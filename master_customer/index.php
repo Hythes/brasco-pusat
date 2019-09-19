@@ -1,0 +1,422 @@
+<?php
+$title = 'Master Data Customer';
+include '../env.php';
+if (isset($_POST['simpan'])) {
+  extract($_POST);
+  $query =  "INSERT INTO customer(kode,nama,alamat,kota,kodepos,telepon,handphone,npwp,ktp,tipe_customer,kredit,contact_name,email,kode_sales,top,batas_kredit,tanggal_jual_akhir,saldo_awal,saldo_jalan,keterangan) VALUES(
+    '$kode','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$npwp','$ktp','$tipe_customer','$kredit','$contact_name','$email','$kode_sales','$top','$batas_kredit','$tanggal','$saldo_awal','$saldo_jalan','$keterangan'
+  )";
+  $sql = mysqli_query($conn, $query);
+  if ($sql) {
+    echo "<script>alert('Data berhasil masuk')</script>";
+  } else {
+    echo "<script>alert('Data gagal masuk')</script>";
+    echo "<script>alert('" . mysqli_error($conn) . "')</script>";
+  }
+}
+$show = query("SELECT * FROM customer");
+?>
+
+
+<!-- =============================================== -->
+<?php include('../templates/header.php') ?>
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+  <!-- Content Header (Page header) -->
+  <section class="content-header">
+    <h1>
+      MASTER DATA CUSTOMER
+    </h1>
+    <!-- <ol class="breadcrumb">
+      <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li><a href="#">Examples</a></li>
+      <li class="active">Blank page</li>
+    </ol> -->
+  </section>
+
+  <!-- Main content -->
+  <section class="content">
+
+    <!-- Default box -->
+    <div class="box">
+      <div class="box-header with-border">
+        <h3 class="box-title">Input Data Customer</h3>
+
+        <div class="box-tools pull-right">
+          <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+            <i class="fa fa-minus"></i></button>
+        </div>
+      </div>
+      <div class="box-body">
+
+        <form action="" method="POST">
+          <div class="form-group">
+            <label class="col-md-2">Kode Customer</label>
+            <div class="col-md-10">
+              <input type="text" class="form-control" name="kode" style="width:40%;" required>
+            </div>
+            <div class="form-group">
+              <label class="col-md-2">Nama Customer</label>
+              <div class="col-md-10">
+                <input type="text" class="form-control" name="nama" required>
+              </div>
+            </div>
+            <!-- Custom Tabs -->
+            <div class="nav-tabs-custom ">
+              <ul class="nav nav-tabs">
+                <li class="active"><a href="#tab_1" data-toggle="tab">Nama dan Alamat</a></li>
+                <li><a href="#tab_2" data-toggle="tab">Profil</a></li>
+                <li><a href="#tab_3" data-toggle="tab">Aging</a></li>
+                <li><a href="#tab_4" data-toggle="tab">Keterangan</a></li>
+              </ul>
+
+              <div class="tab-content">
+                <div class="tab-pane active" id="tab_1">
+                  <div class="form-group">
+                    <label class="col-xs-5">Alamat</label>
+                    <div class="col-xs-7">
+                      <textarea class="form-control" rows="3" name="alamat" required></textarea>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Kota</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="text" name="kota" required class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Kode Pos</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="number" name="kodepos" required class="form-control" style="width: 50%;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Telepon</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="number" name="telepon" required class="form-control" style="width: 60%;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Handphone</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="text" name="handphone" required class="form-control" style="width: 60%;">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_2">
+                  <div class="form-group">
+                    <label class="col-xs-5">NPWP</label>
+                    <div class="col-xs-7">
+                      <input type="text" name="npwp" class="form-control" required style="width: 60%;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">KTP</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="text" name="ktp" class="form-control" required style="width: 60%;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Tipe Customer</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <select class="form-control" name="tipe_customer" style="width: 50%">
+                        <option value="1">Customer 1</option>
+                        <option value="2">Customer 2</option>
+                        <option value="3">Customer 3</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Kredit</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <select class="form-control" name="kredit" style="width: 50%">
+                        <option>Y</option>
+                        <option>T</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Contact Name</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="text" name="contact_name" required class="form-control" style="width: 60%;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Email</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="email" name="email" required class="form-control" style="width: 60%;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Kode Sales</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="text" name="kode_sales" required class="form-control" style="width: 60%;">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_3">
+                  <div class="form-group">
+                    <label class="col-xs-5">TOP</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="text" name="top" required class="form-control" style="width: 60%;">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Batas Kredit</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="text" name="batas_kredit" required class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Tanggal Jual Akhir</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="date" name="tanggal" class="form-control" style="width: 60%">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Saldo Awal</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="number" name="saldo_awal" required class="form-control">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-xs-5">Saldo Jalan</label>
+                    <div class="col-xs-7" style="margin-top: 10px;">
+                      <input type="text" name="saldo_jalan" required class="form-control">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="tab-pane" id="tab_4">
+                  <label class="col-xs-3">Keterangan</label>
+                  <div class="col-xs-9" style="margin-top: 10px;">
+                    <textarea class="form-control" rows="3" name="keterangan" required></textarea>
+                  </div>
+                  <div class="buton pull-right">
+                    <div class="save pad col-xs-6">
+                      <button class="btn btn-info" type="submit" name="simpan">Save</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- /.tab-pane -->
+
+        </form>
+
+        <!-- /.tab-content -->
+      </div>
+
+      <div class="data-table" style="padding-top: 300px;">
+        <table id="example1" class="table table-bordered table-striped">
+          <thead>
+            <tr>
+              <th>Nomor</th>
+              <th>Kode Customer</th>
+              <th>Nama Customer</th>
+              <th>Saldo Awal</th>
+              <th>Saldo Jalan</th>
+              <th>Detail</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php $i = 1;
+            foreach ($show as $data) : ?>
+              <tr>
+                <td><?= $i ?></td>
+                <td><?= $data['kode'] ?></td>
+                <td><?= $data['nama'] ?></td>
+                <td><?= $data['saldo_awal'] ?></td>
+                <td><?= $data['saldo_jalan'] ?></td>
+                <td>
+                  <button type="button" class="btn btn-success" data-toggle="modal" data-target="#modal_customer<?= $i ?>">
+                    Detail
+                  </button>
+                  <div class="modal fade" id="modal_customer<?= $i ?>">
+                    <div class="modal-dialog modal-lg">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title">Detail</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="row">
+                            <div class="nav-tabs-custom ">
+                              <ul class="nav nav-tabs">
+                                <li class="active"><a href="#tab_1_<?= $i ?>" data-toggle="tab">Nama dan Alamat</a></li>
+                                <li><a href="#tab_2_<?= $i ?>" data-toggle="tab">Profil</a></li>
+                                <li><a href="#tab_3_<?= $i ?>" data-toggle="tab">Aging</a></li>
+                                <li><a href="#tab_4_<?= $i ?>" data-toggle="tab">Keterangan</a></li>
+                              </ul>
+                              <form action="" method="POST">
+                                <input type="hidden" name="kode" value="<?= $data['kode'] ?>">
+                                <input type="hidden" name="nama" value="<?= $data['nama'] ?>">
+                                <div class="tab-content">
+                                  <div class="tab-pane active" id="tab_1_<?= $i ?>">
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Alamat</label>
+                                      <div class="col-xs-7">
+                                        <textarea class="form-control" rows="3"><?= $data['keterangan'] ?></textarea>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Kota</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="text" name="kota" required class="form-control">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Kode Pos</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="number" name="kodepos" required class="form-control" style="width: 50%;">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Telepon</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="number" name="telepon" required class="form-control" style="width: 60%;">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Handphone</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="text" name="handphone" required class="form-control" style="width: 60%;">
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="tab-pane" id="tab_2_<?= $i ?>">
+                                    <div class="form-group">
+                                      <label class="col-xs-5">NPWP</label>
+                                      <div class="col-xs-7">
+                                        <input type="text" name="npwp" class="form-control" required style="width: 60%;">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">KTP</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="text" name="ktp" class="form-control" required style="width: 60%;">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Tipe Customer</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <select class="form-control" name="tipe_customer" style="width: 50%">
+                                          <option value="1">Customer 1</option>
+                                          <option value="2">Customer 2</option>
+                                          <option value="3">Customer 3</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Kredit</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <select class="form-control" name="kredit" style="width: 50%">
+                                          <option>Y</option>
+                                          <option>T</option>
+                                        </select>
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Contact Name</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="text" name="contact_name" required class="form-control" style="width: 60%;">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Email</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="email" name="email" required class="form-control" style="width: 60%;">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Kode Sales</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="text" name="kode_sales" required class="form-control" style="width: 60%;">
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="tab-pane" id="tab_3_<?= $i ?>">
+                                    <div class="form-group">
+                                      <label class="col-xs-5">TOP</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="text" name="top" required class="form-control" style="width: 60%;">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Batas Kredit</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="text" name="batas_kredit" required class="form-control">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Tanggal Jual Akhir</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="date" name="tanggal" class="form-control" style="width: 60%">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Saldo Awal</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="number" name="saldo_awal" required class="form-control">
+                                      </div>
+                                    </div>
+                                    <div class="form-group">
+                                      <label class="col-xs-5">Saldo Jalan</label>
+                                      <div class="col-xs-7" style="margin-top: 10px;">
+                                        <input type="text" name="saldo_jalan" required class="form-control">
+                                      </div>
+                                    </div>
+                                  </div>
+
+                                  <div class="tab-pane" id="tab_4_<?= $i ?>">
+                                    <label class="col-xs-3">Keterangan</label>
+                                    <div class="col-xs-9" style="margin-top: 10px;">
+                                      <textarea class="form-control" rows="3" name="keterangan" required></textarea>
+                                    </div>
+                                  </div>
+                                </div>
+
+                            </div>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="submit" name="edit" class="btn btn-warning">Edit</button>
+                            </form>
+                            <form action="" method="POST">
+                              <input type="hidden" name="kode" value="<?= $data['kode'] ?>">
+                              <button name="delete" type="submit" value="<?= $data['kode'] ?>" class="btn btn-danger">Hapus</a>
+                            </form>
+                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+                          </div>
+                        </div>
+                        <!-- /.modal-content -->
+                      </div>
+                      <!-- /.modal-dialog -->
+                    </div>
+                </td>
+              </tr>
+            <?php $i++;
+            endforeach; ?>
+          </tbody>
+        </table>
+      </div>
+
+    </div>
+    <!-- /.box-body -->
+    <div class="box-footer">
+      Footer
+    </div>
+    <!-- /.box-footer-->
+</div>
+<!-- /.box -->
+
+</section>
+<!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<?php include('../templates/footer.php') ?>
