@@ -37,3 +37,7 @@ function tambahId($id)
   }
   return $id;
 }
+function alert($word)
+{
+  echo "<script>alert('" . $word . "')</script>";
+}

@@ -4,8 +4,8 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title><?= $title ?></title>
-  <base href="http://localhost/brasco/" target="_blank">
+  <title id="title"></title>
+  <base href="http://localhost/brasco/">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -332,13 +332,13 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MAIN NAVIGATION</li>
-          <li class="active">
+          <li id="header_profile">
             <a href="profil.php"><i class="fa fa-user"></i> <span>Profil</span></a>
           </li>
           <li class="">
-            <a href="JurnalReferensi.php"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
+            <a href="master_customer"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
           </li>
-          <li class="treeview">
+          <li class="treeview" id="header_inventory">
             <a href="#"><i class="fa fa-cubes"></i>
               <span>Inventori</span>
               <span class="pull-right-container">
@@ -346,9 +346,9 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="masterInventori.php"><i class="fa fa-circle-o"></i> Master Inventori</a></li>
-              <li><a href="searchDataInventory.php"><i class="fa fa-circle-o"></i>Search Data Inventory</a></li>
-              <li><a href="editdatainventory.php"><i class="fa fa-circle-o"></i>Edit Data Inventory</a></li>
+              <li id="header_inventory_master"><a href="masterInventori.php"><i class="fa fa-circle-o"></i> Master Inventori</a></li>
+              <li id="header_inventory_search"><a href="searchDataInventory.php"><i class="fa fa-circle-o"></i>Search Data Inventory</a></li>
+              <li id="header_inventory_edit"><a href="editdatainventory.php"><i class="fa fa-circle-o"></i>Edit Data Inventory</a></li>
             </ul>
           </li>
           <li class="treeview">

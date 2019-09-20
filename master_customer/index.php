@@ -1,7 +1,51 @@
 <?php
 $title = 'Master Data Customer';
 include '../env.php';
-if (isset($_POST['simpan'])) {
+if (isset($_POST['edit'])) {
+  extract($_POST);
+  $query = "UPDATE customer 
+            SET
+                kode = '$kode',
+                nama = '$nama',
+                kota = '$kota',
+                kodepos = '$kodepos',
+                telepon = '$telepon',
+                handphone = '$handphone',
+                npwp = '$npwp',
+                ktp = '$ktp',
+                tipe_customer = '$tipe_customer',
+                kredit = '$kredit',
+                contact_name = '$contact_name',
+                email = '$email',
+                kode_sales = '$kode_sales',
+                top = '$top',
+                batas_kredit = '$batas_kredit',
+                tanggal_jual_akhir = '$tanggal',
+                saldo_awal = '$saldo_awal',
+                saldo_jalan = '$saldo_jalan',
+                keterangan = '$keterangan'
+            WHERE kode = '$kode_old'";
+  $sql = mysqli_query($conn, $query);
+  if ($sql) {
+    alert("Data berhasil diedit");
+  } else {
+    alert("Data gagal diedit");
+    echo mysqli_error($conn);
+    exit();
+  }
+} else if (isset($_POST['delete'])) {
+
+  $id = $_POST['delete'];
+  $query = "DELETE FROM customer WHERE kode = '$id'";
+  $sql = mysqli_query($conn, $query);
+  if ($sql) {
+    alert('Data berhasil dihapus');
+  } else {
+    alert('Data gagal dihapus');
+    echo mysqli_error($conn);
+    exit();
+  }
+} else if (isset($_POST['simpan'])) {
   extract($_POST);
   $query =  "INSERT INTO customer(kode,nama,alamat,kota,kodepos,telepon,handphone,npwp,ktp,tipe_customer,kredit,contact_name,email,kode_sales,top,batas_kredit,tanggal_jual_akhir,saldo_awal,saldo_jalan,keterangan) VALUES(
     '$kode','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$npwp','$ktp','$tipe_customer','$kredit','$contact_name','$email','$kode_sales','$top','$batas_kredit','$tanggal','$saldo_awal','$saldo_jalan','$keterangan'
@@ -17,7 +61,11 @@ if (isset($_POST['simpan'])) {
 $show = query("SELECT * FROM customer");
 ?>
 
-
+<script>
+  var title = 'Ajiiz';
+  var active = 'header_inventory'
+  var active_2 = 'header_inventory_search';
+</script>
 <!-- =============================================== -->
 <?php include('../templates/header.php') ?>
 <!-- Content Wrapper. Contains page content -->
@@ -245,158 +293,166 @@ $show = query("SELECT * FROM customer");
                         <div class="modal-body">
                           <div class="row">
                             <div class="nav-tabs-custom ">
-                              <ul class="nav nav-tabs">
-                                <li class="active"><a href="#tab_1_<?= $i ?>" data-toggle="tab">Nama dan Alamat</a></li>
-                                <li><a href="#tab_2_<?= $i ?>" data-toggle="tab">Profil</a></li>
-                                <li><a href="#tab_3_<?= $i ?>" data-toggle="tab">Aging</a></li>
-                                <li><a href="#tab_4_<?= $i ?>" data-toggle="tab">Keterangan</a></li>
-                              </ul>
                               <form action="" method="POST">
-                                <input type="hidden" name="kode" value="<?= $data['kode'] ?>">
-                                <input type="hidden" name="nama" value="<?= $data['nama'] ?>">
-                                <div class="tab-content">
-                                  <div class="tab-pane active" id="tab_1_<?= $i ?>">
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Alamat</label>
-                                      <div class="col-xs-7">
-                                        <textarea class="form-control" rows="3"><?= $data['keterangan'] ?></textarea>
+                                <div class="form-group">
+                                  <label class="col-md-2">Kode Customer</label>
+                                  <div class="col-md-10">
+                                    <input type="text" class="form-control" name="kode" style="width:40%;" value="<?= $data['kode'] ?> " required>
+                                  </div>
+                                  <div class="form-group">
+                                    <label class="col-md-2">Nama Customer</label>
+                                    <div class="col-md-10">
+                                      <input type="text" class="form-control" name="nama" value="<?= $data['nama'] ?>" required>
+                                    </div>
+                                  </div>
+                                  <ul class="nav nav-tabs">
+                                    <li class="active"><a href="#tab_1_<?= $i ?>" data-toggle="tab">Nama dan Alamat</a></li>
+                                    <li><a href="#tab_2_<?= $i ?>" data-toggle="tab">Profil</a></li>
+                                    <li><a href="#tab_3_<?= $i ?>" data-toggle="tab">Aging</a></li>
+                                    <li><a href="#tab_4_<?= $i ?>" data-toggle="tab">Keterangan</a></li>
+                                  </ul>
+                                  <div class="tab-content">
+                                    <div class="tab-pane active" id="tab_1_<?= $i ?>">
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Alamat</label>
+                                        <div class="col-xs-7">
+                                          <textarea class="form-control" rows="3"><?= $data['keterangan'] ?></textarea>
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Kota</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="text" name="kota" required class="form-control" value="<?= $data['kota'] ?>">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Kode Pos</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="number" name="kodepos" required class="form-control" value="<?= $data['kodepos'] ?>" style="width: 50%;">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Telepon</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="number" name="telepon" required class="form-control" value="<?= $data['telepon'] ?>" style="width: 60%;">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Handphone</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="text" name="handphone" value="<?= $data['handphone'] ?>" required class="form-control" style="width: 60%;">
+                                        </div>
                                       </div>
                                     </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Kota</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="text" name="kota" required class="form-control">
+                                    <div class="tab-pane" id="tab_2_<?= $i ?>">
+                                      <div class="form-group">
+                                        <label class="col-xs-5">NPWP</label>
+                                        <div class="col-xs-7">
+                                          <input type="text" name="npwp" class="form-control" value="<?= $data['npwp'] ?>" required style="width: 60%;">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">KTP</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input value="<?= $data['ktp'] ?>" type="text" name="ktp" class="form-control" required style="width: 60%;">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Tipe Customer</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <select class="form-control" name="tipe_customer" style="width: 50%">
+                                            <option <?php if ($data['tipe_customer'] == 1) echo "active" ?> value="1">Customer 1</option>
+                                            <option <?php if ($data['tipe_customer'] == 2) echo "active" ?> value="2">Customer 2</option>
+                                            <option <?php if ($data['tipe_customer'] == 3) echo "active" ?> value="3">Customer 3</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Kredit</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <select class="form-control" name="kredit" style="width: 50%">
+                                            <option <?php if ($data['kredit'] == "Y") echo "active" ?>>Y</option>
+                                            <option <?php if ($data['kredit'] == "T") echo "active" ?>>T</option>
+                                          </select>
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Contact Name</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="text" name="contact_name" value="<?= $data['contact_name'] ?>" required class="form-control" style="width: 60%;">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Email</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="email" name="email" value="<?= $data['email'] ?>" required class="form-control" style="width: 60%;">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Kode Sales</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="text" name="kode_sales" value="<?= $data['kode_sales'] ?>" required class="form-control" style="width: 60%;">
+                                        </div>
                                       </div>
                                     </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Kode Pos</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="number" name="kodepos" required class="form-control" style="width: 50%;">
+
+                                    <div class="tab-pane" id="tab_3_<?= $i ?>">
+                                      <div class="form-group">
+                                        <label class="col-xs-5">TOP</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="text" name="top" value="<?= $data['top'] ?>" required class="form-control" style="width: 60%;">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Batas Kredit</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="text" name="batas_kredit" value="<?= $data['batas_kredit'] ?>" required class="form-control">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Tanggal Jual Akhir</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="date" name="tanggal" class="form-control" value="<?= $data['tanggal_jual_akhir'] ?>" style="width: 60%">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Saldo Awal</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="number" name="saldo_awal" value="<?= $data['saldo_awal'] ?>" required class="form-control">
+                                        </div>
+                                      </div>
+                                      <div class="form-group">
+                                        <label class="col-xs-5">Saldo Jalan</label>
+                                        <div class="col-xs-7" style="margin-top: 10px;">
+                                          <input type="text" name="saldo_jalan" required value="<?= $data['saldo_jalan'] ?>" class="form-control">
+                                        </div>
                                       </div>
                                     </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Telepon</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="number" name="telepon" required class="form-control" style="width: 60%;">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Handphone</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="text" name="handphone" required class="form-control" style="width: 60%;">
+
+                                    <div class="tab-pane" id="tab_4_<?= $i ?>">
+                                      <label class="col-xs-3">Keterangan</label>
+                                      <div class="col-xs-9" style="margin-top: 10px;">
+                                        <textarea class="form-control" rows="3" name="keterangan" required><?= $data['keterangan'] ?></textarea>
                                       </div>
                                     </div>
                                   </div>
 
-                                  <div class="tab-pane" id="tab_2_<?= $i ?>">
-                                    <div class="form-group">
-                                      <label class="col-xs-5">NPWP</label>
-                                      <div class="col-xs-7">
-                                        <input type="text" name="npwp" class="form-control" required style="width: 60%;">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">KTP</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="text" name="ktp" class="form-control" required style="width: 60%;">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Tipe Customer</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <select class="form-control" name="tipe_customer" style="width: 50%">
-                                          <option value="1">Customer 1</option>
-                                          <option value="2">Customer 2</option>
-                                          <option value="3">Customer 3</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Kredit</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <select class="form-control" name="kredit" style="width: 50%">
-                                          <option>Y</option>
-                                          <option>T</option>
-                                        </select>
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Contact Name</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="text" name="contact_name" required class="form-control" style="width: 60%;">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Email</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="email" name="email" required class="form-control" style="width: 60%;">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Kode Sales</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="text" name="kode_sales" required class="form-control" style="width: 60%;">
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="tab-pane" id="tab_3_<?= $i ?>">
-                                    <div class="form-group">
-                                      <label class="col-xs-5">TOP</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="text" name="top" required class="form-control" style="width: 60%;">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Batas Kredit</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="text" name="batas_kredit" required class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Tanggal Jual Akhir</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="date" name="tanggal" class="form-control" style="width: 60%">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Saldo Awal</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="number" name="saldo_awal" required class="form-control">
-                                      </div>
-                                    </div>
-                                    <div class="form-group">
-                                      <label class="col-xs-5">Saldo Jalan</label>
-                                      <div class="col-xs-7" style="margin-top: 10px;">
-                                        <input type="text" name="saldo_jalan" required class="form-control">
-                                      </div>
-                                    </div>
-                                  </div>
-
-                                  <div class="tab-pane" id="tab_4_<?= $i ?>">
-                                    <label class="col-xs-3">Keterangan</label>
-                                    <div class="col-xs-9" style="margin-top: 10px;">
-                                      <textarea class="form-control" rows="3" name="keterangan" required></textarea>
-                                    </div>
-                                  </div>
                                 </div>
-
+                            </div>
+                            <div class="modal-footer">
+                              <input type="hidden" name="kode_old" value="<?= $data['kode'] ?>">
+                              <button type="submit" name="edit" class="btn btn-warning">Edit</button>
+                              </form>
+                              <form action="" method="POST">
+                                <button name="delete" type="submit" value="<?= $data['kode'] ?>" class="btn btn-danger">Hapus</a>
+                              </form>
+                              <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
                             </div>
                           </div>
-                          <div class="modal-footer">
-                            <button type="submit" name="edit" class="btn btn-warning">Edit</button>
-                            </form>
-                            <form action="" method="POST">
-                              <input type="hidden" name="kode" value="<?= $data['kode'] ?>">
-                              <button name="delete" type="submit" value="<?= $data['kode'] ?>" class="btn btn-danger">Hapus</a>
-                            </form>
-                            <button type="button" class="btn btn-primary" data-dismiss="modal">Tutup</button>
-                          </div>
+                          <!-- /.modal-content -->
                         </div>
-                        <!-- /.modal-content -->
+                        <!-- /.modal-dialog -->
                       </div>
-                      <!-- /.modal-dialog -->
-                    </div>
                 </td>
               </tr>
             <?php $i++;

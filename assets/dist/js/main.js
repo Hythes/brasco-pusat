@@ -1,3 +1,5 @@
+$
+$('#title').val(title);
 function delayTimes(callback, ms) {
     var timer = 0;
     return function () {
@@ -49,7 +51,7 @@ $('#simpan_pph').on('click', function () {
         'tipe_customer': $('#tipecustomer_pph').children("option:selected").val(),
     }
     $.ajax({
-        url: 'ajax_barcode.php',
+        url: './pengajuan_perubahan_harga/ajax_barcode.php',
         type: 'POST',
         data: {
             'simpan': 'yes',
@@ -77,7 +79,7 @@ $('#simpan_pph').on('click', function () {
 
 $('#barcode_pph').keyup(delayTimes(function () {
     $.ajax({
-        url: 'ajax_barcode.php',
+        url: './pengajuan_perubahan_harga/ajax_barcode.php',
         type: 'POST',
         data: {
             "barcode": $('#barcode_pph').val()
@@ -98,9 +100,19 @@ $('#barcode_pph').keyup(delayTimes(function () {
         }
     })
 }, 500));
+
+
+
+
 $('#barcode').on('click', function () {
+    console.log($('#isi_barcode').val());
+
+    if ($('#isi_barcode').val() == null) {
+        alert('Tolong diisi barcodenya');
+        return;
+    }
     $.ajax({
-        url: 'cekBarcode.php',
+        url: './master_inventory/cekBarcode.php',
         type: 'POST',
         data: {
             "barcode": $('#isi_barcode').val()
@@ -119,4 +131,21 @@ $('#barcode').on('click', function () {
             console.log(textStatus + err + jqXHR);
         }
     });
-});
+})
+
+
+if (active == 'header_profile') {
+    $('#header_profile').addClass('active');
+}
+if (active == 'header_inventory') {
+    $('#header_inventory').addClass('active');
+    if (active_2 == 'header_inventory_master') {
+        $('#header_inventory_master').addClass('active');
+    }
+    if (active_2 == 'header_inventory_edit') {
+        $('#header_inventory_edit').addClass('active');
+    }
+    if (active_2 == 'header_inventory_search') {
+        $('#header_inventory_search').addClass('active');
+    }
+}
