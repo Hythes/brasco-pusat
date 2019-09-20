@@ -44,6 +44,7 @@ function alert($word)
 
 function lanjutkan($sql, $word)
 {
+  global $conn;
   if ($sql) {
     alert('Data berhasil ' . $word . '!');
   } else {
