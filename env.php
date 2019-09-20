@@ -41,3 +41,14 @@ function alert($word)
 {
   echo "<script>alert('" . $word . "')</script>";
 }
+
+function lanjutkan($sql, $word)
+{
+  if ($sql) {
+    alert('Data berhasil ' . $word . '!');
+  } else {
+    alert('Data gagal ' . $word . '!');
+    echo mysqli_error($conn);
+    exit();
+  }
+}
