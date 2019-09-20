@@ -10,6 +10,10 @@ if (!isset($query[0]['nomor_pengajuan'])) {
 }
 
 ?>
+<script>
+  var active = 'header_perubahan';
+  var active_2 = 'header_perubahan_pengajuan';
+</script>
 <!-- =============================================== -->
 <?php include('../templates/header.php') ?>
 <!-- Content Wrapper. Contains page content -->

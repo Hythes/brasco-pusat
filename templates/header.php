@@ -3,9 +3,9 @@
 
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title id="title"></title>
   <base href="http://localhost/brasco/">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title id="title"><?= $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -17,7 +17,7 @@
   <!-- Theme style -->
   <link rel="stylesheet" href="assets/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
-       folder instead of downloading all of them to reduce the load. -->
+  folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="assets/dist/css/skins/_all-skins.min.css">
   <!-- Morris chart -->
   <link rel="stylesheet" href="assets/bower_components/morris.js/morris.css">
@@ -30,10 +30,27 @@
   <!-- Daterange picker -->
   <link rel="stylesheet" href="assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
   <!-- bootstrap wysihtml5 - text editor -->
-  <link rel="stylesheet" href="assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
+  <link rel="stylesheet" href="plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
+  <style>
+    .example-modal .modal {
+      position: relative;
+      top: auto;
+      bottom: auto;
+      right: auto;
+      left: auto;
+      display: block;
+      z-index: 1;
+    }
+
+    .example-modal .modal {
+      background: transparent !important;
+    }
+  </style>
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -71,7 +88,7 @@
                       <!-- start message -->
                       <a href="#">
                         <div class="pull-left">
-                          <!-- <img src="assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
+                          <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
                         </div>
                         <h4>
                           Support Team
@@ -84,7 +101,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <!-- <img src="assets/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image"> -->
+                          <!-- <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image"> -->
                         </div>
                         <h4>
                           AdminLTE Design Team
@@ -96,7 +113,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <!-- <img src="assets/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image"> -->
+                          <!-- <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image"> -->
                         </div>
                         <h4>
                           Developers
@@ -108,7 +125,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <!-- <img src="assets/dist/img/user3-128x128.jpg" class="img-circle" alt="User Image"> -->
+                          <!-- <img src="dist/img/user3-128x128.jpg" class="img-circle" alt="User Image"> -->
                         </div>
                         <h4>
                           Sales Department
@@ -120,7 +137,7 @@
                     <li>
                       <a href="#">
                         <div class="pull-left">
-                          <!-- <img src="assets/dist/img/user4-128x128.jpg" class="img-circle" alt="User Image"> -->
+                          <!-- <img src="dist/img/user4-128x128.jpg" class="img-circle" alt="User Image"> -->
                         </div>
                         <h4>
                           Reviewers
@@ -257,13 +274,13 @@
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <!-- <img src="assets/dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
+                <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
                 <span class="hidden-xs">Alexander Pierce</span>
               </a>
               <ul class="dropdown-menu">
                 <!-- User image -->
                 <li class="user-header">
-                  <!-- <img src="assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
+                  <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
 
                   <p>
                     Alexander Pierce - Web Developer
@@ -311,7 +328,7 @@
         <!-- Sidebar user panel -->
         <div class="user-panel">
           <div class="pull-left image">
-            <!-- <img src="assets/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
+            <!-- <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image"> -->
           </div>
           <div class="pull-left info">
             <p>Alexander Pierce</p>
@@ -332,12 +349,12 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MAIN NAVIGATION</li>
-          <li id="header_profile">
-            <a href="profil.php"><i class="fa fa-user"></i> <span>Profil</span></a>
+          <li id="header_profil">
+            <a href="profile"><i class="fa fa-user"></i> <span>Profil</span></a>
           </li>
-          <li class="">
-            <a href="master_customer"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
-          </li>
+          <!-- <li id="header_jurnal">
+            <a href="JurnalReferensi.php"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
+          </li> -->
           <li class="treeview" id="header_inventory">
             <a href="#"><i class="fa fa-cubes"></i>
               <span>Inventori</span>
@@ -346,12 +363,12 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li id="header_inventory_master"><a href="masterInventori.php"><i class="fa fa-circle-o"></i> Master Inventori</a></li>
-              <li id="header_inventory_search"><a href="searchDataInventory.php"><i class="fa fa-circle-o"></i>Search Data Inventory</a></li>
-              <li id="header_inventory_edit"><a href="editdatainventory.php"><i class="fa fa-circle-o"></i>Edit Data Inventory</a></li>
+              <li id="header_inventory_master"><a href="master_inventory"><i class="fa fa-circle-o"></i> Master Inventori</a></li>
+              <!-- <li id="header_inventory_search"><a href="master_inventory/"><i class="fa fa-circle-o"></i>Search Data Inventory</a></li> -->
+              <!-- <li id="header_inventory_edit"><a href="master_inventory/ubah.php"><i class="fa fa-circle-o"></i>Edit Data Inventory</a></li> -->
             </ul>
           </li>
-          <li class="treeview">
+          <li class="treeview" id="header_stock">
             <a href="#"><i class="fa fa-cube"></i>
               <span>Stock Opname</span>
               <span class="pull-right-container">
@@ -359,11 +376,11 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="inputHasilStockOpname.php"><i class="fa fa-circle-o"></i>Input Hasil Stock Opname</a></li>
-              <li><a href="selisihStokOpname.php"><i class="fa fa-circle-o"></i>Selisih Stock Opname</a></li>
+              <li id="header_stock_input"><a href="stock_opname"><i class="fa fa-circle-o"></i>Input Hasil Stock Opname</a></li>
+              <!-- <li id="header_stock_selisih"><a href="selisihStokOpname.php"><i class="fa fa-circle-o"></i>Selisih Stock Opname</a></li> -->
             </ul>
           </li>
-          <li class="treeview">
+          <li class="treeview" id="header_perubahan">
             <a href="#">
               <i class="fa fa-dollar"></i>
               <span>Perubahan Harga</span>
@@ -372,11 +389,11 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="pengajuanPerubahanHarga.php"><i class="fa fa-circle-o"></i>Pengajuan Perubahan Harga</a></li>
-              <li><a href="approvalPengajuanPerubahanHarga.php"><i class="fa fa-circle-o"></i>Approval Perubahan Harga</a></li>
+              <li id="header_perubahan_pengajuan"><a href="pengajuan_perubahan_harga"><i class="fa fa-circle-o"></i>Pengajuan Perubahan Harga</a></li>
+              <!-- <li id="header_perubahan_approval"><a href="approvalPengajuanPerubahanHarga.php"><i class="fa fa-circle-o"></i>Approval Perubahan Harga</a></li> -->
             </ul>
           </li>
-          <li class="treeview">
+          <li class="treeview" id="header_supplier">
             <a href="#">
               <i class="fa fa-archive"></i>
               <span>Supplier</span>
@@ -385,22 +402,22 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li><a href="dataSuplier.php"><i class="fa fa-circle-o"></i>Master Supplier</a></li>
-              <li>
+              <li id="header_supplier_master"><a href="master_supplier"><i class="fa fa-circle-o"></i>Master Supplier</a></li>
+              <!-- <li id="header_supplier_list">
                 <a href="listsSuplier.php"><i class="fa fa-circle-o"></i> <span>List Supplier</span></a>
               </li>
-              <li>
+              <li id="header_supplier_hutang">
                 <a href="listHutang.php"><i class="fa fa-circle-o"></i> <span>List Hutang</span></a>
               </li>
-              <li>
-                <a href="masterSupplierDenganSaldo.php"><i class="fa fa-circle-o"></i> <span>Supplier Dengan Saldo</span></a> <!-- belom komplet-->
+              <li id="header_supplier_saldo">
+                <a href="masterSupplierDenganSaldo.php"><i class="fa fa-circle-o"></i> <span>Supplier Dengan Saldo</span></a>
               </li>
-              <li>
+              <li id="header_supplier_tempo">
                 <a href="jatuhTempoPembayaran.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
-              </li>
+              </li> -->
             </ul>
           </li>
-          <li class="treeview">
+          <!-- <li class="treeview" id="header_po">
             <a href="#">
               <i class="fa fa-shopping-cart"></i>
               <span>Purchase Order</span>
@@ -409,27 +426,27 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li>
+              <li id="header_purchase_order">
                 <a href="Purchase Order.php"><i class="fa fa-circle-o"></i>Purchase Order</a>
               </li>
-              <li>
+              <li id="header_purchase_cetak">
                 <a href="cetakLabelBarcode.php"><i class="fa fa-circle-o"></i> <span>Cetak Label Barcode</span></a>
               </li>
-              <li>
+              <li id="header_purchase_data">
                 <a href="menuDataPO.php"><i class="fa fa-circle-o"></i> <span>Data Purchase Order</span></a>
               </li>
-              <li>
+              <li id="header_purchase_approval">
                 <a href="approvalPurchaseOrder.php"><i class="fa fa-circle-o"></i> <span>Approval PO Manager</span></a>
               </li>
-              <li>
+              <li id="header_purchase_status">
                 <a href="statusApprovalPO.php"><i class="fa fa-circle-o"></i> <span>Status Approval PO</span></a>
               </li>
-              <li>
+              <li id="header_purchase_closed">
                 <a href="menuClosedPO.php"><i class="fa fa-circle-o"></i> <span>Menu Closed PO</span></a>
               </li>
             </ul>
-          </li>
-          <li class="treeview">
+          </li> -->
+          <!-- <li class="treeview" id="header_purchasing">
             <a href="#">
               <i class="fa fa-usd"></i>
               <span>Purchasing</span>
@@ -438,80 +455,91 @@
               </span>
             </a>
             <ul class="treeview-menu">
-              <li>
+              <li id="header_purchasing_input">
                 <a href="#.php"><i class="fa fa-circle-o"></i> <span>Input Barang Masuk</span></a>
               </li>
-              <li>
+              <li id="header_purchasing_masuk">
                 <a href="laporanBarangMasuk.php"><i class="fa fa-circle-o"></i> <span>Laporan Barang Masuk</span></a>
               </li>
-              <li>
+              <li id="header_purchasing_list">
                 <a href="brgmasuk.php"><i class="fa fa-circle-o"></i> <span>Detail List Barang Masuk</span></a>
               </li>
             </ul>
+          </li> -->
+          <li id="header_customer">
+            <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
           </li>
-          <li class="treeview">
+          <!-- <li class="treeview" id="header_sales">
             <a href="#">
-              <i class="fa fa-users"></i>
-              <span>Customer</span>
+              <i class="fa fa-truck"></i>
+              <span>Sales Order</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
             </a>
             <ul class="treeview-menu">
-              <li>
-                <a href="#.php"><i class="fa fa-circle-o"></i> <span>Data Master Customer</span></a>
-              </li>
-              <li>
+              <li id="header_sales_input">
                 <a href="#.php"><i class="fa fa-circle-o"></i> <span>Input Sales Order</span></a>
+              </li>
+              <li id="header_sales_laporan">
+                <a href="laporanSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
+              </li>
+              <li id="header_sales_detail">
+                <a href="detailSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Detail Sales Order</span></a>
+              </li>
+              <li id="header_sales_edit">
+                <a href="editSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Edit Sales Order</span></a>
+              </li>
+              <li id="header_sales_list">
+                <a href="listorder.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
+              </li>
+              <li id="header_sales_gudang">
+                <a href="orderkeGudang.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
               </li>
             </ul>
           </li>
-          <li>
-            <a href="laporanSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
+          <li class="treeview" id="header_packing">
+            <a href="#">
+              <i class="fa fa-cloud"></i>
+              <span>Picking & Packing Gudang</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li id="header_picking_list">
+                <a href="listpickinggudang.php"><i class="fa fa-circle-o"></i> <span>List Picking Gudang</span></a>
+              </li>
+              <li id="header_picking_gudang">
+                <a href="pickingudang.php"><i class="fa fa-circle-o"></i> <span> Picking Gudang</span></a>
+              </li>
+              <li id="header_packing_list">
+                <a href="listpackinggudang.php"><i class="fa fa-circle-o"></i> <span>List Packing Gudang</span></a>
+              </li>
+              <li id="header_packing_gudang">
+                <a href="picking.php"><i class="fa fa-circle-o"></i> <span> Packing Gudang</span></a>
+              </li>
+            </ul>
           </li>
-          <li>
-            <a href="detailSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Detail Sales Order</span></a>
-          </li>
-          <li>
-            <a href="editSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Edit Sales Order</span></a>
-          </li>
-          <li>
-            <a href="listorder.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
-          </li>
-          <li>
-            <a href="orderkeGudang.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
-          </li>
-          <li>
-            <a href="listpickinggudang.php"><i class="fa fa-circle-o"></i> <span>List Picking Gudang</span></a>
-          </li>
-          <li>
-            <a href="pickingudang.php"><i class="fa fa-circle-o"></i> <span> Picking Gudang</span></a>
-          </li>
-          <li>
-            <a href="listpackinggudang.php"><i class="fa fa-circle-o"></i> <span>List Packing Gudang</span></a>
-          </li>
-          <li>
-            <a href="picking.php"><i class="fa fa-circle-o"></i> <span> Packing Gudang</span></a>
-          </li>
-          <li>
+          <li id="header_invoice">
             <a href="sales.php"><i class="fa fa-circle-o"></i> <span>Menu Sales Invoice</span></a>
           </li>
-          <li>
+          <li id="header_surat_jalan">
             <a href="cetaksuratjalan.php"><i class="fa fa-circle-o"></i> <span>Cetak Surat Jalan</span></a>
           </li>
-          <li>
+          <li id="header_kwitansi">
             <a href="cetakkwitansi.php"><i class="fa fa-circle-o"></i> <span>Cetak kwitansi</span></a>
           </li>
-          <li>
+          <li id="header_retur">
             <a href="retpembrg.php"><i class="fa fa-circle-o"></i> <span>Retur Pembelian Barang</span></a>
           </li>
-          <li>
+          <li id="header_diskon">
             <a href="diskonBarangReject.php"><i class="fa fa-circle-o"></i> <span>Diskon Barang Reject</span></a>
-          </li>
-          <li class="header">LABELS</li>
+          </li> -->
+          <!-- <li class="header">LABELS</li>
           <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
           <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-          <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
+          <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
         </ul>
       </section>
       <!-- /.sidebar -->
