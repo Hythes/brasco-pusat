@@ -1,3 +1,6 @@
+<script>
+  var active = 'header_customer';
+</script>
 <?php
 $title = 'Master Data Customer';
 include '../env.php';
@@ -26,46 +29,24 @@ if (isset($_POST['edit'])) {
                 keterangan = '$keterangan'
             WHERE kode = '$kode_old'";
   $sql = mysqli_query($conn, $query);
-  if ($sql) {
-    alert("Data berhasil diedit");
-  } else {
-    alert("Data gagal diedit");
-    echo mysqli_error($conn);
-    exit();
-  }
+  lanjutkan($sql, "Diedit");
 } else if (isset($_POST['delete'])) {
 
   $id = $_POST['delete'];
   $query = "DELETE FROM customer WHERE kode = '$id'";
   $sql = mysqli_query($conn, $query);
-  if ($sql) {
-    alert('Data berhasil dihapus');
-  } else {
-    alert('Data gagal dihapus');
-    echo mysqli_error($conn);
-    exit();
-  }
+  lanjutkan($sql, "Dihapus");
 } else if (isset($_POST['simpan'])) {
   extract($_POST);
   $query =  "INSERT INTO customer(kode,nama,alamat,kota,kodepos,telepon,handphone,npwp,ktp,tipe_customer,kredit,contact_name,email,kode_sales,top,batas_kredit,tanggal_jual_akhir,saldo_awal,saldo_jalan,keterangan) VALUES(
     '$kode','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$npwp','$ktp','$tipe_customer','$kredit','$contact_name','$email','$kode_sales','$top','$batas_kredit','$tanggal','$saldo_awal','$saldo_jalan','$keterangan'
   )";
   $sql = mysqli_query($conn, $query);
-  if ($sql) {
-    echo "<script>alert('Data berhasil masuk')</script>";
-  } else {
-    echo "<script>alert('Data gagal masuk')</script>";
-    echo "<script>alert('" . mysqli_error($conn) . "')</script>";
-  }
+  lanjutkan($sql, "Disimpan");
 }
 $show = query("SELECT * FROM customer");
 ?>
 
-<script>
-  var title = 'Ajiiz';
-  var active = 'header_inventory'
-  var active_2 = 'header_inventory_search';
-</script>
 <!-- =============================================== -->
 <?php include('../templates/header.php') ?>
 <!-- Content Wrapper. Contains page content -->
