@@ -403,9 +403,10 @@
             </a>
             <ul class="treeview-menu">
               <li id="header_supplier_master"><a href="master_supplier"><i class="fa fa-circle-o"></i>Master Supplier</a></li>
-              <!-- <li id="header_supplier_list">
-                <a href="listsSuplier.php"><i class="fa fa-circle-o"></i> <span>List Supplier</span></a>
+              <li id="header_supplier_list">
+                <a href="master_supplier/list_supplier"><i class="fa fa-circle-o"></i> <span>List Supplier</span></a>
               </li>
+              <!--
               <li id="header_supplier_hutang">
                 <a href="listHutang.php"><i class="fa fa-circle-o"></i> <span>List Hutang</span></a>
               </li>
@@ -415,9 +416,12 @@
               <li id="header_supplier_tempo">
                 <a href="jatuhTempoPembayaran.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
               </li> -->
+              <!-- <li id="header_supplier_tambah_saldo">
+                <a href="master_supplier/tambah_saldo"><i class="fa fa-circle-o"></i> <span>Tambah Saldo Supplier</span></a>
+              </li> -->
             </ul>
           </li>
-          <!-- <li class="treeview" id="header_po">
+          <li class="treeview" id="header_po">
             <a href="#">
               <i class="fa fa-shopping-cart"></i>
               <span>Purchase Order</span>
@@ -427,9 +431,9 @@
             </a>
             <ul class="treeview-menu">
               <li id="header_purchase_order">
-                <a href="Purchase Order.php"><i class="fa fa-circle-o"></i>Purchase Order</a>
+                <a href="purchase_order"><i class="fa fa-circle-o"></i>Purchase Order</a>
               </li>
-              <li id="header_purchase_cetak">
+              <!-- <li id="header_purchase_cetak">
                 <a href="cetakLabelBarcode.php"><i class="fa fa-circle-o"></i> <span>Cetak Label Barcode</span></a>
               </li>
               <li id="header_purchase_data">
@@ -443,9 +447,9 @@
               </li>
               <li id="header_purchase_closed">
                 <a href="menuClosedPO.php"><i class="fa fa-circle-o"></i> <span>Menu Closed PO</span></a>
-              </li>
+              </li> -->
             </ul>
-          </li> -->
+          </li>
           <!-- <li class="treeview" id="header_purchasing">
             <a href="#">
               <i class="fa fa-usd"></i>
