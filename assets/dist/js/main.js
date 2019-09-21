@@ -45,6 +45,9 @@ $(document).ready(function () {
 
     if (active == 'header_supplier') {
         $('#header_supplier').addClass('active');
+        if (active_2 == 'header_supplier_tambah_saldo') {
+            $('#header_supplier_tambah_saldo').addClass('active');
+        }
         if (active_2 == 'header_supplier_master') {
             $('#header_supplier_master').addClass('active');
         }
@@ -288,4 +291,17 @@ $('#barcode').on('click', function () {
             console.log(textStatus + err + jqXHR);
         }
     });
+})
+
+
+$('#buat_po').on('click', function () {
+    $.post('purchase_order/ajax.php', { request: 'data_inventory' }, function (data) {
+        data = JSON.parse(data);
+        $('#nama').val(data.nama_cabang);
+        $('#alamat').val(data.alamat);
+        $('#kota').val(data.kota);
+        $('#kodepos').val(data.kodepos);
+        $('#telepon').val(data.no_telp);
+        $('#handphone').val(data.no_hp);
+    })
 })
