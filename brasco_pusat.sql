@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2019 at 12:00 AM
+-- Generation Time: Sep 24, 2019 at 09:20 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.1.30
 
@@ -75,6 +75,7 @@ CREATE TABLE `inventory` (
   `harga_jual1` varchar(255) NOT NULL,
   `harga_jual2` varchar(255) NOT NULL,
   `harga_jual3` varchar(255) NOT NULL,
+  `quantity` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -83,23 +84,24 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_barang`, `harga_jual1`, `harga_jual2`, `harga_jual3`, `created_at`, `update_at`) VALUES
-(16, '1', '1', '1', '1', '12', '12', '1', '2019-09-17 05:42:26', '2019-09-18 23:50:30'),
-(17, '2', '2', '2', '2', '2', '2', '2', '2019-09-17 05:42:35', NULL),
-(18, '3', '3', '3', '3', '3', '3', '3', '2019-09-17 05:42:41', NULL),
-(19, '4', '4', '4', '4', '4', '4', '4', '2019-09-17 05:42:47', NULL),
-(20, '5', '5', '5', '1', '5', '5', '5', '2019-09-17 05:42:53', NULL),
-(21, '6', '6', '6', '3', '6', '6', '6', '2019-09-17 05:43:01', NULL),
-(22, '7', '7', '7', '4', '7', '7', '7', '2019-09-17 05:43:09', NULL),
-(23, '8', '8', '8', '4', '8', '8', '8', '2019-09-17 05:43:17', NULL),
-(24, '9', '9', '9', '3', '9', '9', '9', '2019-09-17 05:43:24', NULL),
-(25, '10', '10', '10', '2', '10', '10', '10', '2019-09-17 05:43:35', NULL),
-(26, '11', '11', '11', '2', '11', '11', '11', '2019-09-17 05:43:43', NULL),
-(27, '12', '12', '12', '3', '12', '12', '12', '2019-09-17 05:43:50', NULL),
-(28, '13', '13', '13', '2', '13', '13', '13', '2019-09-17 05:43:59', NULL),
-(29, '14', '14', '14', '1', '14', '14', '14', '2019-09-17 05:44:05', NULL),
-(30, '15', '15', '15', '4', '15', '15', '15', '2019-09-17 05:44:15', NULL),
-(31, '16', '16', '16', '3', '16', '16', '16', '2019-09-17 05:44:26', NULL);
+INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_barang`, `harga_jual1`, `harga_jual2`, `harga_jual3`, `quantity`, `created_at`, `update_at`) VALUES
+(16, '1', '1', '1', '1', '12', '12', '1', NULL, '2019-09-17 05:42:26', '2019-09-18 23:50:30'),
+(17, '2', '2', '2', '2', '2', '2', '2', NULL, '2019-09-17 05:42:35', NULL),
+(18, '3', '3', '3', '3', '3', '3', '3', NULL, '2019-09-17 05:42:41', NULL),
+(19, '4', '4', '4', '4', '4', '4', '4', NULL, '2019-09-17 05:42:47', NULL),
+(20, '5', '5', '5', '1', '5', '5', '5', NULL, '2019-09-17 05:42:53', NULL),
+(21, '6', '6', '6', '3', '6', '6', '6', NULL, '2019-09-17 05:43:01', NULL),
+(22, '7', '7', '7', '4', '7', '7', '7', NULL, '2019-09-17 05:43:09', NULL),
+(23, '8', '8', '8', '4', '8', '8', '8', NULL, '2019-09-17 05:43:17', NULL),
+(24, '9', '9', '9', '3', '9', '9', '9', NULL, '2019-09-17 05:43:24', NULL),
+(25, '10', '10', '10', '2', '10', '10', '10', NULL, '2019-09-17 05:43:35', NULL),
+(26, '11', '11', '11', '2', '11', '11', '11', NULL, '2019-09-17 05:43:43', NULL),
+(27, '12', '12', '12', '3', '12', '12', '12', NULL, '2019-09-17 05:43:50', NULL),
+(28, '13', '13', '13', '2', '13', '13', '13', NULL, '2019-09-17 05:43:59', NULL),
+(29, '14', '14', '14', '1', '14', '14', '14', NULL, '2019-09-17 05:44:05', NULL),
+(30, '15', '15', '15', '4', '15', '15', '15', NULL, '2019-09-17 05:44:15', NULL),
+(31, '16', '16', '16', '3', '16', '16', '16', NULL, '2019-09-17 05:44:26', NULL),
+(32, '1', '', '', '1', '', '', '', NULL, '2019-09-21 08:47:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -142,6 +144,7 @@ CREATE TABLE `pengajuan_perubahan_harga` (
   `harga_jual_baru` varchar(255) NOT NULL,
   `quantity` varchar(255) NOT NULL,
   `keterangan` text NOT NULL,
+  `approved` int(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -150,14 +153,14 @@ CREATE TABLE `pengajuan_perubahan_harga` (
 -- Dumping data for table `pengajuan_perubahan_harga`
 --
 
-INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tanggal`, `tipe_customer`, `barcode_inventory`, `harga_jual_lama`, `harga_jual_baru`, `quantity`, `keterangan`, `created_at`, `updated_at`) VALUES
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:08', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:08', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:08', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:09', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:09', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:09', NULL),
-('PH-002', '2019-09-18', '1', '1', '2', '12', '11', 'saasd', '2019-09-18 23:50:30', NULL);
+INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tanggal`, `tipe_customer`, `barcode_inventory`, `harga_jual_lama`, `harga_jual_baru`, `quantity`, `keterangan`, `approved`, `created_at`, `updated_at`) VALUES
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:08', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:08', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:08', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:09', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:09', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:09', NULL),
+('PH-002', '2019-09-18', '1', '1', '2', '12', '11', 'saasd', 0, '2019-09-18 23:50:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -184,15 +187,49 @@ CREATE TABLE `profil` (
 --
 
 INSERT INTO `profil` (`id`, `kode_cabang`, `nama_cabang`, `alamat`, `alamat2`, `kota`, `kodepos`, `no_telp`, `no_hp`, `chief`, `logo`) VALUES
-(1, '384', 'Kartonyono', 'jl. mulawarman 11', 'RT 01 RW 12', 'Ngawi', '53456', '02414752737', '08245465637', 'Latip', '12092019095608photo.jpg'),
-(2, '314', 'Puncak', 'jl. Kedondong raya no. 35', 'RT 01 RW 02', 'Bogor', '53451', '02414752123', '08245465621', 'So Lee Kin', '12092019135842images.jpeg.jpg'),
-(3, '218', 'Sri Kuncoro', 'mberok street', 'rt 6 rw 9', '', '3645', '021654322123', '087665543877', 'Kuncoro', '1209201915470920161213_083742.jpg'),
-(4, '502', 'Watu Karang', 'jl. genuksari atas no. 03', 'rt 00 rw 00', '', '53423', '021645544321', '089983624111', 'Rak Jendral', '13092019100156677eb-ibm370.jpg'),
-(5, '348', 'gdjsf', 'jgerh', 'hgsigh', '', '2341', '95023058', '3584068', 'hbfbkgbj', '130920191006242018-01-04.png'),
-(6, '3572', 'fhkduhg', 'ihsguhero', 'jdhgehg', '', 'jfdhi', '294889325', '4629842384', 'dhufiguehgshgo', '13092019100919futuristic_computer.jpg'),
-(7, '384', 'jdifjks', 'jwefjd', 'dsfsf', 'Timika', '6987d', 'dskjfoj', 'fdsjflds', 'fnldsknf', '6c1ca0daf3765a671775c0e83825a928.jpg'),
-(8, '384', 'Kartonyono', 'jl. mulawarman 11', 'RT 01 RW 12', 'Ngawi', '53456', '02414752737', '08245465637', 'Latip', '1309201910543180120-3.jpg'),
-(9, '348', 'bogor', 'jl. mulawarman 11', 'hgsigh', 'Bogor', '53423', '02414752123', '089983624111', 'So Lee Kin', '20180209_085109.jpg');
+(1, '384', 'Kartonyono', 'jl. mulawarman 11', 'RT 01 RW 12', 'Ngawi', '53456', '02414752737', '08245465637', 'Latip', '12092019095608photo.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `purchase_order`
+--
+
+CREATE TABLE `purchase_order` (
+  `kode` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `kode_supplier` varchar(255) NOT NULL,
+  `nama_supplier` varchar(255) NOT NULL,
+  `alamat_supplier` varchar(255) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `kota` varchar(255) NOT NULL,
+  `kodepos` varchar(255) NOT NULL,
+  `telepon` varchar(255) NOT NULL,
+  `handphone` varchar(255) NOT NULL,
+  `dpp` varchar(255) NOT NULL,
+  `tipe_ppn` varchar(2) DEFAULT NULL,
+  `tipe_ppn_input` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `purchase_order_item`
+--
+
+CREATE TABLE `purchase_order_item` (
+  `kode_po` varchar(255) NOT NULL,
+  `barcode_inventory` varchar(255) NOT NULL,
+  `kode_item_supplier` varchar(255) DEFAULT NULL,
+  `nama_inventory` varchar(255) NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `harga_satuan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -237,8 +274,24 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `fax`, `handphone`, `contact_name`, `email`, `kredit`, `top`, `pkp`, `created_at`, `updated_at`) VALUES
-('asodk ', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Semarang', '50246', '222', '1', '2222', 'Hanif', 'hanifsetyananda17@gmail.com', 'wadad', '121313', 'Y', '2019-09-20 17:19:02', '2019-09-20 21:46:08'),
-('CST-002', 'Nanda', 'Jl. Klipang Raya 2002', 'Semarang', '50003', '08959904423', '7790', 'Gtau', 'Nanda Reynaldi', 'nanda.reynaldi@gmail.com', '58882', '99992', 'Y', '2019-09-20 21:47:28', NULL);
+('CST-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Semarang', '50246', '222', '1', '2222', 'Hanif', 'hanifsetyananda17@gmail.com', 'wadad', '121313', 'Y', '2019-09-20 17:19:02', '2019-09-21 04:42:32'),
+('CST-003', 'Nanda', 'Jl. Klipang Raya 2002', 'Semarang', '5003', '08959904423', '7790', 'Gtau', 'Nanda Reynaldi', 'nanda.reynaldi@gmail.com', '58882', '99992', 'Y', '2019-09-20 21:47:28', '2019-09-21 09:02:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier_saldo`
+--
+
+CREATE TABLE `supplier_saldo` (
+  `id` int(11) NOT NULL,
+  `kode_supplier` varchar(255) NOT NULL,
+  `nama_supplier` varchar(255) NOT NULL,
+  `saldo_awal` varchar(255) NOT NULL,
+  `saldo_jalan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -292,10 +345,22 @@ ALTER TABLE `profil`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `purchase_order`
+--
+ALTER TABLE `purchase_order`
+  ADD PRIMARY KEY (`kode`);
+
+--
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`kode`);
+
+--
+-- Indexes for table `supplier_saldo`
+--
+ALTER TABLE `supplier_saldo`
+  ADD KEY `id` (`id`);
 
 --
 -- Indexes for table `tipe_barang`
@@ -311,7 +376,7 @@ ALTER TABLE `tipe_barang`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `pelanggan`
@@ -324,6 +389,12 @@ ALTER TABLE `pelanggan`
 --
 ALTER TABLE `profil`
   MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `supplier_saldo`
+--
+ALTER TABLE `supplier_saldo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tipe_barang`
@@ -340,7 +411,7 @@ COMMIT;
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 21, 2019 at 12:00 AM
+-- Generation Time: Sep 24, 2019 at 09:20 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.1.30
 
@@ -412,6 +483,7 @@ CREATE TABLE `inventory` (
   `harga_jual1` varchar(255) NOT NULL,
   `harga_jual2` varchar(255) NOT NULL,
   `harga_jual3` varchar(255) NOT NULL,
+  `quantity` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -420,23 +492,24 @@ CREATE TABLE `inventory` (
 -- Dumping data for table `inventory`
 --
 
-INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_barang`, `harga_jual1`, `harga_jual2`, `harga_jual3`, `created_at`, `update_at`) VALUES
-(16, '1', '1', '1', '1', '12', '12', '1', '2019-09-17 05:42:26', '2019-09-18 23:50:30'),
-(17, '2', '2', '2', '2', '2', '2', '2', '2019-09-17 05:42:35', NULL),
-(18, '3', '3', '3', '3', '3', '3', '3', '2019-09-17 05:42:41', NULL),
-(19, '4', '4', '4', '4', '4', '4', '4', '2019-09-17 05:42:47', NULL),
-(20, '5', '5', '5', '1', '5', '5', '5', '2019-09-17 05:42:53', NULL),
-(21, '6', '6', '6', '3', '6', '6', '6', '2019-09-17 05:43:01', NULL),
-(22, '7', '7', '7', '4', '7', '7', '7', '2019-09-17 05:43:09', NULL),
-(23, '8', '8', '8', '4', '8', '8', '8', '2019-09-17 05:43:17', NULL),
-(24, '9', '9', '9', '3', '9', '9', '9', '2019-09-17 05:43:24', NULL),
-(25, '10', '10', '10', '2', '10', '10', '10', '2019-09-17 05:43:35', NULL),
-(26, '11', '11', '11', '2', '11', '11', '11', '2019-09-17 05:43:43', NULL),
-(27, '12', '12', '12', '3', '12', '12', '12', '2019-09-17 05:43:50', NULL),
-(28, '13', '13', '13', '2', '13', '13', '13', '2019-09-17 05:43:59', NULL),
-(29, '14', '14', '14', '1', '14', '14', '14', '2019-09-17 05:44:05', NULL),
-(30, '15', '15', '15', '4', '15', '15', '15', '2019-09-17 05:44:15', NULL),
-(31, '16', '16', '16', '3', '16', '16', '16', '2019-09-17 05:44:26', NULL);
+INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_barang`, `harga_jual1`, `harga_jual2`, `harga_jual3`, `quantity`, `created_at`, `update_at`) VALUES
+(16, '1', '1', '1', '1', '12', '12', '1', NULL, '2019-09-17 05:42:26', '2019-09-18 23:50:30'),
+(17, '2', '2', '2', '2', '2', '2', '2', NULL, '2019-09-17 05:42:35', NULL),
+(18, '3', '3', '3', '3', '3', '3', '3', NULL, '2019-09-17 05:42:41', NULL),
+(19, '4', '4', '4', '4', '4', '4', '4', NULL, '2019-09-17 05:42:47', NULL),
+(20, '5', '5', '5', '1', '5', '5', '5', NULL, '2019-09-17 05:42:53', NULL),
+(21, '6', '6', '6', '3', '6', '6', '6', NULL, '2019-09-17 05:43:01', NULL),
+(22, '7', '7', '7', '4', '7', '7', '7', NULL, '2019-09-17 05:43:09', NULL),
+(23, '8', '8', '8', '4', '8', '8', '8', NULL, '2019-09-17 05:43:17', NULL),
+(24, '9', '9', '9', '3', '9', '9', '9', NULL, '2019-09-17 05:43:24', NULL),
+(25, '10', '10', '10', '2', '10', '10', '10', NULL, '2019-09-17 05:43:35', NULL),
+(26, '11', '11', '11', '2', '11', '11', '11', NULL, '2019-09-17 05:43:43', NULL),
+(27, '12', '12', '12', '3', '12', '12', '12', NULL, '2019-09-17 05:43:50', NULL),
+(28, '13', '13', '13', '2', '13', '13', '13', NULL, '2019-09-17 05:43:59', NULL),
+(29, '14', '14', '14', '1', '14', '14', '14', NULL, '2019-09-17 05:44:05', NULL),
+(30, '15', '15', '15', '4', '15', '15', '15', NULL, '2019-09-17 05:44:15', NULL),
+(31, '16', '16', '16', '3', '16', '16', '16', NULL, '2019-09-17 05:44:26', NULL),
+(32, '1', '', '', '1', '', '', '', NULL, '2019-09-21 08:47:41', NULL);
 
 -- --------------------------------------------------------
 
@@ -479,6 +552,7 @@ CREATE TABLE `pengajuan_perubahan_harga` (
   `harga_jual_baru` varchar(255) NOT NULL,
   `quantity` varchar(255) NOT NULL,
   `keterangan` text NOT NULL,
+  `approved` int(1) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -487,14 +561,14 @@ CREATE TABLE `pengajuan_perubahan_harga` (
 -- Dumping data for table `pengajuan_perubahan_harga`
 --
 
-INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tanggal`, `tipe_customer`, `barcode_inventory`, `harga_jual_lama`, `harga_jual_baru`, `quantity`, `keterangan`, `created_at`, `updated_at`) VALUES
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:08', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:08', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:08', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:09', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:09', NULL),
-('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', '2019-09-18 23:50:09', NULL),
-('PH-002', '2019-09-18', '1', '1', '2', '12', '11', 'saasd', '2019-09-18 23:50:30', NULL);
+INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tanggal`, `tipe_customer`, `barcode_inventory`, `harga_jual_lama`, `harga_jual_baru`, `quantity`, `keterangan`, `approved`, `created_at`, `updated_at`) VALUES
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:08', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:08', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:08', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:09', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:09', NULL),
+('PH-001', '2019-09-25', '1', '1', '2', '12', '1', 'awdad', 0, '2019-09-18 23:50:09', NULL),
+('PH-002', '2019-09-18', '1', '1', '2', '12', '11', 'saasd', 0, '2019-09-18 23:50:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -521,15 +595,49 @@ CREATE TABLE `profil` (
 --
 
 INSERT INTO `profil` (`id`, `kode_cabang`, `nama_cabang`, `alamat`, `alamat2`, `kota`, `kodepos`, `no_telp`, `no_hp`, `chief`, `logo`) VALUES
-(1, '384', 'Kartonyono', 'jl. mulawarman 11', 'RT 01 RW 12', 'Ngawi', '53456', '02414752737', '08245465637', 'Latip', '12092019095608photo.jpg'),
-(2, '314', 'Puncak', 'jl. Kedondong raya no. 35', 'RT 01 RW 02', 'Bogor', '53451', '02414752123', '08245465621', 'So Lee Kin', '12092019135842images.jpeg.jpg'),
-(3, '218', 'Sri Kuncoro', 'mberok street', 'rt 6 rw 9', '', '3645', '021654322123', '087665543877', 'Kuncoro', '1209201915470920161213_083742.jpg'),
-(4, '502', 'Watu Karang', 'jl. genuksari atas no. 03', 'rt 00 rw 00', '', '53423', '021645544321', '089983624111', 'Rak Jendral', '13092019100156677eb-ibm370.jpg'),
-(5, '348', 'gdjsf', 'jgerh', 'hgsigh', '', '2341', '95023058', '3584068', 'hbfbkgbj', '130920191006242018-01-04.png'),
-(6, '3572', 'fhkduhg', 'ihsguhero', 'jdhgehg', '', 'jfdhi', '294889325', '4629842384', 'dhufiguehgshgo', '13092019100919futuristic_computer.jpg'),
-(7, '384', 'jdifjks', 'jwefjd', 'dsfsf', 'Timika', '6987d', 'dskjfoj', 'fdsjflds', 'fnldsknf', '6c1ca0daf3765a671775c0e83825a928.jpg'),
-(8, '384', 'Kartonyono', 'jl. mulawarman 11', 'RT 01 RW 12', 'Ngawi', '53456', '02414752737', '08245465637', 'Latip', '1309201910543180120-3.jpg'),
-(9, '348', 'bogor', 'jl. mulawarman 11', 'hgsigh', 'Bogor', '53423', '02414752123', '089983624111', 'So Lee Kin', '20180209_085109.jpg');
+(1, '384', 'Kartonyono', 'jl. mulawarman 11', 'RT 01 RW 12', 'Ngawi', '53456', '02414752737', '08245465637', 'Latip', '12092019095608photo.jpg');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `purchase_order`
+--
+
+CREATE TABLE `purchase_order` (
+  `kode` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `kode_supplier` varchar(255) NOT NULL,
+  `nama_supplier` varchar(255) NOT NULL,
+  `alamat_supplier` varchar(255) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `alamat` varchar(255) NOT NULL,
+  `kota` varchar(255) NOT NULL,
+  `kodepos` varchar(255) NOT NULL,
+  `telepon` varchar(255) NOT NULL,
+  `handphone` varchar(255) NOT NULL,
+  `dpp` varchar(255) NOT NULL,
+  `tipe_ppn` varchar(2) DEFAULT NULL,
+  `tipe_ppn_input` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `purchase_order_item`
+--
+
+CREATE TABLE `purchase_order_item` (
+  `kode_po` varchar(255) NOT NULL,
+  `barcode_inventory` varchar(255) NOT NULL,
+  `kode_item_supplier` varchar(255) DEFAULT NULL,
+  `nama_inventory` varchar(255) NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `harga_satuan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -574,8 +682,24 @@ CREATE TABLE `supplier` (
 --
 
 INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `fax`, `handphone`, `contact_name`, `email`, `kredit`, `top`, `pkp`, `created_at`, `updated_at`) VALUES
-('asodk ', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Semarang', '50246', '222', '1', '2222', 'Hanif', 'hanifsetyananda17@gmail.com', 'wadad', '121313', 'Y', '2019-09-20 17:19:02', '2019-09-20 21:46:08'),
-('CST-002', 'Nanda', 'Jl. Klipang Raya 2002', 'Semarang', '50003', '08959904423', '7790', 'Gtau', 'Nanda Reynaldi', 'nanda.reynaldi@gmail.com', '58882', '99992', 'Y', '2019-09-20 21:47:28', NULL);
+('CST-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Semarang', '50246', '222', '1', '2222', 'Hanif', 'hanifsetyananda17@gmail.com', 'wadad', '121313', 'Y', '2019-09-20 17:19:02', '2019-09-21 04:42:32'),
+('CST-003', 'Nanda', 'Jl. Klipang Raya 2002', 'Semarang', '5003', '08959904423', '7790', 'Gtau', 'Nanda Reynaldi', 'nanda.reynaldi@gmail.com', '58882', '99992', 'Y', '2019-09-20 21:47:28', '2019-09-21 09:02:30');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `supplier_saldo`
+--
+
+CREATE TABLE `supplier_saldo` (
+  `id` int(11) NOT NULL,
+  `kode_supplier` varchar(255) NOT NULL,
+  `nama_supplier` varchar(255) NOT NULL,
+  `saldo_awal` varchar(255) NOT NULL,
+  `saldo_jalan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -629,10 +753,22 @@ ALTER TABLE `profil`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `purchase_order`
+--
+ALTER TABLE `purchase_order`
+  ADD PRIMARY KEY (`kode`);
+
+--
 -- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`kode`);
+
+--
+-- Indexes for table `supplier_saldo`
+--
+ALTER TABLE `supplier_saldo`
+  ADD KEY `id` (`id`);
 
 --
 -- Indexes for table `tipe_barang`
@@ -648,7 +784,7 @@ ALTER TABLE `tipe_barang`
 -- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- AUTO_INCREMENT for table `pelanggan`
@@ -661,6 +797,12 @@ ALTER TABLE `pelanggan`
 --
 ALTER TABLE `profil`
   MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
+--
+-- AUTO_INCREMENT for table `supplier_saldo`
+--
+ALTER TABLE `supplier_saldo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tipe_barang`
