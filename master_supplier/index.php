@@ -235,23 +235,24 @@ include('../templates/header.php') ?>
                           </div>
                         </div>
                       </div>
-                    <?php $i++;
-                    endforeach; ?>
-
-                    <!-- /.box-footer -->
-                    </div>
-                    <!-- /.box-body -->
                   </form>
+
+                <?php $i++;
+                endforeach; ?>
+
+                <!-- /.box-footer -->
                 </div>
+                <!-- /.box-body -->
               </div>
             </div>
-          </table>
         </div>
-        <!-- /.box-body -->
+        </table>
       </div>
-      <!-- /.box -->
+      <!-- /.box-body -->
     </div>
-    <!-- /.col -->
+    <!-- /.box -->
+</div>
+<!-- /.col -->
 </div>
 <!-- /.row -->
 </section>

@@ -125,7 +125,7 @@
                     <td><?php echo $row["harga_jual2"]; ?></td>
                     <td><?php echo $row["harga_jual3"]; ?></td>
                     <td>
-                      <a href="ubah.php?id=<?php echo $row["id"]; ?>">Ubah</a> |
+                      <a href="./ubah.php?id=<?php echo $row["id"]; ?>">Ubah</a> |
                       <a href="hapus.php?id=<?php echo $row["id"]; ?>">Hapus</a>
                     </td>
                   </tr>

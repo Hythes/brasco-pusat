@@ -295,6 +295,7 @@ $('#barcode').on('click', function () {
 
 
 $('#buat_po').on('click', function () {
+    dataSimpan.buat_po = true;
     $.post('purchase_order/ajax.php', { request: 'data_inventory' }, function (data) {
         data = JSON.parse(data);
         $('#nama').val(data.nama_cabang);
@@ -304,4 +305,67 @@ $('#buat_po').on('click', function () {
         $('#telepon').val(data.no_telp);
         $('#handphone').val(data.no_hp);
     })
+    $.post('purchase_order/ajax.php', { request: 'kode_po' }, function (data) {
+        data = JSON.parse(data);
+        $('#kode').val(data);
+    })
 })
+
+$('#cari_supplier_po').on('click', function () {
+    if ($('#kode_supplier').val() == '') {
+        alert('Tolong diisi Kode Suppliernya');
+        return;
+    }
+    $.post('purchase_order/ajax.php', { request: 'data_supplier', data: $('#kode_supplier').val() }, function (data) {
+        data = JSON.parse(data);
+        $('#nama_supplier').val(data.nama);
+        $('#alamat_supplier').val(data.alamat);
+    })
+})
+
+$('#tambah_data_po').on('click', function () {
+    var barcode = $('#barcode_po').val();
+    var kode_item_supplier = $('#kode_item_supplier').val();
+    var nama_item = $('#nama_item').val();
+    var quantity = $('#quantity').val();
+    var harga = $('#harga').val();
+    if (barcode == '' || kode_item_supplier == '' || nama_item == '' || quantity == '' || harga == '') {
+        alert('Tolong diisi semua');
+        return;
+    }
+    simpanArray.push({
+        'barcode': barcode,
+        'kode_item_supplier': kode_item_supplier,
+        'nama_item': nama_item,
+        'quantity': quantity,
+        'harga': harga
+    })
+    $('#table_po').append(
+        '<tr id="tr_po_' + dataSimpan.i + '">' +
+        '<td>' + dataSimpan.i + '</td>' +
+        '<td>' + barcode + '</td>' +
+        '<td>' + kode_item_supplier + '</td>' +
+        '<td>' + nama_item + '</td>' +
+        '<td>' + quantity + '</td>' +
+        '<td>' + dataSimpan.satuan + '</td>' +
+        '<td>' + harga + '</td>' +
+        '<td>' + parseInt(quantity) * parseInt(harga) + '</td>' +
+        '<td>' + '<button type="button" onclick="po_hapus(' + dataSimpan.i + ')" class="btn btn-danger"> Hapus</button>' + '</td>' +
+        '</tr>'
+    );
+    dataSimpan.i++;
+    dataSimpan.total += parseInt(quantity) * parseInt(harga);
+    $('#total').val(dataSimpan.total);
+})
+function po_hapus(id) {
+    $('#tr_po_' + id).remove();
+    delete simpanArray[--id];
+}
+$('#barcode_po').keyup(delayTimes(function () {
+    var barcode = $('#barcode_po').val();
+    $.post('purchase_order/ajax.php', { request: 'cari_barcode', data: barcode }, function (data) {
+        data = JSON.parse(data);
+        $('#nama_item').val(data.nama_barang);
+        dataSimpan.satuan = data.satuan;
+    })
+}, 500));

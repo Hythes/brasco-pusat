@@ -21,19 +21,19 @@ function query($query)
  *	@param $id ID yang akan diganti
  * @return $id ID yang sudah diganti
  */
-function tambahId($id)
+function tambahId($id, $prefix)
 {
   $id = intval(substr($id, -3));
   if ($id < 9) {
-    $id = 'PH-00' . ++$id;
+    $id = $prefix . '-00' . ++$id;
   } else if ($id == 9) {
-    $id = 'PH-010';
+    $id = $prefix . '-010';
   } else if ($id < 99) {
-    $id = 'PH-0' . ++$id;
+    $id = $prefix . '-0' . ++$id;
   } else if ($id == 99) {
-    $id = 'PH-100';
+    $id = $prefix . '-100';
   } else {
-    $id = 'PH-' . ++$id;
+    $id = $prefix . '-' . ++$id;
   }
   return $id;
 }
