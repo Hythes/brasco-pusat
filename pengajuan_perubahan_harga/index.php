@@ -6,7 +6,7 @@ $query = query('SELECT * FROM pengajuan_perubahan_harga ORDER BY nomor_pengajuan
 if (!isset($query[0]['nomor_pengajuan'])) {
   $id = 'PH-001';
 } else {
-  $id = tambahId(strval($query[0]['nomor_pengajuan']));
+  $id = tambahId(strval($query[0]['nomor_pengajuan']), 'PH');
 }
 
 ?>
