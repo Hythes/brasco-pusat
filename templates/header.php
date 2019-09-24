@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <base href="http://localhost/brasco-pusat/">
+  <base href="http://localhost/brasco/">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title id="title"><?= $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->
