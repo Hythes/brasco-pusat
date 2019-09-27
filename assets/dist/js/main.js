@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    var
     if (active == 'header_profil') {
         $('#header_profil').addClass('active');
     }
