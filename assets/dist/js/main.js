@@ -1,5 +1,4 @@
 $(document).ready(function () {
-    var
     if (active == 'header_profil') {
         $('#header_profil').addClass('active');
     }
@@ -22,10 +21,10 @@ $(document).ready(function () {
         if (active_2 == 'header_inventory_edit') {
             $('#header_inventory_edit').addClass('active');
         }
-        if(active_2 == 'header_satuan_master'){
+        if (active_2 == 'header_satuan_master') {
             $('#header_satuan_master').addClass('active');
         }
-        if(active_2 == 'header_type_barang'){
+        if (active_2 == 'header_type_barang') {
             $('#header_type_barang').addClass('active');
         }
     }
@@ -363,6 +362,7 @@ $('#tambah_data_po').on('click', function () {
     dataSimpan.i++;
     dataSimpan.total += parseInt(quantity) * parseInt(harga);
     $('#total').val(dataSimpan.total);
+    $('#data_po').val(JSON.stringify(simpanArray));
 })
 function po_hapus(id) {
     $('#tr_po_' + id).remove();
