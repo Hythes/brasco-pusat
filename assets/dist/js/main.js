@@ -376,3 +376,20 @@ $('#barcode_po').keyup(delayTimes(function () {
         dataSimpan.satuan = data.satuan;
     })
 }, 500));
+
+//barcode quantity harga_jual keterangan
+
+$('#cetak_barcode_input').on('click', function () {
+    $('#table').append(
+        '<tr id="tr_po_' + i + '">' +
+        '<td>' + i + '</td>' +
+        '<td>' + $('#barcode').val() + '</td>' +
+        '<td>' + $('#quantity').val() + '</td>' +
+        '<td>' + $('#harga_jual').val() + '</td>' +
+        '<td>' + $('#keterangan').val() + '</td>' +
+        '<td>' + '<button type="button" onclick="po_hapus(' + i + ')" class="btn btn-danger"> Hapus</button>' + '</td>' +
+        '</tr>'
+
+    );
+    i++;
+})
