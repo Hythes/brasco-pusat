@@ -167,7 +167,7 @@ $title = 'Purchase Order';
                                 <input type="text" name="keterangan" class="form-control" placeholder="KETERANGAN" style="width: 70%;">
                             </div>
                             <div class="form-group">
-                                <input type="submit" name="" class="btn btn-primary" value="Label Barcode">
+                                <a href="purchase_order/cetak_label_barcode.php" class="btn btn-primary">Label Barcode</a>
                             </div>
                         </div>
                         <div class="col-md-6">

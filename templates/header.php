@@ -435,9 +435,10 @@
               <li id="header_purchase_order">
                 <a href="purchase_order"><i class="fa fa-circle-o"></i>Purchase Order</a>
               </li>
-              <!-- <li id="header_purchase_cetak">
-                <a href="cetakLabelBarcode.php"><i class="fa fa-circle-o"></i> <span>Cetak Label Barcode</span></a>
+              <li id="header_purchase_cetak">
+                <a href="purchase_order/cetak_label_barcode.php"><i class="fa fa-circle-o"></i> <span>Cetak Label Barcode</span></a>
               </li>
+              <!--
               <li id="header_purchase_data">
                 <a href="menuDataPO.php"><i class="fa fa-circle-o"></i> <span>Data Purchase Order</span></a>
               </li>
