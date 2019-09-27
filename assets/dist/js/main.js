@@ -21,6 +21,12 @@ $(document).ready(function () {
         if (active_2 == 'header_inventory_edit') {
             $('#header_inventory_edit').addClass('active');
         }
+        if(active_2 == 'header_satuan_master'){
+            $('#header_satuan_master').addClass('active');
+        }
+        if(active_2 == 'header_type_barang'){
+            $('#header_type_barang').addClass('active');
+        }
     }
 
     if (active == 'header_stock') {
