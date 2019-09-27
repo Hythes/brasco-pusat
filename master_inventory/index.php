@@ -50,33 +50,54 @@
         <div class="box-body">
           <h1>MASTER INVENTORY</h1>
           <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
-            <p class="text-danger">
-              Informasi! <br>
-              Pastikan Barcode sudah dibuat dan disetujui <br>
-              Harap Cek Duplikasi Barcode sebelum lanjut ke langkah berikutnya
-            </p>
+          <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
+              <div class="alert alert-danger alert-dismissible">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+                <h4><i class="icon fa fa-info"></i> Informasi </h4>
+                Pastikan Barcode sudah dibuat dan disetujui <br>
+                Harap Cek Duplikasi Barcode sebelum lanjut ke langkah berikutnya
+              </div>
+            </div>
           </div>
           <form class="inline-form" action="" method="post">
-            <div class="form-group">
-              <input class="mr-sm-2 " type="text" id="isi_barcode" name="barcode" placeholder="Barcode">
-              <button type="button" class="btn btn-danger mr-sm-2" id="barcode">Cek Duplikasi</button>
-              <input class="mr-sm-2" type="text" name="nama_barang" placeholder="Nama Barang">
-              <input class="mr-sm-2" type="text" name="satuan" placeholder="Satuan">
-              <select name="id_tipe_barang" style="width: auto" class="custom-select">
-                <?php
-                $datat = cariBarang();
-                foreach ($datat as $datas) :
-                  ?>
-                  <option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
-                <?php endforeach; ?>
-              </select>
-            </div>
-            <div class="form-group ">
-              <input class="mr-sm-2" type="text" name="harga_jual1" placeholder="Harga Jual 1">
-              <input class="mr-sm-2" type="text" name="harga_jual2" placeholder="Harga Jual 2">
-              <input class="mr-sm-2" type="text" name="harga_jual3" placeholder="Harga Jual 3">
-            </div>
-            <button type="submit" class="btn btn-light" name="submit">Add</button>
+            <div class="box-body">
+                <div class="form-group">
+                  <div class="col-sm-2" style="padding: 5px;">
+                    <input type="text"  id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
+                  </div>
+                  <div class="col-sm-2" style="padding: 5px;">
+                    <button type="submit" class="btn btn-danger" id="barcode">Cek Duplikasi</button>
+                  </div>
+                  <div class="col-sm-4" style="padding: 5px;">
+                    <input type="text" name="nama_barang" class="form-control" placeholder="Nama Barang . . ." required>
+                  </div>
+                  <div class="col-sm-2" style="padding: 5px;">
+                    <input type="text" class="form-control" name="satuan" placeholder="Satuan . . ." required>
+                  </div>
+                  <div class="col-sm-2" style="padding: 5px;">
+                    <select class="form-control" name="id_tipe_barang">
+                      <?php
+                      $datat = cariBarang();
+                      foreach ($datat as $datas) :
+                        ?>
+                        <option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
+                      <?php endforeach; ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="col-sm-3" style="padding: 5px;">
+                    <input type="text" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
+                  </div>
+                  <div class="col-sm-3" style="padding: 5px;">
+                    <input type="text" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
+                  </div>
+                  <div class="col-sm-3" style="padding: 5px;">
+                    <input type="text" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
+                  </div>
+                </div>
+                <button type="submit" class="btn btn-info pull-right" name="submit">Tambah</button>
+              </div>
           </form>
           <div style="width: 100%">
             <div style="border-top: solid; width: 100%; margin-top: 20px">
@@ -88,8 +109,8 @@
             <button type="button" class="btn btn-light">PDF</button>
             <button type="button" class="btn btn-light">Print</button>
           </div>
-          <div class="table-responsive" style="margin-top: 20px">
-            <table class="table table-bordered table-striped">
+          <div class="table-responsive"  style="margin-top: 20px">
+            <table id="example1" class="table table-bordered table-striped">
               <thead class="thead-dark" align="center">
                 <tr>
                   <th>No</th>
@@ -126,7 +147,7 @@
                     <td><?php echo $row["harga_jual3"]; ?></td>
                     <td>
                       <a href="./ubah.php?id=<?php echo $row["id"]; ?>">Ubah</a> |
-                      <a href="hapus.php?id=<?php echo $row["id"]; ?>">Hapus</a>
+                      <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>">Hapus</a>
                     </td>
                   </tr>
                   <?php $i++ ?>
