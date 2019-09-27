@@ -48,7 +48,7 @@ if (isset($_POST['show'])) {
                 <div class="container">
                     <!-- search kode suplier -->
                     <div class="row">
-                        <div class="col-sm-6" style="border: 1px solid black;">
+                        <div class="col-sm-6">
                             <form style="margin-top: 20px;" action="" method="POST">
                                 <div class="form-group">
                                     <input type="text" name="kode1" placeholder="KODE SUPLIER..." style="width: 40%;">
