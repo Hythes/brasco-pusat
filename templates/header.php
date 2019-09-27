@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="utf-8">
-  <base href="http://localhost/brasco/">
+  <base href="http://localhost/brasco-pusat/">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title id="title"><?= $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->
@@ -364,6 +364,8 @@
             </a>
             <ul class="treeview-menu">
               <li id="header_inventory_master"><a href="master_inventory"><i class="fa fa-circle-o"></i> Master Inventori</a></li>
+              <li id="header_satuan_master"><a href="master_inventory/master_satuan.php"><i class="fa fa-circle-o"></i> Master Satuan</a></li>
+              <li id="header_type_barang"><a href="master_inventory/type_barang.php"><i class="fa fa-circle-o"></i>Type Barang</a></li>
               <!-- <li id="header_inventory_search"><a href="master_inventory/"><i class="fa fa-circle-o"></i>Search Data Inventory</a></li> -->
               <!-- <li id="header_inventory_edit"><a href="master_inventory/ubah.php"><i class="fa fa-circle-o"></i>Edit Data Inventory</a></li> -->
             </ul>
