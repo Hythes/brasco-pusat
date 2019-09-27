@@ -1,16 +1,16 @@
 <?php
 if (isset($_POST['submit'])) {
+    require '../env.php';
     extract($_POST);
-    print_r($_POST);
-    $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input)
-            VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon') ";
+    $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input) VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks'); ";
     $data_po = json_decode($data_po);
     foreach ($data_po as $data) {
         $data = (array) $data;
         extract($data);
-        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga')";
+        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga'); ";
     }
-    exit();
+    $query = mysqli_multi_query($conn, $sql);
+    lanjutkan($query, "Dibuat");
 }
 $title = 'Purchase Order';
 ?>
@@ -118,7 +118,7 @@ $title = 'Purchase Order';
                 <div class="form bawah">
                     <div class="row">
                         <div class="col-xs-2">
-                            <input type="number" name="barcode" id="barcode_po" class="form-control" placeholder="BARCODE">
+                            <input type="text" name="barcode" id="barcode_po" class="form-control" placeholder="BARCODE">
                         </div>
                         <div class="col-xs-2">
                             <input type="number" name="kode_item_supplier" id="kode_item_supplier" class="form-control" placeholder="KODE ITEM SUPPLI">
@@ -181,15 +181,15 @@ $title = 'Purchase Order';
                                 <label class="col-sm-4 control-label">Tipe PPN</label>
                                 <div class="col-sm-4 radio">
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios1" value="option1" checked>
+                                        <input type="radio" name="tipe_ppn" id="tipe_ppn_t" value="T" checked>
                                         T
                                     </label>
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios2" value="option2">
+                                        <input type="radio" name="tipe_ppn" id="tipe_ppn_i" value="I">
                                         I
                                     </label>
                                     <label>
-                                        <input type="radio" name="optionsRadios" id="optionsRadios3" value="option3">
+                                        <input type="radio" name="tipe_ppn" id="tipe_ppn_e" value="E">
                                         E
                                     </label>
                                 </div>
