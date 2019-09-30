@@ -1,3 +1,69 @@
+<!-- TOLONG BENERIN GAN -->
+<!-- 
+==================== YANG EROR ========================
+    -- GAK ADA
+    -- CUMA BENERIN EDIT NYA (PAS DI KLIK EDIT FORM TAMBAHNYA DI GANTI EDIT, GW GAK BISA BIKIN KEK GITU)
+
+====================== HOSHI ==========================
+ -->
+
+
+<!-- konek -->
+<?php 
+  $host = 'localhost';
+  $user = 'root';
+  $password = '';
+  $dbname = 'brasco_pusat';
+  $conn = mysqli_connect($host, $user, $password, $dbname);
+?>
+
+<!-- query -->
+<?php
+  //tambah 
+  if(isset($_POST['tambah'])){
+    $nama = $_POST['nama'];
+    $sql = "INSERT INTO satuan (satuan) VALUE ('$nama')";
+    $query = mysqli_query($conn, $sql);
+    if ($query) {
+      echo "<script>alert('Data Added')</script>";
+      echo "<script>location='master_satuan.php'</script>";
+    }
+    else{
+      echo "<script>alert('F')</script>";
+    }
+  }
+
+  // edit
+  if (isset($_POST['edit'])) {
+    $nama = $_POST['nama'];
+    // $id= $_POST['id'];
+    $edit = $conn->query("UPDATE satuan SET satuan='$nama' WHERE id='$_GET[id]'");
+    if ($edit) {
+      echo "<script>alert('Data Added')</script>";
+      // echo "<script>location='master_satuan.php'</script>";
+    }
+    else{
+      echo "<script>alert('F')</script>"; 
+    }
+  }
+
+// delete
+  if (isset($_GET['stats'])) {
+    if ($_GET['stats'] == 'delete') {
+      $delete = $conn->query("DELETE FROM satuan WHERE id='$_GET[id]'");
+      if ($delete) {
+        echo "<script>alert('Data deleted')</script>";
+        echo "<script>location='master_satuan.php'</script>";
+      }
+      else{
+        echo "<script>alert('FFF')</script>";
+      }
+    }
+  }
+
+?>
+
+
 <?php $title = "Master Satuan"; ?>
 <script>
     var active = 'header_inventory';
@@ -39,41 +105,68 @@
         <div class="box-body">
           
           <div class="form">
-          	<form action="" method="POST" class="form-horizontal">
-          		<div class="box-body">
-          			<div class="col-sm-8 pad">
-          				<div class="form-group">
-          					<label class="col-sm-3 control-label">Masukan Satuan</label>
-          					<div class="col-sm-7">
-          						<input type="text" name="" class="form-control" required="">
-          					</div>
-                    <button type="submit" class="btn btn-info">Add</button>
-          				</div>
-          				
-          			</div>
-          		</div>
-          	</form>
+            <form action="" method="POST" class="form-horizontal">
+              <div class="box-body">
+                <div class="col-sm-8 pad">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Masukan Satuan</label>
+                    <div class="col-sm-7">
+                      <input type="text" class="form-control" required="" name="nama">
+                    </div>
+                    <button type="submit" class="btn btn-info" name="tambah">Add</button>
+                  </div>
+
+                </div>
+              </div>
+            </form>
+            <?php if (isset($_GET['stats'])) : ?>
+
+              <?php if ($_GET['stats'] == 'edit') : ?>
+                <?php $k = $conn->query('SELECT * FROM satuan WHERE id="'.$_GET['id'].'"') ?>
+                <?php $ok = $k->fetch_assoc(); ?>
+                <form action="" method="POST" class="form-horizontal">
+                  <div class="box-body">
+                    <div class="col-sm-8 pad">
+                      <div class="form-group">
+                        <label class="col-sm-3 control-label">Masukan Satuan</label>
+                        <div class="col-sm-7">
+                          <input type="text" class="form-control" required="" name="nama" value="<?php echo $ok['satuan'] ?>">
+                        </div>
+                        <button type="text" class="btn btn-info" name="edit">Save</button>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              <?php endif; ?>
+            <?php endif; ?>
           </div>
 
           <div class="data-table">
           	<table id="example1" class="table table-bordered table-striped text-center">
           		<thead>
           			<tr>
+                  <th>No</th>
           				<th>Nama Satuan</th>
           				<th>Aksi</th>
           			</tr>
           		</thead>
           		<tbody>
-          			<tr>
-          				<td>Nama Satuan disini...</td>
+          			<?php $nomor =1; ?>
+                <?php 
+                $tampil = $conn->query("SELECT * FROM satuan");
+                 while ($p = $tampil->fetch_assoc()) : ?>
+                <tr>
+                  <td><?php echo $nomor; ?></td>
+          				<td><?php echo $p['satuan'] ?></td>
           				<td>
-          					<a href="#"><i class="fa fa-edit fa-lg text-primary" style="padding-left: 20px;"></i></a>
-          					<a href="#"><i class="fa fa-trash-o fa-lg text-red" style="padding-left: 20px;"></i></a>
+          					<a href="master_inventory/master_satuan.php?stats=edit&id=<?= $p['id'] ?>"><i class="fa fa-edit fa-lg text-primary" style="padding-left: 20px;"></i></a>
+          					<a href="master_inventory/master_satuan.php?stats=delete&id=<?=$p['id']?>"  onclick="return confirm('Data akan dihapus?')"><i class="fa fa-trash-o fa-lg text-red" style="padding-left: 20px;"></i></a>
           				</td>
           			</tr>
+                <?php $nomor++; ?>
+              <?php endwhile; ?>
           		</tbody>
           	</table>
-
 
         </div>
         <!-- /.box-body -->
