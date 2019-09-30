@@ -407,6 +407,8 @@ function po_hapus(id) {
     console.log(dataSimpan.total);
     $('#total').val(dataSimpan.total);
     delete simpanArray[id];
+    $('#data_po').val(JSON.stringify(simpanArray));
+
 
 }
 $('#barcode_po').keyup(delayTimes(function () {
