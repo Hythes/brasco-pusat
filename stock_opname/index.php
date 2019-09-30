@@ -67,20 +67,30 @@ if (isset($_POST['simpan'])) {
       </div>
       <div class="box-body">
         <div class="container">
-          <div class="row" style="border: 1px solid #000; width: 1066px;height: 100px;padding-top: 30px;padding-left: 30px">
-            <form action="" method="post">
+          <div class="">
+            <form action="" method="post" class="form-horizontal">
+              <div class="box-body">
               <div class="form-group">
-                <label>Barcode</label>
+                <!-- <label>Barcode</label>
                 <input type="text" name="barcode1">
                 <label>s/d</label>
-                <input type="text" name="barcode2">
-                <button class="btn btn-primary" type="submit" name="cariBarcode">Search</button>
+                <input type="text" name="barcode2"> -->
+                <label for="" class="col-xs-1 control-label">Barcode</label>
+                <div class="col-xs-3">
+                  <input type="text" class="form-control" name="barcode1" required>
+                </div>
+                <label for="" class="col-xs-1 control-label" >s/d</label>
+                <div class="col-xs-3">
+                  <input type="text" class="form-control" name="barcode2" required>
+                </div>
+                <button class="btn btn-info" type="submit" name="cariBarcode">Search</button>
+              </div>
               </div>
             </form>
           </div>
         </div>
         <div class="table-responsive">
-          <table class=" table table-bordered table-striped"">
+          <table class=" table table-bordered table-striped" id="example1">
             <thead>
               <tr>
                 <th>No.</th>
