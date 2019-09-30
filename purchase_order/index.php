@@ -1,7 +1,5 @@
 <?php
 require '../env.php';
-
-
 if (isset($_POST['submit'])) {
     extract($_POST);
     $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga,keterangan) VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga','$keterangan'); ";

@@ -3,17 +3,16 @@ require '../env.php';
 
 if (isset($_POST['submit'])) {
     extract($_POST);
-    print_r($_POST);
-    exit();
-    // $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga) VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga'); ";
-    // $data_po = json_decode($data_po);
-    // foreach ($data_po as $data) {
-    //     $data = (array) $data;
-    //     extract($data);
-    //     $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga'); ";
-    // }
-    // $query = mysqli_multi_query($conn, $sql);
-    // lanjutkan($query, "Dibuat");
+    $sql = "UPDATE purchase_order SET kode = '$kode',tanggal = '$tanggal',kode_supplier ='$kode_supplier',nama_supplier = '$nama_supplier',alamat_supplier = '$alamat_supplier',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kodepos',telepon = '$telepon',handphone = '$handphone',dpp ='$dpp',tipe_ppn = '$tipe_ppn',tipe_ppn_input = '$tipe_ppn_teks',total_harga = '$total_harga'  WHERE kode = '$kode'; ";
+    $sql .= "DELETE FROM purchase_order_item WHERE kode_po = '$kode';";
+    $data_po = json_decode($data_po);
+    foreach ($data_po as $data) {
+        $data = (array) $data;
+        extract($data);
+        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga'); ";
+    }
+    $query = mysqli_multi_query($conn, $sql);
+    header('Location : data_purchase_order.php');
 }
 $kode = $_GET['kode'];
 $query = "SELECT * FROM purchase_order WHERE kode ='$kode'";
