@@ -130,7 +130,7 @@ include('../templates/header.php') ?>
             </div>
             <!-- /.box-body -->
           </form>
-        </div>
+        
         <div class="box-body">`
           <table id="example1" class="table table-bordered table-striped">
             <thead>
@@ -161,6 +161,11 @@ include('../templates/header.php') ?>
             <div class="modal fade" id="modal_<?= $i ?>" tabindex="-1" role="dialog" aria-hidden="true">
               <div class="modal-dialog modal-lg">
                 <div class="modal-content">
+                <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span></button>
+                  <h4>Detail</h4>
+                </div>
                   <form class="form-horizontal pad" action="" method="POST">
                     <input type="hidden" name="kode_old" value="<?= $kode ?>">
                     <div class="box-body">
@@ -207,19 +212,19 @@ include('../templates/header.php') ?>
                           </div>
                           <!-- col-xs-5 -->
                           <div class="kanan col-xs-5">
-                            <div class="form-group">
+                            <div class="form-group pad">
                               <label class="col-sm-2 control-label">Kredit</label>
                               <div class="col-sm-10">
                                 <input required type="text" class="form-control" name="kredit" value="<?= $kredit ?>" placeholder="Kredit">
                               </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group pad">
                               <label class="col-sm-2 control-label">TOP</label>
                               <div class="col-sm-10">
                                 <input required type="text" class="form-control" value="<?= $top ?>" name="top" placeholder="TOP">
                               </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group pad">
                               <label class="col-sm-2 control-label">PKP</label>
                               <div class="col-sm-10">
                                 <select class="form-control" name="pkp">
@@ -247,6 +252,7 @@ include('../templates/header.php') ?>
             </div>
         </div>
         </table>
+        </div>
       </div>
       <!-- /.box-body -->
     </div>
@@ -256,8 +262,8 @@ include('../templates/header.php') ?>
 </div>
 <!-- /.row -->
 </section>
+
+<?php include('../templates/footer.php') ?>
 <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
-<?php include('../templates/footer.php') ?>

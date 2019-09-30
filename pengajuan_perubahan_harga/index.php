@@ -66,11 +66,13 @@ if (!isset($query[0]['nomor_pengajuan'])) {
               <!-- select -->
               <div class="form-group">
                 <label for="tipecustomer" class="col-sm-2">Tipe Customer</label>
-                <select class="form-control-inline" id="tipecustomer_pph" name="tipe_customer" style="margin-left: 15px">
+                <div class="col-sm-2">
+                <select class="form-control" id="tipecustomer_pph" name="tipe_customer">
                   <option value="1">Customer 1</option>
                   <option value="2">Customer 2</option>
                   <option value="3">Customer 3</option>
                 </select>
+                </div>
               </div>
             </div>
         </div>
