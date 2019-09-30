@@ -10,7 +10,7 @@
       </script>
       ";
     } else {
-      echo "
+      echo "  
       <script>
         alert('Data Gagal Ditambahkan!');
         document.location.href = 'index.php';
@@ -50,7 +50,7 @@
         <div class="box-body">
           <h1>MASTER INVENTORY</h1>
           <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
-          <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
+            <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
               <div class="alert alert-danger alert-dismissible">
                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
                 <h4><i class="icon fa fa-info"></i> Informasi </h4>
@@ -61,43 +61,43 @@
           </div>
           <form class="inline-form" action="" method="post">
             <div class="box-body">
-                <div class="form-group">
-                  <div class="col-sm-2" style="padding: 5px;">
-                    <input type="text"  id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
-                  </div>
-                  <div class="col-sm-2" style="padding: 5px;">
-                    <button type="submit" class="btn btn-danger" id="barcode">Cek Duplikasi</button>
-                  </div>
-                  <div class="col-sm-4" style="padding: 5px;">
-                    <input type="text" name="nama_barang" class="form-control" placeholder="Nama Barang . . ." required>
-                  </div>
-                  <div class="col-sm-2" style="padding: 5px;">
-                    <input type="text" class="form-control" name="satuan" placeholder="Satuan . . ." required>
-                  </div>
-                  <div class="col-sm-2" style="padding: 5px;">
-                    <select class="form-control" name="id_tipe_barang">
-                      <?php
-                      $datat = cariBarang();
-                      foreach ($datat as $datas) :
-                        ?>
-                        <option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
-                      <?php endforeach; ?>
-                    </select>
-                  </div>
+              <div class="form-group">
+                <div class="col-sm-2" style="padding: 5px;">
+                  <input type="text" id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
                 </div>
-                <div class="form-group">
-                  <div class="col-sm-3" style="padding: 5px;">
-                    <input type="text" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
-                  </div>
-                  <div class="col-sm-3" style="padding: 5px;">
-                    <input type="text" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
-                  </div>
-                  <div class="col-sm-3" style="padding: 5px;">
-                    <input type="text" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
-                  </div>
+                <div class="col-sm-2" style="padding: 5px;">
+                  <button type="submit" class="btn btn-danger" id="barcode">Cek Duplikasi</button>
                 </div>
-                <button type="submit" class="btn btn-info pull-right" name="submit">Tambah</button>
+                <div class="col-sm-4" style="padding: 5px;">
+                  <input type="text" name="nama_barang" class="form-control" placeholder="Nama Barang . . ." required>
+                </div>
+                <div class="col-sm-2" style="padding: 5px;">
+                  <input type="text" class="form-control" name="satuan" placeholder="Satuan . . ." required>
+                </div>
+                <div class="col-sm-2" style="padding: 5px;">
+                  <select class="form-control" name="id_tipe_barang">
+                    <?php
+                    $datat = cariBarang();
+                    foreach ($datat as $datas) :
+                      ?>
+                      <option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
               </div>
+              <div class="form-group">
+                <div class="col-sm-3" style="padding: 5px;">
+                  <input type="text" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
+                </div>
+                <div class="col-sm-3" style="padding: 5px;">
+                  <input type="text" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
+                </div>
+                <div class="col-sm-3" style="padding: 5px;">
+                  <input type="text" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-info pull-right" name="submit">Tambah</button>
+            </div>
           </form>
           <div style="width: 100%">
             <div style="border-top: solid; width: 100%; margin-top: 20px">
@@ -109,7 +109,7 @@
             <button type="button" class="btn btn-light">PDF</button>
             <button type="button" class="btn btn-light">Print</button>
           </div>
-          <div class="table-responsive"  style="margin-top: 20px">
+          <div class="table-responsive" style="margin-top: 20px">
             <table id="example1" class="table table-bordered table-striped">
               <thead class="thead-dark" align="center">
                 <tr>

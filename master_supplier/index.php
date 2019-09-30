@@ -2,18 +2,18 @@
 include '../env.php';
 if (isset($_POST['delete'])) {
   extract($_POST);
-  $query = "DELETE FROM supplier WHERE kode = '$kode_old'";
+  $sql = "DELETE FROM supplier WHERE kode = '$kode_old'";
   lanjutkan($sql, "Dihapus");
 }
 if (isset($_POST['edit'])) {
   extract($_POST);
   $fax = intval($fax);
-  $query = "UPDATE supplier SET kode = '$kode',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kode_pos',telepon = '$telepon',fax = '$fax',handphone = '$handphone',contact_name = '$contact_name',email = '$email' ,kredit = '$kredit' ,top = '$top' ,pkp = '$pkp' WHERE kode = '$kode_old'";
+  $sql = "UPDATE supplier SET kode = '$kode',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kode_pos',telepon = '$telepon',fax = '$fax',handphone = '$handphone',contact_name = '$contact_name',email = '$email' ,kredit = '$kredit' ,top = '$top' ,pkp = '$pkp' WHERE kode = '$kode_old'";
   $sql = mysqli_query($conn, $query);
   lanjutkan($sql, "Diedit");
 } else if (isset($_POST['simpan'])) {
   extract($_POST);
-  $query = "INSERT INTO supplier(kode,nama,alamat,kota,kodepos,telepon,fax,handphone,contact_name,email,kredit,top,pkp) VALUES(
+  $sql = "INSERT INTO supplier(kode,nama,alamat,kota,kodepos,telepon,fax,handphone,contact_name,email,kredit,top,pkp) VALUES(
     '$kode','$nama','$alamat','$kota','$kode_pos','$telepon','$fax','$handphone','$contact_name','$email','$kredit','$top','$pkp'
   )";
   $sql = mysqli_query($conn, $query);
