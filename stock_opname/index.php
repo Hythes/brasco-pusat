@@ -3,12 +3,6 @@
 $title = "Hasil Stock Opname";
 include '../env.php';
 
-if (isset($_POST['cariBarcode'])) {
-  $b1 = $_POST['barcode1'];
-  $b2 = $_POST['barcode2'];
-  $query = "SELECT * FROM inventory WHERE barcode BETWEEN $b1 AND $b2";
-  $result = query($query);
-}
 if (isset($_POST['simpan'])) {
   $query = query('SELECT * FROM stock_opname ORDER BY id DESC LIMIT 1');
   if (!isset($query[0]['id'])) {
@@ -27,6 +21,12 @@ if (isset($_POST['simpan'])) {
     echo mysqli_errno($conn);
     exit();
   }
+}
+if (isset($_POST['cariBarcode'])) {
+  $b1 = $_POST['barcode1'];
+  $b2 = $_POST['barcode2'];
+  $query = "SELECT * FROM inventory WHERE barcode BETWEEN $b1 AND $b2";
+  $result = query($query);
 }
 ?>
 
@@ -70,21 +70,21 @@ if (isset($_POST['simpan'])) {
           <div class="">
             <form action="" method="post" class="form-horizontal">
               <div class="box-body">
-              <div class="form-group">
-                <!-- <label>Barcode</label>
+                <div class="form-group">
+                  <!-- <label>Barcode</label>
                 <input type="text" name="barcode1">
                 <label>s/d</label>
                 <input type="text" name="barcode2"> -->
-                <label for="" class="col-xs-1 control-label">Barcode</label>
-                <div class="col-xs-3">
-                  <input type="text" class="form-control" name="barcode1" required>
+                  <label for="" class="col-xs-1 control-label">Barcode</label>
+                  <div class="col-xs-3">
+                    <input type="text" class="form-control" name="barcode1" required>
+                  </div>
+                  <label for="" class="col-xs-1 control-label">s/d</label>
+                  <div class="col-xs-3">
+                    <input type="text" class="form-control" name="barcode2" required>
+                  </div>
+                  <button class="btn btn-info" type="submit" name="cariBarcode">Search</button>
                 </div>
-                <label for="" class="col-xs-1 control-label" >s/d</label>
-                <div class="col-xs-3">
-                  <input type="text" class="form-control" name="barcode2" required>
-                </div>
-                <button class="btn btn-info" type="submit" name="cariBarcode">Search</button>
-              </div>
               </div>
             </form>
           </div>
@@ -100,31 +100,32 @@ if (isset($_POST['simpan'])) {
                 <th>QTY Opname</th>
               </tr>
             </thead>
-              <tbody>
-                <?php if (isset($result)) : ?>
-                <form method=" post" action="">
-            <?php $i = 1;
-              foreach ($result as $res) : ?>
-              <tr>
-                <td><?= $i ?></td>
-                <td><?= $res['barcode'] ?></td>
-                <td><?= $res['nama_barang'] ?></td>
-                <td><?= $res['satuan'] ?></td>
-                <td><input style="width:30px;text-align:center" type="text" name="qty<?= $i ?>"></td>
-                <input type="hidden" name="barcode<?= $i ?>" value="<?= $res['barcode'] ?>">
+            <tbody>
+              <?php if (isset($result)) : ?>
+                <form method="POST" action="">
+                  <?php $i = 1;
+                    foreach ($result as $res) : ?>
+                    <tr>
+                      <td><?= $i ?></td>
+                      <td><?= $res['barcode'] ?></td>
+                      <td><?= $res['nama_barang'] ?></td>
+                      <td><?= $res['satuan'] ?></td>
+                      <td><input style="width:30px;text-align:center" type="text" name="qty<?= $i ?>"></td>
+                      <input type="hidden" name="barcode<?= $i ?>" value="<?= $res['barcode'] ?>">
 
-              </tr>
-            <?php $i++;
-              endforeach; ?>
-          <?php endif ?>
-          </tbody>
+                    </tr>
+                  <?php $i++;
+                    endforeach; ?>
+                <?php endif ?>
+            </tbody>
           </table>
         </div>
         <div style="float: right; padding-top: 50px">
           <input type="hidden" name="total" value="<?= --$i ?>">
-          <button class="btn btn-primary" name="simpan" type="submit">Save</button>
+          <input class="btn btn-primary" name="simpan" type="submit" value="Save">
+          </form>
+
         </div>
-        </form>
       </div>
 
 

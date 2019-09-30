@@ -344,7 +344,8 @@ $('#tambah_data_po').on('click', function () {
         'kode_item_supplier': kode_item_supplier,
         'nama_item': nama_item,
         'quantity': quantity,
-        'harga': harga
+        'harga': harga,
+        'satuan': dataSimpan.satuan
     })
     $('#table_po').append(
         '<tr id="tr_po_' + dataSimpan.i + '">' +
@@ -359,14 +360,56 @@ $('#tambah_data_po').on('click', function () {
         '<td>' + '<button type="button" onclick="po_hapus(' + dataSimpan.i + ')" class="btn btn-danger"> Hapus</button>' + '</td>' +
         '</tr>'
     );
+    cek_tipe_ppn();
     dataSimpan.i++;
-    dataSimpan.total += parseInt(quantity) * parseInt(harga);
+    dataSimpan.total += (parseInt(quantity) * parseInt(harga));
     $('#total').val(dataSimpan.total);
     $('#data_po').val(JSON.stringify(simpanArray));
 })
+function cek_tipe_ppn() {
+    var ppn = 0;
+    var dpp = parseInt($('#dpp').val());
+    if ($('#tipe_ppn_t').is(':checked')) {
+        ppn = 0;
+        $('#ppn').val(ppn);
+    }
+    if ($('#tipe_ppn_i').is(':checked')) {
+        dpp = dpp * (10 / 11);
+        ppn = dpp * (10 / 100);
+        $('#ppn').val(parseFloat(ppn).toFixed(2));
+    }
+    if ($('#tipe_ppn_e').is(':checked')) {
+        ppn = dpp * (10 / 100);
+        $('#ppn').val(parseFloat(ppn).toFixed(2));
+    }
+    return ppn;
+}
+$('#tipe_ppn_t').on('click', function () {
+    var ppn = cek_tipe_ppn();
+    var p = parseFloat(dataSimpan.total) - ppn;
+    $('#total').val(parseFloat(p).toFixed(2));
+});
+$('#tipe_ppn_i').on('click', function () {
+    var ppn = cek_tipe_ppn();
+    var p = parseFloat(dataSimpan.total) - ppn;
+    $('#total').val(parseFloat(p).toFixed(2));
+});
+$('#tipe_ppn_e').on('click', function () {
+    var ppn = cek_tipe_ppn();
+    var p = parseFloat(dataSimpan.total) - ppn;
+    $('#total').val(parseFloat(p).toFixed(2));
+});
 function po_hapus(id) {
     $('#tr_po_' + id).remove();
-    delete simpanArray[--id];
+    id--;
+    var total = parseInt(simpanArray[id].quantity) * parseInt(simpanArray[id].harga);
+    dataSimpan.total = parseInt(dataSimpan.total) - parseInt(total);
+    console.log(dataSimpan.total);
+    $('#total').val(dataSimpan.total);
+    delete simpanArray[id];
+    $('#data_po').val(JSON.stringify(simpanArray));
+
+
 }
 $('#barcode_po').keyup(delayTimes(function () {
     var barcode = $('#barcode_po').val();
