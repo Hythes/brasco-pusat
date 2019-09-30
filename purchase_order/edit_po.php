@@ -1,20 +1,25 @@
 <?php
 require '../env.php';
 
-
 if (isset($_POST['submit'])) {
     extract($_POST);
-    $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga,keterangan) VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga','$keterangan'); ";
-    $data_po = json_decode($data_po);
-    foreach ($data_po as $data) {
-        $data = (array) $data;
-        extract($data);
-        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan,satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga','$satuan'); ";
-    }
-    $query = mysqli_multi_query($conn, $sql);
-    lanjutkan($query, "Dibuat");
+    print_r($_POST);
+    exit();
+    // $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga) VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga'); ";
+    // $data_po = json_decode($data_po);
+    // foreach ($data_po as $data) {
+    //     $data = (array) $data;
+    //     extract($data);
+    //     $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga'); ";
+    // }
+    // $query = mysqli_multi_query($conn, $sql);
+    // lanjutkan($query, "Dibuat");
 }
-$title = 'Purchase Order';
+$kode = $_GET['kode'];
+$query = "SELECT * FROM purchase_order WHERE kode ='$kode'";
+$var = query($query);
+$title = 'Edit Purchase Order';
+$var = $var[0];
 ?>
 <script>
     var dataSimpan = {
@@ -53,24 +58,25 @@ $title = 'Purchase Order';
             <div class="box-body">
                 <h3 class="header text-center">PURCHASE ORDER <span><button id="buat_po" class="btn btn-primary pull-right">Create PO</button></span></h3>
                 <!-- form -->
+                <input type="hidden" id="kode" value="<?= $_GET['kode'] ?>">
                 <div class="form-body" style="margin-top: 20px;">
                     <form action="" method="POST">
                         <!-- div class md-6 -->
                         <div class="row">
                             <div class="col-md-6" style="margin-top: 39px;">
                                 <div class="form-group ">
-                                    <input type="text" name="kode" readonly id="kode" class="form-control" placeholder="KODE PO">
+                                    <input type="text" value="<?= $var['kode'] ?>" name="kode" readonly id="kode" class="form-control" placeholder="KODE PO">
                                 </div>
                                 <div class="form-group textbox">
-                                    <input type="date" name="tanggal" class="form-control" placeholder="TANGGAL PO">
+                                    <input type="date" name="tanggal" value="<?= $var['tanggal'] ?>" class="form-control" placeholder="TANGGAL PO">
                                 </div>
                                 <div class="kode-nama">
                                     <div class="row">
                                         <div class="textbox col-xs-5">
-                                            <input type="text" name="kode_supplier" id="kode_supplier" class="form-control" placeholder="KODE SUPPLIER">
+                                            <input type="text" value="<?= $var['kode_supplier'] ?>" name="kode_supplier" id="kode_supplier" class="form-control" placeholder="KODE SUPPLIER">
                                         </div>
                                         <div class="textbox col-xs-6">
-                                            <input type="text" readonly name="nama_supplier" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
+                                            <input type="text" readonly name="nama_supplier" value="<?= $var['nama_supplier'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
                                         </div>
                                         <div class="col-xs-1">
                                             <i id="cari_supplier_po" style="cursor:pointer" class="fa fa-search fa-2x"></i>
@@ -78,35 +84,35 @@ $title = 'Purchase Order';
                                     </div>
                                 </div>
                                 <div class="textbox form-group" style="margin-top: 15px;">
-                                    <textarea class="form-control" id="alamat_supplier" readonly rows="3" name="alamat_supplier" placeholder="ALAMAT"></textarea>
+                                    <textarea class="form-control" id="alamat_supplier" readonly rows="3" name="alamat_supplier" placeholder="ALAMAT"><?= $var['alamat_supplier'] ?></textarea>
                                 </div>
                             </div>
                             <!-- div class md-6 -->
                             <div class="col-md-6">
                                 <h4 class="mr-5">DIKIRIM KE</h4>
                                 <div class="form-group textbox">
-                                    <input type="text" name="nama" id="nama" class="form-control" placeholder="NAMA">
+                                    <input type="text" name="nama" id="nama" class="form-control" placeholder="NAMA" value="<?= $var['nama'] ?>">
                                 </div>
                                 <div class="textbox form-group" style="margin-top: 15px;">
-                                    <textarea class="form-control" rows="3" id="alamat" name="alamat" placeholder="ALAMAT"></textarea>
+                                    <textarea class="form-control" rows="3" id="alamat" name="alamat" placeholder="ALAMAT"><?= $var['alamat'] ?></textarea>
                                 </div>
                                 <div class="kota-kode">
                                     <div class="row">
                                         <div class="textbox col-xs-8">
-                                            <input type="text" name="kota" id="kota" class="form-control" placeholder="KOTA">
+                                            <input type="text" name="kota" id="kota" class="form-control" placeholder="KOTA" value="<?= $var['kota'] ?>">
                                         </div>
                                         <div class="textbox col-xs-4">
-                                            <input type="text" name="kodepos" id="kodepos" class="form-control" placeholder="KODE POS">
+                                            <input type="text" name="kodepos" id="kodepos" class="form-control" placeholder="KODE POS" value="<?= $var['kodepos'] ?>">
                                         </div>
                                     </div>
                                 </div>
                                 <div class="nomer" style="margin-top: 15px;">
                                     <div class="row">
                                         <div class="textbox col-xs-6">
-                                            <input type="text" name="telepon" id="telepon" class="form-control" placeholder="NO TELEPON">
+                                            <input type="text" name="telepon" id="telepon" class="form-control" placeholder="NO TELEPON" value="<?= $var['telepon'] ?>">
                                         </div>
                                         <div class="textbox col-xs-6">
-                                            <input type="text" name="handphone" id="handphone" class="form-control" placeholder="NO HANDPHONE">
+                                            <input type="text" name="handphone" id="handphone" class="form-control" placeholder="NO HANDPHONE" value="<?= $var['handphone'] ?>">
                                         </div>
                                     </div>
                                 </div>
@@ -166,7 +172,7 @@ $title = 'Purchase Order';
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
-                                <input type="text" name="keterangan" class="form-control" placeholder="KETERANGAN" style="width: 70%;">
+                                <input type="text" name="keterangan" value="<?= $var['keterangan'] ?>" class="form-control" placeholder="KETERANGAN" style="width: 70%;">
                             </div>
                             <div class="form-group">
                                 <a href="purchase_order/cetak_label_barcode.php" class="btn btn-primary">Label Barcode</a>
@@ -176,7 +182,7 @@ $title = 'Purchase Order';
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">DPP</label>
                                 <div class="col-sm-8">
-                                    <input type="number" name="dpp" id="dpp" class="form-control">
+                                    <input type="number" id="dpp" name="dpp" class="form-control" value="<?= $var['dpp'] ?>">
                                 </div>
                             </div>
                             <div class="form-group" style="margin-top: 50px;">
@@ -187,7 +193,7 @@ $title = 'Purchase Order';
                                         T
                                     </label>
                                     <label>
-                                        <input type="radio" name="tipe_ppn" id="tipe_ppn_i" value="I">
+                                        <input type="radio" selected name="tipe_ppn" id="tipe_ppn_i" value="I">
                                         I
                                     </label>
                                     <label>
@@ -196,13 +202,13 @@ $title = 'Purchase Order';
                                     </label>
                                 </div>
                                 <div class="col-sm-4">
-                                    <input type="text" readonly id="ppn" name="tipe_ppn_teks" class="form-control">
+                                    <input type="text" readonly id="ppn" name="tipe_ppn_teks" class="form-control" value="<?= $var['tipe_ppn_input'] ?>">
                                 </div>
                             </div>
                             <div class="form-group" style="margin-top: 100px;">
                                 <label class="col-sm-4 control-label">Total</label>
                                 <div class="col-sm-8">
-                                    <input type="text" id="total" name="total_harga" readonly class="form-control">
+                                    <input type="text" id="total" name="total_harga" readonly class="form-control" value="<?= $var['total_harga'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -226,5 +232,52 @@ $title = 'Purchase Order';
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    var dataSimpan = {
+        'buat_po': false,
+        'i': 1,
+        'satuan': '',
+        'total': 0
+    };
+    var simpanArray = [];
 
+    $(document).ready(function() {
+        var kodeku = $('#kode').val();
+        $.post('purchase_order/ajax.php', {
+            request: 'data_po',
+            kode: kodeku,
+        }, function(data) {
+            data = JSON.parse(data);
+            for (var x in data) {
+                $('#table_po').append(
+                    '<tr id="tr_po_' + dataSimpan.i + '">' +
+                    '<td>' + dataSimpan.i + '</td>' +
+                    '<td>' + data[x].barcode_inventory + '</td>' +
+                    '<td>' + data[x].kode_item_supplier + '</td>' +
+                    '<td>' + data[x].nama_inventory + '</td>' +
+                    '<td>' + data[x].quantity + '</td>' +
+                    '<td>' + data[x].satuan + '</td>' +
+                    '<td>' + data[x].harga_satuan + '</td>' +
+                    '<td>' + parseInt(data[x].quantity) * parseInt(data[x].harga_satuan) + '</td>' +
+                    '<td>' + '<button type="button" onclick="po_hapus(' + dataSimpan.i + ')" class="btn btn-danger"> Hapus</button>' + '</td>' +
+                    '</tr>'
+                );
+                simpanArray.push({
+                    'barcode': data[x].barcode_inventory,
+                    'kode_item_supplier': data[x].kode_item_supplier,
+                    'nama_item': data[x].nama_inventory,
+                    'quantity': data[x].quantity,
+                    'harga': data[x].harga_satuan,
+                    'satuan': data[x].satuan
+                })
+                dataSimpan.i++;
+                dataSimpan.total += parseInt(data[x].quantity) * parseInt(data[x].harga_satuan);
+                $('#data_po').val(JSON.stringify(simpanArray));
+            }
+
+        })
+
+    })
+</script>
 <?php include('../templates/footer.php') ?>

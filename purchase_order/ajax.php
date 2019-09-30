@@ -29,4 +29,10 @@ if (isset($_POST['request'])) {
         $sql = mysqli_fetch_assoc(mysqli_query($conn, $query));
         echo json_encode($sql);
     }
+    if ($req == "data_po") {
+        $kode = $_POST['kode'];
+        $query = "SELECT * FROM purchase_order_item WHERE kode_po = '$kode'";
+        $sql = query($query);
+        echo json_encode($sql);
+    }
 }
