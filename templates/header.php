@@ -438,19 +438,18 @@
               <li id="header_purchase_cetak">
                 <a href="purchase_order/cetak_label_barcode.php"><i class="fa fa-circle-o"></i> <span>Cetak Label Barcode</span></a>
               </li>
-              <!--
               <li id="header_purchase_data">
-                <a href="menuDataPO.php"><i class="fa fa-circle-o"></i> <span>Data Purchase Order</span></a>
+                <a href="purchase_order/data_purchase_order.php"><i class="fa fa-circle-o"></i> <span>Data Purchase Order</span></a>
               </li>
               <li id="header_purchase_approval">
-                <a href="approvalPurchaseOrder.php"><i class="fa fa-circle-o"></i> <span>Approval PO Manager</span></a>
+                <a href="purchase_order/approve_po.php"><i class="fa fa-circle-o"></i> <span>Approval PO Manager</span></a>
               </li>
               <li id="header_purchase_status">
                 <a href="statusApprovalPO.php"><i class="fa fa-circle-o"></i> <span>Status Approval PO</span></a>
               </li>
               <li id="header_purchase_closed">
                 <a href="menuClosedPO.php"><i class="fa fa-circle-o"></i> <span>Menu Closed PO</span></a>
-              </li> -->
+              </li>
             </ul>
           </li>
           <!-- <li class="treeview" id="header_purchasing">
