@@ -29,7 +29,7 @@ $title = "Profile"; ?>
   <!-- Main content -->
   <section class="content">
 
-    <div class="row">
+    <div class="">
       <!-- left column -->
       <!-- general form elements -->
       <div class="box box-primary">
@@ -38,7 +38,7 @@ $title = "Profile"; ?>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form method="post" action="proses_simpan.php" enctype="multipart/form-data">
+        <form method="post" action="profile/proses_simpan.php" enctype="multipart/form-data">
           <div class="box-body">
             <div class="callout callout-danger">
               <label>Informasi!<br>Isilah dengan benar data profil..</label>
