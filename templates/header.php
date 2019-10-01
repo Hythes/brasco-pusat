@@ -392,7 +392,8 @@
             </a>
             <ul class="treeview-menu">
               <li id="header_perubahan_pengajuan"><a href="pengajuan_perubahan_harga"><i class="fa fa-circle-o"></i>Pengajuan Perubahan Harga</a></li>
-              <!-- <li id="header_perubahan_approval"><a href="approvalPengajuanPerubahanHarga.php"><i class="fa fa-circle-o"></i>Approval Perubahan Harga</a></li> -->
+              <li id="header_perubahan_approval"><a href="pengajuan_perubahan_harga/approval.php"><i class="fa fa-circle-o"></i>Approval Perubahan Harga</a></li>
+              <li id="header_perubahan_status"><a href="pengajuan_perubahan_harga/status.php"><i class="fa fa-circle-o"></i>Status Perubahan Harga</a></li>
             </ul>
           </li>
           <li class="treeview" id="header_supplier">

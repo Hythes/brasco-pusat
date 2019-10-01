@@ -53,3 +53,15 @@ function lanjutkan($sql, $word)
     exit();
   }
 }
+function status($st)
+{
+  if ($st == 'belum_approve') {
+    return 'Belum Diapprove';
+  }
+  if ($st == 'approve') {
+    return 'Approve';
+  }
+  if ($st == 'batal') {
+    return 'Batal';
+  }
+}

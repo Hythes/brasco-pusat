@@ -72,7 +72,14 @@
                   <input type="text" name="nama_barang" class="form-control" placeholder="Nama Barang . . ." required>
                 </div>
                 <div class="col-sm-2" style="padding: 5px;">
-                  <input type="text" class="form-control" name="satuan" placeholder="Satuan . . ." required>
+                  <select class="form-control" name="satuan">
+                    <?php
+                    $datat = query("SELECT * FROM satuan");
+                    foreach ($datat as $datas) :
+                      ?>
+                      <option value="<?= $datas['id'] ?>"><?= $datas['satuan'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
                 </div>
                 <div class="col-sm-2" style="padding: 5px;">
                   <select class="form-control" name="id_tipe_barang">
@@ -134,19 +141,21 @@
                   <tr>
                     <td><?php echo $i; ?></td>
                     <td><?php echo $row["barcode"]; ?></td>
-                    <td><?php echo $row["nama_barang"]; ?></td>
-                    <td><?php echo $row["satuan"]; ?></td>
                     <?php
                       $id_tipe = $row['id_tipe_barang'];
                       $result = query("SELECT * FROM tipe_barang WHERE id = '$id_tipe'");
+                      $id_satuan = $row['satuan'];
+                      $result2 = query("SELECT * FROM satuan WHERE id = '$id_satuan'");
 
                       ?>
+                    <td><?php echo $row["nama_barang"]; ?></td>
+                    <td><?php echo $result2[0]["satuan"]; ?></td>
                     <td><?php echo $result[0]['nama_barang']; ?></td>
                     <td><?php echo $row["harga_jual1"]; ?></td>
                     <td><?php echo $row["harga_jual2"]; ?></td>
                     <td><?php echo $row["harga_jual3"]; ?></td>
                     <td>
-                      <a href="./ubah.php?id=<?php echo $row["id"]; ?>">Ubah</a> |
+                      <a href="master_inventory/ubah.php?id=<?php echo $row["id"]; ?>">Ubah</a> |
                       <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>">Hapus</a>
                     </td>
                   </tr>

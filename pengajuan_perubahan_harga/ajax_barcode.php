@@ -18,13 +18,14 @@ if (isset($_POST['barcode'])) {
 }
 
 if (isset($_POST['simpan'])) {
-    $sql = '';
     header('Content-Type: Application/Json');
     $input = $_POST['data'];
     $inti = $_POST['inti'];
     $nomor_pengajuan = $inti['nomor_pengajuan'];
     $tipe_customer  = $inti['tipe_customer'];
     $tanggal = $inti['tanggal'];
+    $sql = "INSERT INTO pengajuan_perubahan_harga(nomor_pengajuan,tipe_customer,tanggal_pengajuan) VALUES('$nomor_pengajuan','$tipe_customer',CAST('$tanggal' AS DATE));";
+
     foreach ($input as $data) {
         $barcode = $data['barcode'];
         $harga_lama = $data['harga_jual_lama'];
@@ -32,30 +33,20 @@ if (isset($_POST['simpan'])) {
         $ket = $data['keterangan'];
         $qty = $data['quantity'];
 
-        $sql .= "INSERT INTO pengajuan_perubahan_harga(nomor_pengajuan,tanggal,tipe_customer,barcode_inventory,harga_jual_lama,harga_jual_baru,quantity,keterangan) VALUES('$nomor_pengajuan',CAST('$tanggal' AS DATE),'$tipe_customer','$barcode','$harga_lama','$harga_baru','$qty','$ket');";
+        $sql .= "INSERT INTO pph_item(nomor_pengajuan,tanggal,tipe_customer,barcode_inventory,harga_jual_lama,harga_jual_baru,quantity,keterangan) VALUES('$nomor_pengajuan',CAST('$tanggal' AS DATE),'$tipe_customer','$barcode','$harga_lama','$harga_baru','$qty','$ket');";
     }
-    if (mysqli_multi_query($conn, $sql)) {
-        if (intval($tipe_customer) == 1) {
-            $sql2 = "UPDATE inventory SET harga_jual1 ='$harga_baru' WHERE barcode = $barcode";
-        }
-        if (intval($tipe_customer) == 2) {
-            $sql2 = "UPDATE inventory SET harga_jual2 ='$harga_baru' WHERE barcode = $barcode";
-        }
-        if (intval($tipe_customer) == 3) {
-            $sql2 = "UPDATE inventory SET harga_jual3 ='$harga_baru' WHERE barcode = $barcode";
-        }
-        $query2 = mysqli_query($conn, $sql2);
-        if ($query2) {
-            echo json_encode(['msg' => 'berhasil']);
-        } else {
-            echo json_encode([
-                'msg' => 'err Insert',
-                'err' => mysqli_error($conn)
-            ]);
-        }
+    $query2 = mysqli_multi_query($conn, $sql);
+    if ($query2) {
+        echo json_encode(['msg' => 'berhasil']);
     } else {
         echo json_encode([
             'err' => mysqli_error($conn)
         ]);
     }
+}
+
+if (isset($_POST['request'])) {
+    extract($_POST);
+    if ($request == "cari") { }
+    if ($request == 'kirim') { }
 }

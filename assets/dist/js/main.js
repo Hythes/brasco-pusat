@@ -47,6 +47,9 @@ $(document).ready(function () {
         if (active_2 == 'header_perubahan_approval') {
             $('#header_perubahan_approval').addClass('active');
         }
+        if (active_2 == 'header_perubahan_status') {
+            $('#header_perubahan_status').addClass('active');
+        }
     }
 
     if (active == 'header_supplier') {
@@ -220,7 +223,7 @@ $('#simpan_pph').on('click', function () {
         'tipe_customer': $('#tipecustomer_pph').children("option:selected").val(),
     }
     $.ajax({
-        url: './pengajuan_perubahan_harga/ajax_barcode.php',
+        url: 'pengajuan_perubahan_harga/ajax_barcode.php',
         type: 'POST',
         data: {
             'simpan': 'yes',
@@ -245,7 +248,29 @@ $('#simpan_pph').on('click', function () {
         }
     })
 })
-
+$('#tipecustomer_pph').change(function () {
+    $.ajax({
+        url: './pengajuan_perubahan_harga/ajax_barcode.php',
+        type: 'POST',
+        data: {
+            "barcode": $('#barcode_pph').val()
+        },
+        complete: function (response, text, XHR) {
+            var res = JSON.parse(response.responseText);
+            $('#item_pph').val(res.nama_barang);
+            var tipe_pelanggan = $('#tipecustomer_pph').children("option:selected").val();
+            if (tipe_pelanggan == 1) {
+                $('#jual_pph').val(res.harga_jual1);
+            }
+            else if (tipe_pelanggan == 2) {
+                $('#jual_pph').val(res.harga_jual2);
+            }
+            else if (tipe_pelanggan == 3) {
+                $('#jual_pph').val(res.harga_jual3);
+            }
+        }
+    })
+})
 $('#barcode_pph').keyup(delayTimes(function () {
     $.ajax({
         url: './pengajuan_perubahan_harga/ajax_barcode.php',
@@ -273,7 +298,7 @@ $('#barcode_pph').keyup(delayTimes(function () {
 $('#barcode').on('click', function () {
     console.log($('#isi_barcode').val());
 
-    if ($('#isi_barcode').val() == null) {
+    if ($('#isi_barcode').val() == '') {
         alert('Tolong diisi barcodenya');
         return;
     }

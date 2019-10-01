@@ -2,16 +2,7 @@
 
     require 'functions.php';
 
-    $id = $_GET["id"];
-
-    $data = query("SELECT * FROM inventory WHERE id=$id");
-    $data = $data[0];
-    $harga1 = $data['harga_jual1'];
-    $harga2 = $data['harga_jual2'];
-    $harga3 = $data['harga_jual3'];
-    $title = "Edit Data Inventory";
     if (isset($_POST["submit"])) {
-
       if (ubah($_POST) > 0) {
         echo "
         <script>
@@ -22,13 +13,20 @@
       } else {
         echo "
         <script>
-        alert('Data Gagal Diubah!');
+        alert('Data Tidak ada yang Diubah!');
         document.location.href='index.php';
         </script>
         ";
       }
     }
+    $id = $_GET["id"];
 
+    $data = query("SELECT * FROM inventory WHERE id=$id");
+    $data = $data[0];
+    $harga1 = $data['harga_jual1'];
+    $harga2 = $data['harga_jual2'];
+    $harga3 = $data['harga_jual3'];
+    $title = "Edit Data Inventory";
     ?>
     <?php include('../templates/header.php') ?>
     <!-- =============================================== -->
@@ -60,19 +58,28 @@
             <div class="box-body">
               <div class="form-group" style="width: 10%">
                 <label for="InputBarcode">Barcode</label>
-                <input type="text" class="form-control" id="InputBarcode" placeholder="Barcode" value="<?php echo $data["barcode"]; ?>">
+                <input type="text" class="form-control" readonly id="InputBarcode" name="barcode" placeholder="Barcode" value="<?php echo $data["barcode"]; ?>">
               </div>
               <div class="form-group" style="width: 70%">
                 <label for="NamaItem">Nama Item</label>
-                <input type="text" class="form-control" id="NamaItem" placeholder="Nama Item" value="<?php echo $data["nama_barang"]; ?>">
+                <input type="text" class="form-control" id="NamaItem" name="nama_barang" placeholder="Nama Item" value="<?php echo $data["nama_barang"]; ?>">
               </div>
+              <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
               <div class="form-group" style="width: 10%">
                 <label for="Satuan">Satuan</label>
-                <input type="text" class="form-control" id="Satuan" placeholder="Pcs" value="<?php echo $data["satuan"]; ?>">
+                <?php
+
+                $datat = query("SELECT * FROM satuan");
+                foreach ($datat as $datas) : ?>
+                  <?php if ($datas['id'] ==  $data['satuan']) : ?>
+                    <input value="<?= $datas['satuan'] ?>" type="text" readonly>
+                  <?php endif; ?>
+                <?php endforeach; ?>
+                </select>
               </div>
               <div class="form-group" style="width: 70%">
                 <label>Tipe Barang</label>
-                <select class="form-control" name="id_tipe_barang" id="id_tipe_barang" class="form-control">
+                <select class="form-control" name="id_tipe_barang" readonly id="id_tipe_barang" class="form-control">
                   <?php
                   $datat = cariBarang();
                   foreach ($datat as $datas) : ?>
@@ -88,52 +95,51 @@
                 <label>Harga Beli Akhir</label>
                 <div class="form-group input-group">
                   <span class="input-group-addon">Rp</span>
-                  <input type="text" class="form-control">
+                  <input readonly type="text" class="form-control">
                   <span class="input-group-addon">.00</span>
                 </div>
                 <div class="form-group">
                   <label for="TanggalAkhir">Tanggal Beli Akhir</label>
-                  <input type="text" class="form-control" id="Satuan" placeholder="DD/MM/YYYY">
+                  <input readonly type="text" name="satuan" class="form-control" id="Satuan" placeholder="DD/MM/YYYY">
                 </div>
                 <div>
                   <label>Harga Jual 1</label>
                   <div class="form-group input-group">
                     <span class="input-group-addon">Rp</span>
-                    <input type="text"  value="<?php echo $harga1; ?>" class="form-control">
+                    <input type="text" name="harga_jual1" value="<?php echo $harga1; ?>" class="form-control">
                     <span class="input-group-addon">.00</span>
                   </div>
                   <div>
                     <label>Harga Jual 2</label>
                     <div class="form-group input-group">
                       <span class="input-group-addon">Rp</span>
-                      <input type="text"  value="<?php echo $harga2; ?>" class="form-control">
+                      <input type="text" name="harga_jual2" value="<?php echo $harga2; ?>" class="form-control">
                       <span class="input-group-addon">.00</span>
                     </div>
                     <div>
                       <label>Harga Jual 3</label>
                       <div class="form-group input-group">
                         <span class="input-group-addon">Rp</span>
-                        <input type="text"  value="<?php echo $harga3; ?>" class="form-control">
+                        <input type="text" name="harga_jual3" value="<?php echo $harga3; ?>" class="form-control">
                         <span class="input-group-addon">.00</span>
                       </div>
 
                       <!-- /.box-body -->
                       <div class="box-footer" style="float: right;">
-                        <button type="submit" class="btn btn-success">Save</button>
-                        <button type="button" onclick="cancel()" class="btn btn-danger">Cancel</button>
+                        <button type="submit" name="submit" class="btn btn-success">Save</button>
                       </div>
-                  </form>
-                      <!-- /.box-footer-->
-                    </div>
-                    <!-- /.box -->
+          </form>
+          <!-- /.box-footer-->
+        </div>
+        <!-- /.box -->
 
       </section>
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
     <script>
-      function cancel(){
-        window.location.href  = "index.php";
+      function cancel() {
+        window.location.href = "index.php";
       }
     </script>
     <?php include('../templates/footer.php') ?>

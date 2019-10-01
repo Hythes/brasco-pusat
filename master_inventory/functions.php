@@ -3,9 +3,10 @@ include '../env.php';
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 
-function tambah($data){
+function tambah($data)
+{
 	global $conn;
-	
+
 	$barcode = htmlspecialchars($data['barcode']);
 	$nama_barang = htmlspecialchars($data['nama_barang']);
 	$satuan = htmlspecialchars($data['satuan']);
@@ -16,8 +17,8 @@ function tambah($data){
 	$query = " INSERT INTO inventory(barcode,nama_barang,satuan,id_tipe_barang,harga_jual1,harga_jual2,harga_jual3)         
 	VALUES 
 	('$barcode','$nama_barang','$satuan','$id_tipe_barang','$harga_jual1','$harga_jual2','$harga_jual3')";
-	$thread = mysqli_query($conn,$query);
-	if(!$thread){
+	$thread = mysqli_query($conn, $query);
+	if (!$thread) {
 		echo mysqli_error($conn);
 		exit();
 	}
@@ -27,7 +28,7 @@ function tambah($data){
 function hapus($id)
 {
 	global $conn;
-	mysqli_query($conn,"DELETE FROM inventory WHERE id=$id");
+	mysqli_query($conn, "DELETE FROM inventory WHERE id=$id");
 	return mysqli_affected_rows($conn);
 }
 
@@ -41,7 +42,7 @@ function ubah($data)
 	$harga_jual1 = htmlspecialchars($data['harga_jual1']);
 	$harga_jual2 = htmlspecialchars($data['harga_jual2']);
 	$harga_jual3 = htmlspecialchars($data['harga_jual3']);
-	$id = $_GET['id'];
+	$id = $data['id'];
 	$query = " UPDATE inventory SET
 	barcode = '$barcode',
 	nama_barang = '$nama_barang',
@@ -50,14 +51,18 @@ function ubah($data)
 	harga_jual1 = '$harga_jual1',
 	harga_jual2 = '$harga_jual2',
 	harga_jual3 = '$harga_jual3'
-	WHERE id=$id
+	WHERE id='$id'
 	";
-	mysqli_query($conn,$query);
-
+	$thread = mysqli_query($conn, $query);
+	if (!$thread) {
+		echo mysqli_error($conn);
+		exit();
+	}
 	return mysqli_affected_rows($conn);
 }
 
-function cariBarang(){
+function cariBarang()
+{
 	global $conn;
 	$return = query('SELECT * FROM tipe_barang');
 	return $return;

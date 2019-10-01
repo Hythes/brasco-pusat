@@ -2,7 +2,7 @@
 include '../env.php';
 
 $title = 'Pengajuan Perubahan Harga';
-$query = query('SELECT * FROM pengajuan_perubahan_harga ORDER BY nomor_pengajuan DESC LIMIT 1');
+$query = query('SELECT * FROM pph_item ORDER BY nomor_pengajuan DESC LIMIT 1');
 if (!isset($query[0]['nomor_pengajuan'])) {
   $id = 'PH-001';
 } else {
@@ -53,7 +53,7 @@ if (!isset($query[0]['nomor_pengajuan'])) {
                 <label class="col-sm-2 control-label-inline" for="formtanggal">Tanggal</label>
                 <div class="col-sm-2">
                   <div class="input-group">
-                    <input type="date" id="formtanggal" name="tanggal" class="form-control">
+                    <input type="date" required id="formtanggal" name="tanggal" class="form-control">
                     <div class="input-group-addon">
                       <i class="fa fa-calendar"></i>
                     </div>
@@ -67,11 +67,11 @@ if (!isset($query[0]['nomor_pengajuan'])) {
               <div class="form-group">
                 <label for="tipecustomer" class="col-sm-2">Tipe Customer</label>
                 <div class="col-sm-2">
-                <select class="form-control" id="tipecustomer_pph" name="tipe_customer">
-                  <option value="1">Customer 1</option>
-                  <option value="2">Customer 2</option>
-                  <option value="3">Customer 3</option>
-                </select>
+                  <select class="form-control" id="tipecustomer_pph" name="tipe_customer">
+                    <option value="1">Customer 1</option>
+                    <option value="2">Customer 2</option>
+                    <option value="3">Customer 3</option>
+                  </select>
                 </div>
               </div>
             </div>
