@@ -167,11 +167,6 @@ $(document).ready(function () {
         $('#header_diskon').addClass('active');
     }
 })
-
-
-
-
-$('#title').val(title);
 function delayTimes(callback, ms) {
     var timer = 0;
     return function () {
@@ -355,41 +350,48 @@ $('#cari_supplier_po').on('click', function () {
 })
 
 $('#tambah_data_po').on('click', function () {
-    var barcode = $('#barcode_po').val();
-    var kode_item_supplier = $('#kode_item_supplier').val();
-    var nama_item = $('#nama_item').val();
-    var quantity = $('#quantity').val();
-    var harga = $('#harga').val();
-    if (barcode == '' || kode_item_supplier == '' || nama_item == '' || quantity == '' || harga == '') {
-        alert('Tolong diisi semua');
-        return;
-    }
-    simpanArray.push({
-        'barcode': barcode,
-        'kode_item_supplier': kode_item_supplier,
-        'nama_item': nama_item,
-        'quantity': quantity,
-        'harga': harga,
-        'satuan': dataSimpan.satuan
+    $.post('purchase_order/ajax.php', { request: 'cari_satuan', data: dataSimpan.satuan }, function (data) {
+        data = JSON.parse(data);
+        console.log(data.satuan);
+        dataSimpan.sata = data.satuan;
+
+        var barcode = $('#barcode_po').val();
+        var kode_item_supplier = $('#kode_item_supplier').val();
+        var nama_item = $('#nama_item').val();
+        var quantity = $('#quantity').val();
+        var harga = $('#harga').val();
+        if (barcode == '' || kode_item_supplier == '' || nama_item == '' || quantity == '' || harga == '') {
+            alert('Tolong diisi semua');
+            return;
+        }
+        simpanArray.push({
+            'barcode': barcode,
+            'kode_item_supplier': kode_item_supplier,
+            'nama_item': nama_item,
+            'quantity': quantity,
+            'harga': harga,
+            'satuan': dataSimpan.satuan
+        })
+
+        $('#table_po').append(
+            '<tr id="tr_po_' + dataSimpan.i + '">' +
+            '<td>' + dataSimpan.i + '</td>' +
+            '<td>' + barcode + '</td>' +
+            '<td>' + kode_item_supplier + '</td>' +
+            '<td>' + nama_item + '</td>' +
+            '<td>' + quantity + '</td>' +
+            '<td>' + dataSimpan.sata + '</td>' +
+            '<td>' + harga + '</td>' +
+            '<td>' + parseInt(quantity) * parseInt(harga) + '</td>' +
+            '<td>' + '<button type="button" onclick="po_hapus(' + dataSimpan.i + ')" class="btn btn-danger"> Hapus</button>' + '</td>' +
+            '</tr>'
+        );
+        cek_tipe_ppn();
+        dataSimpan.i++;
+        dataSimpan.total += (parseInt(quantity) * parseInt(harga));
+        $('#total').val(dataSimpan.total);
+        $('#data_po').val(JSON.stringify(simpanArray));
     })
-    $('#table_po').append(
-        '<tr id="tr_po_' + dataSimpan.i + '">' +
-        '<td>' + dataSimpan.i + '</td>' +
-        '<td>' + barcode + '</td>' +
-        '<td>' + kode_item_supplier + '</td>' +
-        '<td>' + nama_item + '</td>' +
-        '<td>' + quantity + '</td>' +
-        '<td>' + dataSimpan.satuan + '</td>' +
-        '<td>' + harga + '</td>' +
-        '<td>' + parseInt(quantity) * parseInt(harga) + '</td>' +
-        '<td>' + '<button type="button" onclick="po_hapus(' + dataSimpan.i + ')" class="btn btn-danger"> Hapus</button>' + '</td>' +
-        '</tr>'
-    );
-    cek_tipe_ppn();
-    dataSimpan.i++;
-    dataSimpan.total += (parseInt(quantity) * parseInt(harga));
-    $('#total').val(dataSimpan.total);
-    $('#data_po').val(JSON.stringify(simpanArray));
 })
 function cek_tipe_ppn() {
     var ppn = 0;
@@ -410,16 +412,21 @@ function cek_tipe_ppn() {
     return ppn;
 }
 $('#tipe_ppn_t').on('click', function () {
+    if ($('#dpp').val() == '') alert('Tolong diisi DPP nya');
     var ppn = cek_tipe_ppn();
     var p = parseFloat(dataSimpan.total) - ppn;
     $('#total').val(parseFloat(p).toFixed(2));
 });
 $('#tipe_ppn_i').on('click', function () {
+    if ($('#dpp').val() == '') alert('Tolong diisi DPP nya');
+
     var ppn = cek_tipe_ppn();
     var p = parseFloat(dataSimpan.total) - ppn;
     $('#total').val(parseFloat(p).toFixed(2));
 });
 $('#tipe_ppn_e').on('click', function () {
+    if ($('#dpp').val() == '') alert('Tolong diisi DPP nya');
+
     var ppn = cek_tipe_ppn();
     var p = parseFloat(dataSimpan.total) - ppn;
     $('#total').val(parseFloat(p).toFixed(2));
@@ -438,7 +445,7 @@ function po_hapus(id) {
 }
 $('#barcode_po').keyup(delayTimes(function () {
     var barcode = $('#barcode_po').val();
-    $.post('purchase_order/ajax.php', { request: 'cari_barcode', data: barcode }, function (data) {
+    $.post('purchase_order/ajax.php', { request: 'cari_barcode', data: String(barcode) }, function (data) {
         data = JSON.parse(data);
         $('#nama_item').val(data.nama_barang);
         dataSimpan.satuan = data.satuan;

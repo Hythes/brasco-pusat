@@ -41,7 +41,7 @@ if (isset($_POST['submit'])) {
 ?>
 <script>
     var active = 'header_po';
-    var active_2 = 'header_purchase_approval';
+    var active_2 = 'header_purchase_status';
 </script>
 
 <?php include('../templates/header.php') ?>
@@ -69,7 +69,7 @@ if (isset($_POST['submit'])) {
         <div class="box box-info pb-4">
 
             <div class="box-body ">
-                <h3 class="text-center">APPROVAL PURCHASE ORDER MANAGER</h3>
+                <h3 class="text-center">STATUS APPROVAL PURCHASE ORDER</h3>
 
                 <div class="row" style="margin-top: 40px;">
                     <form method="POST" action="">
@@ -109,6 +109,7 @@ if (isset($_POST['submit'])) {
                                             <option>Approve</option>
                                             <option>Belum Approve</option>
                                             <option>Batal</option>
+                                            <option>Closed</option>
                                         </select>
                                     </div>
                                 </div>
@@ -138,7 +139,6 @@ if (isset($_POST['submit'])) {
                                     <th>Tanggal Approve</th>
                                     <th>Status</th>
                                     <th>Aksi</th>
-                                    <th>Approval</th>
                                     <th>Keterangan</th>
                                 </tr>
                             </thead>
@@ -152,15 +152,7 @@ if (isset($_POST['submit'])) {
                                         <td><?= ($tanggal_approve == '') ? 'Unknown' : $tanggal_approve ?></td>
                                         <td><?= $status ?></td>
                                         <td><a href="purchase_order/lihat_po.php?kode=<?= $kode ?>" target="_blank" class="btn btn-info">Detail</a></td>
-                                        <td>
-                                            <div class="input-group">
-                                                <select style="width: auto" name="status<?= $i ?>" class="form-control">
-                                                    <option>Approve</option>
-                                                    <option>Batal</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td> <input type="text" name="keterangan<?= $i ?>"></td>
+                                        <td> <?= ($keterangan !== '') ? $keterangan : $keterangan_approve ?></td>
                                         <input type="hidden" name="total" value="<?= $i ?>">
                                         <input type="hidden" name="kode<?= $i ?>" value="<?= $kode ?>">
                                     </tr>
@@ -171,7 +163,6 @@ if (isset($_POST['submit'])) {
                     </div>
                     <div class="box-footer">
                         <input type="hidden" name="tanggal" value="<?= date('Y-m-d') ?>">
-                        <button type="submit" name="kirim" class="btn btn-info pull-right mt-2">Save</button>
                     </div>
                 </form>
             </div>

@@ -29,10 +29,25 @@ if (isset($_POST['request'])) {
         $sql = mysqli_fetch_assoc(mysqli_query($conn, $query));
         echo json_encode($sql);
     }
+    if ($req == 'cari_satuan') {
+        $query = "SELECT * FROM satuan WHERE id = '$data' ";
+        $sql = mysqli_fetch_assoc(mysqli_query($conn, $query));
+        echo json_encode($sql);
+    }
     if ($req == "data_po") {
         $kode = $_POST['kode'];
         $query = "SELECT * FROM purchase_order_item WHERE kode_po = '$kode'";
         $sql = query($query);
         echo json_encode($sql);
+    }
+    if ($req == 'close') {
+        $kode = $_POST['kode'];
+        $query = "UPDATE purchase_order SET status = 'Closed' WHERE kode = '$kode'";
+        $sql = mysqli_query($conn, $query);
+        if ($sql) {
+            echo json_encode(['msg' => 'ok!']);
+        } else {
+            echo json_encode(['msg' => mysqli_error($conn)]);
+        }
     }
 }

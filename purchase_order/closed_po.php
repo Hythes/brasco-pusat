@@ -1,18 +1,7 @@
 <?php
-$title = "Approval Purchase Order Manager";
+$title = "Close Purchase Order";
 require '../env.php';
-if (isset($_POST['kirim'])) {
-    $sql = '';
-    $tanggal = $_POST['tanggal'];
-    for ($i = 1; $i <= $_POST['total']; $i++) {
-        $keterangan_approve = $_POST['keterangan' . $i];
-        $status = $_POST['status' . $i];
-        $kode = $_POST['kode' . $i];
-        $sql .= "UPDATE purchase_order SET tanggal_approve = '$tanggal', keterangan_approve = '$keterangan_approve', status = '$status' WHERE kode = '$kode' ;";
-    }
-    $query2 = mysqli_multi_query($conn, $sql);
-    lanjutkan($query2, "Di Approve");
-}
+
 if (isset($_POST['submit'])) {
     extract($_POST);
     $t = false;
@@ -41,7 +30,7 @@ if (isset($_POST['submit'])) {
 ?>
 <script>
     var active = 'header_po';
-    var active_2 = 'header_purchase_approval';
+    var active_2 = 'header_purchase_closed';
 </script>
 
 <?php include('../templates/header.php') ?>
@@ -69,7 +58,7 @@ if (isset($_POST['submit'])) {
         <div class="box box-info pb-4">
 
             <div class="box-body ">
-                <h3 class="text-center">APPROVAL PURCHASE ORDER MANAGER</h3>
+                <h3 class="text-center">CLOSE PURCHASE ORDER </h3>
 
                 <div class="row" style="margin-top: 40px;">
                     <form method="POST" action="">
@@ -126,54 +115,41 @@ if (isset($_POST['submit'])) {
         </div>
         <?php if (isset($query)) : ?>
             <div class="box box-info">
-                <form action="" method="POST">
-                    <div class="box-body">
-                        <!-- table -->
-                        <table class="table table-bordered table-striped">
-                            <thead>
+                <div class="box-body">
+                    <!-- table -->
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>Kode Transaksi</th>
+                                <th>Tanggal Purchase Order</th>
+                                <th>Tanggal Approve</th>
+                                <th>Status</th>
+                                <th>Aksi</th>
+                                <th>Keterangan</th>
+                                <th>Close PO</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1;
+                                foreach ($query as $data) : extract($data); ?>
                                 <tr>
-                                    <th>No</th>
-                                    <th>Kode Transaksi</th>
-                                    <th>Tanggal Purchase Order</th>
-                                    <th>Tanggal Approve</th>
-                                    <th>Status</th>
-                                    <th>Aksi</th>
-                                    <th>Approval</th>
-                                    <th>Keterangan</th>
+                                    <td><?= $i ?></td>
+                                    <td><?= $kode ?></td>
+                                    <td><?= $tanggal ?></td>
+                                    <td><?= ($tanggal_approve == '') ? 'Unknown' : $tanggal_approve ?></td>
+                                    <td><?= $status ?></td>
+                                    <td><a href="purchase_order/lihat_po.php?kode=<?= $kode ?>" target="_blank" class="btn btn-info">Detail</a></td>
+                                    <td> <?= $keterangan_approve ?></td>
+                                    <td><button class="btn btn-danger" onclick="close_po('<?= $kode ?>')">Close PO</button></td>
+                                    <input type="hidden" name="total" value="<?= $i ?>">
+                                    <input type="hidden" name="kode<?= $i ?>" value="<?= $kode ?>">
                                 </tr>
-                            </thead>
-                            <tbody>
-                                <?php $i = 1;
-                                    foreach ($query as $data) : extract($data); ?>
-                                    <tr>
-                                        <td><?= $i ?></td>
-                                        <td><?= $kode ?></td>
-                                        <td><?= $tanggal ?></td>
-                                        <td><?= ($tanggal_approve == '') ? 'Unknown' : $tanggal_approve ?></td>
-                                        <td><?= $status ?></td>
-                                        <td><a href="purchase_order/lihat_po.php?kode=<?= $kode ?>" target="_blank" class="btn btn-info">Detail</a></td>
-                                        <td>
-                                            <div class="input-group">
-                                                <select style="width: auto" name="status<?= $i ?>" class="form-control">
-                                                    <option>Approve</option>
-                                                    <option>Batal</option>
-                                                </select>
-                                            </div>
-                                        </td>
-                                        <td> <input type="text" name="keterangan<?= $i ?>"></td>
-                                        <input type="hidden" name="total" value="<?= $i ?>">
-                                        <input type="hidden" name="kode<?= $i ?>" value="<?= $kode ?>">
-                                    </tr>
-                                <?php $i++;
-                                    endforeach; ?>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="box-footer">
-                        <input type="hidden" name="tanggal" value="<?= date('Y-m-d') ?>">
-                        <button type="submit" name="kirim" class="btn btn-info pull-right mt-2">Save</button>
-                    </div>
-                </form>
+                            <?php $i++;
+                                endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         <?php endif; ?>
         <!-- /.box -->
@@ -182,5 +158,16 @@ if (isset($_POST['submit'])) {
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
+<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript">
+    function close_po(kode) {
+        $.post('purchase_order/ajax.php', {
+            request: 'close',
+            'kode': kode
+        }, function() {
+            alert('PO berhasil di Close!')
+            window.location.href = 'purchase_order/closed_po.php';
+        })
+    }
+</script>
 <?php include('../templates/footer.php') ?>

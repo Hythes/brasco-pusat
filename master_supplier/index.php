@@ -9,14 +9,14 @@ if (isset($_POST['edit'])) {
   extract($_POST);
   $fax = intval($fax);
   $sql = "UPDATE supplier SET kode = '$kode',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kode_pos',telepon = '$telepon',fax = '$fax',handphone = '$handphone',contact_name = '$contact_name',email = '$email' ,kredit = '$kredit' ,top = '$top' ,pkp = '$pkp' WHERE kode = '$kode_old'";
-  $sql = mysqli_query($conn, $query);
+  $sql = mysqli_query($conn, $sql);
   lanjutkan($sql, "Diedit");
 } else if (isset($_POST['simpan'])) {
   extract($_POST);
   $sql = "INSERT INTO supplier(kode,nama,alamat,kota,kodepos,telepon,fax,handphone,contact_name,email,kredit,top,pkp) VALUES(
     '$kode','$nama','$alamat','$kota','$kode_pos','$telepon','$fax','$handphone','$contact_name','$email','$kredit','$top','$pkp'
   )";
-  $sql = mysqli_query($conn, $query);
+  $sql = mysqli_query($conn, $sql);
   lanjutkan($sql, "Disimpan");
 }
 ?>

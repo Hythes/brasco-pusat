@@ -10,17 +10,17 @@ if (isset($_GET['request'])) {
         lanjutkan($sql, "Dihapus");
     }
 }
-$query = "SELECT * FROM purchase_order";
 if (isset($_POST['submit'])) {
     extract($_POST);
-    if (isset($kode_po)) {
-        if (isset($kode_supplier)) {
-            $query = "SELECT * FROM purchase_order WHERE kode = '$kode_po' AND kode_supplier = '$kode_supplier'";
+    if ($kode_po !== '') {
+        if ($kode_supplier !== '') {
+            $query = "SELECT * FROM purchase_order WHERE kode = '$kode_po' AND kode_supplier = '$kode_supplier' AND status = 'Approve'";
+        } else {
+            $query  = "SELECT * FROM purchase_order WHERE kode = '$kode_po' AND status = 'Approve'";
         }
-        $query  = "SELECT * FROM purchase_order WHERE kode = '$kode_po'";
     }
-    if (isset($kode_supplier)) {
-        $query = "SELECT * FROM purchase_order WHERE kode_supplier = '$kode_supplier'";
+    if ($kode_supplier !== '' && $kode_po == '') {
+        $query = "SELECT * FROM purchase_order WHERE kode_supplier = '$kode_supplier' AND status = 'Approve'";
     }
 }
 
@@ -98,66 +98,72 @@ if (isset($_POST['submit'])) {
                     </div>
                 </div>
 
-                <div class="otherButtom" style="margin-bottom: 20px;">
-                    <h4 style="margin-bottom: 20px; margin-top: 30px;">LIST DATA PURCHASE ORDER</h4>
-                    <a href="#" class="btn btn-default">Copy</a>
-                    <a href="#" class="btn btn-default">CSV</a>
-                    <a href="#" class="btn btn-default">Excel</a>
-                    <a href="#" class="btn btn-default">PDF</a>
-                    <a href="#" class="btn btn-default">Print</a>
-                </div>
 
-                <!-- datatable -->
-                <table id="example1" class="table table-bordered table-striped">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>PO NUMBER</th>
-                            <th>Tanggal</th>
-                            <th>KODE SUPPLIER</th>
-                            <th>NAMA SUPPLIER</th>
-                            <th>TELP</th>
-                            <th>NO HP</th>
-                            <th>JUMLAH</th>
-                            <th>AKSI</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        $i = 1;
-                        $sql = query($query);
-                        foreach ($sql as $row) :
-                            ?>
-                            <tr>
-                                <td><?= $i ?></td>
-                                <td><?= $row['kode'] ?></td>
-                                <td><?= $row['tanggal'] ?></td>
-                                <td><?= $row['kode_supplier'] ?></td>
-                                <td><?= $row['nama_supplier'] ?></td>
-                                <td><?= $row['telepon'] ?></td>
-                                <td><?= $row['handphone'] ?></td>
-                                <td><?= $row['total_harga'] ?></td>
-                                <td>
-                                    <a href="purchase_order/edit_po.php?kode=<?= $row['kode'] ?>"><i class="fa fa-edit fa-lg" style="color: blue; padding: 5px;"></i></a>
-                                    <a href="purchase_order/data_purchase_order.php?request=delete&kode=<?= $row['kode'] ?>"><i class="fa fa-trash fa-lg" style="color: red; padding: 5px;"></i></a>
-                                    <a href="#"><i class="fa fa-print fa-lg" style="color: green; padding: 5px;"></i></a>
-                                </td>
-                            </tr>
-                        <?php $i++;
-                        endforeach; ?>
-                    </tbody>
-                </table>
-                <!-- datatable -->
-                <div class="button-close pull-right" style="margin-top: 20px;">
-                    <a href="#" class="btn btn-primary">Close</a>
-                </div>
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                Footer
             </div>
             <!-- /.box-footer-->
         </div>
+        <?php if (isset($query)) : ?>
+            <div class="box box-info">
+                <div class="box-body">
+                    <div class="otherButtom" style="margin-bottom: 20px;">
+                        <h4 style="margin-bottom: 20px; margin-top: 30px;">LIST DATA PURCHASE ORDER</h4>
+                        <a href="#" class="btn btn-default">Copy</a>
+                        <a href="#" class="btn btn-default">CSV</a>
+                        <a href="#" class="btn btn-default">Excel</a>
+                        <a href="#" class="btn btn-default">PDF</a>
+                        <a href="#" class="btn btn-default">Print</a>
+                    </div>
+
+                    <!-- datatable -->
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>PO NUMBER</th>
+                                <th>Tanggal</th>
+                                <th>KODE SUPPLIER</th>
+                                <th>NAMA SUPPLIER</th>
+                                <th>TELP</th>
+                                <th>NO HP</th>
+                                <th>JUMLAH</th>
+                                <th>AKSI</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php
+                                $i = 1;
+                                $sql = query($query);
+                                foreach ($sql as $row) :
+                                    ?>
+                                <tr>
+                                    <td><?= $i ?></td>
+                                    <td><?= $row['kode'] ?></td>
+                                    <td><?= $row['tanggal'] ?></td>
+                                    <td><?= $row['kode_supplier'] ?></td>
+                                    <td><?= $row['nama_supplier'] ?></td>
+                                    <td><?= $row['telepon'] ?></td>
+                                    <td><?= $row['handphone'] ?></td>
+                                    <td><?= $row['total_harga'] ?></td>
+                                    <td>
+                                        <a href="purchase_order/edit_po.php?kode=<?= $row['kode'] ?>"><i class="fa fa-edit fa-lg" style="color: blue; padding: 5px;"></i></a>
+                                        <a href="purchase_order/data_purchase_order.php?request=delete&kode=<?= $row['kode'] ?>"><i class="fa fa-trash fa-lg" style="color: red; padding: 5px;"></i></a>
+                                        <a href="#"><i class="fa fa-print fa-lg" style="color: green; padding: 5px;"></i></a>
+                                    </td>
+                                </tr>
+                            <?php $i++;
+                                endforeach; ?>
+                        </tbody>
+                    </table>
+                    <!-- datatable -->
+                    <div class="button-close pull-right" style="margin-top: 20px;">
+                        <a href="#" class="btn btn-primary">Close</a>
+                    </div>
+                </div>
+            </div>
+        <?php endif; ?>
         <!-- /.box -->
 
     </section>

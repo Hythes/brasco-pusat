@@ -3,7 +3,7 @@ require '../env.php';
 
 if (isset($_POST['submit'])) {
     extract($_POST);
-    $sql = "UPDATE purchase_order SET kode = '$kode',tanggal = '$tanggal',kode_supplier ='$kode_supplier',nama_supplier = '$nama_supplier',alamat_supplier = '$alamat_supplier',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kodepos',telepon = '$telepon',handphone = '$handphone',dpp ='$dpp',tipe_ppn = '$tipe_ppn',tipe_ppn_input = '$tipe_ppn_teks',total_harga = '$total_harga'  WHERE kode = '$kode'; ";
+    $sql = "UPDATE purchase_order SET kode = '$kode',tanggal = '$tanggal',kode_supplier ='$kode_supplier',nama_supplier = '$nama_supplier',alamat_supplier = '$alamat_supplier',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kodepos',telepon = '$telepon',handphone = '$handphone',dpp ='$dpp',tipe_ppn = '$tipe_ppn',tipe_ppn_input = '$tipe_ppn_teks',total_harga = '$total_harga',keterangan = '$keterangan'  WHERE kode = '$kode'; ";
     $sql .= "DELETE FROM purchase_order_item WHERE kode_po = '$kode';";
     $data_po = json_decode($data_po);
     $data_po = array_filter($data_po);
@@ -13,7 +13,7 @@ if (isset($_POST['submit'])) {
         $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga'); ";
     }
     $query = mysqli_multi_query($conn, $sql);
-    lanjutkan($query,"Diedit");
+    lanjutkan($query, "Diedit");
     echo "<script> document.location.href = 'data_purchase_order.php'</script>";
 }
 $kode = $_GET['kode'];
@@ -190,15 +190,15 @@ $var = $var[0];
                                 <label class="col-sm-4 control-label">Tipe PPN</label>
                                 <div class="col-sm-4 radio">
                                     <label>
-                                        <input type="radio" <?php if($var['tipe_ppn'] == 'T') echo 'checked'?> name="tipe_ppn" id="tipe_ppn_t" value="T">
+                                        <input type="radio" <?php if ($var['tipe_ppn'] == 'T') echo 'checked' ?> name="tipe_ppn" id="tipe_ppn_t" value="T">
                                         T
                                     </label>
                                     <label>
-                                        <input type="radio" <?php if($var['tipe_ppn'] == 'I') echo 'checked'?> name="tipe_ppn" id="tipe_ppn_i" value="I">
+                                        <input type="radio" <?php if ($var['tipe_ppn'] == 'I') echo 'checked' ?> name="tipe_ppn" id="tipe_ppn_i" value="I">
                                         I
                                     </label>
                                     <label>
-                                        <input type="radio"<?php if($var['tipe_ppn'] == 'E') echo 'checked'?> name="tipe_ppn" id="tipe_ppn_e" value="E">
+                                        <input type="radio" <?php if ($var['tipe_ppn'] == 'E') echo 'checked' ?> name="tipe_ppn" id="tipe_ppn_e" value="E">
                                         E
                                     </label>
                                 </div>
