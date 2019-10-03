@@ -66,7 +66,7 @@
                   <input type="text" id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
                 </div>
                 <div class="col-sm-2" style="padding: 5px;">
-                  <button type="submit" class="btn btn-danger" id="barcode">Cek Duplikasi</button>
+                  <button type="button" class="btn btn-danger" id="barcode_inv">Cek Duplikasi</button>
                 </div>
                 <div class="col-sm-4" style="padding: 5px;">
                   <input type="text" name="nama_barang" class="form-control" placeholder="Nama Barang . . ." required>
@@ -179,7 +179,37 @@
     </section>
     <!-- /.content -->
   </div>
+  <script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+  <script>
+    $('#barcode_inv').on('click', function() {
+      console.log($('#isi_barcode').val());
 
+      if ($('#isi_barcode').val() == '') {
+        alert('Tolong diisi barcodenya');
+        return;
+      }
+      $.ajax({
+        url: './master_inventory/cekBarcode.php',
+        type: 'POST',
+        data: {
+          "barcode": $('#isi_barcode').val()
+        },
+        complete: function(response, textStatus, jqXHR) {
+          var respon = JSON.parse(response.responseText);
+          if (respon.result == 0) {
+            alert("Barcode bisa digunakan!");
+          } else {
+            alert("Barcode tidak bisa digunakan!");
+          }
+
+
+        },
+        error: function(jqXHR, textStatus, err) {
+          console.log(textStatus + err + jqXHR);
+        }
+      });
+    })
+  </script>
   <!-- /.content-wrapper -->
 
   <?php include('../templates/footer.php') ?>
