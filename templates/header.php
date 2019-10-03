@@ -352,6 +352,9 @@
           <li id="header_profil">
             <a href="profile"><i class="fa fa-user"></i> <span>Profil</span></a>
           </li>
+          <li id="header_customer">
+            <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
+          </li>
           <!-- <li id="header_jurnal">
             <a href="JurnalReferensi.php"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
           </li> -->
@@ -473,10 +476,8 @@
               </li>
             </ul>
           </li> -->
-          <li id="header_customer">
-            <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
-          </li>
-          <!-- <li class="treeview" id="header_sales">
+
+          <li class="treeview" id="header_sales">
             <a href="#">
               <i class="fa fa-truck"></i>
               <span>Sales Order</span>
@@ -486,25 +487,24 @@
             </a>
             <ul class="treeview-menu">
               <li id="header_sales_input">
-                <a href="#.php"><i class="fa fa-circle-o"></i> <span>Input Sales Order</span></a>
+                <a href="sales_order/input_so.php"><i class="fa fa-circle-o"></i> <span>Input Sales Order</span></a>
               </li>
               <li id="header_sales_laporan">
-                <a href="laporanSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
+                <a href="sales_order/laporanSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
               </li>
+              <!--
               <li id="header_sales_detail">
                 <a href="detailSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Detail Sales Order</span></a>
-              </li>
-              <li id="header_sales_edit">
-                <a href="editSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Edit Sales Order</span></a>
               </li>
               <li id="header_sales_list">
                 <a href="listorder.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
               </li>
               <li id="header_sales_gudang">
                 <a href="orderkeGudang.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
-              </li>
+              </li> -->
             </ul>
           </li>
+          <!--
           <li class="treeview" id="header_packing">
             <a href="#">
               <i class="fa fa-cloud"></i>

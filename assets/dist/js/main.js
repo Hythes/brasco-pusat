@@ -436,7 +436,6 @@ function po_hapus(id) {
     id--;
     var total = parseInt(simpanArray[id].quantity) * parseInt(simpanArray[id].harga);
     dataSimpan.total = parseInt(dataSimpan.total) - parseInt(total);
-    console.log(dataSimpan.total);
     $('#total').val(dataSimpan.total);
     delete simpanArray[id];
     $('#data_po').val(JSON.stringify(simpanArray));
@@ -468,3 +467,13 @@ $('#cetak_barcode_input').on('click', function () {
     );
     i++;
 })
+
+function fix_iteration(nama_table) {
+    var num = 1;
+    $(nama_table).find('tr').each(function () {
+        $(this).find('#icr').each(function () {
+            $(this).html(num++);
+        });
+    });
+    num = 1;
+}
