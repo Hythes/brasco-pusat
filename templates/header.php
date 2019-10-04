@@ -492,16 +492,15 @@
               <li id="header_sales_laporan">
                 <a href="sales_order/laporanSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
               </li>
-              <!--
               <li id="header_sales_detail">
-                <a href="detailSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Detail Sales Order</span></a>
+                <a href="sales_order/detail.php"><i class="fa fa-circle-o"></i> <span>Detail Sales Order</span></a>
               </li>
               <li id="header_sales_list">
-                <a href="listorder.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
+                <a href="sales_order/list_order.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
               </li>
               <li id="header_sales_gudang">
-                <a href="orderkeGudang.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
-              </li> -->
+                <a href="sales_order/order_gudang.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
+              </li>
             </ul>
           </li>
           <!--
