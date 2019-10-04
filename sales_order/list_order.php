@@ -10,31 +10,54 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content">
-        <div class="box-body">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1>LIST PACKING GUDANG</h1>
+        <div class="box box-primary">
+            <div class="">
+                <div class="box-header with-border">
+                    <h2 class="box-title">LIST ORDER KE GUDANG</h2>
                 </div>
                 <div class="panel-body">
-                    <form>
-                        <div class="form-group row" style="padding-left: 10px">
-                            <div class="col-sm-10">
-                                Tanggal:<input type="text" name="" style="margin-left: 30px; width: 100px" placeholder="dd/mm/yyyy"><a href="" style="color: black; margin-left: 10px"><span class="glyphicon glyphicon-calendar"></span></a><br>
-                                Customer:<select style="margin-left: 20px">
-                                    <option>- Pilih Customer -</option>
-                                </select>
-                                <button class="btn btn-primary" style="width: 80px; height: 29px; margin: 10px">Search</button>
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label for="" class="col-sm-2 ">Tanggal</label>
+                                <div class="col-sm-3">
+                                    <div class="input-group">
+                                        <input type="date" name="" class="form-control">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="" class=" col-sm-2">Customer : </label>
+                                <div class="col-sm-3">
+                                    <select name="" class="form-control" id="">
+                                        <option value="">Costumer 1</option>
+                                        <option value="">Costumer 2</option>
+                                        <option value="">Costumer 3</option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2">
+                                    <button type="button" class="btn btn-info">Search</button>
+                                </div>
+                            </div>
+                            <div class="form-group pad">
+                                <button type="submit" class="btn btn-primary">Buat order baru</button>
                             </div>
                         </div>
-                        <button class="btn btn-primary" style="width: 120px; height: 30px; margin: 10px">Buat Order Baru</button>
-                        <!-- 1 -->
                     </form>
-                    <div class="container">
-                        <div class="row" style="width: 950px; padding: 10px">
-                            <div style="border-top: solid; width: 100%; margin-top: 5px">
-                                <div class="table-responsive" style="margin-top: 20px; width: 950px">
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="thead-dark">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-primary">
+                        <div class="box-body">
+                            <div class="data-table">
+                                <div class="box-body">
+                                    <table id="example1" class="table table-bordered table-striped">
+                                    <thead class="thead-dark">
                                             <tr>
                                                 <th>No </th>
                                                 <th>Tanggal</th>
@@ -85,9 +108,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        </div>
 
     </section> <!-- /.content -->
 </div>
