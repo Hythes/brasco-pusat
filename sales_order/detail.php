@@ -6,12 +6,13 @@
 <?php include('../templates/header.php') ?>
 
 <div class="content-wrapper">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h1>DETAIL SALES ORDER</h1>
+    <section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3>DETAIL SALES ORDER</h3>
 
         </div>
-        <div class="panel-body">
+        <div class="box-body">
             <form>
                 <!-- 1 -->
                 <div class="row">
@@ -151,6 +152,7 @@
 
         </div>
     </div>
+    </section>
 </div>
 
 <?php include('../templates/footer.php') ?>
