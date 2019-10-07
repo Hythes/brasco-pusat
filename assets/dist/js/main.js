@@ -99,7 +99,7 @@ $(document).ready(function () {
     if (active == 'header_purchasing') {
         $('#header_purchasing').addClass('active');
         if (active_2 == 'header_purchasing_input') {
-            $('#header_purchasing_masuk').addClass('active');
+            $('#header_purchasing_input').addClass('active');
         }
         if (active_2 == 'header_purchasing_masuk') {
             $('#header_purchasing_masuk').addClass('active');

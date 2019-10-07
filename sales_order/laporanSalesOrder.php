@@ -150,8 +150,9 @@ if (isset($_POST['cari'])) {
                                 <td><?= $total ?></td>
                                 <td><?= $keterangan ?></td>
                                 <td>
-                                    <a href="sales_order/edit_so.php?nomor=<?= $nomor_so ?>"><i style="color: blue;font-size:24px;" class="fa fa-pencil"></i></a>
-                                    <a onclick="return confirm('Yakin ingin menghapus?')" href="sales_order/ajax.php?nomor=<?= $nomor_so ?>"><i style="color: red;font-size:24px;" class="fa fa-trash"></i></a>
+                                    <a title="Edit" href="sales_order/edit_so.php?nomor=<?= $nomor_so ?>"><i style="color: blue;font-size:24px;" class="fa fa-pencil"></i></a>
+                                    <a title="Hapus" onclick="return confirm('Yakin ingin menghapus?')" href="sales_order/ajax.php?nomor=<?= $nomor_so ?>"><i style="color: red;font-size:24px;" class="fa fa-trash"></i></a>
+                                    <a title="Detail" target="_blank" href="sales_order/detail.php?nomor=<?= $nomor_so ?>"><i style="color: green;font-size:24px;" class="fa fa-info"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach; ?>

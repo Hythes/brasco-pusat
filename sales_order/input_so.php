@@ -243,7 +243,7 @@ if (isset($_POST['submit'])) {
             } else {
                 data = data[0];
                 sessData.dataCust = data;
-                $('#nama').val(data.contact_name);
+                $('#nama').val(data.nama);
                 $('#alamat').val(data.alamat);
                 $('#kota').val(data.kota);
                 $('#no_telepon').val(data.telepon);

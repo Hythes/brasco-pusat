@@ -5,6 +5,10 @@ $user = "root";
 $password = "";
 $dbname = "brasco_pusat";
 $conn = mysqli_connect($host, $user, $password, $dbname);
+function jquery()
+{
+  echo '<script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>';
+}
 function query($query)
 {
   global $conn;
