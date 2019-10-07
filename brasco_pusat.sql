@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 02, 2019 at 01:43 PM
--- Server version: 10.3.16-MariaDB
--- PHP Version: 7.1.30
+-- Waktu pembuatan: 04 Okt 2019 pada 04.01
+-- Versi server: 10.3.16-MariaDB
+-- Versi PHP: 7.1.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,7 +25,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Table structure for table `customer`
+-- Struktur dari tabel `customer`
 --
 
 CREATE TABLE `customer` (
@@ -54,7 +54,7 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `customer`
+-- Dumping data untuk tabel `customer`
 --
 
 INSERT INTO `customer` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `handphone`, `npwp`, `ktp`, `tipe_customer`, `kredit`, `contact_name`, `email`, `kode_sales`, `top`, `batas_kredit`, `tanggal_jual_akhir`, `saldo_awal`, `saldo_jalan`, `keterangan`, `created_at`, `updated_at`) VALUES
@@ -63,7 +63,7 @@ INSERT INTO `customer` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `inventory`
+-- Struktur dari tabel `inventory`
 --
 
 CREATE TABLE `inventory` (
@@ -81,18 +81,52 @@ CREATE TABLE `inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `inventory`
+-- Dumping data untuk tabel `inventory`
 --
 
 INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_barang`, `harga_jual1`, `harga_jual2`, `harga_jual3`, `quantity`, `created_at`, `update_at`) VALUES
 (2, 'A33', 'Sepatu', '4', '6', '14000', '10000', '6500', '2', '2019-09-30 14:25:46', '2019-10-01 07:08:25'),
 (3, 'A23', 'Baju', '4', '7', '50000', '40000', '45000', NULL, '2019-10-01 14:06:24', NULL),
-(4, 'A13', 'Celana', '4', '8', '75000', '78000', '60000', NULL, '2019-10-01 14:07:24', NULL);
+(4, 'A13', 'Celana', '4', '8', '75000', '78000', '60000', NULL, '2019-10-01 14:07:24', NULL),
+(5, '1', 'Ret', '4', '6', '2000', '1000', '3000', NULL, '2019-10-04 01:23:25', NULL),
+(6, '2', 'Priz', '7', '7', '4000', '3000', '2500', NULL, '2019-10-04 01:23:42', NULL),
+(7, '3', 'Randu', '6', '8', '7000', '6000', '5000', NULL, '2019-10-04 01:23:58', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pelanggan`
+-- Struktur dari tabel `order_gudang`
+--
+
+CREATE TABLE `order_gudang` (
+  `nomor_order` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `nomor_so` varchar(255) NOT NULL,
+  `kode_customer` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `total` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `order_gudang_item`
+--
+
+CREATE TABLE `order_gudang_item` (
+  `nomor_order` varchar(255) NOT NULL,
+  `barcode` varchar(255) NOT NULL,
+  `quantity` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `pelanggan`
 --
 
 CREATE TABLE `pelanggan` (
@@ -108,7 +142,7 @@ CREATE TABLE `pelanggan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pelanggan`
+-- Dumping data untuk tabel `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`id`, `kode`, `tanggal`, `nama`, `alamat`, `kota`, `kodepos`, `no_telepon`, `no_handphone`) VALUES
@@ -118,7 +152,7 @@ INSERT INTO `pelanggan` (`id`, `kode`, `tanggal`, `nama`, `alamat`, `kota`, `kod
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pengajuan_perubahan_harga`
+-- Struktur dari tabel `pengajuan_perubahan_harga`
 --
 
 CREATE TABLE `pengajuan_perubahan_harga` (
@@ -133,7 +167,7 @@ CREATE TABLE `pengajuan_perubahan_harga` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pengajuan_perubahan_harga`
+-- Dumping data untuk tabel `pengajuan_perubahan_harga`
 --
 
 INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tipe_customer`, `tanggal_approve`, `tanggal_pengajuan`, `keterangan`, `status`, `created_at`, `updated_at`) VALUES
@@ -143,7 +177,7 @@ INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tipe_customer`, `ta
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pph_item`
+-- Struktur dari tabel `pph_item`
 --
 
 CREATE TABLE `pph_item` (
@@ -160,7 +194,7 @@ CREATE TABLE `pph_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `pph_item`
+-- Dumping data untuk tabel `pph_item`
 --
 
 INSERT INTO `pph_item` (`nomor_pengajuan`, `tanggal`, `tipe_customer`, `barcode_inventory`, `harga_jual_lama`, `harga_jual_baru`, `quantity`, `keterangan`, `created_at`, `updated_at`) VALUES
@@ -171,7 +205,7 @@ INSERT INTO `pph_item` (`nomor_pengajuan`, `tanggal`, `tipe_customer`, `barcode_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `profil`
+-- Struktur dari tabel `profil`
 --
 
 CREATE TABLE `profil` (
@@ -189,7 +223,7 @@ CREATE TABLE `profil` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `profil`
+-- Dumping data untuk tabel `profil`
 --
 
 INSERT INTO `profil` (`id`, `kode_cabang`, `nama_cabang`, `alamat`, `alamat2`, `kota`, `kodepos`, `no_telp`, `no_hp`, `chief`, `logo`) VALUES
@@ -198,7 +232,7 @@ INSERT INTO `profil` (`id`, `kode_cabang`, `nama_cabang`, `alamat`, `alamat2`, `
 -- --------------------------------------------------------
 
 --
--- Table structure for table `purchase_order`
+-- Struktur dari tabel `purchase_order`
 --
 
 CREATE TABLE `purchase_order` (
@@ -226,16 +260,16 @@ CREATE TABLE `purchase_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `purchase_order`
+-- Dumping data untuk tabel `purchase_order`
 --
 
 INSERT INTO `purchase_order` (`kode`, `tanggal`, `tanggal_approve`, `kode_supplier`, `nama_supplier`, `alamat_supplier`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `handphone`, `dpp`, `tipe_ppn`, `tipe_ppn_input`, `total_harga`, `keterangan`, `keterangan_approve`, `status`, `created_at`, `updated_at`) VALUES
-('PO-001', '2019-10-05', '2019-10-02', 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '30000', 'I', '2727.27', '922272.73', 'Purchase Order #2', 'sudah diapprove', 'Closed', '2019-10-01 14:08:56', '2019-10-02 00:59:16');
+('PO-001', '2019-10-15', NULL, 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '12000', 'I', '1090.91', '7948.09', 'AWOKKOA', NULL, 'Belum Approve', '2019-10-04 01:20:18', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `purchase_order_item`
+-- Struktur dari tabel `purchase_order_item`
 --
 
 CREATE TABLE `purchase_order_item` (
@@ -251,17 +285,18 @@ CREATE TABLE `purchase_order_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `purchase_order_item`
+-- Dumping data untuk tabel `purchase_order_item`
 --
 
 INSERT INTO `purchase_order_item` (`kode_po`, `barcode_inventory`, `kode_item_supplier`, `nama_inventory`, `quantity`, `harga_satuan`, `satuan`, `created_at`, `updated_at`) VALUES
-('PO-001', 'A13', 'B12', 'Celana', '10', '40000', '', '2019-10-01 14:10:46', NULL),
-('PO-001', 'A23', 'B44', 'Baju', '15', '35000', '', '2019-10-01 14:10:46', NULL);
+('PO-001', 'A33', '23', 'Sepatu', '23', '131', '4', '2019-10-04 01:20:18', NULL),
+('PO-001', 'A33', '23', 'Sepatu', '23', '131', '4', '2019-10-04 01:20:19', NULL),
+('PO-001', 'A33', '23', 'Sepatu', '23', '131', '4', '2019-10-04 01:20:19', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sales_order`
+-- Struktur dari tabel `sales_order`
 --
 
 CREATE TABLE `sales_order` (
@@ -269,14 +304,24 @@ CREATE TABLE `sales_order` (
   `tanggal_so` date NOT NULL,
   `kode_customer` varchar(255) NOT NULL,
   `keterangan` varchar(255) NOT NULL,
+  `total` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `sales_order`
+--
+
+INSERT INTO `sales_order` (`nomor_so`, `tanggal_so`, `kode_customer`, `keterangan`, `total`, `created_at`, `updated_at`) VALUES
+('SO-001', '2019-10-01', 'CST-001', 'Lve', '55', '2019-10-03 02:32:20', '2019-10-03 04:25:13'),
+('SO-002', '2019-10-01', 'CST-001', 'ww', '11', '2019-10-03 07:18:54', '2019-10-03 07:20:56'),
+('SO-003', '2019-10-09', 'CST-001', 'asdawdwad', '66', '2019-10-03 07:20:44', NULL);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `sales_order_item`
+-- Struktur dari tabel `sales_order_item`
 --
 
 CREATE TABLE `sales_order_item` (
@@ -287,10 +332,22 @@ CREATE TABLE `sales_order_item` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data untuk tabel `sales_order_item`
+--
+
+INSERT INTO `sales_order_item` (`nomor_so`, `barcode`, `quantity`, `created_at`, `updated_at`) VALUES
+('SO-001', 'A33', '55', '2019-10-03 04:25:14', NULL),
+('SO-003', 'A33', '22', '2019-10-03 07:20:44', NULL),
+('SO-003', 'A33', '44', '2019-10-03 07:20:45', NULL),
+('SO-002', 'A33', '2', '2019-10-03 07:20:56', NULL),
+('SO-002', 'A33', '4', '2019-10-03 07:20:56', NULL),
+('SO-002', 'A33', '5', '2019-10-03 07:20:56', NULL);
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `satuan`
+-- Struktur dari tabel `satuan`
 --
 
 CREATE TABLE `satuan` (
@@ -299,7 +356,7 @@ CREATE TABLE `satuan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `satuan`
+-- Dumping data untuk tabel `satuan`
 --
 
 INSERT INTO `satuan` (`id`, `satuan`) VALUES
@@ -311,7 +368,7 @@ INSERT INTO `satuan` (`id`, `satuan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `stock_opname`
+-- Struktur dari tabel `stock_opname`
 --
 
 CREATE TABLE `stock_opname` (
@@ -325,7 +382,7 @@ CREATE TABLE `stock_opname` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supplier`
+-- Struktur dari tabel `supplier`
 --
 
 CREATE TABLE `supplier` (
@@ -347,7 +404,7 @@ CREATE TABLE `supplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `supplier`
+-- Dumping data untuk tabel `supplier`
 --
 
 INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `fax`, `handphone`, `contact_name`, `email`, `kredit`, `top`, `pkp`, `created_at`, `updated_at`) VALUES
@@ -357,7 +414,7 @@ INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `supplier_saldo`
+-- Struktur dari tabel `supplier_saldo`
 --
 
 CREATE TABLE `supplier_saldo` (
@@ -373,7 +430,7 @@ CREATE TABLE `supplier_saldo` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tipe_barang`
+-- Struktur dari tabel `tipe_barang`
 --
 
 CREATE TABLE `tipe_barang` (
@@ -384,7 +441,7 @@ CREATE TABLE `tipe_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tipe_barang`
+-- Dumping data untuk tabel `tipe_barang`
 --
 
 INSERT INTO `tipe_barang` (`id`, `nama_barang`, `created_at`, `update_at`) VALUES
@@ -397,107 +454,113 @@ INSERT INTO `tipe_barang` (`id`, `nama_barang`, `created_at`, `update_at`) VALUE
 --
 
 --
--- Indexes for table `customer`
+-- Indeks untuk tabel `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indexes for table `inventory`
+-- Indeks untuk tabel `inventory`
 --
 ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pelanggan`
+-- Indeks untuk tabel `order_gudang`
+--
+ALTER TABLE `order_gudang`
+  ADD PRIMARY KEY (`nomor_order`);
+
+--
+-- Indeks untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `pengajuan_perubahan_harga`
+-- Indeks untuk tabel `pengajuan_perubahan_harga`
 --
 ALTER TABLE `pengajuan_perubahan_harga`
   ADD PRIMARY KEY (`nomor_pengajuan`);
 
 --
--- Indexes for table `profil`
+-- Indeks untuk tabel `profil`
 --
 ALTER TABLE `profil`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `purchase_order`
+-- Indeks untuk tabel `purchase_order`
 --
 ALTER TABLE `purchase_order`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indexes for table `sales_order`
+-- Indeks untuk tabel `sales_order`
 --
 ALTER TABLE `sales_order`
   ADD PRIMARY KEY (`nomor_so`);
 
 --
--- Indexes for table `satuan`
+-- Indeks untuk tabel `satuan`
 --
 ALTER TABLE `satuan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `supplier`
+-- Indeks untuk tabel `supplier`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indexes for table `supplier_saldo`
+-- Indeks untuk tabel `supplier_saldo`
 --
 ALTER TABLE `supplier_saldo`
   ADD KEY `id` (`id`);
 
 --
--- Indexes for table `tipe_barang`
+-- Indeks untuk tabel `tipe_barang`
 --
 ALTER TABLE `tipe_barang`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `inventory`
+-- AUTO_INCREMENT untuk tabel `inventory`
 --
 ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `pelanggan`
+-- AUTO_INCREMENT untuk tabel `pelanggan`
 --
 ALTER TABLE `pelanggan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT for table `profil`
+-- AUTO_INCREMENT untuk tabel `profil`
 --
 ALTER TABLE `profil`
   MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT for table `satuan`
+-- AUTO_INCREMENT untuk tabel `satuan`
 --
 ALTER TABLE `satuan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `supplier_saldo`
+-- AUTO_INCREMENT untuk tabel `supplier_saldo`
 --
 ALTER TABLE `supplier_saldo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `tipe_barang`
+-- AUTO_INCREMENT untuk tabel `tipe_barang`
 --
 ALTER TABLE `tipe_barang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
