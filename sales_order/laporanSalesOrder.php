@@ -33,11 +33,12 @@ if (isset($_POST['cari'])) {
 <?php include('../templates/header.php') ?>
 
 <div class="content-wrapper">
-    <div class="panel panel-default">
-        <div class="panel-heading">
-            <h1>LAPORAN SALES ORDER</h1>
+    <section class="content">
+    <div class="box">
+        <div class="box-header">
+            <h3>LAPORAN SALES ORDER</h3>
         </div>
-        <div class="panel-body">
+        <div class="box-body">
             <form action="" method="POST">
                 <div class="row">
                     <div class="col-md-2">
@@ -161,6 +162,7 @@ if (isset($_POST['cari'])) {
 
     </div>
 </div>
+    </section>
 </div>
 
 <?php include('../templates/footer.php') ?>
