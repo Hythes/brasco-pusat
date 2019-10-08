@@ -27,16 +27,6 @@ if (isset($_POST['submit'])) {
 <?php include('../templates/header.php') ?>
 
 <div class="content-wrapper">
-<<<<<<< HEAD
-    <section class="content">
-    <div class="box">
-        <div class="box-header">
-            <h3>DETAIL SALES ORDER</h3>
-
-        </div>
-        <div class="box-body">
-            <form>
-=======
     <div class="panel panel-default">
         <div class="panel-heading text-center">
             <h1>DETAIL SALES ORDER</h1>
@@ -44,7 +34,6 @@ if (isset($_POST['submit'])) {
         </div>
         <div class="panel-body">
             <form action="" method="POST">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
                 <!-- 1 -->
                 <div class="row">
                     <div class="col-md-2">
@@ -225,7 +214,6 @@ if (isset($_POST['submit'])) {
 
         </div>
     </div>
-    </section>
 </div>
 <script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -283,10 +271,7 @@ if (isset($_POST['submit'])) {
                             fix_iteration('#table_so');
                             i++;
                         })
-
-
                     })
-
                 });
             })
         })
@@ -353,15 +338,12 @@ if (isset($_POST['submit'])) {
                 })
             }
         })
-
-
     })
     $('#masuk_data').on('click', function() {
         if ($('#quantity').val() == '' || $('#barcode_so').val() == '' || $('#satuan').val() == '' || $('#nama_item').val() == '') {
             alert('Tolong diisi semua fieldnya');
             return;
         }
-
         storeData.push({
             'barcode': $('#barcode_so').val(),
             'quantity': $('#quantity').val()
@@ -385,9 +367,6 @@ if (isset($_POST['submit'])) {
         fix_iteration('#table_so');
         i++;
     })
-
-
-
     function so_hapus(i) {
         $('#tr_so_' + i).remove();
         fix_iteration('#table_so');
@@ -396,7 +375,6 @@ if (isset($_POST['submit'])) {
         $('#total').val(total);
         delete storeData[i];
         $('#data_item').val(JSON.stringify(storeData));
-
     }
 </script>
 <?php include('../templates/footer.php') ?>
