@@ -4,7 +4,7 @@ if (isset($_POST['submit'])) {
     require '../env.php';
     extract($_POST);
     $data_item = json_decode($data_item, true);
-    $sql = "INSERT INTO sales_order(nomor_so,tanggal_so,kode_customer,keterangan,total) VALUES('$nomor_so', '$tanggal','$kode_customer','$keterangan','$total'); ";
+    $sql = "INSERT INTO sales_order(nomor_so, tanggal_so, kode_customer, keterangan, total) VALUES('$nomor_so', '$tanggal','$kode_customer','$keterangan','$total'); ";
     foreach (array_filter($data_item) as $data) {
         extract($data);
         $sql .= "INSERT INTO sales_order_item(nomor_so,barcode,quantity) VALUES('$nomor_so','$barcode','$quantity');";
@@ -22,104 +22,71 @@ if (isset($_POST['submit'])) {
 <?php include('../templates/header.php') ?>
 
 <div class="content-wrapper">
-    <div class="panel panel-default">
-        <div class="panel-heading text-center">
-            <h1>INPUT SALES ORDER</h1>
+    <section class="content">
+    <div class="box box-primary">
+        <div class="box-header text-center">
+            <h3>INPUT SALES ORDER</h3>
 
         </div>
         <div class="panel-body">
-            <form action="" method="POST">
-                <!-- 1 -->
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label>KIRIM KE</label>
-
+            <form action="" method="POST" class="form-horizontal">
+                
+            <!-- form grid ke 1 -->
+            <div class="col-sm-6">
+                <div class="box-body">
+                <h5><b>KIRIM KE</b></h5>
+                    <div class="form-group">
+                        <div style="display: inline-flex">
+                            <input style="margin-right: 20px;" type="text" name="kode_customer" id="kode_customer" placeholder="Kode Customer" class="form-control">
+                            <i style="font-size: 30px; cursor:pointer;" class="fa fa-search" id="cari_customer"></i>
                         </div>
                     </div>
-                    <div class="col-md-5">
-
+                    <div class="form-group">
+                        <input type="text" readonly id="nama" placeholder="Nama Customer" class="form-control">
                     </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label>Nomor Sales Order :</label>
-
+                    <div class="form-group">
+                        <Textarea type="text" readonly id="alamat" placeholder="Alamat" class="form-control"></Textarea>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" id="kota" readonly placeholder="Kota" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-6" style="padding-bottom: 10px;">
+                                <input type="text" id="no_telepon" readonly placeholder="No Telepon" class="form-control">
+                            </div>
+                            <div class="col-sm-6">
+                                <input type="text" id="handphone" readonly placeholder="No Handphone" class="form-control">
+                            </div>
                         </div>
                     </div>
-                    <div class="col-md-3">
-                        <div class="form-group">
+                </div>
+            </div>
+
+            <!-- grid ke 2 -->
+            <div class="col-sm-6">
+                <div class="box-body">
+                    <div class="form-group">
+                        <label for="" class="col-sm-4">Nomor Sales Order</label>
+                        <div class="col-sm-8">
                             <input type="text" name="nomor_so" id="nomor_so" required class="form-control">
-
                         </div>
                     </div>
-                </div>
-                <!-- 2 -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <div style="display: inline-flex;">
-                                <input style="margin-right: 20px" type="text" name="kode_customer" id="kode_customer" placeholder="Kode Customer" class="form-control">
-                                <i style="font-size: 30px;cursor:pointer;" class="fa fa-search" id="cari_customer"></i>
+                    <div class="form-group">
+                        <label for="" class="col-sm-4">Tanggal Sales Order</label>
+                        <div class="col-sm-8">
+                        <div class="input-group">
+                            <input type="date" required name="tanggal" class="form-control">
+                            <div class="input-group-addon">
+                                <i class="fa fa-calendar"></i>
                             </div>
                         </div>
+                        </div>
                     </div>
-                    <div class="col-md-4">
+                </div>
+            </div>
 
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <label>Tanggal Sales Order :</label>
-
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <div style="display: inline-flex;">
-                                <input style="margin-right: 20px" required type="date" name="tanggal" class="form-control">
-                                <i style="font-size: 30px" class="fa fa-calendar"></i>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-                <!-- 3 -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="text" readonly id="nama" placeholder="Nama Customer" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <!-- 4 -->
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="text" readonly id="alamat" placeholder="Alamat" style="font-size: 14px;" class="form-control input-lg">
-                        </div>
-                    </div>
-                </div>
-                <!-- 5 -->
-                <div class="row">
-                    <div class="col-md-3">
-                        <div class="form-group">
-                            <input type="text" id="kota" readonly placeholder="Kota" class="form-control">
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <input type="text" id="no_telepon" readonly placeholder="No Telepon" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <input type="text" id="handphone" readonly placeholder="No Handphone" class="form-control">
-
-                        </div>
-                    </div>
-                </div>
-                <div style="border-bottom: 1px solid black; margin-bottom: 20px"></div>
+                <!-- <div style="border-bottom: 1px solid black; margin-bottom: 20px"></div>
                 <div class="row">
                     <div class="col-md-2">
                         <div class="form-group">
@@ -154,65 +121,105 @@ if (isset($_POST['submit'])) {
 
                         </div>
                     </div>
-                </div>
-                <div style="margin-top: 5px">
-
-                    <table class="table table-bordered ">
-                        <thead align="center">
-                            <tr>
-                                <th>
-                                    <center>No</center>
-                                </th>
-                                <th>
-                                    <center>Barcode</center>
-                                </th>
-                                <th>
-                                    <center>Nama Item</center>
-                                </th>
-                                <th>
-                                    <center>QTY</center>
-                                </th>
-                                <th>
-                                    <center>Satuan</center>
-                                </th>
-                                <th>
-                                    <center>Harga Jual Satuan</center>
-                                </th>
-                                <th>
-                                    <center>Jumlah</center>
-                                </th>
-                                <th>
-                                    <center>Aksi</center>
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody align="center" id="table_so">
-
-                        </tbody>
-                    </table>
-                </div>
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="form-group">
-                            <input type="text" name="keterangan" required class="form-control input-lg " placeholder="KETERANGAN">
-
-                        </div>
-                    </div>
-                    <div class="col-md-6">
-
-                    </div>
-                    <div class="col-md-2">
-                        <div class="form-group">
-                            <input type="hidden" name="total" id="total">
-                            <input type="hidden" name="data_item" id="data_item">
-                            <button class="btn btn-primary pull-right" type="submit" name="submit">Simpan</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
+                </div> -->
+                
+            
 
         </div>
     </div>
+
+    <div class="box box-primary">
+        <div class="box-body">
+
+            <div class="col-xs-3">
+                <div class="form-group">
+                <div style="display: inline-flex">
+                    <input style="margin-right: 20px;" type="text" id="barcode_so" placeholder="Barcode" class="form-control">
+                    <i style="font-size: 30px;cursor:pointer" class="fa fa-search" id="cari_barcode"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="form-group">
+                    <div>
+                    <input type="text" id="nama_item" readonly placeholder="Nama Item" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="form-group">
+                    <input type="text" id="satuan" readonly placeholder="Satuan" class="form-control">
+                </div>
+            </div>
+            <div class="col-xs-2">
+                <div class="form-group">
+                <input type="text" id="quantity" placeholder="Qty" class="form-control">
+                </div>
+            </div>
+            <div class="col-xs-1">
+                <div class="form-group">
+                <i style="font-size: 30px;cursor:pointer" id="masuk_data" class="fa fa-plus"></i>
+                </div>
+            </div>
+
+            <!-- table -->
+            <div class="data-table">
+                <div class="box-body">
+                    <table class="table table-bordered table-striped">
+                    <thead align="center">
+                                <tr>
+                                    <th>
+                                        <center>No</center>
+                                    </th>
+                                    <th>
+                                        <center>Barcode</center>
+                                    </th>
+                                    <th>
+                                        <center>Nama Item</center>
+                                    </th>
+                                    <th>
+                                        <center>QTY</center>
+                                    </th>
+                                    <th>
+                                        <center>Satuan</center>
+                                    </th>
+                                    <th>
+                                        <center>Harga Jual Satuan</center>
+                                    </th>
+                                    <th>
+                                        <center>Jumlah</center>
+                                    </th>
+                                    <th>
+                                        <center>Aksi</center>
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody align="center" id="table_so">
+    
+                            </tbody>
+                    </table>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" style="padding-top: 10px;" >
+                        <textarea type="text" name="keterangan" required class="form-control" rows="3" placeholder="KETERANGAN"></textarea>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="form-group" style="padding-top: 10px;">
+                    <div class="pull-right">
+                        <input type="hidden" name="total" id="total">
+                        <input type="hidden" name="data_item" id="data_item">
+                        <button class="btn btn-primary pull-right" type="submit" name="submit">Simpan</button>
+                    </div>
+                    </div>
+                </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+
+    </section>
 </div>
 <script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -306,7 +313,7 @@ if (isset($_POST['submit'])) {
             '<td>' + sessData.dataB.harga_jual1 + '</td>' +
             '<td>' + parseInt(sessData.dataB.harga_jual1) * parseInt($('#quantity').val()) + '</td>' +
             '<td>' +
-            '<i style="color: red;cursor:pointer" onclick="so_hapus(' + i + ')" class="fa fa-trash"></i>' + '</td>' +
+            '<i style="color: red;cursor:pointer" onclick="so_hapus(' + i + ')" class="fa fa-trash fa-lg"></i>' + '</td>' +
             '</tr>'
         )
         total += parseInt($('#quantity').val());

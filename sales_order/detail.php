@@ -271,10 +271,7 @@ if (isset($_POST['submit'])) {
                             fix_iteration('#table_so');
                             i++;
                         })
-
-
                     })
-
                 });
             })
         })
@@ -341,15 +338,12 @@ if (isset($_POST['submit'])) {
                 })
             }
         })
-
-
     })
     $('#masuk_data').on('click', function() {
         if ($('#quantity').val() == '' || $('#barcode_so').val() == '' || $('#satuan').val() == '' || $('#nama_item').val() == '') {
             alert('Tolong diisi semua fieldnya');
             return;
         }
-
         storeData.push({
             'barcode': $('#barcode_so').val(),
             'quantity': $('#quantity').val()
@@ -373,9 +367,6 @@ if (isset($_POST['submit'])) {
         fix_iteration('#table_so');
         i++;
     })
-
-
-
     function so_hapus(i) {
         $('#tr_so_' + i).remove();
         fix_iteration('#table_so');
@@ -384,7 +375,6 @@ if (isset($_POST['submit'])) {
         $('#total').val(total);
         delete storeData[i];
         $('#data_item').val(JSON.stringify(storeData));
-
     }
 </script>
 <?php include('../templates/footer.php') ?>

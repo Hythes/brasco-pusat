@@ -86,45 +86,51 @@
                     $datat = cariBarang();
                     foreach ($datat as $datas) :
                       ?>
-                     <option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
-                   <?php endforeach; ?>
-                 </select>
-               </div>
-             </div>
-             <div class="form-group">
-               <div class="col-sm-3" style="padding: 5px;">
-                 <input type="text" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
-               </div>
-               <div class="col-sm-3" style="padding: 5px;">
-                 <input type="text" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
-               </div>
-               <div class="col-sm-3" style="padding: 5px;">
-                 <input type="text" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
-               </div>
-             </div>
-             <button type="submit" class="btn btn-info pull-right" name="submit">Tambah</button>
-           </div>
-         </form>
-         <div style="width: 100%">
-           <div style="border-top: solid; width: 100%; margin-top: 20px">
-             <h3 style="margin-top: 20px">LIST MASTER INVENTORY</h3>
-           </div>
-           <!-- <button type="button" class="btn btn-light">Copy</button>
+
+                      <option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
+                    <?php endforeach; ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <div class="col-sm-3" style="padding: 5px;">
+                  <input type="text" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
+                </div>
+                <div class="col-sm-3" style="padding: 5px;">
+                  <input type="text" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
+                </div>
+                <div class="col-sm-3" style="padding: 5px;">
+                  <input type="text" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
+                </div>
+              </div>
+              <button type="submit" class="btn btn-info pull-right" name="submit">Tambah</button>
+            </div>
+          </form>
+          <div style="width: 100%">
+            <div style="border-top: solid; width: 100%; margin-top: 20px">
+              <h3 style="margin-top: 20px">LIST MASTER INVENTORY</h3>
+            </div>
+            <!-- <button type="button" class="btn btn-light">Copy</button>
+
             <button type="button" class="btn btn-light">CSV</button>
             <button type="button" class="btn btn-light">Excel</button>
             <button type="button" class="btn btn-light">PDF</button>
             <a href="master_inventory/laporan/print.php" class="btn btn-primary">Print</a> -->
-         </div>
-         <div class="table-responsive" style="margin-top: 20px">
-           <table id="example1" class="table table-bordered table-striped">
-             <thead class="thead-dark" align="center">
-               <tr class="text-center">
-                 <th>No</th>
-                 <th>BARCODE</th>
-                 <th>NAMA</th>
-                 <th>SAT</th>
-                 <th>TIPE BARANG</th>
-                 <!-- <th>HARGA BELI AKHIR</th>
+
+
+          </div>
+          <div class="table-responsive" style="margin-top: 20px">
+            <table id="example1" class="table table-bordered table-striped">
+              <thead class="thead-dark" align="center">
+                <tr class="text-center">
+                  <th>No</th>
+                  <th>BARCODE</th>
+                  <th>NAMA</th>
+                  <th>SAT</th>
+                  <th>TIPE BARANG</th>
+                  <!-- <th>HARGA BELI AKHIR</th>
+
+
                     <th>TOT BELI AKHIR</th> -->
                  <th>HARGA JUAL 1</th>
                  <th>HARGA JUAL 2</th>
@@ -146,66 +152,71 @@
                       $id_satuan = $row['satuan'];
                       $result2 = query("SELECT * FROM satuan WHERE id = '$id_satuan'");
                       ?>
-                   <td><?php echo $row["nama_barang"]; ?></td>
-                   <td><?php echo $result2[0]["satuan"]; ?></td>
-                   <td><?php echo $result[0]['nama_barang']; ?></td>
-                   <td><?php echo $row["harga_jual1"]; ?></td>
-                   <td><?php echo $row["harga_jual2"]; ?></td>
-                   <td><?php echo $row["harga_jual3"]; ?></td>
-                   <td>
-                     <a href="master_inventory/ubah.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-edit fa-lg"></i>&nbsp&nbsp&nbsp</a>
-                     <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-trash fa-lg text-red">&nbsp&nbsp&nbsp</i></a>
-                     <a href="master_inventory/laporan/print.php?id=<?php echo $row["id"] ?>"><i class="fa fa-print text-green fa-lg"></i></a>
-                   </td>
-                 </tr>
-                 <?php $i++ ?>
-               <?php endforeach; ?>
-             </tbody>
-           </table>
-         </div>
-         <div style="width: 100%; text-align: right;">
-           <button class="btn btn-light">Close</button>
-         </div>
-       </div>
-       <!-- /.box-body -->
-       <div class="box-footer">
-         Footer
-       </div>
-       <!-- /.box-footer-->
-     </div>
-     <!-- /.box -->
+                    <td><?php echo $row["nama_barang"]; ?></td>
+                    <td><?php echo $result2[0]["satuan"]; ?></td>
+                    <td><?php echo $result[0]['nama_barang']; ?></td>
+                    <td><?php echo $row["harga_jual1"]; ?></td>
+                    <td><?php echo $row["harga_jual2"]; ?></td>
+                    <td><?php echo $row["harga_jual3"]; ?></td>
+                    <td>
+                      <a href="master_inventory/ubah.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-edit fa-lg"></i>&nbsp&nbsp&nbsp</a>
+                      <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-trash fa-lg text-red">&nbsp&nbsp&nbsp</i></a>
+                      <a href="master_inventory/laporan/print.php?id=<?php echo $row["id"] ?>"><i class="fa fa-print text-green fa-lg"></i></a>
+                    </td>
+                  </tr>
+                  <?php $i++ ?>
+                <?php endforeach; ?>
+              </tbody>
+            </table>
+          </div>
+          <div style="width: 100%; text-align: right;">
+            <button class="btn btn-light">Close</button>
+          </div>
+        </div>
+        <!-- /.box-body -->
+        <div class="box-footer">
+          Footer
+        </div>
+        <!-- /.box-footer-->
+      </div>
+      <!-- /.box -->
 
-   </section>
-   <!-- /.content -->
- </div>
- <script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
- <script>
-   $('#barcode_inv').on('click', function() {
-     console.log($('#isi_barcode').val());
-     if ($('#isi_barcode').val() == '') {
-       alert('Tolong diisi barcodenya');
-       return;
-     }
-     $.ajax({
-       url: './master_inventory/cekBarcode.php',
-       type: 'POST',
-       data: {
-         "barcode": $('#isi_barcode').val()
-       },
-       complete: function(response, textStatus, jqXHR) {
-         var respon = JSON.parse(response.responseText);
-         if (respon.result == 0) {
-           alert("Barcode bisa digunakan!");
-         } else {
-           alert("Barcode tidak bisa digunakan!");
-         }
-       },
-       error: function(jqXHR, textStatus, err) {
-         console.log(textStatus + err + jqXHR);
-       }
-     });
-   })
- </script>
- <!-- /.content-wrapper -->
+    </section>
+    <!-- /.content -->
+  </div>
+  <script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+  <script>
+    $('#barcode_inv').on('click', function() {
+      console.log($('#isi_barcode').val());
+
+      if ($('#isi_barcode').val() == '') {
+        alert('Tolong diisi barcodenya');
+        return;
+      }
+      $.ajax({
+        url: './master_inventory/cekBarcode.php',
+        type: 'POST',
+        data: {
+          "barcode": $('#isi_barcode').val()
+        },
+        complete: function(response, textStatus, jqXHR) {
+          var respon = JSON.parse(response.responseText);
+          if (respon.result == 0) {
+            alert("Barcode bisa digunakan!");
+          } else {
+            alert("Barcode tidak bisa digunakan!");
+          }
+
+
+        },
+        error: function(jqXHR, textStatus, err) {
+          console.log(textStatus + err + jqXHR);
+        }
+      });
+    })
+      
+  </script>
+  <!-- /.content-wrapper -->
+
 
  <?php include('../templates/footer.php') ?>
