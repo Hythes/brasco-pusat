@@ -1,5 +1,4 @@
-  <?php
-
+ <?php
   require 'functions.php';
   if (isset($_POST["submit"])) {
     if (tambah($_POST) > 0) {
@@ -21,17 +20,17 @@
   $data = query("SELECT * FROM inventory");
   $title = "Master Inventory";
   ?>
-  <script>
-    var active = 'header_inventory';
-    var active_2 = 'header_inventory_master';
-  </script>
-  <?php include('../templates/header.php') ?>
-  <!-- =============================================== -->
+ <script>
+   var active = 'header_inventory';
+   var active_2 = 'header_inventory_master';
+ </script>
+ <?php include('../templates/header.php') ?>
+ <!-- =============================================== -->
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <!-- <section class="content-header">
+ <!-- Content Wrapper. Contains page content -->
+ <div class="content-wrapper">
+   <!-- Content Header (Page header) -->
+   <!-- <section class="content-header">
         <h1>
           Master Inventori
         </h1>
@@ -42,48 +41,48 @@
         </ol>
       </section> -->
 
-    <!-- Main content -->
-    <section class="content">
+   <!-- Main content -->
+   <section class="content">
 
-      <!-- Default box -->
-      <div class="box">
-        <div class="box-body">
-          <h1>MASTER INVENTORY</h1>
-          <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
-            <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
-              <div class="alert alert-danger alert-dismissible">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
-                <h4><i class="icon fa fa-info"></i> Informasi </h4>
-                Pastikan Barcode sudah dibuat dan disetujui <br>
-                Harap Cek Duplikasi Barcode sebelum lanjut ke langkah berikutnya
-              </div>
-            </div>
-          </div>
-          <form class="inline-form" action="" method="post">
-            <div class="box-body">
-              <div class="form-group">
-                <div class="col-sm-2" style="padding: 5px;">
-                  <input type="text" id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
-                </div>
-                <div class="col-sm-2" style="padding: 5px;">
-                  <button type="button" class="btn btn-danger" id="barcode_inv">Cek Duplikasi</button>
-                </div>
-                <div class="col-sm-4" style="padding: 5px;">
-                  <input type="text" name="nama_barang" class="form-control" placeholder="Nama Barang . . ." required>
-                </div>
-                <div class="col-sm-2" style="padding: 5px;">
-                  <select class="form-control" name="satuan">
-                    <?php
+     <!-- Default box -->
+     <div class="box">
+       <div class="box-body">
+         <h1>MASTER INVENTORY</h1>
+         <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
+           <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
+             <div class="alert alert-danger alert-dismissible">
+               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+               <h4><i class="icon fa fa-info"></i> Informasi </h4>
+               Pastikan Barcode sudah dibuat dan disetujui <br>
+               Harap Cek Duplikasi Barcode sebelum lanjut ke langkah berikutnya
+             </div>
+           </div>
+         </div>
+         <form class="inline-form" action="" method="post">
+           <div class="box-body">
+             <div class="form-group">
+               <div class="col-sm-2" style="padding: 5px;">
+                 <input type="text" id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
+               </div>
+               <div class="col-sm-2" style="padding: 5px;">
+                 <button type="button" class="btn btn-danger" id="barcode_inv">Cek Duplikasi</button>
+               </div>
+               <div class="col-sm-4" style="padding: 5px;">
+                 <input type="text" name="nama_barang" class="form-control" placeholder="Nama Barang . . ." required>
+               </div>
+               <div class="col-sm-2" style="padding: 5px;">
+                 <select class="form-control" name="satuan">
+                   <?php
                     $datat = query("SELECT * FROM satuan");
                     foreach ($datat as $datas) :
                       ?>
-                      <option value="<?= $datas['id'] ?>"><?= $datas['satuan'] ?></option>
-                    <?php endforeach; ?>
-                  </select>
-                </div>
-                <div class="col-sm-2" style="padding: 5px;">
-                  <select class="form-control" name="id_tipe_barang">
-                    <?php
+                     <option value="<?= $datas['id'] ?>"><?= $datas['satuan'] ?></option>
+                   <?php endforeach; ?>
+                 </select>
+               </div>
+               <div class="col-sm-2" style="padding: 5px;">
+                 <select class="form-control" name="id_tipe_barang">
+                   <?php
                     $datat = cariBarang();
                     foreach ($datat as $datas) :
                       ?>
@@ -115,6 +114,7 @@
             <button type="button" class="btn btn-light">Excel</button>
             <button type="button" class="btn btn-light">PDF</button>
             <a href="master_inventory/laporan/print.php" class="btn btn-primary">Print</a> -->
+
           </div>
           <div class="table-responsive" style="margin-top: 20px">
             <table id="example1" class="table table-bordered table-striped">
@@ -126,27 +126,27 @@
                   <th>SAT</th>
                   <th>TIPE BARANG</th>
                   <!-- <th>HARGA BELI AKHIR</th>
+
                     <th>TOT BELI AKHIR</th> -->
-                  <th>HARGA JUAL 1</th>
-                  <th>HARGA JUAL 2</th>
-                  <th>HARGA JUAL 3</th>
-                  <th>AKSI</th>
-                </tr>
-              </thead>
-              <tbody align="center">
-                <?php $i = 1; ?>
-                <?php foreach ($data as $row) :
+                 <th>HARGA JUAL 1</th>
+                 <th>HARGA JUAL 2</th>
+                 <th>HARGA JUAL 3</th>
+                 <th>AKSI</th>
+               </tr>
+             </thead>
+             <tbody align="center">
+               <?php $i = 1; ?>
+               <?php foreach ($data as $row) :
                   ?>
 
-                  <tr>
-                    <td><?php echo $i; ?></td>
-                    <td><?php echo $row["barcode"]; ?></td>
-                    <?php
+                 <tr>
+                   <td><?php echo $i; ?></td>
+                   <td><?php echo $row["barcode"]; ?></td>
+                   <?php
                       $id_tipe = $row['id_tipe_barang'];
                       $result = query("SELECT * FROM tipe_barang WHERE id = '$id_tipe'");
                       $id_satuan = $row['satuan'];
                       $result2 = query("SELECT * FROM satuan WHERE id = '$id_satuan'");
-
                       ?>
                     <td><?php echo $row["nama_barang"]; ?></td>
                     <td><?php echo $result2[0]["satuan"]; ?></td>
@@ -214,4 +214,4 @@
   </script>
   <!-- /.content-wrapper -->
 
-  <?php include('../templates/footer.php') ?>
+ <?php include('../templates/footer.php') ?>

@@ -1,3 +1,26 @@
+<?php
+require '../env.php';
+$title = "List Order ke Gudang";
+if (isset($_POST['cari'])) {
+    extract($_POST);
+    $sql = "SELECT * FROM order_gudang WHERE ";
+    if ($customer !== '') {
+        $customer = rtrim($customer);
+        $sql .= "kode_customer = '$customer' ";
+    }
+    if ($tanggal !== '') {
+        if ($customer !== '') {
+            $sql .= " AND ";
+        }
+        $sql .= "tanggal = '$tanggal'";
+    }
+    if ($customer == 'sen') {
+        $sql = "SELECT * FROM order_gudang ";
+    }
+    $query = query($sql);
+}
+
+?>
 <script>
     var active = 'header_sales';
     var active_2 = 'header_sales_list'
@@ -16,13 +39,13 @@
                     <h2 class="box-title">LIST ORDER KE GUDANG</h2>
                 </div>
                 <div class="panel-body">
-                    <form class="form-horizontal">
+                    <form class="form-horizontal" action="" method="POST">
                         <div class="box-body">
                             <div class="form-group">
                                 <label for="" class="col-sm-2 ">Tanggal</label>
                                 <div class="col-sm-3">
                                     <div class="input-group">
-                                        <input type="date" name="" class="form-control">
+                                        <input type="date" name="tanggal" class="form-control">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
@@ -32,83 +55,73 @@
                             <div class="form-group">
                                 <label for="" class=" col-sm-2">Customer : </label>
                                 <div class="col-sm-3">
-                                    <select name="" class="form-control" id="">
-                                        <option value="">Costumer 1</option>
-                                        <option value="">Costumer 2</option>
-                                        <option value="">Costumer 3</option>
+                                    <select name="customer" class="form-control">
+                                        <option value="sen">-- Semua Customer --</option>
+                                        <?php
+                                        foreach (query("SELECT * FROM customer") as $o) {
+                                            echo '<option value="' . $o['kode'] . '" >' . $o['nama'] . '</option>';
+                                        }
+                                        ?>
+                                        <option value="">-- Tidak Pilih Customer --</option>
                                     </select>
                                 </div>
                                 <div class="col-sm-2">
-                                    <button type="button" class="btn btn-info">Search</button>
+                                    <button type="submit" name="cari" class="btn btn-info">Search</button>
                                 </div>
                             </div>
                             <div class="form-group pad">
-                                <button type="submit" class="btn btn-primary">Buat order baru</button>
+                                <a href="sales_order/order_gudang.php" class="btn btn-primary">Buat order baru</a>
                             </div>
                         </div>
                     </form>
-                    
+
                 </div>
             </div>
         </div>
-
-        <div class="box box-primary">
+        <?php if (isset($query)) : ?>
+            <div class="box box-primary">
+                <div class="box-body">
+                    <div class="data-table">
                         <div class="box-body">
-                            <div class="data-table">
-                                <div class="box-body">
-                                    <table id="example1" class="table table-bordered table-striped">
-                                    <thead class="thead-dark">
-                                            <tr>
-                                                <th>No </th>
-                                                <th>Tanggal</th>
-                                                <th>No Order</th>
-                                                <th>No SO</th>
-                                                <th>Kode Customer</th>
-                                                <th>Qty</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
+                            <table id="example1" class="table table-bordered table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No </th>
+                                        <th>Tanggal</th>
+                                        <th>No Order</th>
+                                        <th>No SO</th>
+                                        <th>Customer</th>
+                                        <th>Qty</th>
+                                        <th>Keterangan</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?php $i = 1;
+                                        foreach ($query as $t) : extract($t);
+                                            $src = query("SELECT * FROM customer WHERE kode='$kode_customer'")[0]; ?>
+                                        <tr>
+                                            <td><?= $i++ ?></td>
+                                            <td><?= $nomor_order ?></td>
+                                            <td><?= $tanggal ?></td>
+                                            <td><?= $nomor_so ?></td>
+                                            <td><?= $src['nama'] ?></td>
+                                            <td><?= $total ?></td>
+                                            <td><?= $keterangan ?></td>
+                                            <td>
+                                                <a title="Edit" href="sales_order/edit_order.php?nomor=<?= $nomor_order ?>"><i style="color: blue;font-size:24px;" class="fa fa-pencil"></i></a>
+                                                <a title="Hapus" onclick="return confirm('Yakin ingin menghapus?')" href="sales_order/ajax.php?nomor_order=<?= $nomor_order ?>"><i style="color: red;font-size:24px;" class="fa fa-trash"></i></a>
+                                                <a title="Detail" target="_blank" href="sales_order/detail_order.php?nomor=<?= $nomor_order ?>"><i style="color: green;font-size:24px;" class="fa fa-info"></i></a>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
-
+                </div>
+            </div>
+        <?php endif; ?>
     </section> <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->

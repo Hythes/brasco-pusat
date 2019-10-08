@@ -490,16 +490,13 @@
                 <a href="sales_order/input_so.php"><i class="fa fa-circle-o"></i> <span>Input Sales Order</span></a>
               </li>
               <li id="header_sales_laporan">
-                <a href="sales_order/laporanSalesOrder.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
-              </li>
-              <li id="header_sales_detail">
-                <a href="sales_order/detail.php"><i class="fa fa-circle-o"></i> <span>Detail Sales Order</span></a>
+                <a href="sales_order/laporan_so.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
               </li>
               <li id="header_sales_list">
                 <a href="sales_order/list_order.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
               </li>
               <li id="header_sales_gudang">
-                <a href="sales_order/order_gudang.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
+                <a href="sales_order/input_order.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
               </li>
             </ul>
           </li>

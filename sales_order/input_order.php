@@ -36,7 +36,7 @@ if (!isset($query[0]['nomor_order'])) {
 if (isset($_POST['submit'])) {
 	extract($_POST);
 	$data_item = json_decode($data_item, true);
-	$sql = "INSERT INTO order_gudang(nomor_order,tanggal,nomor_so,kode_customer,keterangan,total) VALUES('$no_order', '$tanggal','$kode_customer','$nomor_so','$keterangan','$total'); ";
+	$sql = "INSERT INTO order_gudang(nomor_order,tanggal,kode_customer,nomor_so,keterangan,total) VALUES('$no_order', '$tanggal','$kode_customer','$nomor_so','$keterangan','$total'); ";
 	foreach (array_filter($data_item) as $data) {
 		extract($data);
 		$sql .= "INSERT INTO order_gudang_item(nomor_order,barcode,quantity) VALUES('$no_order','$barcode','$quantity');";
