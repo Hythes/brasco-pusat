@@ -110,16 +110,16 @@
             <div style="border-top: solid; width: 100%; margin-top: 20px">
               <h3 style="margin-top: 20px">LIST MASTER INVENTORY</h3>
             </div>
-            <button type="button" class="btn btn-light">Copy</button>
+            <!-- <button type="button" class="btn btn-light">Copy</button>
             <button type="button" class="btn btn-light">CSV</button>
             <button type="button" class="btn btn-light">Excel</button>
             <button type="button" class="btn btn-light">PDF</button>
-            <button type="button" class="btn btn-light">Print</button>
+            <a href="master_inventory/laporan/print.php" class="btn btn-primary">Print</a> -->
           </div>
           <div class="table-responsive" style="margin-top: 20px">
             <table id="example1" class="table table-bordered table-striped">
               <thead class="thead-dark" align="center">
-                <tr>
+                <tr class="text-center">
                   <th>No</th>
                   <th>BARCODE</th>
                   <th>NAMA</th>
@@ -155,8 +155,9 @@
                     <td><?php echo $row["harga_jual2"]; ?></td>
                     <td><?php echo $row["harga_jual3"]; ?></td>
                     <td>
-                      <a href="master_inventory/ubah.php?id=<?php echo $row["id"]; ?>">Ubah</a> |
-                      <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>">Hapus</a>
+                      <a href="master_inventory/ubah.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-edit fa-lg"></i>&nbsp&nbsp&nbsp</a>
+                      <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-trash fa-lg text-red">&nbsp&nbsp&nbsp</i></a>
+                      <a href="master_inventory/laporan/print.php?id=<?php echo $row["id"] ?>"><i class="fa fa-print text-green fa-lg"></i></a>
                     </td>
                   </tr>
                   <?php $i++ ?>
@@ -209,6 +210,7 @@
         }
       });
     })
+      
   </script>
   <!-- /.content-wrapper -->
 
