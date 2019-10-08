@@ -86,6 +86,7 @@
                     $datat = cariBarang();
                     foreach ($datat as $datas) :
                       ?>
+
                       <option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
                     <?php endforeach; ?>
                   </select>
@@ -110,10 +111,12 @@
               <h3 style="margin-top: 20px">LIST MASTER INVENTORY</h3>
             </div>
             <!-- <button type="button" class="btn btn-light">Copy</button>
+
             <button type="button" class="btn btn-light">CSV</button>
             <button type="button" class="btn btn-light">Excel</button>
             <button type="button" class="btn btn-light">PDF</button>
             <a href="master_inventory/laporan/print.php" class="btn btn-primary">Print</a> -->
+
 
           </div>
           <div class="table-responsive" style="margin-top: 20px">
@@ -126,6 +129,7 @@
                   <th>SAT</th>
                   <th>TIPE BARANG</th>
                   <!-- <th>HARGA BELI AKHIR</th>
+
 
                     <th>TOT BELI AKHIR</th> -->
                  <th>HARGA JUAL 1</th>
@@ -213,5 +217,6 @@
       
   </script>
   <!-- /.content-wrapper -->
+
 
  <?php include('../templates/footer.php') ?>

@@ -1,29 +1,3 @@
-<<<<<<< HEAD
-	<script>
-		var active = 'header_sales';
-		var active_2 = 'header_sales_gudang';
-	</script>
-
-	<?php 
-	$title = "Order Ke Gudang";
-	include('../templates/header.php');
-	?>
-
-	<div class="content-wrapper">
-
-		<section class="content">
-		<div class="box">
-			<div class="box-header">
-				<h3>ORDER KE GUDANG</h3>
-			</div>
-			<div class="box-body">
-				<form>
-					<!-- 1 -->
-					<div class="row">
-						<div class="col-md-2">
-							<div class="form-group">
-								<label>Tanggal :</label>
-=======
 <?php
 require '../env.php';
 $title = "Order ke Gudang";
@@ -49,11 +23,7 @@ if (isset($_POST['submit'])) {
 	var active = 'header_sales';
 	var active_2 = 'header_sales_gudang';
 </script>
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
-							</div>
-
-<<<<<<< HEAD
 						</div>
 						<div class="col-md-3">
 							<div class="form-group">
@@ -70,7 +40,7 @@ if (isset($_POST['submit'])) {
 								<label>KIRIM KE</label>
 
 							</div>
-=======
+
 <form action="" method="POST">
 
 	<div class="content-wrapper">
@@ -86,13 +56,12 @@ if (isset($_POST['submit'])) {
 						<div class="form-group">
 							<label>Tanggal :</label>
 
-						</div>
+            </div>
 
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<input style="width: 80%" type="date" name="tanggal" required class="form-control">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 						</div>
 					</div>
 					<!-- 2 -->
@@ -116,14 +85,10 @@ if (isset($_POST['submit'])) {
 
 							</div>
 						</div>
-<<<<<<< HEAD
-						<div class="col-md-3">
-=======
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<input type="text" required name="no_order" value="<?= $id ?>" readonly class="form-control">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
 						</div>
 						<div class="col-md-3">
@@ -140,15 +105,12 @@ if (isset($_POST['submit'])) {
 									</select>
 								</div>
 
-<<<<<<< HEAD
-=======
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<div style="display: inline-flex;">
 								<input style="margin-right: 20px" type="text" id="kode_customer" name="kode_customer" class="form-control" placeholder="Kode Customer">
 								<i id="cari_customer" style="font-size: 30px;cursor:pointer" class="fa fa-search"></i>
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 							</div>
 						</div>
 					</div>
@@ -159,22 +121,6 @@ if (isset($_POST['submit'])) {
 								<label>Cari SO :</label>
 							</div>
 						</div>
-<<<<<<< HEAD
-						<div class="col-md-3">
-							<div class="form-group">
-								<div style="display: inline-flex;width: 100%">
-									<select id="sou" style="margin-right: 20px" class="form-control">
-										<option selected="">---Cari Sales Order---</option>
-										<?php
-										$q = mysqli_query($conn,"SELECT * FROM sales_order");
-										while ($f = mysqli_fetch_assoc($q)) {
-										?>
-										<option value="<?= $f['nomor_so']?>"><?= $f['nomor_so']?></option>
-										<?php } ?>
-									</select>
-									<button id="soudesu" type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalay"><i class="fa fa-search"></i></button>
-								</div>
-=======
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
@@ -254,7 +200,6 @@ if (isset($_POST['submit'])) {
 									<!-- /.modal-dialog -->
 								</div>
 								<!-- /. Modal Cari SO -->
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 							</div>
 						</div>
 						<!-- Modal -->
@@ -305,13 +250,6 @@ if (isset($_POST['submit'])) {
 						</div>
 						<div class="col-md-3">
 
-<<<<<<< HEAD
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<input style="margin-right: 20px" type="text" id="nama" name="" class="form-control" placeholder="Nama Customer">
-							</div>
-=======
 					</div>
 					<div class="col-md-3">
 
@@ -319,24 +257,18 @@ if (isset($_POST['submit'])) {
 					<div class="col-md-4">
 						<div class="form-group">
 							<input style="margin-right: 20px" readonly type="text" id="nama_cust" readonly class="form-control" placeholder="Nama Customer">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 						</div>
 					</div>
 					<!-- 4 -->
 					<div class="row">
 						<div class="col-md-8">
 
-<<<<<<< HEAD
-						</div>
-						<div class="col-md-4">
-							<div class="form-group">
-								<input type="" name="" class="form-control input-lg" id="alamat" placeholder="Alamat">
-=======
+
 					</div>
 					<div class="col-md-4">
 						<div class="form-group">
 							<input type="text" readonly id="alamat_cust" class="form-control input-lg" placeholder="Alamat">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
+
 
 							</div>
 						</div>
@@ -345,67 +277,31 @@ if (isset($_POST['submit'])) {
 					<div class="row">
 						<div class="col-md-8">
 
-<<<<<<< HEAD
-						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<input type="text" id="kota" name="" class="form-control " placeholder="Kota">
-=======
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<input type="text" readonly id="kota_cust" class="form-control " placeholder="Kota">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
-
 							</div>
 						</div>
 					</div>
 					<!-- 6 -->
 					<div class="row">
 						<div class="col-md-8">
-
-<<<<<<< HEAD
-						</div>
-						<div class="col-md-2">
-							<div class="form-group">
-								<input type="text" id="telp" name="" class="form-control" placeholder="No Telepon">
-=======
 					</div>
 					<div class="col-md-2">
 						<div class="form-group">
 							<input type="text" readonly id="telepon_cust" class="form-control" placeholder="No Telepon">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
 							</div>
 						</div>
-<<<<<<< HEAD
-						<div class="col-md-2">
-							<div class="form-group">
-								<input type="text" id="hp" name="" class="form-control" placeholder="No Handphone">
-=======
 					</div>
 					<div class="col-md-2">
 						<div class="form-group">
 							<input type="text" readonly id="handphone_cust" class="form-control" placeholder="No Handphone">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
 							</div>
 						</div>
 					</div>
-
-<<<<<<< HEAD
-					<div style="border-bottom: 1px solid black; margin-bottom: 20px"></div>
-					<div class="row">
-						<div class="col-md-2">
-							<div class="form-group">
-								<input type="" name="" class="form-control" placeholder="Barcode">
-
-							</div>
-						</div>
-						<div class="col-md-1">
-							<div class="form-group">
-								<i style="font-size: 30px" class="fa fa-search"></i>
-=======
 				<div style="border-bottom: 1px solid black; margin-bottom: 20px"></div>
 				<div class="row">
 					<div class="col-md-2">
@@ -414,65 +310,37 @@ if (isset($_POST['submit'])) {
 								<input style="margin-right: 20px" type="text" id="barcode_so" placeholder="Barcode" class="form-control">
 								<i style="font-size: 30px;cursor:pointer" class="fa fa-search" id="cari_barcode"></i>
 							</div>
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
 							</div>
 						</div>
-<<<<<<< HEAD
-						<div class="col-md-3">
-							<div class="form-group">
-								<input type="" name="" class="form-control" placeholder="Nama Item">
-=======
 					</div>
 					<div class="col-md-3">
 						<div class="form-group">
 							<input type="text" id="nama_item" readonly placeholder="Nama Item" class="form-control">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
 							</div>
 						</div>
-<<<<<<< HEAD
-						<div class="col-md-2">
-							<div class="form-group">
-								<input type="" name="" class="form-control" placeholder="Satuan">
-=======
 					</div>
 					<div class="col-md-2">
 						<div class="form-group">
 							<input type="text" id="satuan" readonly placeholder="Satuan" class="form-control">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
 							</div>
 						</div>
-<<<<<<< HEAD
-						<div class="col-md-1">
-							<div class="form-group">
-								<input type="" name="" class="form-control" placeholder="Qty">
-
-=======
 					</div>
 					<div class="col-md-1">
 						<div class="form-group">
 							<input type="number" id="quantity" placeholder="Qty" class="form-control">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
 							</div>
 						</div>
-<<<<<<< HEAD
-						<div class="col-md-1">
-							<div class="form-group">
-								<i style="font-size: 30px" class="fa fa-plus"></i>
-=======
 					</div>
 					<div class="col-md-1">
 						<div class="form-group">
 							<i style="font-size: 30px;cursor:pointer" id="masuk_data" class="fa fa-plus"></i>
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 
 							</div>
 						</div>
-<<<<<<< HEAD
-=======
 					</div>
 				</div>
 				<div style="margin-top: 5px">
@@ -515,10 +383,7 @@ if (isset($_POST['submit'])) {
 					<div class="col-md-4">
 						<div class="form-group">
 							<input type="text" name="keterangan" required class="form-control input-lg " placeholder="KETERANGAN">
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
-
 					</div>
-<<<<<<< HEAD
 					<div style="margin-top: 5px">
 
 						<table class="table table-bordered ">
@@ -689,7 +554,9 @@ if (isset($_POST['submit'])) {
 									</div>
 								</div>
 							</div>
-=======
+
+						</div>
+					</div>
 					<div class="col-md-6">
 
 					</div>
@@ -698,22 +565,15 @@ if (isset($_POST['submit'])) {
 							<input type="hidden" name="total" id="total">
 							<input type="hidden" name="data_item" id="data_item">
 							<button class="btn btn-primary pull-right" type="submit" name="submit">Simpan</button>
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 						</div>
 					</div>
-
-<<<<<<< HEAD
 				</form>
 
 
-
-=======
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
 			</div>
 		</div>
 		</section>
 	</div>
-<<<<<<< HEAD
 
 	<?php include('../templates/footer.php') ?>
 	<script type="text/javascript">
@@ -747,7 +607,7 @@ if (isset($_POST['submit'])) {
 			})
 		})
 	</script>
-=======
+
 </form>
 
 <script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
@@ -894,4 +754,5 @@ if (isset($_POST['submit'])) {
 	})
 </script>
 <?php include('../templates/footer.php') ?>
->>>>>>> 29e311bd95a5860329e4ed267e94b1a0bac68f39
+
+
