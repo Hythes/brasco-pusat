@@ -36,6 +36,8 @@
                 <td><?php echo $p['satuan'] ?></td>
                 <td><?php echo $p['id_tipe_barang'] ?></td>
                 <td><?php echo $p['harga_jual1'] ?></td>
+                <td><?php echo $p['harga_jual2'] ?></td>
+                <td><?php echo $p['harga_jual3']?></td>
             </tr>
             <?php endwhile; ?>
             <?php $i++; ?>
