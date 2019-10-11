@@ -84,7 +84,6 @@ if (!isset($query[0]['nomor_pengajuan'])) {
             <div class="row" style="margin-left: 5px">
               <div class="col-sm-2">
                 <input type="text" class="form-control" placeholder="Barcode" id="barcode_pph">
-
               </div>
               <div class="col-sm-2">
                 <input type="text" class="form-control" disabled placeholder="Nama Item" id="item_pph">
@@ -98,15 +97,16 @@ if (!isset($query[0]['nomor_pengajuan'])) {
               <div class="col-sm-1">
                 <input type="text" class="form-control" placeholder="Qty" id="qty">
               </div>
-              <div class="col-sm-2 ">
+              <div class="col-sm-2 col-xs-10 ">
                 <input type="text" class="form-control" placeholder="Keterangan" id="keterangan">
               </div>
-              <div class="col-sm-1" style="margin-top: 5px;">
+              <div class="col-sm-1 col-xs-2" style="margin-top: 5px;">
                 <i class="fa fa-plus fa-2x" id="insert_pph" style="cursor:pointer"></i>
               </div>
             </div>
             <!-- /.box-header -->
             <div class="box-body">
+              <div class="table-responsive">
               <table class="table table-bordered table-striped">
                 <thead align="center">
                   <tr>
@@ -123,6 +123,7 @@ if (!isset($query[0]['nomor_pengajuan'])) {
                 <tbody align="center" id="table">
                 </tbody>
               </table>
+              </div>
             </div>
           </div>
         </div>
