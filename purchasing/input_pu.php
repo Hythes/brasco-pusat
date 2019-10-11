@@ -121,7 +121,7 @@ if (isset($_GET['kode_po'])) {
                                         <div class="col-md-8">
                                             <input type="text" name="diterima_oleh" class="form-control" placeholder="DITERIMA OLEH">
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Tanggal Terima</label>
                                         <div class="col-md-8">
@@ -216,35 +216,37 @@ if (isset($_GET['kode_po'])) {
                 </div>
                 <div class="box-body">
                     <!-- table -->
-                    <table class="table table-bordered table-striped ">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Kode Transaksi</th>
-                                <th>Tanggal Purchase Order</th>
-                                <th>Tanggal Approve</th>
-                                <th>Status</th>
-                                <th>Keterangan</th>
-                                <th>Pilih</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1;
-                                foreach ($query as $data) : extract($data); ?>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped ">
+                            <thead>
                                 <tr>
-                                    <td><?= $i ?></td>
-                                    <td><?= $kode ?></td>
-                                    <td><?= $tanggal ?></td>
-                                    <td><?= ($tanggal_approve == '') ? 'Unknown' : $tanggal_approve ?></td>
-                                    <td><?= $status ?></td>
-                                    <td> <?= ($keterangan !== '') ? $keterangan : $keterangan_approve ?></td>
-                                    <td><a href="purchasing/input_pu.php?kode_po=<?= $kode ?>" class="btn btn-info">Pilih</a></td>
-
+                                    <th>No</th>
+                                    <th>Kode Transaksi</th>
+                                    <th>Tanggal Purchase Order</th>
+                                    <th>Tanggal Approve</th>
+                                    <th>Status</th>
+                                    <th>Keterangan</th>
+                                    <th>Pilih</th>
                                 </tr>
-                            <?php $i++;
-                                endforeach; ?>
-                        </tbody>
-                    </table>
+                            </thead>
+                            <tbody>
+                                <?php $i = 1;
+                                    foreach ($query as $data) : extract($data); ?>
+                                    <tr>
+                                        <td><?= $i ?></td>
+                                        <td><?= $kode ?></td>
+                                        <td><?= $tanggal ?></td>
+                                        <td><?= ($tanggal_approve == '') ? 'Unknown' : $tanggal_approve ?></td>
+                                        <td><?= $status ?></td>
+                                        <td> <?= ($keterangan !== '') ? $keterangan : $keterangan_approve ?></td>
+                                        <td><a href="purchasing/input_pu.php?kode_po=<?= $kode ?>" class="btn btn-info">Pilih</a></td>
+
+                                    </tr>
+                                <?php $i++;
+                                    endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             <?php endif; ?>
         </div>
