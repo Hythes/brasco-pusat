@@ -235,7 +235,7 @@ include('../templates/header.php') ?>
                               </div>
                               <div class="box-footer">
                                 <button type="submit" name="edit" class="btn btn-warning col-md-5">Edit</button>
-                                <button type="submit" name="delete" class="btn btn-danger  col-md-5 pull-right">Delete</button>
+                                <button type="submit" name="delete" onclick="return confirm('Yakin ingin hapus?')" class="btn btn-danger  col-md-5 pull-right">Delete</button>
                               </div>
                             </div>
                           </div>
