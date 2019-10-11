@@ -456,7 +456,7 @@
               </li>
             </ul>
           </li>
-          <!-- <li class="treeview" id="header_purchasing">
+          <li class="treeview" id="header_purchasing">
             <a href="#">
               <i class="fa fa-usd"></i>
               <span>Purchasing</span>
@@ -466,16 +466,16 @@
             </a>
             <ul class="treeview-menu">
               <li id="header_purchasing_input">
-                <a href="#.php"><i class="fa fa-circle-o"></i> <span>Input Barang Masuk</span></a>
+                <a href="purchasing/input_pu.php"><i class="fa fa-circle-o"></i> <span>Input Barang Masuk</span></a>
               </li>
               <li id="header_purchasing_masuk">
-                <a href="laporanBarangMasuk.php"><i class="fa fa-circle-o"></i> <span>Laporan Barang Masuk</span></a>
+                <a href="purchasing/laporan_pu.php"><i class="fa fa-circle-o"></i> <span>Laporan Barang Masuk</span></a>
               </li>
               <li id="header_purchasing_list">
                 <a href="brgmasuk.php"><i class="fa fa-circle-o"></i> <span>Detail List Barang Masuk</span></a>
               </li>
             </ul>
-          </li> -->
+          </li>
 
           <li class="treeview" id="header_sales">
             <a href="#">
