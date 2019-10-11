@@ -132,126 +132,128 @@ include('../templates/header.php') ?>
           </form>
 
           <div class="box-body">`
-            <table id="example1" class="table table-bordered table-striped">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Nama Suplier</th>
-                  <th>Email</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                $i = 1;
-                $sql = "SELECT * FROM supplier";
-                $data = query($sql);
-                foreach ($data as $datas) :
-                  extract($datas);
-                  ?>
+            <div class="table-responsive">
+              <table id="example1" class="table table-bordered table-striped">
+                <thead>
                   <tr>
-                    <td><?= $i ?></td>
-                    <td><?= $nama ?></td>
-                    <td><?= $email ?></td>
-                    <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_<?= $i ?>">Details</button></td>
+                    <th>No</th>
+                    <th>Nama Suplier</th>
+                    <th>Email</th>
+                    <th>Action</th>
                   </tr>
-              </tbody>
+                </thead>
+                <tbody>
+                  <?php
+                  $i = 1;
+                  $sql = "SELECT * FROM supplier";
+                  $data = query($sql);
+                  foreach ($data as $datas) :
+                    extract($datas);
+                    ?>
+                    <tr>
+                      <td><?= $i ?></td>
+                      <td><?= $nama ?></td>
+                      <td><?= $email ?></td>
+                      <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_<?= $i ?>">Details</button></td>
+                    </tr>
+                </tbody>
 
 
-              <div class="modal fade" id="modal_<?= $i ?>" tabindex="-1" role="dialog" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span></button>
-                      <h4>Detail</h4>
-                    </div>
-                    <form class="form-horizontal pad" action="" method="POST">
-                      <input type="hidden" name="kode_old" value="<?= $kode ?>">
-                      <div class="box-body">
-                        <div class="form-group">
-                          <div class="row">
-                            <!-- col-xs-7 -->
-                            <div class="kiri col-xs-7 ">
-                              <div class="kode-suplier" style="padding: 5px;">
-                                <input required type="text" class="form-control" value="<?= $kode ?>" name="kode" placeholder="Kode Supplier">
-                              </div>
-                              <div class="nama-suplier" style="padding:  5px;">
-                                <input required type="text" class="form-control" value="<?= $nama ?>" name="nama" placeholder="Nama Supplier">
-                              </div>
-                              <div class="alamat-suplier" style="padding:  5px;">
-                                <textarea required name="alamat" class="form-control" rows="3" placeholder="Alamat Supplier"><?= $alamat ?></textarea>
-                              </div>
-                              <div class="row kota-kode" style="padding: 5px;">
-                                <div class="col-xs-6">
-                                  <input required type="text" name="kota" class="form-control" value="<?= $kota ?>" placeholder="Kota">
+                <div class="modal fade" id="modal_<?= $i ?>" tabindex="-1" role="dialog" aria-hidden="true">
+                  <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span></button>
+                        <h4>Detail</h4>
+                      </div>
+                      <form class="form-horizontal pad" action="" method="POST">
+                        <input type="hidden" name="kode_old" value="<?= $kode ?>">
+                        <div class="box-body">
+                          <div class="form-group">
+                            <div class="row">
+                              <!-- col-xs-7 -->
+                              <div class="kiri col-xs-7 ">
+                                <div class="kode-suplier" style="padding: 5px;">
+                                  <input required type="text" class="form-control" value="<?= $kode ?>" name="kode" placeholder="Kode Supplier">
                                 </div>
-                                <div class="col-xs-6">
-                                  <input required type="number" class="form-control" name="kode_pos" value="<?= $kodepos ?>" placeholder="Kode Pos">
+                                <div class="nama-suplier" style="padding:  5px;">
+                                  <input required type="text" class="form-control" value="<?= $nama ?>" name="nama" placeholder="Nama Supplier">
                                 </div>
-                              </div>
-                              <div class="row telepon-fax" style="padding: 5px;">
-                                <div class="col-xs-6">
-                                  <input required type="number" class="form-control" name="telepon" value="<?= $telepon ?>" placeholder="Telepon">
+                                <div class="alamat-suplier" style="padding:  5px;">
+                                  <textarea required name="alamat" class="form-control" rows="3" placeholder="Alamat Supplier"><?= $alamat ?></textarea>
                                 </div>
-                                <div class="col-xs-6">
-                                  <input required type="text" class="form-control" name="fax" placeholder="Fax" value=" <?= intval($fax) ?>">
+                                <div class="row kota-kode" style="padding: 5px;">
+                                  <div class="col-xs-6">
+                                    <input required type="text" name="kota" class="form-control" value="<?= $kota ?>" placeholder="Kota">
+                                  </div>
+                                  <div class="col-xs-6">
+                                    <input required type="number" class="form-control" name="kode_pos" value="<?= $kodepos ?>" placeholder="Kode Pos">
+                                  </div>
                                 </div>
-                              </div>
-                              <div class="row phone-kontak" style="padding: 5px;">
-                                <div class="col-xs-6">
-                                  <input required type="text" class="form-control" name="handphone" placeholder="Handphone" value="<?= $handphone ?>">
+                                <div class="row telepon-fax" style="padding: 5px;">
+                                  <div class="col-xs-6">
+                                    <input required type="number" class="form-control" name="telepon" value="<?= $telepon ?>" placeholder="Telepon">
+                                  </div>
+                                  <div class="col-xs-6">
+                                    <input required type="text" class="form-control" name="fax" placeholder="Fax" value=" <?= intval($fax) ?>">
+                                  </div>
                                 </div>
-                                <div class="col-xs-6">
-                                  <input required type="text" name="contact_name" class="form-control" value="<?= $contact_name ?>" placeholder="Contact Name">
+                                <div class="row phone-kontak" style="padding: 5px;">
+                                  <div class="col-xs-6">
+                                    <input required type="text" class="form-control" name="handphone" placeholder="Handphone" value="<?= $handphone ?>">
+                                  </div>
+                                  <div class="col-xs-6">
+                                    <input required type="text" name="contact_name" class="form-control" value="<?= $contact_name ?>" placeholder="Contact Name">
+                                  </div>
                                 </div>
-                              </div>
-                              <div class="email" style="padding:  5px;">
-                                <input required type="email" name="email" class="form-control" value="<?= $email ?>" placeholder="Email">
-                              </div>
-                            </div>
-                            <!-- col-xs-5 -->
-                            <div class="kanan col-xs-5">
-                              <div class="form-group pad">
-                                <label class="col-sm-2 control-label">Kredit</label>
-                                <div class="col-sm-10">
-                                  <input required type="text" class="form-control" name="kredit" value="<?= $kredit ?>" placeholder="Kredit">
+                                <div class="email" style="padding:  5px;">
+                                  <input required type="email" name="email" class="form-control" value="<?= $email ?>" placeholder="Email">
                                 </div>
                               </div>
-                              <div class="form-group pad">
-                                <label class="col-sm-2 control-label">TOP</label>
-                                <div class="col-sm-10">
-                                  <input required type="text" class="form-control" value="<?= $top ?>" name="top" placeholder="TOP">
+                              <!-- col-xs-5 -->
+                              <div class="kanan col-xs-5">
+                                <div class="form-group pad">
+                                  <label class="col-sm-2 control-label">Kredit</label>
+                                  <div class="col-sm-10">       
+                                    <input required type="text" class="form-control" name="kredit" value="<?= $kredit ?>" placeholder="Kredit">
+                                  </div>
                                 </div>
-                              </div>
-                              <div class="form-group pad">
-                                <label class="col-sm-2 control-label">PKP</label>
-                                <div class="col-sm-10">
-                                  <select class="form-control" name="pkp">
-                                    <option <?php if ($pkp == "Y") echo 'selected' ?>>Y</option>
-                                    <option <?php if ($pkp == "T") echo 'selected' ?>>T</option>
-                                  </select>
+                                <div class="form-group pad">
+                                  <label class="col-sm-2 control-label">TOP</label>
+                                  <div class="col-sm-10">
+                                    <input required type="text" class="form-control" value="<?= $top ?>" name="top" placeholder="TOP">
+                                  </div>
                                 </div>
-                              </div>
-                              <div class="box-footer">
-                                <button type="submit" name="edit" class="btn btn-warning col-md-5">Edit</button>
-                                <button type="submit" name="delete" onclick="return confirm('Yakin ingin hapus?')" class="btn btn-danger  col-md-5 pull-right">Delete</button>
+                                <div class="form-group pad">
+                                  <label class="col-sm-2 control-label">PKP</label>
+                                  <div class="col-sm-10">
+                                    <select class="form-control" name="pkp">
+                                      <option <?php if ($pkp == "Y") echo 'selected' ?>>Y</option>
+                                      <option <?php if ($pkp == "T") echo 'selected' ?>>T</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="box-footer">
+                                  <button type="submit" name="edit" class="btn btn-warning col-md-5">Edit</button>
+                                  <button type="submit" name="delete" onclick="return confirm('Yakin ingin hapus?')" class="btn btn-danger  col-md-5 pull-right">Delete</button>
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                    </form>
+                      </form>
 
-                  <?php $i++;
-                  endforeach; ?>
+                    <?php $i++;
+                    endforeach; ?>
 
-                  <!-- /.box-footer -->
+                    <!-- /.box-footer -->
+                    </div>
+                    <!-- /.box-body -->
                   </div>
-                  <!-- /.box-body -->
                 </div>
-              </div>
-          </div>
+            </div>
           </table>
+        </div>
         </div>
       </div>
       <!-- /.box-body -->
