@@ -18,6 +18,9 @@ if (isset($_POST['request'])) {
     if ($request == 'cari_so') {
         $sql = "SELECT * FROM sales_order WHERE tanggal_so = '$data'";
     }
+    if ($request == 'cari_item_gudang') {
+        $sql = "SELECT * FROM order_gudang_item WHERE nomor_order = '$data'";
+    }
     $query = query($sql);
     echo json_encode($query);
 }
