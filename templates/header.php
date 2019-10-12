@@ -33,7 +33,7 @@
   <link rel="stylesheet" href="assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
 
   <!-- Google Font -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <!-- <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic"> -->
 
   <style>
     .example-modal .modal {
@@ -471,12 +471,8 @@
               <li id="header_purchasing_masuk">
                 <a href="purchasing/laporan_pu.php"><i class="fa fa-circle-o"></i> <span>Laporan Barang Masuk</span></a>
               </li>
-              <li id="header_purchasing_list">
-                <a href="brgmasuk.php"><i class="fa fa-circle-o"></i> <span>Detail List Barang Masuk</span></a>
-              </li>
             </ul>
           </li>
-
           <li class="treeview" id="header_sales">
             <a href="#">
               <i class="fa fa-truck"></i>
@@ -500,11 +496,12 @@
               </li>
             </ul>
           </li>
-          <!--
-          <li class="treeview" id="header_packing">
+
+
+          <li class="treeview" id="header_picking">
             <a href="#">
               <i class="fa fa-cloud"></i>
-              <span>Picking & Packing Gudang</span>
+              <span>Picking Gudang</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
               </span>
@@ -516,6 +513,17 @@
               <li id="header_picking_gudang">
                 <a href="pickingudang.php"><i class="fa fa-circle-o"></i> <span> Picking Gudang</span></a>
               </li>
+            </ul>
+          </li>
+          <li class="treeview" id="header_packing">
+            <a href="#">
+              <i class="fa fa-cloud"></i>
+              <span>Packing Gudang</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
               <li id="header_packing_list">
                 <a href="listpackinggudang.php"><i class="fa fa-circle-o"></i> <span>List Packing Gudang</span></a>
               </li>
@@ -538,7 +546,7 @@
           </li>
           <li id="header_diskon">
             <a href="diskonBarangReject.php"><i class="fa fa-circle-o"></i> <span>Diskon Barang Reject</span></a>
-          </li> -->
+          </li>
           <!-- <li class="header">LABELS</li>
           <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
           <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>

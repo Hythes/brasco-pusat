@@ -10,7 +10,7 @@ if (!isset($query[0]['nomor_order'])) {
 if (isset($_POST['submit'])) {
 	extract($_POST);
 	$data_item = json_decode($data_item, true);
-	$sql = "INSERT INTO order_gudang(nomor_order,tanggal,nomor_so,kode_customer,keterangan,total) VALUES('$no_order', '$tanggal','$kode_customer','$nomor_so','$keterangan','$total'); ";
+	$sql = "INSERT INTO order_gudang(nomor_order,tanggal,nomor_so,kode_customer,keterangan,total) VALUES('$no_order', '$tanggal','$nomor_so','$kode_customer','$keterangan','$total'); ";
 	foreach (array_filter($data_item) as $data) {
 		extract($data);
 		$sql .= "INSERT INTO order_gudang_item(nomor_order,barcode,quantity) VALUES('$no_order','$barcode','$quantity');";
@@ -24,15 +24,15 @@ if (isset($_POST['submit'])) {
 	var active_2 = 'header_sales_gudang';
 </script>
 <?php include('../templates/header.php') ?>
+<form action="" method="POST">
 
-<div class="content-wrapper">
-	<section class="content">
-		<div class="box box-primary">
-			<div class="box-header">
-				<h3>ORDER KE GUDANG</h3>
-			</div>
-			<div class="box-body">
-				<form action="" method="POST" class="form-horizontal">
+	<div class="content-wrapper">
+		<section class="content">
+			<div class="box box-primary">
+				<div class="box-header">
+					<h3>ORDER KE GUDANG</h3>
+				</div>
+				<div class="box-body form-horizontal">
 					<!-- form grid ke 1 -->
 					<div class="col-sm-6">
 						<div class="box-body">
@@ -103,175 +103,175 @@ if (isset($_POST['submit'])) {
 							</div>
 						</div>
 					</div>
-			</div>
+				</div>
 
-			<div class="modal fade" id="modal2">
-				<div class="modal-dialog modal-md">
-					<div class="modal-content">
-						<div class="modal-header bg-primary">
-							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-								<span aria-hidden="true">&times;</span></button>
-							<h4 class="modal-title text-center">Pilih Sales Order</h4>
-						</div>
-						<div class="modal-body">
-							<div class="table-data">
-								<form class="form-horizontal">
-									<div class="box-body">
-										<div class="form-group">
-											<label class="col-xs-3 control-label">Tanggal</label>
-											<div class="col-xs-6">
-												<div class="input-group">
-													<input type="date" id="cari_so_tanggal_val" class="form-control">
-													<div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
+				<div class="modal fade" id="modal2">
+					<div class="modal-dialog modal-md">
+						<div class="modal-content">
+							<div class="modal-header bg-primary">
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span></button>
+								<h4 class="modal-title text-center">Pilih Sales Order</h4>
+							</div>
+							<div class="modal-body">
+								<div class="table-data">
+									<form class="form-horizontal" action="" method="POST">
+										<div class="box-body">
+											<div class="form-group">
+												<label class="col-xs-3 control-label">Tanggal</label>
+												<div class="col-xs-6">
+													<div class="input-group">
+														<input type="date" id="cari_so_tanggal_val" class="form-control">
+														<div class="input-group-addon">
+															<i class="fa fa-calendar"></i>
+														</div>
 													</div>
 												</div>
-											</div>
-											<div class="form-group">
-												<button type="button" id="cari_so_tanggal" class="btn btn-primary">Cek</button>
+												<div class="form-group">
+													<button type="button" id="cari_so_tanggal" class="btn btn-primary">Cek</button>
+												</div>
 											</div>
 										</div>
-									</div>
-								</form>
-								<div class="box-body">
-									<table class="table table-bordered table-striped">
-										<thead>
-											<tr>
-												<th>No</th>
-												<th>No SO</th>
-												<th>Kode Customer</th>
-												<th>Qty Order</th>
-												<th>Aksi</th>
-											</tr>
-										</thead>
-										<tbody id="cari_so_tabel">
-											<?php
-											$i_m1 = 1;
-											foreach (query("SELECT * FROM sales_order") as $data_so) : $so =  $data_so['nomor_so'];
-												?>
+									</form>
+									<div class="box-body">
+										<table class="table table-bordered table-striped">
+											<thead>
 												<tr>
-													<td><?= $i_m1 ?></td>
-													<td><?= $data_so['nomor_so'];  ?></td>
-													<td><?= $data_so['kode_customer'] ?></td>
-													<td><?= $data_so['total'] ?></td>
-													<td><button type="button" class="btn btn-primary" onclick="cari_so('<?= $so ?>')" data-dismiss="modal">Pilih</button></td>
+													<th>No</th>
+													<th>No SO</th>
+													<th>Kode Customer</th>
+													<th>Qty Order</th>
+													<th>Aksi</th>
 												</tr>
-											<?php
-												$i_m1++;
-											endforeach;
-											?>
-										</tbody>
-									</table>
+											</thead>
+											<tbody id="cari_so_tabel">
+												<?php
+												$i_m1 = 1;
+												foreach (query("SELECT * FROM sales_order") as $data_so) : $so =  $data_so['nomor_so'];
+													?>
+													<tr>
+														<td><?= $i_m1 ?></td>
+														<td><?= $data_so['nomor_so'];  ?></td>
+														<td><?= $data_so['kode_customer'] ?></td>
+														<td><?= $data_so['total'] ?></td>
+														<td><button type="button" class="btn btn-primary" onclick="cari_so('<?= $so ?>')" data-dismiss="modal">Pilih</button></td>
+													</tr>
+												<?php
+													$i_m1++;
+												endforeach;
+												?>
+											</tbody>
+										</table>
+									</div>
+								</div>
+							</div>
+							<div class="modal-footer">
+								<div class="pull-right">
+									<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
 								</div>
 							</div>
 						</div>
-						<div class="modal-footer">
-							<div class="pull-right">
-								<button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-							</div>
-						</div>
+						<!-- /.modal-content -->
 					</div>
-					<!-- /.modal-content -->
+					<!-- /.modal-dialog -->
 				</div>
-				<!-- /.modal-dialog -->
+				<!-- /. Modal Cari SO -->
+
 			</div>
-			<!-- /. Modal Cari SO -->
 
-		</div>
-
-		<div class="box box-primary">
-			<div class="box-body">
-				<div class="row">
-					<div class="col-sm-3">
-						<div class="form-group">
-							<div style="display: inline-flex">
-								<input style="margin-right: 20px;" type="text" id="barcode_so" placeholder="Barcode" class="form-control">
-								<i style="font-size: 30px;cursor:pointer" class="fa fa-search" id="cari_barcode"></i>
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-3">
-						<div class="form-group">
-							<div>
-								<input type="text" id="nama_item" readonly placeholder="Nama Item" class="form-control">
-							</div>
-						</div>
-					</div>
-					<div class="col-sm-2">
-						<div class="form-group">
-							<input type="text" id="satuan" readonly placeholder="Satuan" class="form-control">
-						</div>
-					</div>
-					<div class="col-sm-2 col-xs-6">
-						<div class="form-group">
-							<input type="text" id="quantity" placeholder="Qty" class="form-control">
-						</div>
-					</div>
-					<div class="col-sm-2 col-xs-6">
-						<div class="form-group">
-							<i style="font-size: 30px;cursor:pointer" id="masuk_data" class="fa fa-plus"></i>
-						</div>
-					</div>
-				</div>
-
-				<!-- table -->
+			<div class="box box-primary">
 				<div class="box-body">
-					<div class="table-responsive">
-						<table class="table table-bordered table-striped text-center ">
-							<thead align="center">
-								<tr>
-									<th>
-										<center>No</center>
-									</th>
-									<th>
-										<center>Barocde</center>
-									</th>
-									<th>
-										<center>Nama Item</center>
-									</th>
-									<th>
-										<center>QTY</center>
-									</th>
-									<th>
-										<center>Satuan</center>
-									</th>
-									<th>
-										<center>Harga Jual Satuan</center>
-									</th>
-									<th>
-										<center>Jumlah</center>
-									</th>
-									<th>
-										<center>Aksi</center>
-									</th>
-								</tr>
-							</thead>
-							<tbody align="center" id="table_so">
-								<tr>
-									<!-- table dari jquery -->
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-				<div style="padding-top: 10px;">
-					<div class="col-sm-6">
-						<div class="form-group">
-							<textarea class="form-control" name="keterangan" required rows="3" placeholder="Keterangan"></textarea>
+					<div class="row">
+						<div class="col-sm-3">
+							<div class="form-group">
+								<div style="display: inline-flex">
+									<input style="margin-right: 20px;" type="text" id="barcode_so" placeholder="Barcode" class="form-control">
+									<i style="font-size: 30px;cursor:pointer" class="fa fa-search" id="cari_barcode"></i>
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-3">
+							<div class="form-group">
+								<div>
+									<input type="text" id="nama_item" readonly placeholder="Nama Item" class="form-control">
+								</div>
+							</div>
+						</div>
+						<div class="col-sm-2">
+							<div class="form-group">
+								<input type="text" id="satuan" readonly placeholder="Satuan" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-2 col-xs-6">
+							<div class="form-group">
+								<input type="text" id="quantity" placeholder="Qty" class="form-control">
+							</div>
+						</div>
+						<div class="col-sm-2 col-xs-6">
+							<div class="form-group">
+								<i style="font-size: 30px;cursor:pointer" id="masuk_data" class="fa fa-plus"></i>
+							</div>
 						</div>
 					</div>
-					<div class="col-sm-6">
-						<div class="form-group pull-right">
-							<input type="hidden" name="total" id="total">
-							<input type="hidden" name="data_item" id="data_item">
-							<button type="submit" name="submit" class="btn btn-info">Simpan</button>
+
+					<!-- table -->
+					<div class="box-body">
+						<div class="table-responsive">
+							<table class="table table-bordered table-striped text-center ">
+								<thead align="center">
+									<tr>
+										<th>
+											<center>No</center>
+										</th>
+										<th>
+											<center>Barocde</center>
+										</th>
+										<th>
+											<center>Nama Item</center>
+										</th>
+										<th>
+											<center>QTY</center>
+										</th>
+										<th>
+											<center>Satuan</center>
+										</th>
+										<th>
+											<center>Harga Jual Satuan</center>
+										</th>
+										<th>
+											<center>Jumlah</center>
+										</th>
+										<th>
+											<center>Aksi</center>
+										</th>
+									</tr>
+								</thead>
+								<tbody align="center" id="table_so">
+									<tr>
+										<!-- table dari jquery -->
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div style="padding-top: 10px;">
+						<div class="col-sm-6">
+							<div class="form-group">
+								<textarea class="form-control" name="keterangan" required rows="3" placeholder="Keterangan"></textarea>
+							</div>
+						</div>
+						<div class="col-sm-6">
+							<div class="form-group pull-right">
+								<input type="hidden" name="total" id="total">
+								<input type="hidden" name="data_item" id="data_item">
+								<button type="submit" name="submit" class="btn btn-info">Simpan</button>
+							</div>
 						</div>
 					</div>
 				</div>
-				</form>
-			</div>
-	</section>
-</div>
+		</section>
+	</div>
+</form>
 
 <script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
 <script type="text/javascript">
@@ -375,6 +375,8 @@ if (isset($_POST['submit'])) {
 		$('#tr_so_' + i).remove();
 		fix_iteration('#table_so');
 		i--;
+		var total -= parseInt(storeData[i]['quantity']);
+		$('#total').val(total)
 		delete storeData[i];
 		$('#data_item').val(JSON.stringify(storeData));
 	}
