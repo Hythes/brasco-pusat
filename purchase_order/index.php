@@ -107,22 +107,22 @@ $title = 'Purchase Order';
 
                 <div class="form bawah">
                     <div class="row">
-                        <div class="col-xs-2">
+                        <div class="col-sm-2">
                             <input type="text" name="barcode" id="barcode_po" class="form-control" placeholder="BARCODE">
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-sm-2">
                             <input type="text" name="kode_item_supplier" id="kode_item_supplier" class="form-control" placeholder="KODE ITEM SUPPLI">
                         </div>
-                        <div class="col-xs-3">
+                        <div class="col-sm-3">
                             <input type="text" readonly class="form-control" name="nama_item" id="nama_item" placeholder="NAMA ITEM">
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-sm-2">
                             <input type="number" name="quantity" id="quantity" class="form-control" placeholder="QTY ORDER">
                         </div>
-                        <div class="col-xs-2">
+                        <div class="col-sm-2 col-xs-10">
                             <input type="number" name="harga" id="harga" class="form-control" placeholder="HARGA SATUAN">
                         </div>
-                        <div class="col-xs-1">
+                        <div class="col-sm-1 col-xs-2">
                             <i class="fa fa-plus fa-2x" id="tambah_data_po" style="margin-top: 5px; cursor:pointer"></i>
                         </div>
                     </div>
@@ -130,23 +130,27 @@ $title = 'Purchase Order';
 
                 <!-- data table -->
                 <div class="table-data">
-                    <table id="" class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Barcode</th>
-                                <th>Kode Item Supplier</th>
-                                <th>Nama Item</th>
-                                <th>QTY order</th>
-                                <th>Sat</th>
-                                <th>Harga Satuan</th>
-                                <th>Jumlah</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table_po">
-                        </tbody>
-                    </table>
+                    <div class="box-body">
+                        <div class="table-responsive">
+                            <table id="" class="table table-bordered table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Barcode</th>
+                                        <th>Kode Item Supplier</th>
+                                        <th>Nama Item</th>
+                                        <th>QTY order</th>
+                                        <th>Sat</th>
+                                        <th>Harga Satuan</th>
+                                        <th>Jumlah</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table_po">
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
                 <!-- /data table -->
 
