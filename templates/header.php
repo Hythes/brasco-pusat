@@ -496,8 +496,6 @@
               </li>
             </ul>
           </li>
-
-
           <li class="treeview" id="header_picking">
             <a href="#">
               <i class="fa fa-cloud"></i>
@@ -508,14 +506,14 @@
             </a>
             <ul class="treeview-menu">
               <li id="header_picking_list">
-                <a href="listpickinggudang.php"><i class="fa fa-circle-o"></i> <span>List Picking Gudang</span></a>
+                <a href="picking_gudang/list.php"><i class="fa fa-circle-o"></i> <span>List Picking Gudang</span></a>
               </li>
               <li id="header_picking_gudang">
-                <a href="pickingudang.php"><i class="fa fa-circle-o"></i> <span> Picking Gudang</span></a>
+                <a href="picking_gudang/input.php"><i class="fa fa-circle-o"></i> <span> Picking Gudang</span></a>
               </li>
             </ul>
           </li>
-          <li class="treeview" id="header_packing">
+          <!-- <li class="treeview" id="header_packing">
             <a href="#">
               <i class="fa fa-cloud"></i>
               <span>Packing Gudang</span>
@@ -531,8 +529,11 @@
                 <a href="picking.php"><i class="fa fa-circle-o"></i> <span> Packing Gudang</span></a>
               </li>
             </ul>
-          </li>
-          <li id="header_invoice">
+          </li> -->
+
+
+
+          <!-- <li id="header_invoice">
             <a href="sales.php"><i class="fa fa-circle-o"></i> <span>Menu Sales Invoice</span></a>
           </li>
           <li id="header_surat_jalan">
@@ -546,11 +547,7 @@
           </li>
           <li id="header_diskon">
             <a href="diskonBarangReject.php"><i class="fa fa-circle-o"></i> <span>Diskon Barang Reject</span></a>
-          </li>
-          <!-- <li class="header">LABELS</li>
-          <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-          <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-          <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li> -->
+          </li> -->
         </ul>
       </section>
       <!-- /.sidebar -->
