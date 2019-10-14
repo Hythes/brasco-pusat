@@ -2,7 +2,7 @@
     var active = 'header_packing';
     var active_2 = 'header_packing_list';
 </script>
-
+<?php $title="List Picking Gudang" ?>
 <?php include('../templates/header.php') ?>
 <!-- =============================================== -->
 
@@ -10,74 +10,58 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content">
-        <div class="box-body">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1>LIST PACKING GUDANG</h1>
+        <div class="box box-info">
+            <div class="">
+                <div class="box-header with-border">
+                    <h3 class="box-title">LIST PACKING GUDANG</h3>
+                    <div class="box-tools pull-right">
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
+                    </div>
                 </div>
-                <div class="panel-body">
-                    <form>
-                        <div class="form-group row" style="padding-left: 10px">
-                            <div class="col-sm-10">
-                                Tanggal:<input type="text" name="" style="margin-left: 10px; width: 100px" placeholder="dd/mm/yyyy">
-                                <button class="btn btn-primary" style="width: 80px; height: 29px; margin: 10px">Search</button>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" style="width: 80px; height: 30px; margin: 10px">Packing</button>
-                        <!-- 1 -->
-                    </form>
-                    <div class="container">
-                        <div class="row" style="width: 950px; padding: 10px">
-                            <div style="border-top: solid; width: 100%; margin-top: 5px">
-                                <div class="table-responsive" style="margin-top: 20px; width: 950px">
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>No </th>
-                                                <th>No Pack</th>
-                                                <th>Kode Cust</th>
-                                                <th>Nama Customer</th>
-                                                <th>Qty Pack</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                <div class="box-body">
+                    <form class="form-horizontal">
+                        <div class="form-group">
+                            <label class="col-sm-1">Tanggal</label>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <input type="text" readonly value="10/14/2019" name="tanggal" class="form-control">
+                                    <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="col-sm-1">
+                                <button type="" class="btn btn-info">Search</button>
+                            </div>
                         </div>
-                    </div>
+                        <button class="btn btn-info">Packing</button>
+                    </form>
+
+                <div class="table-responsive">
+                    <table class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th>No</th>
+                                <th>No Pack</th>
+                                <th>Kode Cust</th>
+                                <th>Nama Barang</th>
+                                <th>Qty Pack</th>
+                                <th>Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td><a href="#"><i class="fa fa-edit fa-lg text-blue"></i></a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
                 </div>
             </div>
         </div>
