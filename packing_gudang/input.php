@@ -3,108 +3,95 @@
     var active_2 = 'header_packing_gudang';
 </script>
 
+<?php $title="Packing Gudang" ?>
 <?php include('../templates/header.php') ?>
 <div class="content-wrapper">
 
     <!-- M ain content -->
     <section class="content">
         <!-- Default box -->
-        <div class="box">
-            <div class="box-header">
+        <div class="box box-info">
+            <div class="box-header with-border">
+                <h3 class="box-title">Packing Gudang</h3>
                 <div class="box-tools pull-right">
                     <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                 </div>
             </div>
             <div class="box-body">
-                <div class="container">
-                    <div class="row" style="width: 1050px">
-                        <div class="panel panel-default">
-                            <div class="panel-heading" style="text-align: center;">
-                                <h2>PACKING GUDANG</h2>
+                <div class="row">
+                    <div class="box-body">
+                        <form method class="form-horizontal">
+                            <div class="col-sm-6">
+                                <div class="form-group">
+                                    <label class="col-xs-3">No Packing</label>
+                                    <div class="col-xs-9">
+                                        <input type="text" name="" class="form-control" placeholder="Pack-001">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3">Tanggal</label>
+                                    <div class="col-xs-9">
+                                        <div class="input-group">
+                                            <input type="date" name="tanggal" class="form-control">
+                                            <div class="input-group-addon">
+                                                <i class="fa fa-calendar"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-xs-3">Pilih Customer</label>
+                                    <div class="col-xs-9">
+                                        <select name="" id="" class="form-control">
+                                            <option value="">- Pilih Customer -</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="" class="btn btn-info">Tambah Item</button>
                             </div>
-                            <div class="panel-body">
-                                <div class="row">
-                                    <div class="col-md-2">
-                                        <div class="form-group">
-                                            <label for="paking">No Packing</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="tgl">Tanggal</label>
-                                        </div>
-                                        <div class="form-group">
-                                            <label for="pilih">Pilih Customer</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-7">
-                                        <div class="form-group">
-                                            <input type="text" name="paking" id="paking" placeholder="Pick-001">
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="date" name="tgl" id="tgl">
-                                            <span class="glyphicon glyphicon-calendar" style="font-size: 20px"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <select>
-                                                <option> - Pilih Customer - </option>
-                                                <option>x</option>
-                                                <option>x</option>
-                                            </select>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="container">
-                                    <div class="row">
-                                        <div class="form-group">
-                                            <button class="btn btn-primary">Tambah Item</button>
-                                        </div>
-                                        <div class="table-responsive" style="margin-top: 20px; width: 1000px">
-                                            <table class="table table-bordered table-striped">
-                                                <thead class="thead-dark" align="center">
-                                                    <tr style="text-align: center;">
-                                                        <th>No</th>
-                                                        <th>Barcode</th>
-                                                        <th>Nama Item</th>
-                                                        <th>Jml</th>
-                                                        <th>Qty Pick</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody align="center">
-                                                    <tr>
-                                                        <td>x</td>
-                                                        <td>x</td>
-                                                        <td>x</td>
-                                                        <td>x</td>
-                                                        <td>x</td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-md-8">
-                                        <div class="form-group" style="float: right;">
-                                            <label>
-                                                <h4>Total Qty</h4>
-                                            </label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4">
-                                        <div class="form-group" style="padding-left: 30px">
-                                            <input type="number" name="total" style="width: 100px">
-                                            <input type="number" name="qty" style="width: 100px">
-                                        </div>
-                                        <div class="form-group" style="padding-left: 50px">
-                                            <button>Close</button>
-                                            <button class="btn btn-danger">Reset</button>
-                                            <button class="btn btn-primary">Simpan</button>
-                                        </div>
-                                    </div>
-                                </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped text-center">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Barcode</th>
+                                    <th>Nama Item</th>
+                                    <th>Jml</th>
+                                    <th>Qty Pack</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>111111111</td>
+                                    <td>Jaket Batik</td>
+                                    <td>15</td>
+                                    <td><input type="text" class="form-control"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="pull-right">
+                        <div class="form-group">
+                            <label class="col-xs-2">Total Qty</label>
+                            <div class="col-xs-5">
+                                <input type="text" class="form-control">
+                            </div>
+                            <div class="col-xs-5">
+                                <input type="text" class="form-control">
                             </div>
                         </div>
                     </div>
                 </div>
+                <div class="pull-right">
+                        <button class="btn btn-danger">Reset</button>
+                        <button class="btn btn-info">Simpan</button>
+                    </div>
             </div>
         </div>
     </section>
