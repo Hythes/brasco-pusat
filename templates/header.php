@@ -475,7 +475,7 @@
           </li>
           <li class="treeview" id="header_sales">
             <a href="#">
-              <i class="fa fa-truck"></i>
+              <i class="fa fa-user-secret"></i>
               <span>Sales Order</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -498,7 +498,7 @@
           </li>
           <li class="treeview" id="header_picking">
             <a href="#">
-              <i class="fa fa-cloud"></i>
+              <i class="fa fa-truck"></i>
               <span>Picking Gudang</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -515,7 +515,7 @@
           </li>
           <li class="treeview" id="header_packing">
             <a href="#">
-              <i class="fa fa-cloud"></i>
+              <i class="fa fa-dropbox"></i>
               <span>Packing Gudang</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
