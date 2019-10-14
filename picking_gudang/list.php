@@ -24,7 +24,7 @@
                                     <div class="input-group">
                                         <input type="date" required id="formtanggal" name="tanggal" class="form-control">
                                         <div class="input-group-addon">
-                                        <i class="fa fa-calendar"></i>
+                                            <i class="fa fa-calendar"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -32,8 +32,8 @@
                             <div class="form-group">
                                 <label class="col-sm-1 col-xs-3">Status</label>
                                 <div class="col-sm-3 col-xs-6">
-                                    <select name="" id="" class="form-control">
-                                        <option value=""> PILIH STATUS </option>
+                                    <select name="status" id="status" class="form-control">
+                                        <option value="0">-- Pilih Status -- </option>
                                     </select>
                                 </div>
                                 <div class="col-sm-1 col-xs-1">
@@ -51,7 +51,7 @@
             <div class="box-body">
                 <div>
                     <div>
-                        <div class="table-responsive" >
+                        <div class="table-responsive">
                             <table class="table table-bordered table-striped">
                                 <thead class="thead-dark">
                                     <tr>
