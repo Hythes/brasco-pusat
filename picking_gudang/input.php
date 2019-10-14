@@ -59,191 +59,174 @@ if (isset($_POST['submit'])) {
 </script>
 
 <?php include('../templates/header.php') ?>
-<form action="" method="POST" id="picki">
+<form action="" method="POST" id="picki" class="form-horizontal">
     <div class="content-wrapper">
 
         <!-- M ain content -->
         <section class="content">
-            <!-- Default box -->
-            <div class="box">
-                <div class="box-header">
+            <div class="box box-info">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Picking Gudang</h3>
                     <div class="box-tools pull-right">
                         <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse"><i class="fa fa-minus"></i></button>
                     </div>
                 </div>
                 <div class="box-body">
-                    <div class="container">
-                        <div class="row" style="width: 1050px">
-                            <div class="panel panel-default">
-                                <div class="panel-heading" style="text-align: center;">
-                                    <h2>PICKING GUDANG</h2>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="row">
-                                        <div class="col-md-2">
-                                            <div class="form-group">
-                                                <label for="tgl">Tanggal</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="pick">No Pick</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="order">No Order</label>
-                                            </div>
-                                            <div class="form-group">
-                                                <label for="kode">Kode Customer</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-7">
-                                            <div class="form-group" style="width: 30%;">
-                                                <div class="input-group">
-                                                    <input type="text" readonly value="<?= date('m/d/Y') ?>" name="tanggal" class="form-control">
-                                                    <div class="input-group-addon">
-                                                        <i class="fa fa-calendar"></i>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" readonly value="<?= $nomor_pick ?>" name="nomor_picking" id="pick">
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" id="nomor_order" readonly name="nomor_order" value="<?= $nomor_order ?>">
-                                                <a data-toggle="modal" data-target="#modal2" style="cursor : pointer; color: #000;"><i class="fa fa-search fa-2x"></i></a>
-                                            </div>
-                                            <div class="form-group">
-                                                <input type="text" name="kode" readonly id="kode_customer" value="<?= $kode_customer ?>">
-                                            </div>
-                                        </div>
-                                        <!-- modal -->
-                                        <div class="modal fade" id="modal2">
-                                            <div class="modal-dialog modal-md">
-                                                <div class="modal-content">
-                                                    <div class="modal-header bg-primary">
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span></button>
-                                                        <h4 class="modal-title text-center">Pilih Order</h4>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="table-data">
-                                                            <div class="box-body">
-                                                                <div class="form-group">
-                                                                    <label class="col-xs-3 control-label">Tanggal</label>
-                                                                    <div class="col-xs-6">
-                                                                        <div class="input-group">
-                                                                            <input type="date" id="cari_so_tanggal_val" class="form-control">
-                                                                            <div class="input-group-addon">
-                                                                                <i class="fa fa-calendar"></i>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <button type="button" id="cari_so_tanggal" class="btn btn-primary">Cek</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="box-body">
-                                                                <table class="table table-bordered table-striped">
-                                                                    <thead>
-                                                                        <tr>
-                                                                            <th>No</th>
-                                                                            <th>No Order</th>
-                                                                            <th>Kode Customer</th>
-                                                                            <th>Qty Order</th>
-                                                                            <th>Aksi</th>
-                                                                        </tr>
-                                                                    </thead>
-                                                                    <tbody id="cari_so_tabel">
-                                                                        <?php
-                                                                        $i_m1 = 1;
-                                                                        foreach (query("SELECT * FROM order_gudang") as $data_so) : $so =  $data_so['nomor_order'];
-                                                                            $ko = $data_so['kode_customer'];
-                                                                            ?>
-                                                                            <tr>
-                                                                                <td><?= $i_m1 ?></td>
-                                                                                <td><?= $data_so['nomor_order'];  ?></td>
-                                                                                <td><?= $data_so['kode_customer'] ?></td>
-                                                                                <td><?= $data_so['total'] ?></td>
-                                                                                <td><a class="btn btn-primary" href="picking_gudang/input.php?nomor=<?= $so ?>">Pilih</button></td>
-                                                                            </tr>
-                                                                        <?php
-                                                                            $i_m1++;
-                                                                        endforeach;
-                                                                        ?>
-                                                                    </tbody>
-                                                                </table>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <div class="pull-right">
-                                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- /. modal done -->
-                                        <div class="col-md-1">
-                                            <div class="form-group">
-                                                <label for="status">Status</label>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-2">
-                                            <select id="select" name="status">
-                                                <option value="0"> - Pilih Status - </option>
-                                                <option>Selesai</option>
-                                                <option>Proses</option>
-                                            </select>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3">Tanggal</label>
+                                <div class="col-sm-6">
+                                    <div class="input-group">
+                                        <input type="text" readonly value="<?= date('m/d/Y') ?>" name="tanggal" class="form-control">
+                                        <div class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
                                         </div>
                                     </div>
-                                    <div class="container">
-                                        <div class="row">
-                                            <div class="table-responsive" style="margin-top: 20px; width: 1000px">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3">No Pick</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" readonly value="<?= $nomor_pick ?>" name="nomor_picking" id="pick">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3 col-xs-3">No Order</label>
+                                <div class="col-sm-6 col-xs-6">
+                                    <input type="text" class="form-control" id="nomor_order" readonly name="nomor_order" value="<?= $nomor_order ?>">
+                                </div>
+                                <div class="col-sm-1 col-xs-1">
+                                    <a data-toggle="modal" data-target="#modal2" style="cursor : pointer; color: #000;"><i class="fa fa-search fa-2x"></i></a>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-sm-3">Kode Customer</label>
+                                <div class="col-sm-6">
+                                    <input type="text" class="form-control" name="kode" readonly id="kode_customer" value="<?= $kode_customer ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="col-sm-3">Status</label>
+                                <div class="col-sm-6">
+                                    <select id="select" name="status" class="form-control">
+                                        <option value="0"> - Pilih Status - </option>
+                                        <option>Selesai</option>
+                                        <option>Proses</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- modal -->
+                        <div class="modal fade" id="modal2">
+                            <div class="modal-dialog modal-md">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title text-center">Pilih Order</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="table-data">
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                    <label class="col-xs-3 control-label">Tanggal</label>
+                                                    <div class="col-xs-6">
+                                                        <div class="input-group">
+                                                            <input type="date" id="cari_so_tanggal_val" class="form-control">
+                                                            <div class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <button type="button" id="cari_so_tanggal" class="btn btn-primary">Cek</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="box-body">
                                                 <table class="table table-bordered table-striped">
-                                                    <thead class="thead-dark" align="center">
-                                                        <tr style="text-align: center;">
+                                                    <thead>
+                                                        <tr>
                                                             <th>No</th>
-                                                            <th>Barcode</th>
-                                                            <th>Nama Item</th>
-                                                            <th>Satuan</th>
+                                                            <th>No Order</th>
+                                                            <th>Kode Customer</th>
                                                             <th>Qty Order</th>
-                                                            <th>Qty Pick</th>
+                                                            <th>Aksi</th>
                                                         </tr>
                                                     </thead>
-                                                    <tbody align="center">
-                                                        <?php $i = 1;
-                                                        foreach ($item as $now) : ?>
+                                                    <tbody id="cari_so_tabel">
+                                                        <?php
+                                                        $i_m1 = 1;
+                                                        foreach (query("SELECT * FROM order_gudang") as $data_so) : $so =  $data_so['nomor_order'];
+                                                            $ko = $data_so['kode_customer'];
+                                                            ?>
                                                             <tr>
-                                                                <td><?= $i ?></td>
-                                                                <td><?= $now['barcode'] ?></td>
-                                                                <td><?= $now['nama_item'] ?></td>
-                                                                <td><?= $now['satuan'] ?></td>
-                                                                <td><?= $now['quantity'] ?></td>
-                                                                <td><input type="text" name="quantity_pick_<?= $i ?>"></td>
-                                                                <input type="hidden" name="id_<?= $i ?>" value="<?= $now['id'] ?>">
+                                                                <td><?= $i_m1 ?></td>
+                                                                <td><?= $data_so['nomor_order'];  ?></td>
+                                                                <td><?= $data_so['kode_customer'] ?></td>
+                                                                <td><?= $data_so['total'] ?></td>
+                                                                <td><a class="btn btn-primary" href="picking_gudang/input.php?nomor=<?= $so ?>">Pilih</button></td>
                                                             </tr>
-                                                        <?php $i++;
-                                                        endforeach; ?>
+                                                        <?php
+                                                            $i_m1++;
+                                                        endforeach;
+                                                        ?>
                                                     </tbody>
                                                 </table>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="row">
-                                        <div class="col-md-8">
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="form-group" style="padding-left: 50px">
-                                                <input type="hidden" name="total" value="<?= --$i ?>">
-                                                <button class="btn btn-danger">Reset</button>
-                                                <button name="submit" type="submit" class="btn btn-primary">Simpan</button>
-                                            </div>
+                                    <div class="modal-footer">
+                                        <div class="pull-right">
+                                            <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                        <!-- /. modal done -->
                     </div>
+
+                <div class="box-body">
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead class="thead-dark" align="center">
+                                <tr style="text-align: center;">
+                                    <th>No</th>
+                                    <th>Barcode</th>
+                                    <th>Nama Item</th>
+                                    <th>Satuan</th>
+                                    <th>Qty Order</th>
+                                    <th>Qty Pick</th>
+                                </tr>
+                            </thead>
+                            <tbody align="center">
+                                <?php $i = 1;
+                                foreach ($item as $now) : ?>
+                                    <tr>
+                                        <td><?= $i ?></td>
+                                        <td><?= $now['barcode'] ?></td>
+                                        <td><?= $now['nama_item'] ?></td>
+                                        <td><?= $now['satuan'] ?></td>
+                                        <td><?= $now['quantity'] ?></td>
+                                        <td><input type="text" class="form-control" name="quantity_pick_<?= $i ?>"></td>
+                                        <input type="hidden" name="id_<?= $i ?>" value="<?= $now['id'] ?>">
+                                    </tr>
+                                <?php $i++;
+                                endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="form-group pull-right">
+                        <input type="hidden" name="total" value="<?= --$i ?>">
+                        <button class="btn btn-danger">Reset</button>
+                        <button name="submit" type="submit" class="btn btn-primary">Simpan</button>
+                    </div>                                                      
+                </div>                                                        
+
                 </div>
             </div>
         </section>

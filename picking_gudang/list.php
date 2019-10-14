@@ -2,7 +2,7 @@
     var active = 'header_picking';
     var active_2 = 'header_picking_list';
 </script>
-
+<?php $title = "List Picking Gudang"; ?>
 <?php include('../templates/header.php') ?>
 <!-- =============================================== -->
 
@@ -10,86 +10,103 @@
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <section class="content">
-        <div class="box-body">
-            <div class="panel panel-default">
-                <div class="panel-heading">
-                    <h1>LIST PICKING GUDANG</h1>
+        <div class="box box-info">
+            <div class="">
+                <div class="box-header with-border">
+                    <h3 class="box-title">LIST PICKING GUDANG</h3>
                 </div>
                 <div class="panel-body">
-                    <form>
-                        <div class="form-group row" style="padding-left: 10px">
-                            <div class="col-sm-10">
-                                Tanggal:<input type="text" name="" style="margin-left: 10px; width: 100px" placeholder="dd/mm/yyyy"><br>
-                                Status:<select style="margin-left: 20px">
-                                    <option>- Pilih Status -</option>
-                                </select>
-                                <button class="btn btn-primary" style="width: 80px; height: 29px; margin: 10px">Search</button>
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" style="width: 80px; height: 30px; margin: 10px">Picking</button>
-                        <!-- 1 -->
-                    </form>
-                    <div class="container">
-                        <div class="row" style="width: 950px; padding: 10px">
-                            <div style="border-top: solid; width: 100%; margin-top: 5px">
-                                <div class="table-responsive" style="margin-top: 20px; width: 950px">
-                                    <table class="table table-bordered table-striped">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>No </th>
-                                                <th>No Pack</th>
-                                                <th>No Order</th>
-                                                <th>Kode Cust</th>
-                                                <th>Qty Order</th>
-                                                <th>Qty Pack</th>
-                                                <th>Status</th>
-                                                <th>Aksi</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                    <a href="" style="color: black"><span class="glyphicon glyphicon-print"></span></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                    <a href="" style="color: black"><span class="glyphicon glyphicon-print"></span></a>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td>
-                                                    <a href="index.php?halaman=data" style="color: blue"><span class="glyphicon glyphicon-edit"></span></a>
-                                                    <a href="" style="color: black"><span class="glyphicon glyphicon-print"></span></a>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                    <form class="form-horizontal">
+                        <div class="box-body">
+                            <div class="form-group">
+                                <label class="col-sm-1 col-xs-3">Tanggal</label>
+                                <div class="col-sm-3 col-xs-3">
+                                    <div class="input-group">
+                                        <input type="date" required id="formtanggal" name="tanggal" class="form-control">
+                                        <div class="input-group-addon">
+                                        <i class="fa fa-calendar"></i>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label class="col-sm-1 col-xs-3">Status</label>
+                                <div class="col-sm-3 col-xs-6">
+                                    <select name="" id="" class="form-control">
+                                        <option value=""> PILIH STATUS </option>
+                                    </select>
+                                </div>
+                                <div class="col-sm-1 col-xs-1">
+                                    <button type="" class="btn btn-primary">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="" class="btn btn-info">Picking</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="box box-info">
+            <div class="box-body">
+                <div>
+                    <div>
+                        <div class="table-responsive" >
+                            <table class="table table-bordered table-striped">
+                                <thead class="thead-dark">
+                                    <tr>
+                                        <th>No </th>
+                                        <th>No Pack</th>
+                                        <th>No Order</th>
+                                        <th>Kode Cust</th>
+                                        <th>Qty Order</th>
+                                        <th>Qty Pack</th>
+                                        <th>Status</th>
+                                        <th>Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <a href="index.php?halaman=data" style="color: blue"><span class="fa fa-edit fa-lg"></span></a>&nbsp&nbsp&nbsp
+                                            <a href="" style="color: black"><span class="fa fa-print fa-lg"></span></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <a href="index.php?halaman=data" style="color: blue"><span class="fa fa-edit fa-lg"></span></a>&nbsp&nbsp&nbsp
+                                            <a href="" style="color: black"><span class="fa fa-print fa-lg"></span></a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>
+                                            <a href="index.php?halaman=data" style="color: blue"><span class="fa fa-edit fa-lg"></span></a>&nbsp&nbsp&nbsp
+                                            <a href="" style="color: black"><span class="fa fa-print fa-lg"></span></a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                 </div>
