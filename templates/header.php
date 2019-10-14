@@ -513,7 +513,7 @@
               </li>
             </ul>
           </li>
-          <!-- <li class="treeview" id="header_packing">
+          <li class="treeview" id="header_packing">
             <a href="#">
               <i class="fa fa-cloud"></i>
               <span>Packing Gudang</span>
@@ -523,13 +523,13 @@
             </a>
             <ul class="treeview-menu">
               <li id="header_packing_list">
-                <a href="listpackinggudang.php"><i class="fa fa-circle-o"></i> <span>List Packing Gudang</span></a>
+                <a href="packing_gudang/list.php"><i class="fa fa-circle-o"></i> <span>List Packing Gudang</span></a>
               </li>
               <li id="header_packing_gudang">
-                <a href="picking.php"><i class="fa fa-circle-o"></i> <span> Packing Gudang</span></a>
+                <a href="packing_gudang/input.php"><i class="fa fa-circle-o"></i> <span> Packing Gudang</span></a>
               </li>
             </ul>
-          </li> -->
+          </li>
 
 
 

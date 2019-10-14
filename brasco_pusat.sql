@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Okt 2019 pada 13.09
+-- Waktu pembuatan: 14 Okt 2019 pada 04.31
 -- Versi server: 10.3.16-MariaDB
 -- Versi PHP: 7.1.30
 
@@ -78,7 +78,7 @@ CREATE TABLE `inventory` (
   `harga_jual1` varchar(255) NOT NULL,
   `harga_jual2` varchar(255) NOT NULL,
   `harga_jual3` varchar(255) NOT NULL,
-  `quantity` varchar(255) DEFAULT NULL,
+  `quantity` varchar(255) DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -89,12 +89,12 @@ CREATE TABLE `inventory` (
 
 INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_barang`, `harga_jual1`, `harga_jual2`, `harga_jual3`, `quantity`, `created_at`, `update_at`) VALUES
 (2, 'A33', 'Sepatu', '4', '6', '14000', '10000', '6500', '2', '2019-09-30 21:25:46', '2019-10-01 14:08:25'),
-(3, 'A23', 'Baju', '4', '7', '50000', '40000', '45000', NULL, '2019-10-01 21:06:24', NULL),
-(4, 'A13', 'Celana', '4', '8', '75000', '78000', '60000', NULL, '2019-10-01 21:07:24', NULL),
-(5, '1', 'Ret', '4', '6', '2000', '1000', '3000', NULL, '2019-10-04 08:23:25', NULL),
-(6, '2', 'Priz', '7', '7', '4000', '3000', '2500', NULL, '2019-10-04 08:23:42', NULL),
-(7, '3', 'Randu', '6', '8', '7000', '6000', '5000', NULL, '2019-10-04 08:23:58', NULL),
-(8, '5', 'w', '4', '8', '2000', '2000', '3000', NULL, '2019-10-07 13:48:15', '2019-10-09 10:43:10');
+(3, 'A23', 'Baju', '4', '7', '50000', '40000', '45000', '0', '2019-10-01 21:06:24', '2019-10-13 14:34:19'),
+(4, 'A13', 'Celana', '4', '8', '75000', '78000', '60000', '0', '2019-10-01 21:07:24', '2019-10-13 14:34:22'),
+(5, '1', 'Ret', '4', '6', '2000', '1000', '3000', '0', '2019-10-04 08:23:25', '2019-10-13 14:34:23'),
+(6, '2', 'Priz', '7', '7', '4000', '3000', '2500', '0', '2019-10-04 08:23:42', '2019-10-13 14:34:25'),
+(7, '3', 'Randu', '6', '8', '7000', '6000', '5000', '0', '2019-10-04 08:23:58', '2019-10-13 14:34:27'),
+(8, '5', 'w', '4', '8', '2000', '2000', '3000', '0', '2019-10-07 13:48:15', '2019-10-13 14:34:29');
 
 -- --------------------------------------------------------
 
@@ -344,13 +344,6 @@ CREATE TABLE `purchasing` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
---
--- Dumping data untuk tabel `purchasing`
---
-
-INSERT INTO `purchasing` (`kode`, `nomor_surat_jalan`, `kode_supplier`, `diterima_oleh`, `tanggal_terima`, `tanggal_jatuh_tempo`, `total_quantity`, `created_at`, `updated_at`) VALUES
-('TB-001', 'SJ-001', 'SP-001', 'Rendi', '2019-10-03', '2019-10-07', '69', '2019-10-11 14:00:48', NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -368,15 +361,6 @@ CREATE TABLE `purchasing_item` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data untuk tabel `purchasing_item`
---
-
-INSERT INTO `purchasing_item` (`id`, `kode_pu`, `barcode`, `quantity_order`, `quantity_terima`, `harga_satuan`, `created_at`, `updated_at`) VALUES
-(14, 'TB-001', 'A33', '23', '23', '131', '2019-10-11 14:00:48', '2019-10-11 14:52:04'),
-(15, 'TB-001', 'A33', '23', '23', '131', '2019-10-11 14:00:48', '2019-10-11 14:52:07'),
-(16, 'TB-001', 'A33', '23', '23', '131', '2019-10-11 14:00:48', '2019-10-11 14:52:10');
 
 -- --------------------------------------------------------
 
@@ -691,7 +675,7 @@ ALTER TABLE `purchase_order_item`
 -- AUTO_INCREMENT untuk tabel `purchasing_item`
 --
 ALTER TABLE `purchasing_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT untuk tabel `sales_order_item`
