@@ -10,6 +10,9 @@ if (isset($_POST['submit'])) {
     for ($i = 1; $i <= $total_item; $i++) {
         $quantity_terima = $_POST['quantity_terima_' . $i];
         $barcode = $_POST['barcode_' . $i];
+        $inven = query("SELECT * FROM inventory WHERE barcode = '$barcode'")[0];
+        $quantity_inven  =  intval($inven['quantity']) + intval($quantity_terima);
+        $sql .= "UPDATE inventory SET quantity = '$quantity_inven' WHERE barcode = '$barcode';";
         $harga_satuan = $_POST['harga_satuan_' . $i];
         $quantity_order = $_POST['quantity_order_' . $i];
         $sql .= "INSERT INTO purchasing_item(kode_pu,barcode,quantity_order,quantity_terima,harga_satuan) VALUES('$nomor_invoice','$barcode','$quantity_order','$quantity_terima','$harga_satuan');";
@@ -116,7 +119,7 @@ if (isset($_GET['kode_po'])) {
                                         <div class="col-md-8">
                                             <input type="text" name="diterima_oleh" class="form-control" placeholder="DITERIMA OLEH">
                                         </div>
-                                    </div> 
+                                    </div>
                                     <div class="form-group">
                                         <label class="col-md-4 control-label">Tanggal Terima</label>
                                         <div class="col-md-8">

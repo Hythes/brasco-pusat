@@ -422,9 +422,9 @@
               <li id="header_supplier_tempo">
                 <a href="jatuhTempoPembayaran.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
               </li> -->
-              <!-- <li id="header_supplier_tambah_saldo">
+              <li id="header_supplier_tambah_saldo">
                 <a href="master_supplier/tambah_saldo"><i class="fa fa-circle-o"></i> <span>Tambah Saldo Supplier</span></a>
-              </li> -->
+              </li>
             </ul>
           </li>
           <li class="treeview" id="header_po">
