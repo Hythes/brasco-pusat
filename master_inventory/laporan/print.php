@@ -32,9 +32,15 @@
             <tr>
                 <td><?php echo $i?></td>
                 <td><?php echo $p['barcode'] ?></td>
+                <?php
+                    $id_tipe = $p['id_tipe_barang'];
+                    $result = query("SELECT * FROM tipe_barang WHERE id = '$id_tipe'");
+                    $id_satuan = $p['satuan'];
+                    $result2 = query("SELECT * FROM satuan WHERE id = '$id_satuan'");
+                ?>
                 <td><?php echo $p['nama_barang'] ?></td>
-                <td><?php echo $p['satuan'] ?></td>
-                <td><?php echo $p['id_tipe_barang'] ?></td>
+                <td><?php echo $result2[0]['satuan'] ?></td>
+                <td><?php echo $result[0]['nama_barang'] ?></td>
                 <td><?php echo $p['harga_jual1'] ?></td>
                 <td><?php echo $p['harga_jual2'] ?></td>
                 <td><?php echo $p['harga_jual3']?></td>
@@ -43,5 +49,22 @@
             <?php $i++; ?>
         </tbody>
     </table>
+
+    <script>
+        function printWindow(){
+            window.print();
+            CheckWindowState();
+        }
+        function CheckWindowState(){
+            if(document.readyState=="complete"){
+                window.close();
+            }
+            else{
+                setTimeout("CheckWindowState()", 11000);
+            }
+        }
+        printWindow();
+    </script>
+
 </body>
 </html>
