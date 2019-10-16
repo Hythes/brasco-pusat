@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 14 Okt 2019 pada 04.31
--- Versi server: 10.3.16-MariaDB
--- Versi PHP: 7.1.30
+-- Generation Time: Oct 16, 2019 at 09:38 AM
+-- Server version: 10.3.16-MariaDB
+-- PHP Version: 7.1.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -26,7 +26,7 @@ USE `brasco_pusat`;
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `customer`
+-- Table structure for table `customer`
 --
 
 DROP TABLE IF EXISTS `customer`;
@@ -56,7 +56,7 @@ CREATE TABLE `customer` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `customer`
+-- Dumping data for table `customer`
 --
 
 INSERT INTO `customer` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `handphone`, `npwp`, `ktp`, `tipe_customer`, `kredit`, `contact_name`, `email`, `kode_sales`, `top`, `batas_kredit`, `tanggal_jual_akhir`, `saldo_awal`, `saldo_jalan`, `keterangan`, `created_at`, `updated_at`) VALUES
@@ -65,7 +65,7 @@ INSERT INTO `customer` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `inventory`
+-- Table structure for table `inventory`
 --
 
 DROP TABLE IF EXISTS `inventory`;
@@ -84,7 +84,7 @@ CREATE TABLE `inventory` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `inventory`
+-- Dumping data for table `inventory`
 --
 
 INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_barang`, `harga_jual1`, `harga_jual2`, `harga_jual3`, `quantity`, `created_at`, `update_at`) VALUES
@@ -99,7 +99,7 @@ INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_bara
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `order_gudang`
+-- Table structure for table `order_gudang`
 --
 
 DROP TABLE IF EXISTS `order_gudang`;
@@ -115,7 +115,7 @@ CREATE TABLE `order_gudang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `order_gudang`
+-- Dumping data for table `order_gudang`
 --
 
 INSERT INTO `order_gudang` (`nomor_order`, `tanggal`, `nomor_so`, `kode_customer`, `keterangan`, `total`, `created_at`, `updated_at`) VALUES
@@ -125,7 +125,7 @@ INSERT INTO `order_gudang` (`nomor_order`, `tanggal`, `nomor_so`, `kode_customer
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `order_gudang_item`
+-- Table structure for table `order_gudang_item`
 --
 
 DROP TABLE IF EXISTS `order_gudang_item`;
@@ -139,7 +139,7 @@ CREATE TABLE `order_gudang_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `order_gudang_item`
+-- Dumping data for table `order_gudang_item`
 --
 
 INSERT INTO `order_gudang_item` (`id`, `nomor_order`, `barcode`, `quantity`, `created_at`, `updated_at`) VALUES
@@ -151,7 +151,7 @@ INSERT INTO `order_gudang_item` (`id`, `nomor_order`, `barcode`, `quantity`, `cr
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pelanggan`
+-- Table structure for table `pelanggan`
 --
 
 DROP TABLE IF EXISTS `pelanggan`;
@@ -168,7 +168,7 @@ CREATE TABLE `pelanggan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pelanggan`
+-- Dumping data for table `pelanggan`
 --
 
 INSERT INTO `pelanggan` (`id`, `kode`, `tanggal`, `nama`, `alamat`, `kota`, `kodepos`, `no_telepon`, `no_handphone`) VALUES
@@ -178,7 +178,7 @@ INSERT INTO `pelanggan` (`id`, `kode`, `tanggal`, `nama`, `alamat`, `kota`, `kod
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pengajuan_perubahan_harga`
+-- Table structure for table `pengajuan_perubahan_harga`
 --
 
 DROP TABLE IF EXISTS `pengajuan_perubahan_harga`;
@@ -194,7 +194,7 @@ CREATE TABLE `pengajuan_perubahan_harga` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pengajuan_perubahan_harga`
+-- Dumping data for table `pengajuan_perubahan_harga`
 --
 
 INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tipe_customer`, `tanggal_approve`, `tanggal_pengajuan`, `keterangan`, `status`, `created_at`, `updated_at`) VALUES
@@ -204,7 +204,7 @@ INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tipe_customer`, `ta
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pph_item`
+-- Table structure for table `pph_item`
 --
 
 DROP TABLE IF EXISTS `pph_item`;
@@ -222,7 +222,7 @@ CREATE TABLE `pph_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `pph_item`
+-- Dumping data for table `pph_item`
 --
 
 INSERT INTO `pph_item` (`nomor_pengajuan`, `tanggal`, `tipe_customer`, `barcode_inventory`, `harga_jual_lama`, `harga_jual_baru`, `quantity`, `keterangan`, `created_at`, `updated_at`) VALUES
@@ -233,7 +233,7 @@ INSERT INTO `pph_item` (`nomor_pengajuan`, `tanggal`, `tipe_customer`, `barcode_
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `profil`
+-- Table structure for table `profil`
 --
 
 DROP TABLE IF EXISTS `profil`;
@@ -252,7 +252,7 @@ CREATE TABLE `profil` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `profil`
+-- Dumping data for table `profil`
 --
 
 INSERT INTO `profil` (`id`, `kode_cabang`, `nama_cabang`, `alamat`, `alamat2`, `kota`, `kodepos`, `no_telp`, `no_hp`, `chief`, `logo`) VALUES
@@ -261,7 +261,7 @@ INSERT INTO `profil` (`id`, `kode_cabang`, `nama_cabang`, `alamat`, `alamat2`, `
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `purchase_order`
+-- Table structure for table `purchase_order`
 --
 
 DROP TABLE IF EXISTS `purchase_order`;
@@ -290,7 +290,7 @@ CREATE TABLE `purchase_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `purchase_order`
+-- Dumping data for table `purchase_order`
 --
 
 INSERT INTO `purchase_order` (`kode`, `tanggal`, `tanggal_approve`, `kode_supplier`, `nama_supplier`, `alamat_supplier`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `handphone`, `dpp`, `tipe_ppn`, `tipe_ppn_input`, `total_harga`, `keterangan`, `keterangan_approve`, `status`, `created_at`, `updated_at`) VALUES
@@ -299,7 +299,7 @@ INSERT INTO `purchase_order` (`kode`, `tanggal`, `tanggal_approve`, `kode_suppli
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `purchase_order_item`
+-- Table structure for table `purchase_order_item`
 --
 
 DROP TABLE IF EXISTS `purchase_order_item`;
@@ -317,7 +317,7 @@ CREATE TABLE `purchase_order_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `purchase_order_item`
+-- Dumping data for table `purchase_order_item`
 --
 
 INSERT INTO `purchase_order_item` (`id`, `kode_po`, `barcode_inventory`, `kode_item_supplier`, `nama_inventory`, `quantity`, `harga_satuan`, `satuan`, `created_at`, `updated_at`) VALUES
@@ -328,7 +328,7 @@ INSERT INTO `purchase_order_item` (`id`, `kode_po`, `barcode_inventory`, `kode_i
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `purchasing`
+-- Table structure for table `purchasing`
 --
 
 DROP TABLE IF EXISTS `purchasing`;
@@ -347,7 +347,7 @@ CREATE TABLE `purchasing` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `purchasing_item`
+-- Table structure for table `purchasing_item`
 --
 
 DROP TABLE IF EXISTS `purchasing_item`;
@@ -365,7 +365,7 @@ CREATE TABLE `purchasing_item` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sales_order`
+-- Table structure for table `sales_order`
 --
 
 DROP TABLE IF EXISTS `sales_order`;
@@ -380,7 +380,7 @@ CREATE TABLE `sales_order` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `sales_order`
+-- Dumping data for table `sales_order`
 --
 
 INSERT INTO `sales_order` (`nomor_so`, `tanggal_so`, `kode_customer`, `keterangan`, `total`, `created_at`, `updated_at`) VALUES
@@ -392,7 +392,7 @@ INSERT INTO `sales_order` (`nomor_so`, `tanggal_so`, `kode_customer`, `keteranga
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sales_order_item`
+-- Table structure for table `sales_order_item`
 --
 
 DROP TABLE IF EXISTS `sales_order_item`;
@@ -406,7 +406,7 @@ CREATE TABLE `sales_order_item` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `sales_order_item`
+-- Dumping data for table `sales_order_item`
 --
 
 INSERT INTO `sales_order_item` (`id`, `nomor_so`, `barcode`, `quantity`, `created_at`, `updated_at`) VALUES
@@ -424,7 +424,7 @@ INSERT INTO `sales_order_item` (`id`, `nomor_so`, `barcode`, `quantity`, `create
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `satuan`
+-- Table structure for table `satuan`
 --
 
 DROP TABLE IF EXISTS `satuan`;
@@ -434,7 +434,7 @@ CREATE TABLE `satuan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `satuan`
+-- Dumping data for table `satuan`
 --
 
 INSERT INTO `satuan` (`id`, `satuan`) VALUES
@@ -446,7 +446,7 @@ INSERT INTO `satuan` (`id`, `satuan`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `stock_opname`
+-- Table structure for table `stock_opname`
 --
 
 DROP TABLE IF EXISTS `stock_opname`;
@@ -461,7 +461,7 @@ CREATE TABLE `stock_opname` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `supplier`
+-- Table structure for table `supplier`
 --
 
 DROP TABLE IF EXISTS `supplier`;
@@ -484,7 +484,7 @@ CREATE TABLE `supplier` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `supplier`
+-- Dumping data for table `supplier`
 --
 
 INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `fax`, `handphone`, `contact_name`, `email`, `kredit`, `top`, `pkp`, `created_at`, `updated_at`) VALUES
@@ -494,7 +494,7 @@ INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `supplier_saldo`
+-- Table structure for table `supplier_saldo`
 --
 
 DROP TABLE IF EXISTS `supplier_saldo`;
@@ -511,7 +511,7 @@ CREATE TABLE `supplier_saldo` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `tipe_barang`
+-- Table structure for table `tipe_barang`
 --
 
 DROP TABLE IF EXISTS `tipe_barang`;
@@ -523,7 +523,7 @@ CREATE TABLE `tipe_barang` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data untuk tabel `tipe_barang`
+-- Dumping data for table `tipe_barang`
 --
 
 INSERT INTO `tipe_barang` (`id`, `nama_barang`, `created_at`, `update_at`) VALUES
@@ -536,167 +536,167 @@ INSERT INTO `tipe_barang` (`id`, `nama_barang`, `created_at`, `update_at`) VALUE
 --
 
 --
--- Indeks untuk tabel `customer`
+-- Indexes for table `customer`
 --
 ALTER TABLE `customer`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indeks untuk tabel `inventory`
+-- Indexes for table `inventory`
 --
 ALTER TABLE `inventory`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `order_gudang`
+-- Indexes for table `order_gudang`
 --
 ALTER TABLE `order_gudang`
   ADD PRIMARY KEY (`nomor_order`);
 
 --
--- Indeks untuk tabel `order_gudang_item`
+-- Indexes for table `order_gudang_item`
 --
 ALTER TABLE `order_gudang_item`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pelanggan`
+-- Indexes for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `pengajuan_perubahan_harga`
+-- Indexes for table `pengajuan_perubahan_harga`
 --
 ALTER TABLE `pengajuan_perubahan_harga`
   ADD PRIMARY KEY (`nomor_pengajuan`);
 
 --
--- Indeks untuk tabel `profil`
+-- Indexes for table `profil`
 --
 ALTER TABLE `profil`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `purchase_order`
+-- Indexes for table `purchase_order`
 --
 ALTER TABLE `purchase_order`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indeks untuk tabel `purchase_order_item`
+-- Indexes for table `purchase_order_item`
 --
 ALTER TABLE `purchase_order_item`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `purchasing`
+-- Indexes for table `purchasing`
 --
 ALTER TABLE `purchasing`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indeks untuk tabel `purchasing_item`
+-- Indexes for table `purchasing_item`
 --
 ALTER TABLE `purchasing_item`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `sales_order`
+-- Indexes for table `sales_order`
 --
 ALTER TABLE `sales_order`
   ADD PRIMARY KEY (`nomor_so`);
 
 --
--- Indeks untuk tabel `sales_order_item`
+-- Indexes for table `sales_order_item`
 --
 ALTER TABLE `sales_order_item`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `satuan`
+-- Indexes for table `satuan`
 --
 ALTER TABLE `satuan`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `supplier`
+-- Indexes for table `supplier`
 --
 ALTER TABLE `supplier`
   ADD PRIMARY KEY (`kode`);
 
 --
--- Indeks untuk tabel `supplier_saldo`
+-- Indexes for table `supplier_saldo`
 --
 ALTER TABLE `supplier_saldo`
   ADD KEY `id` (`id`);
 
 --
--- Indeks untuk tabel `tipe_barang`
+-- Indexes for table `tipe_barang`
 --
 ALTER TABLE `tipe_barang`
   ADD PRIMARY KEY (`id`);
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `inventory`
+-- AUTO_INCREMENT for table `inventory`
 --
 ALTER TABLE `inventory`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
--- AUTO_INCREMENT untuk tabel `order_gudang_item`
+-- AUTO_INCREMENT for table `order_gudang_item`
 --
 ALTER TABLE `order_gudang_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
--- AUTO_INCREMENT untuk tabel `pelanggan`
+-- AUTO_INCREMENT for table `pelanggan`
 --
 ALTER TABLE `pelanggan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
--- AUTO_INCREMENT untuk tabel `profil`
+-- AUTO_INCREMENT for table `profil`
 --
 ALTER TABLE `profil`
   MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
--- AUTO_INCREMENT untuk tabel `purchase_order_item`
+-- AUTO_INCREMENT for table `purchase_order_item`
 --
 ALTER TABLE `purchase_order_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT untuk tabel `purchasing_item`
+-- AUTO_INCREMENT for table `purchasing_item`
 --
 ALTER TABLE `purchasing_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `sales_order_item`
+-- AUTO_INCREMENT for table `sales_order_item`
 --
 ALTER TABLE `sales_order_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT untuk tabel `satuan`
+-- AUTO_INCREMENT for table `satuan`
 --
 ALTER TABLE `satuan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT untuk tabel `supplier_saldo`
+-- AUTO_INCREMENT for table `supplier_saldo`
 --
 ALTER TABLE `supplier_saldo`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `tipe_barang`
+-- AUTO_INCREMENT for table `tipe_barang`
 --
 ALTER TABLE `tipe_barang`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;

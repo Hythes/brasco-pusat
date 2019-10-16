@@ -2,7 +2,7 @@
     var active = 'header_packing';
     var active_2 = 'header_packing_list';
 </script>
-<?php $title="List Picking Gudang" ?>
+<?php $title = "List Picking Gudang" ?>
 <?php include('../templates/header.php') ?>
 <!-- =============================================== -->
 
@@ -24,7 +24,7 @@
                             <label class="col-sm-1">Tanggal</label>
                             <div class="col-sm-4">
                                 <div class="input-group">
-                                    <input type="text" readonly value="10/14/2019" name="tanggal" class="form-control">
+                                    <input type="date" name="tanggal" class="form-control">
                                     <div class="input-group-addon">
                                         <i class="fa fa-calendar"></i>
                                     </div>
@@ -37,30 +37,30 @@
                         <button class="btn btn-info">Packing</button>
                     </form>
 
-                <div class="table-responsive">
-                    <table class="table table-bordered table-striped">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>No Pack</th>
-                                <th>Kode Cust</th>
-                                <th>Nama Barang</th>
-                                <th>Qty Pack</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                                <td><a href="#"><i class="fa fa-edit fa-lg text-blue"></i></a></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>No Pack</th>
+                                    <th>Kode Cust</th>
+                                    <th>Nama Barang</th>
+                                    <th>Qty Pack</th>
+                                    <th>Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td></td>
+                                    <td><a href="#"><i class="fa fa-edit fa-lg text-blue"></i></a></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
 
                 </div>
             </div>

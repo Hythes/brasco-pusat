@@ -496,6 +496,8 @@
               </li>
             </ul>
           </li>
+          <li class="header">GUDANG</li>
+
           <li class="treeview" id="header_picking">
             <a href="#">
               <i class="fa fa-truck"></i>
