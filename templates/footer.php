@@ -236,6 +236,14 @@
 <script src="assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
 <script src="assets/bower_components/fastclick/lib/fastclick.js"></script>
+<!-- datatables print csv excel pdf component -->
+<script src="assets/bower_components/datatables.net/js/dataTables.buttons.min.js"></script>
+<script src="assets/bower_components/datatables.net/js/buttons.flash.min.js"></script>
+<script src="assets/bower_components/datatables.net/js/jszip.min.js"></script>
+<script src="assets/bower_components/datatables.net/js/pdfmake.min.js"></script>
+<script src="assets/bower_components/datatables.net/js/vfs_fonts.js"></script>
+<script src="assets/bower_components/datatables.net/js/buttons.html5.min.js"></script>
+<script src="assets/bower_components/datatables.net/js/buttons.print.min.js"></script>
 <!-- AdminLTE App -->
 <script src="assets/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
