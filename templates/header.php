@@ -52,6 +52,11 @@
   </style>
 
 </head>
+<?php if (isset($_GET['err'])) : ?>
+  <script>
+    alert('Tidak diperbolehkan!')
+  </script>
+<?php endif; ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
