@@ -159,9 +159,9 @@
                     <td><?php echo $row["harga_jual2"]; ?></td>
                     <td><?php echo $row["harga_jual3"]; ?></td>
                     <td>
-                      <a href="master_inventory/ubah.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-edit fa-lg"></i>&nbsp&nbsp&nbsp</a>
-                      <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-trash fa-lg text-red">&nbsp&nbsp&nbsp</i></a>
-                      <a href="master_inventory/laporan/print.php?id=<?php echo $row["id"] ?>"><i class="fa fa-print text-green fa-lg"></i></a>
+                      <a href="master_inventory/ubah.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-edit fa-lg"></i>&nbsp&nbsp</a>
+                      <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-trash fa-lg text-red">&nbsp&nbsp</i></a>
+                      <a href="master_inventory/laporan/print.php?id=<?php echo $row["id"] ?>" target="_blank"><i class="fa fa-print text-green fa-lg"></i></a>
                     </td>
                   </tr>
                   <?php $i++ ?>

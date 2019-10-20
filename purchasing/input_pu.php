@@ -189,10 +189,10 @@ if (isset($_GET['kode_po'])) {
                                                     endforeach; ?> </tbody>
                             </table>
                         </div>
-                    </div>
-                    <div class="form-group pull-right">
-                        <input type="hidden" name="total_item" value="<?= --$i ?>">
-                        <button type="submit" name="submit" class="btn btn-info">Save</button>
+                        <div class="form-group pull-right">
+                            <input type="hidden" name="total_item" value="<?= --$i ?>">
+                            <button type="submit" name="submit" class="btn btn-info">Save</button>
+                        </div>
                     </div>
                 </form>
                 <!-- Sebelum ada GET -->
