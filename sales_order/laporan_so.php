@@ -101,7 +101,7 @@ if (isset($_POST['cari'])) {
             </form>
         </div>
         <?php if (isset($query)) : ?>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="col-md-3">
                     <div class="form-group">
                         <button class="btn btn-light">Excel</button>
@@ -110,11 +110,11 @@ if (isset($_POST['cari'])) {
 
                     </div>
                 </div>
-            </div>
+            </div> -->
 
             <div style="margin-top: 5px">
 
-                <table class="table table-bordered ">
+                <table id="data-table" class="table table-bordered ">
                     <thead align="center">
                         <tr>
                             <th>
@@ -169,5 +169,54 @@ if (isset($_POST['cari'])) {
     </section>
 
 </div>
+
+<!-- jQuery 3 -->
+<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+
+<script>
+    $(function(){
+        $('#example1').DataTable()
+        $('#data-table').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            dom: 'Bfrtip',
+            buttons: [
+                {
+                    extend: 'pdfHtml5',
+                    orientation: 'potrait',
+                    pageSize: 'LEGAL',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5 ]
+                    }
+                },
+                {
+                    extend: 'print',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5 ]
+                    }, 
+                    customize: function ( win ) {
+                        $(win.document.body)
+                            .css( 'font-size', '10pt' )
+    
+                        $(win.document.body).find( 'table' )
+                            .addClass( 'compact' )
+                            .css( 'font-size', 'inherit' );
+                    }
+                },
+                {
+                    extend: 'excel',
+                    text: 'Excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5]
+                    }
+                }
+            ]
+        })
+    })
+</script>
 
 <?php include('../templates/footer.php') ?>
