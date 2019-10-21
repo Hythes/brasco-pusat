@@ -33,6 +33,7 @@
   <link rel="stylesheet" href="assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <!-- button datatables -->
   <link rel="stylesheet" href="assets/bower_components/datatables.net/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="assets/bower_components/select2/dist/css/select2.min.css">
   <!-- datatables css -->
   <!-- <link rel="stylesheet" href="assets/bower_components/datatables.net/css/jquery.dataTables.min.css"> -->
 
@@ -364,9 +365,9 @@
           <li id="header_customer">
             <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
           </li>
-          <!-- <li id="header_jurnal">
-            <a href="JurnalReferensi.php"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
-          </li> -->
+          <li id="header_jurnal">
+            <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
+          </li>
           <li class="treeview" id="header_inventory">
             <a href="#"><i class="fa fa-cubes"></i>
               <span>Inventori</span>
