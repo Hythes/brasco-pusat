@@ -33,6 +33,7 @@
   <link rel="stylesheet" href="assets/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
   <!-- button datatables -->
   <link rel="stylesheet" href="assets/bower_components/datatables.net/css/buttons.dataTables.min.css">
+  <link rel="stylesheet" href="assets/bower_components/select2/dist/css/select2.min.css">
   <!-- datatables css -->
   <!-- <link rel="stylesheet" href="assets/bower_components/datatables.net/css/jquery.dataTables.min.css"> -->
 
@@ -56,6 +57,11 @@
   </style>
 
 </head>
+<?php if (isset($_GET['err'])) : ?>
+  <script>
+    alert('Tidak diperbolehkan!')
+  </script>
+<?php endif; ?>
 
 <body class="hold-transition skin-blue sidebar-mini">
   <div class="wrapper">
@@ -359,9 +365,9 @@
           <li id="header_customer">
             <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
           </li>
-          <!-- <li id="header_jurnal">
-            <a href="JurnalReferensi.php"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
-          </li> -->
+          <li id="header_jurnal">
+            <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
+          </li>
           <li class="treeview" id="header_inventory">
             <a href="#"><i class="fa fa-cubes"></i>
               <span>Inventori</span>
@@ -500,6 +506,8 @@
               </li>
             </ul>
           </li>
+          <li class="header">GUDANG</li>
+
           <li class="treeview" id="header_picking">
             <a href="#">
               <i class="fa fa-truck"></i>

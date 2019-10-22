@@ -1,31 +1,53 @@
-<script>
-    var active = 'header_packing';
-    var active_2 = 'header_packing_gudang';
-</script>
-
 <?php
 require '../env.php';
+if (isset($_GET['kode'])) {
+    header('Content-Type: Application/Json');
+    $nomor_pack = $_GET['kode'];
+    $data_hidden = ['data_packing' => [], 'data_picking_item' => [], 'data_inventory' => [], 'data_picking' => []];
+    foreach (query("SELECT * FROM packing_item WHERE nomor_packing = '$nomor_pack'") as $data) {
+        $data_picking_item = query(sprintf("SELECT * FROM picking_item WHERE id = '%s' ", $data['id_picking_item']))[0];
+        $data_picking = query(sprintf("SELECT * FROM picking WHERE nomor_picking = '%s'", $data_picking_item['nomor_picking']))[0];
+        $data_inventory = query(sprintf("SELECT * FROM inventory WHERE barcode = '%s'", $data_picking_item['barcode']))[0];
+
+        array_push($data_hidden['data_packing'], $data);
+        array_push($data_hidden['data_picking_item'], $data_picking_item);
+        array_push($data_hidden['data_picking'], $data_picking);
+        array_push($data_hidden['data_inventory'], $data_inventory);
+    }
+    echo json_encode($data_hidden);
+    exit();
+}
+if (is_null($_GET['nomor'])) {
+    return header('Location: list.php?err=1');
+}
+$title = "Edit Packing Gudang";
+$nomor_pack = $_GET['nomor'];
+$data = query("SELECT * FROM packing WHERE nomor_packing = '$nomor_pack'")[0];
+
 if (isset($_POST['submit'])) {
     $query = '';
     $total = 0;
     for ($i = 1; $i <= $_POST['total']; $i++) {
-        $query .= sprintf("INSERT INTO packing_item(nomor_packing,id_picking_item,quantity_packing) VALUES('%s',%s,%s); ", $_POST['nomor_packing'], $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i]);
+        if (isset($_POST['id_packing_' . $i])) {
+            $query .= sprintf("UPDATE packing_item SET id_picking_item ='%s',quantity_packing='%s' WHERE id=%s;", $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i], $_POST['id_packing_' . $i]);
+        } else {
+            $query .= sprintf("INSERT INTO packing_item(nomor_packing,id_picking_item,quantity_packing) VALUES('%s',%s,%s); ", $_POST['nomor_packing'], $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i]);
+        }
+
         $query .= sprintf("UPDATE picking_item SET quantity_packing = '%s' WHERE id = %s;", $_POST['qty_pack_' . $i], $_POST['id_picking_' . $i]);
         $total += intval($_POST['qty_pack_' . $i]);
     }
-    $query .= sprintf("INSERT INTO packing(nomor_packing,kode_customer,tanggal,total) VALUES('%s','%s','%s','%s');", $_POST['nomor_packing'], $_POST['customer'], $_POST['tanggal'], $total);
+    $query .= sprintf("UPDATE packing SET nomor_packing='%s',kode_customer='%s',tanggal='%s',total='%s' WHERE nomor_packing='%s';", $_POST['nomor_packing'], $_POST['customer'], $_POST['tanggal'], $total, $_POST['nomor_packing']);
     $sql = mysqli_multi_query($conn, $query);
-    lanjutkan($sql, "Ditambahkan!");
+    lanjutkan($sql, "Diedit!");
     $return = true;
 }
-$title = "Packing Gudang";
-$query = query('SELECT * FROM packing ORDER BY nomor_packing DESC LIMIT 1');
-if (!isset($query[0]['nomor_packing'])) {
-    $nomor_pick = 'Pack-001';
-} else {
-    $nomor_pick = tambahId(strval($query[0]['nomor_packing']), 'Pack');
-}
+
 ?>
+<script>
+    var active = 'header_packing';
+    var active_2 = 'header_packing_gudang';
+</script>
 <?php include('../templates/header.php') ?>
 <?php if (isset($return)) : ?>
     <script>
@@ -55,14 +77,14 @@ if (!isset($query[0]['nomor_packing'])) {
                                     <div class="form-group">
                                         <label class="col-xs-3">No Packing</label>
                                         <div class="col-xs-9">
-                                            <input type="text" name="nomor_packing" class="form-control" value="<?= $nomor_pick ?>" readonly>
+                                            <input type="text" name="nomor_packing" id="nomor_packing" class="form-control" value="<?= $nomor_pack ?>" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-xs-3">Tanggal</label>
                                         <div class="col-xs-9">
                                             <div class="input-group">
-                                                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= date('Y-m-d') ?>" readonly>
+                                                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= $data['tanggal'] ?>" readonly>
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
@@ -75,7 +97,7 @@ if (!isset($query[0]['nomor_packing'])) {
                                             <select name="customer" id="customer" class="form-control">
                                                 <?php foreach (query("SELECT * FROM customer") as $cust) : ?>
                                                     <option value="0">- Pilih Customer -</option>
-                                                    <option value="<?= $cust['kode'] ?>"><?= $cust['nama'] ?> </option>
+                                                    <option <?= ($cust['kode'] == $data['kode_customer']) ? 'selected'  : '' ?> value="<?= $cust['kode'] ?>"><?= $cust['nama'] ?> </option>
                                                 <?php endforeach; ?>
                                             </select>
                                         </div>
@@ -202,9 +224,60 @@ if (!isset($query[0]['nomor_packing'])) {
     var i = 1;
     var total = {
         pick: 0,
-        pack: [],
+        pack: ['', ],
     }
-    var savedData = []
+    var savedData = ['', ]
+    $(document).ready(() => {
+        $.get(document.location.href, {
+            kode: $('#nomor_packing').val()
+        }, (data) => {
+            var tot = 0;
+            var temp = {}
+            data = JSON.parse(data)
+            for (it in data.data_inventory) {
+                temp.tanggal = data.data_picking[it].tanggal
+                temp.kode_customer = data.data_picking[it].kode_customer
+                temp.no_pick = data.data_picking[it].nomor_picking
+                temp.nama = data.data_inventory[it].nama_barang
+                temp.id = data.data_picking_item[it].id
+                temp.id_packing = data.data_packing[it].id
+                temp.qty_pick = data.data_picking_item[it].quantity_picking
+                temp.qty_pack = data.data_packing[it].quantity_packing
+                temp.barcode = data.data_inventory[it].barcode
+                temp.jumlah = parseInt(temp.qty_pick) - parseInt(temp.qty_pack)
+                total.pick += parseInt(temp.qty_pick)
+                total.pack.push(temp.qty_pack)
+
+                $('#total_qty_pack').val(tot)
+                $('#total_qty_pick').val(total.pick)
+                $('#table_show').append(
+                    '<tr>' +
+                    '<td>' + i + '</td>' +
+                    '<td>' + temp.barcode + '</td>' +
+                    '<td>' + temp.nama + '</td>' +
+                    '<td>' + temp.qty_pick + '</td>' +
+                    '<td>' + '<input type="number" value="' + temp.qty_pack + '" id="qty_pack" onkeyup="press(this.value,' + i + ')"  name="qty_pack_' + i + '" class="form-control">' + '</td>' +
+                    '<input type="number" value="' + temp.qty_pack + '" id="qty_pack" onkeyup="press(this.value,' + i + ')"  name="qty_pack_' + i + '" class="form-control">' +
+                    '</tr>' +
+                    '<input type="hidden" name="id_picking_' + i + '" value="' + temp.id + '">' +
+                    '<input type="hidden" name="id_packing_' + i + '" value="' + temp.id_packing + '">'
+
+                )
+                i++
+                savedData.push(temp)
+
+
+            }
+            for (a in total.pack) {
+                if (total.pack[a] == '') {
+                    total.pack[a] = 0
+                }
+                tot += parseInt(total.pack[a])
+            }
+            $('#total_qty_pack').val(tot)
+
+        })
+    })
 
     function pilih_item(is) {
         var tot = 0;
@@ -262,7 +335,7 @@ if (!isset($query[0]['nomor_packing'])) {
 
     function press(val, i) {
         var tot = 0;
-        for (var p = 1; p <= savedData.length; p++) {
+        for (var p = 0; p <= savedData.length; p++) {
             if (p == i) {
                 total.pack[p] = val
             }

@@ -5,17 +5,10 @@ $query = query('SELECT * FROM picking ORDER BY nomor_picking DESC LIMIT 1');
 $nomor_order = '';
 $kode_customer = '';
 $item = array();
-if (!isset($query[0]['nomor_picking'])) {
-    $nomor_pick = 'Pick-001';
-} else {
-    $nomor_pick = tambahId(strval($query[0]['nomor_picking']), 'Pick');
-}
-if (isset($_GET['nomor'])) {
-    $nomor_order = $_GET['nomor'];
-    $data = query("SELECT * FROM order_gudang WHERE nomor_order = '$nomor_order'")[0];
-    $kode_customer = $data['kode_customer'];
-    $item = array();
-    $query = query("SELECT * FROM order_gudang_item WHERE nomor_order = '$nomor_order'");
+if (isset($_GET['kode'])) {
+    $kode = $_GET['kode'];
+    $data = query("SELECT * FROM picking WHERE nomor_picking = '$kode'")[0];
+    $query = query("SELECT * FROM picking_item WHERE nomor_picking = '$kode'");
     foreach ($query as $blaa) {
         $barcode = $blaa['barcode'];
         $inven = query("SELECT * FROM inventory WHERE barcode = '$barcode'")[0];
@@ -26,6 +19,7 @@ if (isset($_GET['nomor'])) {
         array_push($item, $blaa);
     }
 }
+
 if (isset($_POST['submit'])) {
     $sql = '';
     $totalQuantity = 0;
@@ -36,23 +30,27 @@ if (isset($_POST['submit'])) {
         foreach ($item as $now) {
             $id = $_POST['id_' . $i2];
             if (intval($now['id']) == intval($id)) {
+                $order = query(sprintf("SELECT * FROM order_gudang_item WHERE id ='%s'", $now['id_order_item']))[0];
+                $quantity = $order['quantity'];
+                $id_order = $order['id'];
+
                 $quantity_pick = $_POST['quantity_pick_' . $i2];
                 extract($now);
-                $sql .= "INSERT INTO picking_item(nomor_picking,barcode,id_order_item,quantity_picking,quantity_order) VALUES('$nomor_picking','$barcode','$id','$quantity_pick','$quantity');";
+                $sql .= "UPDATE picking_item SET nomor_picking='$nomor_picking',barcode='$barcode',id_order_item='$id_order',quantity_picking='$quantity_pick',quantity_order='$quantity' WHERE id = '$id';";
                 $totalQuantity += intval($quantity_pick);
             }
         }
     }
-    $sql .= "INSERT INTO picking(nomor_picking,nomor_order,kode_customer,status,total,tanggal) VALUES('$nomor_picking','$nomor_order','$kode','$status','$totalQuantity','$tanggal');";
+    $sql .= "UPDATE picking SET nomor_order = '$nomor_order',kode_customer = '$kode',status = '$status',total = '$totalQuantity',tanggal = '$tanggal' WHERE nomor_picking = '$nomor_picking';";
     $query = mysqli_multi_query($conn, $sql);
-    lanjutkan($query, "Dibuat!");
+    lanjutkan($query, "Diedit!");
     $return = true;
 }
 ?>
 <?php if (isset($return)) : ?>
     <script>
         window.stop();
-        window.location.href = 'input.php';
+        window.location.href = 'list.php';
     </script>
 <?php endif; ?>
 <script>
@@ -80,7 +78,7 @@ if (isset($_POST['submit'])) {
                                 <label class="col-sm-3">Tanggal</label>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        <input type="text" readonly value="<?= date('Y-m-d') ?>" name="tanggal" class="form-control">
+                                        <input type="text" readonly value="<?= $data['tanggal'] ?>" name="tanggal" class="form-control">
                                         <div class="input-group-addon">
                                             <i class="fa fa-calendar"></i>
                                         </div>
@@ -90,13 +88,13 @@ if (isset($_POST['submit'])) {
                             <div class="form-group">
                                 <label class="col-sm-3">No Pick</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" readonly value="<?= $nomor_pick ?>" name="nomor_picking" id="pick">
+                                    <input type="text" class="form-control" readonly value="<?= $data['nomor_picking'] ?>" name="nomor_picking" id="pick">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label class="col-sm-3 col-xs-3">No Order</label>
                                 <div class="col-sm-6 col-xs-6">
-                                    <input type="text" class="form-control" id="nomor_order" readonly name="nomor_order" value="<?= $nomor_order ?>">
+                                    <input type="text" class="form-control" id="nomor_order" value="<?= $data['nomor_order'] ?>" readonly name="nomor_order">
                                 </div>
                                 <div class="col-sm-1 col-xs-1">
                                     <a data-toggle="modal" data-target="#modal2" style="cursor : pointer; color: #000;"><i class="fa fa-search fa-2x"></i></a>
@@ -105,7 +103,7 @@ if (isset($_POST['submit'])) {
                             <div class="form-group">
                                 <label class="col-sm-3">Kode Customer</label>
                                 <div class="col-sm-6">
-                                    <input type="text" class="form-control" name="kode" readonly id="kode_customer" value="<?= $kode_customer ?>">
+                                    <input type="text" class="form-control" name="kode" readonly id="kode_customer" value="<?= $data['kode_customer'] ?>">
                                 </div>
                             </div>
                         </div>
@@ -114,9 +112,8 @@ if (isset($_POST['submit'])) {
                                 <label class="col-sm-3">Status</label>
                                 <div class="col-sm-6">
                                     <select id="select" name="status" class="form-control">
-                                        <option value="0"> - Pilih Status - </option>
-                                        <option>Selesai</option>
-                                        <option>Proses</option>
+                                        <option <?= ($data['status'] == 'Selesai') ? 'selected' : '' ?>>Selesai</option>
+                                        <option <?= ($data['status'] == 'Selesai') ? '' : 'selected' ?>>Proses</option>
                                     </select>
                                 </div>
                             </div>
@@ -170,7 +167,7 @@ if (isset($_POST['submit'])) {
                                                                 <td><?= $data_so['nomor_order'];  ?></td>
                                                                 <td><?= $data_so['kode_customer'] ?></td>
                                                                 <td><?= $data_so['total'] ?></td>
-                                                                <td><a class="btn btn-primary" href="picking_gudang/input.php?nomor=<?= $so ?>">Pilih</button></td>
+                                                                <td><a class="btn btn-primary" onclick="return confirm('Yakin ingin mengganti?')" href="picking_gudang/input.php?nomor=<?= $so ?>">Pilih</button></td>
                                                             </tr>
                                                         <?php
                                                             $i_m1++;
@@ -213,8 +210,8 @@ if (isset($_POST['submit'])) {
                                             <td><?= $now['barcode'] ?></td>
                                             <td><?= $now['nama_item'] ?></td>
                                             <td><?= $now['satuan'] ?></td>
-                                            <td><?= $now['quantity'] ?></td>
-                                            <td><input type="text" class="form-control" name="quantity_pick_<?= $i ?>"></td>
+                                            <td><?= $now['quantity_order'] ?></td>
+                                            <td><input type="text" class="form-control" value="<?= $now['quantity_picking'] ?>" name="quantity_pick_<?= $i ?>"></td>
                                             <input type="hidden" name="id_<?= $i ?>" value="<?= $now['id'] ?>">
                                         </tr>
                                     <?php $i++;

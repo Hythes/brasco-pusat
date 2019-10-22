@@ -169,7 +169,7 @@ $title = 'Purchase Order';
                             <div class="form-group">
                                 <label class="col-sm-4 control-label">DPP</label>
                                 <div class="col-sm-8">
-                                    <input type="number" name="dpp" id="dpp" class="form-control">
+                                    <input type="number" name="dpp" readonly id="dpp" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group" style="margin-top: 50px;">
@@ -310,6 +310,7 @@ $title = 'Purchase Order';
         'satuan': '',
         'total': 0,
         'sata': '',
+        'dpp': 0
     };
     var active = 'header_po';
     var active_2 = 'header_purchase_order';
@@ -357,8 +358,8 @@ $title = 'Purchase Order';
             request: 'cari_satuan',
             data: dataSimpan.satuan
         }, function(data) {
+
             data = JSON.parse(data);
-            console.log(data.satuan);
             dataSimpan.sata = data.satuan;
 
             var barcode = $('#barcode_po').val();
@@ -378,7 +379,6 @@ $title = 'Purchase Order';
                 'harga': harga,
                 'satuan': dataSimpan.satuan
             })
-
             $('#table_po').append(
                 '<tr id="tr_po_' + dataSimpan.i + '">' +
                 '<td>' + dataSimpan.i + '</td>' +
@@ -395,7 +395,9 @@ $title = 'Purchase Order';
             cek_tipe_ppn();
             dataSimpan.i++;
             dataSimpan.total += (parseInt(quantity) * parseInt(harga));
+            dataSimpan.dpp = dataSimpan.total;
             $('#total').val(dataSimpan.total);
+            $('#dpp').val(dataSimpan.dpp);
             $('#data_po').val(JSON.stringify(simpanArray));
         })
     })
@@ -410,11 +412,11 @@ $title = 'Purchase Order';
         if ($('#tipe_ppn_i').is(':checked')) {
             dpp = dpp * (10 / 11);
             ppn = dpp * (10 / 100);
-            $('#ppn').val(parseFloat(ppn).toFixed(2));
+            $('#ppn').val('(10/11) * 10%');
         }
         if ($('#tipe_ppn_e').is(':checked')) {
             ppn = dpp * (10 / 100);
-            $('#ppn').val(parseFloat(ppn).toFixed(2));
+            $('#ppn').val("10%");
         }
         return ppn;
     }

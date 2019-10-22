@@ -248,12 +248,14 @@
 <script src="assets/dist/js/adminlte.min.js"></script>
 <!-- AdminLTE for demo purposes -->
 <script src="assets/dist/js/demo.js"></script>
+<script src="assets/dist/js/select2.full.min.js"></script>
 
 <script src="assets/dist/js/main.js"></script>
 
 <script type="text/javascript">
   $(document).ready(function() {
     $('.sidebar-menu').tree()
+    $('.select2').select2()
   })
   $(function() {
     $('#example1').DataTable()

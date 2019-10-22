@@ -1,5 +1,6 @@
 <?php
 
+$base_url = 'http://localhost/brasco/';
 $host = "localhost";
 $user = "root";
 $password = "";
