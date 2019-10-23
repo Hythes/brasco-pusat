@@ -56,10 +56,6 @@ $title = "Profile"; ?>
               <input type="text" class="form-control" name="alamat" id="alamat">
             </div>
             <div class="form-group" style="width: 50%">
-              <label for="alamat2"></label>
-              <input type="text" class="form-control" name="alamat2" id="alamat2">
-            </div>
-            <div class="form-group" style="width: 50%">
               <label for="kota">Kota</label>
               <input type="text" class="form-control" name="kota" id="kota">
             </div>
