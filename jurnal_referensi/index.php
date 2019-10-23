@@ -375,7 +375,8 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                         <div id="menu6" class="tab-pane fade">
                             <form class="" action="" method="post">
                                 <!-- Setup Penjualan -->
-                                <table class=" table table-bordered table-striped display nowrap" style="width:100%">
+                            <div class="box-body">
+                                <table class=" table table-bordered table-striped" style="width:92%">
                                     <thead>
                                         <tr>
                                             <th>No</th>
@@ -390,12 +391,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>Kas</td>
                                             <td>
 
-                                                <select name="kas" class="form-control select2" required id="kas" width="100%">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['kas']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['kas']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="kas" class="form-control select2" required id="kas" width="100%">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['kas']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['kas']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -404,12 +411,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="bank" class="form-control select2" required id="bank">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['bank']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['bank']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="bank" class="form-control select2" required id="bank">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['bank']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['bank']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -418,12 +431,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="umbeli" class="form-control select2" required id="umbeli">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['umbeli']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['umbeli']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="umbeli" class="form-control select2 col-sm-6" required id="umbeli">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['umbeli']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['umbeli']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -432,12 +451,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="hutang" class="form-control select2" required id="hutang">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['hutang']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['hutang']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="hutang" class="form-control select2 col-sm-6" required id="hutang">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['hutang']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['hutang']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -446,12 +471,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="persediaan" class="form-control select2" required id="persediaan">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['persediaan']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['persediaan']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="persediaan" class="form-control select2" required id="persediaan">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['persediaan']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['persediaan']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -460,12 +491,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="ppnmasuk" class="form-control select2" required id="ppnmasuk">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['ppnmasuk']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['ppnmasuk']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="ppnmasuk" class="form-control select2 col-sm-6" required id="ppnmasuk">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['ppnmasuk']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['ppnmasuk']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -474,12 +511,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="ongkirbeli" class="form-control select2" required id="ongkirbeli">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['ongkirbeli']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['ongkirbeli']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="ongkirbeli" class="form-control select2 col-sm-6" required id="ongkirbeli">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['ongkirbeli']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['ongkirbeli']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -488,12 +531,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="umjual" class="form-control select2" required id="umjual">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['umjual']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['umjual']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="umjual" class="form-control select2 col-sm-6" required id="umjual">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['umjual']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['umjual']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -502,12 +551,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="piutang" class="form-control select2" required id="piutang">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['piutang']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['piutang']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="piutang" class="form-control select2 col-sm-6" required id="piutang">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['piutang']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['piutang']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -516,12 +571,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="penjualan" class="form-control select2" required id="penjualan">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['penjualan']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['penjualan']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="penjualan" class="form-control select2" required id="penjualan">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['penjualan']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['penjualan']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -530,12 +591,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="ppnkeluar" class="form-control select2" required id="ppnkeluar">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['ppnkeluar']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['ppnkeluar']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="ppnkeluar" class="form-control select2 col-sm-6" required id="ppnkeluar">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['ppnkeluar']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['ppnkeluar']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -544,12 +611,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="ongkirjual" class="form-control select2" required id="ongkirjual">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['ongkirjual']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['ongkirjual']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="ongkirjual" class="form-control select2 col-sm-6" required id="ongkirjual">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['ongkirjual']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['ongkirjual']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -558,12 +631,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="hpp" class="form-control select2" required id="hpp">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['hpp']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['hpp']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="hpp" class="form-control select2 col-sm-6" required id="hpp">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['hpp']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['hpp']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                         <tr>
@@ -572,12 +651,18 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                             <td>
 
 
-                                                <select name="retur_penjualan" class="form-control select2" required id="retur_penjualan">
-                                                    <?php foreach ($dataAkun as $data) : ?>
-                                                        <option <?= ($data['kodeakun'] == $dataJurnal['retur_penjualan']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['retur_penjualan']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
-                                                    <?php endforeach; ?>
-                                                </select>
-                                                <div class='pull-right'><button type='button' class='btn bg-maroon btn-flat'><?= $res ?></div>
+                                                <div class="col-sm-6">
+                                                    <select name="retur_penjualan" class="form-control select2 col-sm-6" required id="retur_penjualan">
+                                                        <?php foreach ($dataAkun as $data) : ?>
+                                                            <option <?= ($data['kodeakun'] == $dataJurnal['retur_penjualan']) ? 'selected' : ''  ?> value="<?= $data['kodeakun'] ?>"><?= ($data['kodeakun'] == $dataJurnal['retur_penjualan']) ? $res =  $data['kodeakun'] . ' - ' . $data['namaakun'] : $data['kodeakun'] . ' - ' . $data['namaakun'] ?></option>
+                                                        <?php endforeach; ?>
+                                                    </select>
+                                                </div>
+                                                <div class='col-sm-6'>
+                                                    <div class="pull-right">
+                                                        <button type='button' class='btn bg-maroon btn-flat'><?= $res ?></button>
+                                                    </div>
+                                                </div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -589,8 +674,11 @@ $dataJurnal = query("SELECT * FROM jurnal_referensi")[0];
                                         </tr>
                                     </tfoot>
                                 </table>
-                                <div class="pull-right">
-                                    <button class="btn btn-info" type="submit" name="submit">Submit</button>
+                                <div class="col-sm-11">
+                                    <div class="pull-right">
+                                        <button class="btn btn-info" type="submit" name="submit">Submit</button>
+                                    </div>
+                                </div>
                                 </div>
                             </form>
                         </div>
