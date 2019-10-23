@@ -59,6 +59,17 @@ if (isset($_POST['submit'])) {
 <?php include('../templates/header.php') ?>
 <!-- =============================================== -->
 
+<style>
+    .dt-button.color{
+        background: #3A80D5;
+        color: #fff;
+        border-color: #3A80D5;
+    }
+    .dt-button.color:hover{
+        color: #000;
+        background-color: tomato;
+    }
+</style>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -153,7 +164,7 @@ if (isset($_POST['submit'])) {
             <div class="box box-info">
                 <div class="box-body">
                     <div class="data-table table-responsive table" style="margin-top: 30px;">
-                        <table id="example1" class="table table-responsive  table-bordered table-striped">
+                        <table id="data-table" class="table table-responsive  table-bordered table-striped">
                             <thead>
                                 <tr>
                                     <th>No</th>
@@ -185,7 +196,7 @@ if (isset($_POST['submit'])) {
                         </table>
                     </div>
 
-                    <div class="button-grup">
+                    <!-- <div class="button-grup">
                         <div class="button1" style="margin-top: 10px;">
                             <a href="#" class="btn btn-default">Copy</a>
                             <a href="#" class="btn btn-default">CSV</a>
@@ -194,7 +205,7 @@ if (isset($_POST['submit'])) {
                             <a href="#" class="btn btn-default">Print</a>
                             <a href="#" class="btn btn-default pull-right">Close</a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         <?php endif; ?>
@@ -203,5 +214,71 @@ if (isset($_POST['submit'])) {
 
 </div>
 <!-- /.content-wrapper -->
-
+<!-- jQuery 3 -->
+<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+<!-- script buat button print copy csv excel pdf -->
+<script>
+    $(function() {
+    $('#example1').DataTable()
+    $('#data-table').DataTable({
+      'paging': true,
+      'lengthChange': false,
+      'searching': true,
+      'ordering': true,
+      'info': true,
+      'autoWidth': false,
+      dom: 'Bfrtip',
+      buttons: [
+                {
+                    extend: 'pdfHtml5',
+                    className: 'color',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    extend: 'print',
+                    className: 'color',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }, 
+                    customize: function ( win ) {
+                        $(win.document.body)
+                            .css( 'font-size', '10pt' )
+    
+                        $(win.document.body).find( 'table' )
+                            .addClass( 'compact' )
+                            .css( 'font-size', 'inherit' );
+                    }
+                },
+                {
+                    extend: 'excel', 
+                    className: 'color',
+                    text: 'Excel',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'CSV',
+                    className: 'color',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                },
+                {
+                    extend: 'copy',
+                    text: 'Copy',
+                    className: 'color',
+                    exportOptions: {
+                        columns: [0, 1, 2, 3, 4, 5, 6]
+                    }
+                }
+            ]
+        })
+    })
+</script>
 <?php include('../templates/footer.php') ?>
