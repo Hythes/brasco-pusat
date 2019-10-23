@@ -1,4 +1,28 @@
 <?php
+// Load file koneksi.php
+include "../env.php";
+if (isset($_POST['kode_cabang'])) {
+  $_POST['id'] = 1;
+  $logo = $_FILES['logo']['name'];
+  $query =  "UPDATE profil SET id ='{$_POST['id']}', kode_cabang = '{$_POST['kode_cabang']}',nama_cabang = '{$_POST['nama_cabang']}',alamat = '{$_POST['alamat']}',alamat2 = '{$_POST['alamat2']}',kota = '{$_POST['kota']}',kodepos = '{$_POST['kodepos']}',no_telp = '{$_POST['no_telp']}',no_hp = '{$_POST['no_hp']}',chief = '{$_POST['chief']}'";
+  if (!empty($logo)) {
+    $hapus = mysqli_query($conn, "SELECT * FROM profil where id='{$_POST['id']}'");
+    // menghapus gambar yang lama
+    $nama_gambar = mysqli_fetch_assoc($hapus);
+    // nama field gambar
+    $lokasi = $nama_gambar['logo'];
+    // alamat tempat foto
+    if (move_uploaded_file($_FILES['logo']['tmp_name'], 'images/' . $logo)) {
+      $query .= ",logo = '$logo' ";
+      $hapus_gambar = "images/{$lokasi}";
+      unlink($hapus_gambar);
+    } else {
+      alert('Foto tidak bisa diupload!');
+    }
+  }
+  $query .= "WHERE id='{$_POST['id']}'";
+  lanjutkan(mysqli_query($conn, $query), "Diupdate!");
+}
 $title = "Profile"; ?>
 <script>
   var active = 'header_profil';
@@ -22,9 +46,9 @@ $title = "Profile"; ?>
       <li class="active">Blank page</li>
     </ol>
   </section>
-  <?php include "dbconnect.php";
+  <?php
   $query = "SELECT * FROM profil";
-  $result = mysqli_query($conn, $query);
+  $row = query($query)[0];
   ?>
   <!-- Main content -->
   <section class="content">
@@ -38,55 +62,53 @@ $title = "Profile"; ?>
         </div>
         <!-- /.box-header -->
         <!-- form start -->
-        <form method="post" action="profile/proses_simpan.php" enctype="multipart/form-data">
+        <form method="post" action="" enctype="multipart/form-data" id="form">
           <div class="box-body">
-            <div class="callout callout-danger">
-              <label>Informasi!<br>Isilah dengan benar data profil..</label>
-            </div>
             <div class="form-group" style="width: 10%">
               <label for="kode_cabang">Kode Cabang</label>
-              <input type="text" class="form-control" name="kode_cabang" id="kode_cabang">
+              <input type="text" class="form-control" name="kode_cabang" id="kode_cabang" value="<?php echo $row['kode_cabang']; ?>">
             </div>
             <div class="form-group" style="width: 50%">
               <label for="nama_cabang">Nama Cabang</label>
-              <input type="text" class="form-control" name="nama_cabang" id="nama_cabang">
+              <input type="text" class="form-control" name="nama_cabang" id="nama_cabang" value="<?php echo $row['nama_cabang']; ?>">
             </div>
             <div class="form-group" style="width: 50%">
               <label for="alamat">Alamat</label>
-              <input type="text" class="form-control" name="alamat" id="alamat">
+              <input type="text" class="form-control" name="alamat" id="alamat" value="<?php echo $row['alamat']; ?>">
+            </div>
+            <div class="form-group" style="width: 50%">
+              <label for="alamat2">Alamat 2</label>
+              <input type="text" class="form-control" name="alamat2" id="alamat2" value="<?php echo $row['alamat2']; ?>">
             </div>
             <div class="form-group" style="width: 50%">
               <label for="kota">Kota</label>
-              <input type="text" class="form-control" name="kota" id="kota">
+              <input type="text" class="form-control" name="kota" id="kota" value="<?php echo $row['kota']; ?>">
             </div>
             <div class="form-group" style="width: 10%">
               <label for="kodepos">Kodepos</label>
-              <input type="text" class="form-control" name="kodepos" id="kodepos">
+              <input type="text" class="form-control" name="kodepos" id="kodepos" value="<?php echo $row['kodepos']; ?>">
             </div>
             <div class="form-group" style="width: 50%">
               <label for="exampleInputPassword1">No Telepon</label>
-              <input type="text" class="form-control" name="no_telp" id="no_telp">
+              <input type="text" class="form-control" name="no_telp" id="no_telp" value="<?php echo $row['no_telp']; ?>">
             </div>
             <div class="form-group" style="width: 50%">
               <label for="exampleInputPassword1">No Handphone</label>
-              <input type="text" class="form-control" name="no_hp" id="no_hp">
+              <input type="text" class="form-control" name="no_hp" id="no_hp" value="<?php echo $row['no_hp']; ?>">
             </div>
             <div class="form-group" style="width: 50%">
               <label for="exampleInputPassword1">Chief Manager</label>
-              <input type="text" class="form-control" name="chief" id="Chief">
+              <input type="text" class="form-control" name="chief" id="Chief" value="<?php echo $row['chief']; ?>">
             </div>
             <div class="form-group">
-              <label for="exampleInputFile">Logo</label>
-              <input type="file" id="logo" name="logo">
+              <p class="text-bold">Logo</p>
+              <img id="foto" src="profile/images/<?= $row['logo'] ?>" alt="Foto Profile" width="100px" height="100px">
+              <input id="foto_input" type="file" id="logo" name="logo" class="custom-file-input" value="<?php echo $row['logo']; ?>">
             </div>
           </div>
-          <!-- /.box-body -->
-
           <div class="box-footer">
-            <button type="submit" value="simpan" class="btn btn-primary" name="simpan">Save</button></a>&nbsp &nbsp &nbsp
-            <a href="profil.php"><input type="button" value="Batal"></a>&nbsp &nbsp &nbsp
-            <button class="btn btn-primary">Close</button>&nbsp &nbsp &nbsp
-            <a href="editform.php"><input type="button" value="Edit"></a>&nbsp &nbsp &nbsp
+            <button type="button" id="edit" class="btn btn-success">Edit</button>
+            <button id="buton" type="submit" value="simpan" class="btn btn-primary" name="simpan">Save</button>
           </div>
         </form>
       </div>
@@ -96,5 +118,50 @@ $title = "Profile"; ?>
   <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
+<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+<script>
+  $(document).ready(() => {
+    $('#buton').hide()
+    $('input').attr('readonly', 'readonly')
+    $('#foto_input').hide()
+  })
+  $('#edit').on('click', () => {
+    $('#buton').show()
+    $('input').removeAttr('readonly')
+    $('#foto_input').show()
+    $('#foto').hide()
+  })
+  $("#form").submit(function(e) {
+    var form = this
+    e.preventDefault(); //Stop the submit for now
+    //Replace with your selector to find the file input in your $('#form')
+    var fileInput = $(this).find("input[type=file]")[0],
+      file = fileInput.files && fileInput.files[0];
 
+    if (file) {
+      var img = new Image();
+
+      img.src = window.URL.createObjectURL(file);
+
+      img.onload = function() {
+        var width = img.naturalWidth,
+          height = img.naturalHeight;
+
+        window.URL.revokeObjectURL(img.src);
+        if (width == 100 && height == 100) {
+          form.submit();
+          return true;
+        } else {
+          alert('Foto harus 100x100 Pixes')
+          return false;
+        }
+      };
+    } else { //No file was input or browser doesn't support client side reading
+      this.submit();
+      return true;
+
+    }
+
+  });
+</script>
 <?php include('../templates/footer.php') ?>
