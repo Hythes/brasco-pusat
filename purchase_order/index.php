@@ -37,7 +37,7 @@ $title = 'Purchase Order';
     <section class="content">
 
         <!-- Default box -->
-        <div class="box">
+        <div class="box box-info">
             <div class="box-body">
                 <h3 class="header text-center">PURCHASE ORDER <span><button id="buat_po" class="btn btn-primary pull-right">Create PO</button></span></h3>
                 <!-- form -->
@@ -161,7 +161,8 @@ $title = 'Purchase Order';
                                 <input type="text" name="keterangan" class="form-control" placeholder="KETERANGAN" style="width: 70%;">
                             </div>
                             <div class="form-group">
-                                <a href="purchase_order/cetak_label_barcode.php" class="btn btn-primary">Label Barcode</a>
+                                <!-- <a href="purchase_order/cetak_label_barcode.php" class="btn btn-primary">Label Barcode</a> -->
+                                <a href="#labelbarcode" type="button" class="btn btn-info" data-toggle="modal">Label Barcode</a>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -206,8 +207,91 @@ $title = 'Purchase Order';
                     </div>
                     <!-- /button -->
                     </form>
-                </div>
 
+                    <?php
+                        $query1 = query('SELECT * FROM purchase_order ORDER BY kode DESC LIMIT 1');
+                        if (!isset($query1[0]['kode'])) {
+                            $id = 'PO-001';
+                        } else {
+                            $id = tambahId(strval($query1[0]['kode']), 'PO');
+                        }
+                        $data = query("SELECT * FROM inventory");
+                    ?>
+                    <!-- modal -->
+                    <div class="modal fade" id="labelbarcode">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Label Barcode</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="" class="form-horizontal" method="post">
+                                        <div class="box-body">
+                                            <div class="col-sm-2">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <select name="barcode" id="barcode" class="form-control">
+                                                            <?php
+                                                            foreach ($data as $val) : ?>
+                                                                <option value="<?= $val['barcode'] ?>"><?= $val['barcode'] ?></option>
+                                                            <?php
+                                                            endforeach; ?>
+                                                        </select>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <input type="number" id="quantity" class="form-control" placeholder="Qty">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <input type="number" id="harga_jual" class="form-control" placeholder="Harga Jual">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-5">
+                                                <div class="box-body">
+                                                    <div class="form-group">
+                                                        <input type="text" id="keterangan" class="form-control" placeholder="Keterangan">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <div class="box-body">
+                                                    <i id="cetak_barcode_input" class="fa fa-plus fa-2x" style="padding-top: 5px; cursor:pointer"></i>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="box-body">
+                                        <div class="data-table table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Barcode</th>
+                                                        <th>Qty</th>
+                                                        <th>Sat</th>
+                                                        <th>Harga Jual</th>
+                                                        <th>Keterangan</th>
+                                                        <th>Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <!-- /.box-body -->
             <!-- /.box-footer-->
