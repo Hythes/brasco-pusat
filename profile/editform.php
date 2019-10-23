@@ -1,9 +1,7 @@
 <?php
 // Load file koneksi.php
 include "../env.php";
-if (isset($_POST['simpan'])) {
-  print_r($_POST);
-  exit();
+if (isset($_POST['kode_cabang'])) {
   $_POST['id'] = 1;
   $logo = $_FILES['logo']['name'];
   $query =  "UPDATE profil SET id ='{$_POST['id']}', kode_cabang = '{$_POST['kode_cabang']}',nama_cabang = '{$_POST['nama_cabang']}',alamat = '{$_POST['alamat']}',alamat2 = '{$_POST['alamat2']}',kota = '{$_POST['kota']}',kodepos = '{$_POST['kodepos']}',no_telp = '{$_POST['no_telp']}',no_hp = '{$_POST['no_hp']}',chief = '{$_POST['chief']}'";
@@ -17,7 +15,7 @@ if (isset($_POST['simpan'])) {
     if (move_uploaded_file($_FILES['logo']['tmp_name'], 'images/' . $logo)) {
       $query .= ",logo = '$logo' ";
       $hapus_gambar = "images/{$lokasi}";
-      // unlink($hapus_gambar);
+      unlink($hapus_gambar);
     } else {
       alert('Foto tidak bisa diupload!');
     }
@@ -107,10 +105,6 @@ $title = "Profile"; ?>
               <img id="foto" src="profile/images/<?= $row['logo'] ?>" alt="Foto Profile" width="100px" height="100px">
               <input id="foto_input" type="file" id="logo" name="logo" class="custom-file-input" value="<?php echo $row['logo']; ?>">
             </div>
-          </div>
-          <!-- /.box-body -->
-          <div id="preview">
-
           </div>
           <div class="box-footer">
             <button type="button" id="edit" class="btn btn-success">Edit</button>
