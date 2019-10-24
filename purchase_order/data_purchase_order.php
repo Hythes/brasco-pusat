@@ -1,6 +1,7 @@
 <?php
 $title = "Data Purchase Order";
 require '../env.php';
+$query = "SELECT * FROM purchase_order";
 if (isset($_GET['request'])) {
     if ($_GET['request'] == "delete") {
         $kode = $_GET['kode'];

@@ -5,6 +5,8 @@ if (isset($_POST['submit'])) {
     extract($_POST);
     $sql = "UPDATE purchase_order SET kode = '$kode',tanggal = '$tanggal',kode_supplier ='$kode_supplier',nama_supplier = '$nama_supplier',alamat_supplier = '$alamat_supplier',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kodepos',telepon = '$telepon',handphone = '$handphone',dpp ='$dpp',tipe_ppn = '$tipe_ppn',tipe_ppn_input = '$tipe_ppn_teks',total_harga = '$total_harga',keterangan = '$keterangan'  WHERE kode = '$kode'; ";
     $sql .= "DELETE FROM purchase_order_item WHERE kode_po = '$kode';";
+    $sql .= "DELETE FROM label_barcode WHERE kode_po = '$kode';";
+
     $data_po = json_decode($data_po);
     $data_po = array_filter($data_po);
     foreach ($data_po as $data) {
@@ -12,10 +14,18 @@ if (isset($_POST['submit'])) {
         extract($data);
         $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga'); ";
     }
+    $dataLabel = json_decode($dataLabel);
+    $dataLabel = array_filter($dataLabel);
+    foreach ($dataLabel as $data) {
+        $data = (array) $data;
+        extract($data);
+        $sql .= "INSERT INTO label_barcode(kode_po,barcode,harga,keterangan,quantity) VALUES ('$kode','$barcode','$harga','$keterangan','$quantity');";
+    }
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Diedit");
     echo "<script> document.location.href = 'data_purchase_order.php'</script>";
 }
+$data = query("SELECT * FROM inventory");
 $kode = $_GET['kode'];
 $query = "SELECT * FROM purchase_order WHERE kode ='$kode'";
 $var = query($query);
@@ -176,7 +186,7 @@ $var = $var[0];
                                 <input type="text" name="keterangan" value="<?= $var['keterangan'] ?>" class="form-control" placeholder="KETERANGAN" style="width: 70%;">
                             </div>
                             <div class="form-group">
-                                <a href="purchase_order/cetak_label_barcode.php" class="btn btn-primary">Label Barcode</a>
+                                <a href="#labelbarcode" type="button" class="btn btn-info" data-toggle="modal">Label Barcode</a>
                             </div>
                         </div>
                         <div class="col-md-6">
@@ -219,7 +229,78 @@ $var = $var[0];
                         <input type="hidden" name="data_po" id="data_po">
                         <input type="submit" name="submit" class="btn btn-primary" value="Save">
                     </div>
+                    <!-- Modal Start -->
+                    <div class="modal fade" id="labelbarcode">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header bg-primary">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title">Label Barcode</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="box-body">
+                                        <div class="col-sm-2">
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                    <select id="barcode_label" class="form-control select2 ">
+                                                        <?php foreach ($data as $val) : ?>
+                                                            <option value="<?= $val['barcode'] ?>"><?= $val['barcode'] ?></option>
+                                                        <?php endforeach ?>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                    <input type="number" id="quantity_label" class="form-control" placeholder="Qty">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                    <input type="number" id="harga_jual_label" class="form-control" placeholder="Harga Jual">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-5">
+                                            <div class="box-body">
+                                                <div class="form-group">
+                                                    <input type="text" id="keterangan_label" class="form-control" placeholder="Keterangan">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm-1">
+                                            <div class="box-body">
+                                                <i id="label_barcode_input" class="fa fa-plus fa-2x" style="padding-top: 5px; cursor:pointer"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="box-body">
+                                        <div class="data-table table-responsive">
+                                            <table class="table table-bordered table-hover">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Barcode</th>
+                                                        <th>Qty</th>
+                                                        <th>Harga Jual</th>
+                                                        <th>Keterangan</th>
+                                                        <th>Aksi</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody id="table2">
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Modal End -->
                     <!-- /button -->
+                    <input type="hidden" name="dataLabel" id="dataLabel">
                     </form>
                 </div>
 
@@ -239,12 +320,94 @@ $var = $var[0];
         'buat_po': false,
         'i': 1,
         'satuan': '',
-        'total': 0
+        'total': 0,
+        'label': 0
     };
+    var simpanLabel = []
     var simpanArray = [];
+
+    $('#barcode_label').change(() => {
+        var barcode = document.getElementById('barcode_label').value;
+        dataSimpan.barcodeLabel = barcode
+    })
+
+    $('#label_barcode_input').click(() => {
+        var quantity = $('#quantity_label').val()
+        var harga = $('#harga_jual_label').val()
+        var keterangan = $('#keterangan_label').val()
+        if (quantity == '' || harga == '' || keterangan == '') {
+            alert('Tolong diisi datanya!');
+            return false;
+        } else {
+            var save = {
+                'barcode': dataSimpan.barcodeLabel,
+                'harga': harga,
+                'keterangan': keterangan,
+                'quantity': quantity
+            }
+            $.post('purchase_order/ajax.php', {
+                request: 'cari_barcode',
+                data: dataSimpan.barcodeLabel
+            }, (datas) => {
+                datas = JSON.parse(datas);
+            })
+            simpanLabel.push(save)
+            $('#table2').append(
+                `<tr id="tr_${dataSimpan.label}">
+                    <td>${save.barcode}</td>
+                    <td>${save.quantity}</td>
+                    <td>${save.harga}</td>
+                    <td>${save.keterangan}</td>
+                    <td><button class="btn btn-danger" onclick="labelDelete(${dataSimpan.label})">Hapus</button></td>
+                </tr>
+                `
+            )
+            dataSimpan.label++
+            $('#dataLabel').val(JSON.stringify(simpanLabel));
+        }
+    })
+
+    function labelDelete(id) {
+        $('#tr_' + id).remove()
+        delete simpanLabel[id]
+        $('#dataLabel').val(JSON.stringify(simpanLabel));
+
+    }
+
 
     $(document).ready(function() {
         var kodeku = $('#kode').val();
+        var barcode = document.getElementById('barcode_label').value;
+        dataSimpan.barcodeLabel = barcode
+        $.post('purchase_order/ajax.php', {
+            request: 'data_label',
+            kode: kodeku
+        }, function(data) {
+            data = JSON.parse(data);
+            data.forEach(val => {
+                var save = {
+                    'id': val.id,
+                    'barcode': val.barcode,
+                    'harga': val.harga,
+                    'keterangan': val.keterangan,
+                    'quantity': val.quantity
+                }
+                simpanLabel.push(save)
+                $('#table2').append(
+                    `<tr id="tr_${dataSimpan.label}">
+                    <td>${save.barcode}</td>
+                    <td>${save.quantity}</td>
+                    <td>${save.harga}</td>
+                    <td>${save.keterangan}</td>
+                    <td><button class="btn btn-danger" onclick="labelDelete(${dataSimpan.label})">Hapus</button></td>
+                </tr>
+                `
+                )
+                dataSimpan.label++
+                $('#dataLabel').val(JSON.stringify(simpanLabel));
+            })
+
+        })
         $.post('purchase_order/ajax.php', {
             request: 'data_po',
             kode: kodeku,
