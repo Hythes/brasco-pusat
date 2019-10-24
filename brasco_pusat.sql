@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 24, 2019 at 04:24 AM
+-- Generation Time: Oct 24, 2019 at 07:00 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.1.30
 
@@ -119,8 +119,8 @@ INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_bara
 (3, 'A23', 'Baju', '4', '7', '50000', '40000', '45000', '0', '2019-10-01 14:06:24', '2019-10-13 07:34:19'),
 (4, 'A13', 'Celana', '4', '8', '75000', '78000', '60000', '0', '2019-10-01 14:07:24', '2019-10-13 07:34:22'),
 (5, '1', 'Ret', '4', '6', '2000', '1000', '3000', '0', '2019-10-04 01:23:25', '2019-10-13 07:34:23'),
-(6, '2', 'Priz', '7', '7', '4000', '3000', '2500', '0', '2019-10-04 01:23:42', '2019-10-13 07:34:25'),
-(7, '3', 'Randu', '6', '8', '7000', '6000', '5000', '0', '2019-10-04 01:23:58', '2019-10-13 07:34:27'),
+(6, '2', 'Priz', '7', '7', '4000', '3000', '2500', '15', '2019-10-04 01:23:42', '2019-10-24 04:30:15'),
+(7, '3', 'Randu', '6', '8', '7000', '6000', '5000', '13', '2019-10-04 01:23:58', '2019-10-24 04:30:15'),
 (8, '5', 'w', '4', '8', '2000', '2000', '3000', '0', '2019-10-07 06:48:15', '2019-10-13 07:34:29');
 
 -- --------------------------------------------------------
@@ -196,7 +196,11 @@ INSERT INTO `label_barcode` (`id`, `kode_po`, `barcode`, `harga`, `keterangan`, 
 (7, 'PO-003', 'A33', '232', 'adwadsada', '22', '2019-10-24 02:17:38', NULL),
 (8, 'PO-003', 'A33', '232', 'adwadsada', '22', '2019-10-24 02:17:38', NULL),
 (9, 'PO-002', 'A33', '2', 'dwada', '1', '2019-10-24 02:17:56', NULL),
-(10, 'PO-002', 'A33', '2', 'dwada', '1', '2019-10-24 02:17:56', NULL);
+(10, 'PO-002', 'A33', '2', 'dwada', '1', '2019-10-24 02:17:56', NULL),
+(11, 'PO-001', 'A33', '2', 'adawdaw', '12', '2019-10-24 03:12:04', NULL),
+(12, 'PO-001', 'A33', '2', 'adawdaw', '12', '2019-10-24 03:12:04', NULL),
+(13, 'PO-001', 'A33', '2', 'adawdaw', '12', '2019-10-24 03:12:04', NULL),
+(14, 'PO-005', 'A33', '2', 'adwad', '2', '2019-10-24 04:27:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -616,10 +620,11 @@ CREATE TABLE `purchase_order` (
 --
 
 INSERT INTO `purchase_order` (`kode`, `tanggal`, `tanggal_approve`, `kode_supplier`, `nama_supplier`, `alamat_supplier`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `handphone`, `dpp`, `tipe_ppn`, `tipe_ppn_input`, `total_harga`, `keterangan`, `keterangan_approve`, `status`, `created_at`, `updated_at`) VALUES
-('PO-001', '2019-10-15', NULL, 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '12000', 'I', '1090.91', '7948.09', 'AWOKKOA', NULL, 'Belum Approve', '2019-10-04 01:20:18', NULL),
-('PO-002', '2019-10-16', NULL, 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '92', 'T', '0', '92', 'adwadwad', NULL, 'Belum Approve', '2019-10-24 01:18:31', NULL),
-('PO-003', '2019-10-05', NULL, 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '16', 'T', '0', '16', 'adwadad', NULL, 'Belum Approve', '2019-10-24 01:28:57', NULL),
-('PO-004', '2019-10-11', NULL, 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '2155744', 'T', '0', '2155744', 'adwad', NULL, 'Belum Approve', '2019-10-24 01:30:36', NULL);
+('PO-001', '2019-10-15', '2019-10-24', 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '12000', 'I', '1090.91', '7948.09', 'AWOKKOA', '', 'Approve', '2019-10-04 01:20:18', '2019-10-24 04:28:43'),
+('PO-002', '2019-10-16', '2019-10-24', 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '92', 'T', '0', '92', 'adwadwad', '', 'Approve', '2019-10-24 01:18:31', '2019-10-24 04:28:43'),
+('PO-003', '2019-10-05', '2019-10-24', 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '16', 'T', '0', '16', 'adwadad', '', 'Approve', '2019-10-24 01:28:57', '2019-10-24 04:28:44'),
+('PO-004', '2019-10-11', '2019-10-24', 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '2155744', 'T', '0', '2155744', 'adwad', '', 'Approve', '2019-10-24 01:30:36', '2019-10-24 04:28:44'),
+('PO-005', '2019-10-12', '2019-10-24', 'SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Kartonyono', 'jl. mulawarman 11', 'Ngawi', '53456', '02414752737', '08245465637', '56000', 'T', '0', '56000', 'adwadwad', 'ter approve', 'Approve', '2019-10-24 04:27:50', '2019-10-24 04:28:44');
 
 -- --------------------------------------------------------
 
@@ -645,9 +650,6 @@ CREATE TABLE `purchase_order_item` (
 --
 
 INSERT INTO `purchase_order_item` (`id`, `kode_po`, `barcode_inventory`, `kode_item_supplier`, `nama_inventory`, `quantity`, `harga_satuan`, `satuan`, `created_at`, `updated_at`) VALUES
-(1, 'PO-001', 'A33', '23', 'Sepatu', '23', '131', '4', '2019-10-04 01:20:18', NULL),
-(2, 'PO-001', 'A33', '23', 'Sepatu', '23', '131', '4', '2019-10-04 01:20:19', NULL),
-(3, 'PO-001', 'A33', '23', 'Sepatu', '23', '131', '4', '2019-10-04 01:20:19', NULL),
 (10, 'PO-004', '2', 'aawdasd', 'Priz', '232', '2323', '7', '2019-10-24 01:30:36', NULL),
 (11, 'PO-004', '2', 'aawdasd', 'Priz', '232', '2323', '7', '2019-10-24 01:30:36', NULL),
 (12, 'PO-004', '2', 'aawdasd', 'Priz', '232', '2323', '7', '2019-10-24 01:30:36', NULL),
@@ -657,7 +659,12 @@ INSERT INTO `purchase_order_item` (`id`, `kode_po`, `barcode_inventory`, `kode_i
 (16, 'PO-003', 'A33', '4', 'Sepatu', '2', '2', '', '2019-10-24 02:17:38', NULL),
 (17, 'PO-003', 'A33', '4', 'Sepatu', '2', '2', '', '2019-10-24 02:17:38', NULL),
 (18, 'PO-002', 'A33', '2', 'Sepatu', '23', '2', '', '2019-10-24 02:17:56', NULL),
-(19, 'PO-002', 'A33', '2', 'Sepatu', '23', '2', '', '2019-10-24 02:17:56', NULL);
+(19, 'PO-002', 'A33', '2', 'Sepatu', '23', '2', '', '2019-10-24 02:17:56', NULL),
+(20, 'PO-001', 'A33', '23', 'Sepatu', '23', '131', '', '2019-10-24 03:12:03', NULL),
+(21, 'PO-001', 'A33', '23', 'Sepatu', '23', '131', '', '2019-10-24 03:12:03', NULL),
+(22, 'PO-001', 'A33', '23', 'Sepatu', '23', '131', '', '2019-10-24 03:12:04', NULL),
+(23, 'PO-005', '2', '44', 'Priz', '15', '2000', '7', '2019-10-24 04:27:50', NULL),
+(24, 'PO-005', '3', '12', 'Randu', '13', '2000', '6', '2019-10-24 04:27:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -677,6 +684,13 @@ CREATE TABLE `purchasing` (
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `purchasing`
+--
+
+INSERT INTO `purchasing` (`kode`, `nomor_surat_jalan`, `kode_supplier`, `diterima_oleh`, `tanggal_terima`, `tanggal_jatuh_tempo`, `total_quantity`, `created_at`, `updated_at`) VALUES
+('INV-001', 'SJ-001', 'SP-001', 'Rendi', '2019-10-23', '2019-10-18', '28', '2019-10-24 04:30:15', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -693,6 +707,14 @@ CREATE TABLE `purchasing_item` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `purchasing_item`
+--
+
+INSERT INTO `purchasing_item` (`id`, `kode_pu`, `barcode`, `quantity_order`, `quantity_terima`, `harga_satuan`, `created_at`, `updated_at`) VALUES
+(1, 'INV-001', '2', '15', '15', '2000', '2019-10-24 04:30:15', NULL),
+(2, 'INV-001', '3', '13', '13', '2000', '2019-10-24 04:30:15', NULL);
 
 -- --------------------------------------------------------
 
@@ -1085,7 +1107,7 @@ ALTER TABLE `jurnal_referensi`
 -- AUTO_INCREMENT for table `label_barcode`
 --
 ALTER TABLE `label_barcode`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `order_gudang_item`
@@ -1121,13 +1143,13 @@ ALTER TABLE `profil`
 -- AUTO_INCREMENT for table `purchase_order_item`
 --
 ALTER TABLE `purchase_order_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `purchasing_item`
 --
 ALTER TABLE `purchasing_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sales_order_item`
