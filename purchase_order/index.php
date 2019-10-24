@@ -9,6 +9,12 @@ if (isset($_POST['submit'])) {
         extract($data);
         $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan,satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga','$satuan'); ";
     }
+    $dataLabel = json_decode($dataLabel);
+    foreach ($dataLabel as $data) {
+        $data = (array) $data;
+        extract($data);
+        $sql .= "INSERT INTO label_barcode(kode_po,barcode,harga,keterangan,quantity) VALUES ('$kode','$barcode','$harga','$keterangan','$quantity');";
+    }
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dibuat");
 }
@@ -34,15 +40,16 @@ $title = 'Purchase Order';
     </section> -->
 
     <!-- Main content -->
-    <section class="content">
+    <form action="" method="POST" id="form">
 
-        <!-- Default box -->
-        <div class="box box-info">
-            <div class="box-body">
-                <h3 class="header text-center">PURCHASE ORDER <span><button id="buat_po" class="btn btn-primary pull-right">Create PO</button></span></h3>
-                <!-- form -->
-                <div class="form-body" style="margin-top: 20px;">
-                    <form action="" method="POST">
+        <section class="content">
+
+            <!-- Default box -->
+            <div class="box box-info">
+                <div class="box-body">
+                    <h3 class="header text-center">PURCHASE ORDER <span><button id="buat_po" class="btn btn-primary pull-right">Create PO</button></span></h3>
+                    <!-- form -->
+                    <div class="form-body" style="margin-top: 20px;">
                         <!-- div class md-6 -->
                         <div class="row">
                             <div class="col-md-6" style="margin-top: 39px;">
@@ -101,142 +108,137 @@ $title = 'Purchase Order';
                             </div>
                         </div>
 
-                </div>
-                <hr>
-                <!-- /form end -->
-
-                <div class="form bawah">
-                    <div class="row">
-                        <div class="col-sm-2">
-                            <input type="text" name="barcode" id="barcode_po" class="form-control" placeholder="BARCODE">
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="text" name="kode_item_supplier" id="kode_item_supplier" class="form-control" placeholder="KODE ITEM SUPPLI">
-                        </div>
-                        <div class="col-sm-3">
-                            <input type="text" readonly class="form-control" name="nama_item" id="nama_item" placeholder="NAMA ITEM">
-                        </div>
-                        <div class="col-sm-2">
-                            <input type="number" name="quantity" id="quantity" class="form-control" placeholder="QTY ORDER">
-                        </div>
-                        <div class="col-sm-2 col-xs-10">
-                            <input type="number" name="harga" id="harga" class="form-control" placeholder="HARGA SATUAN">
-                        </div>
-                        <div class="col-sm-1 col-xs-2">
-                            <i class="fa fa-plus fa-2x" id="tambah_data_po" style="margin-top: 5px; cursor:pointer"></i>
-                        </div>
                     </div>
-                </div>
+                    <hr>
+                    <!-- /form end -->
 
-                <!-- data table -->
-                <div class="table-data">
-                    <div class="box-body">
-                        <div class="table-responsive">
-                            <table id="" class="table table-bordered table-hover">
-                                <thead>
-                                    <tr>
-                                        <th>No</th>
-                                        <th>Barcode</th>
-                                        <th>Kode Item Supplier</th>
-                                        <th>Nama Item</th>
-                                        <th>QTY order</th>
-                                        <th>Sat</th>
-                                        <th>Harga Satuan</th>
-                                        <th>Jumlah</th>
-                                        <th>Aksi</th>
-                                    </tr>
-                                </thead>
-                                <tbody id="table_po">
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-                <!-- /data table -->
-
-                <div class="form-no2">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <input type="text" name="keterangan" class="form-control" placeholder="KETERANGAN" style="width: 70%;">
+                    <div class="form bawah">
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <input type="text" name="barcode" id="barcode_po" class="form-control" placeholder="BARCODE">
                             </div>
-                            <div class="form-group">
-                                <!-- <a href="purchase_order/cetak_label_barcode.php" class="btn btn-primary">Label Barcode</a> -->
-                                <a href="#labelbarcode" type="button" class="btn btn-info" data-toggle="modal">Label Barcode</a>
+                            <div class="col-sm-2">
+                                <input type="text" name="kode_item_supplier" id="kode_item_supplier" class="form-control" placeholder="KODE ITEM SUPPLI">
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label class="col-sm-4 control-label">DPP</label>
-                                <div class="col-sm-8">
-                                    <input type="number" name="dpp" readonly id="dpp" class="form-control">
-                                </div>
+                            <div class="col-sm-3">
+                                <input type="text" readonly class="form-control" name="nama_item" id="nama_item" placeholder="NAMA ITEM">
                             </div>
-                            <div class="form-group" style="margin-top: 50px;">
-                                <label class="col-sm-4 control-label">Tipe PPN</label>
-                                <div class="col-sm-4 radio">
-                                    <label>
-                                        <input type="radio" name="tipe_ppn" id="tipe_ppn_t" value="T" checked>
-                                        T
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="tipe_ppn" id="tipe_ppn_i" value="I">
-                                        I
-                                    </label>
-                                    <label>
-                                        <input type="radio" name="tipe_ppn" id="tipe_ppn_e" value="E">
-                                        E
-                                    </label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <input type="text" readonly id="ppn" name="tipe_ppn_teks" class="form-control">
-                                </div>
+                            <div class="col-sm-2">
+                                <input type="number" name="quantity" id="quantity" class="form-control" placeholder="QTY ORDER">
                             </div>
-                            <div class="form-group" style="margin-top: 100px;">
-                                <label class="col-sm-4 control-label">Total</label>
-                                <div class="col-sm-8">
-                                    <input type="text" id="total" name="total_harga" readonly class="form-control">
-                                </div>
+                            <div class="col-sm-2 col-xs-10">
+                                <input type="number" name="harga" id="harga" class="form-control" placeholder="HARGA SATUAN">
+                            </div>
+                            <div class="col-sm-1 col-xs-2">
+                                <i class="fa fa-plus fa-2x" id="tambah_data_po" style="margin-top: 5px; cursor:pointer"></i>
                             </div>
                         </div>
                     </div>
-                    <!-- button -->
-                    <div class="form-group tombol pull-right" style="margin-top: 20px;">
-                        <input type="hidden" name="data_po" id="data_po">
-                        <input type="submit" name="submit" class="btn btn-primary" value="Save">
-                    </div>
-                    <!-- /button -->
-                    </form>
 
-                    <?php
-                        $query1 = query('SELECT * FROM purchase_order ORDER BY kode DESC LIMIT 1');
+                    <!-- data table -->
+                    <div class="table-data">
+                        <div class="box-body">
+                            <div class="table-responsive">
+                                <table id="" class="table table-bordered table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>No</th>
+                                            <th>Barcode</th>
+                                            <th>Kode Item Supplier</th>
+                                            <th>Nama Item</th>
+                                            <th>QTY order</th>
+                                            <th>Sat</th>
+                                            <th>Harga Satuan</th>
+                                            <th>Jumlah</th>
+                                            <th>Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="table_po">
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- /data table -->
+
+                    <div class="form-no2">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <input type="text" name="keterangan" class="form-control" placeholder="KETERANGAN" style="width: 70%;">
+                                </div>
+                                <div class="form-group">
+                                    <a href="#labelbarcode" type="button" class="btn btn-info" data-toggle="modal">Label Barcode</a>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="col-sm-4 control-label">DPP</label>
+                                    <div class="col-sm-8">
+                                        <input type="number" name="dpp" readonly id="dpp" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 50px;">
+                                    <label class="col-sm-4 control-label">Tipe PPN</label>
+                                    <div class="col-sm-4 radio">
+                                        <label>
+                                            <input type="radio" name="tipe_ppn" id="tipe_ppn_t" value="T" checked>
+                                            T
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="tipe_ppn" id="tipe_ppn_i" value="I">
+                                            I
+                                        </label>
+                                        <label>
+                                            <input type="radio" name="tipe_ppn" id="tipe_ppn_e" value="E">
+                                            E
+                                        </label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <input type="text" readonly id="ppn" name="tipe_ppn_teks" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="form-group" style="margin-top: 100px;">
+                                    <label class="col-sm-4 control-label">Total</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" id="total" name="total_harga" readonly class="form-control">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- button -->
+                        <div class="form-group tombol pull-right" style="margin-top: 20px;">
+                            <input type="hidden" name="data_po" id="data_po">
+                            <input type="submit" name="submit" id="kirim" class="btn btn-primary" value="Save">
+                        </div>
+                        <!-- /button -->
+
+                        <?php
+                        $query1 = query('SELECT * FROM purchase_order ORDER BY created_at DESC LIMIT 1');
                         if (!isset($query1[0]['kode'])) {
                             $id = 'PO-001';
                         } else {
                             $id = tambahId(strval($query1[0]['kode']), 'PO');
                         }
                         $data = query("SELECT * FROM inventory");
-                    ?>
-                    <!-- modal -->
-                    <div class="modal fade" id="labelbarcode">
-                        <div class="modal-dialog modal-lg">
-                            <div class="modal-content">
-                                <div class="modal-header bg-primary">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title">Label Barcode</h4>
-                                </div>
-                                <div class="modal-body">
-                                    <form action="" class="form-horizontal" method="post">
+                        ?>
+                        <!-- modal -->
+                        <div class="modal fade" id="labelbarcode">
+                            <div class="modal-dialog modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header bg-primary">
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                        <h4 class="modal-title">Label Barcode</h4>
+                                    </div>
+                                    <div class="modal-body">
                                         <div class="box-body">
                                             <div class="col-sm-2">
                                                 <div class="box-body">
                                                     <div class="form-group">
-                                                        <select name="barcode" id="barcode" class="form-control">
-                                                            <?php
-                                                            foreach ($data as $val) : ?>
+                                                        <select id="barcode_label" class="form-control ">
+                                                            <?php foreach ($data as $val) : ?>
                                                                 <option value="<?= $val['barcode'] ?>"><?= $val['barcode'] ?></option>
-                                                            <?php
-                                                            endforeach; ?>
+                                                            <?php endforeach ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -244,47 +246,46 @@ $title = 'Purchase Order';
                                             <div class="col-sm-2">
                                                 <div class="box-body">
                                                     <div class="form-group">
-                                                        <input type="number" id="quantity" class="form-control" placeholder="Qty">
+                                                        <input type="number" id="quantity_label" class="form-control" placeholder="Qty">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-2">
                                                 <div class="box-body">
                                                     <div class="form-group">
-                                                        <input type="number" id="harga_jual" class="form-control" placeholder="Harga Jual">
+                                                        <input type="number" id="harga_jual_label" class="form-control" placeholder="Harga Jual">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-5">
                                                 <div class="box-body">
                                                     <div class="form-group">
-                                                        <input type="text" id="keterangan" class="form-control" placeholder="Keterangan">
+                                                        <input type="text" id="keterangan_label" class="form-control" placeholder="Keterangan">
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-sm-1">
                                                 <div class="box-body">
-                                                    <i id="cetak_barcode_input" class="fa fa-plus fa-2x" style="padding-top: 5px; cursor:pointer"></i>
+                                                    <i id="label_barcode_input" class="fa fa-plus fa-2x" style="padding-top: 5px; cursor:pointer"></i>
                                                 </div>
                                             </div>
                                         </div>
-                                    </form>
-                                    <div class="box-body">
-                                        <div class="data-table table-responsive">
-                                            <table class="table table-bordered table-hover">
-                                                <thead>
-                                                    <tr>
-                                                        <th>Barcode</th>
-                                                        <th>Qty</th>
-                                                        <th>Sat</th>
-                                                        <th>Harga Jual</th>
-                                                        <th>Keterangan</th>
-                                                        <th>Aksi</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody id="table">
-                                                </tbody>
-                                            </table>
+                                        <div class="box-body">
+                                            <div class="data-table table-responsive">
+                                                <table class="table table-bordered table-hover">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Barcode</th>
+                                                            <th>Qty</th>
+                                                            <th>Harga Jual</th>
+                                                            <th>Keterangan</th>
+                                                            <th>Aksi</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody id="table2">
+                                                    </tbody>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -292,13 +293,15 @@ $title = 'Purchase Order';
                         </div>
                     </div>
                 </div>
+                <!-- /.box-body -->
+                <!-- /.box-footer-->
             </div>
-            <!-- /.box-body -->
-            <!-- /.box-footer-->
-        </div>
-        <!-- /.box -->
+            <!-- /.box -->
 
-    </section>
+        </section>
+        <input type="hidden" name="dataLabel" id="dataLabel">
+    </form>
+
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
@@ -310,12 +313,67 @@ $title = 'Purchase Order';
         'satuan': '',
         'total': 0,
         'sata': '',
-        'dpp': 0
+        'dpp': 0,
+        'label': 0
     };
+    var submitted = false;
+    var kirim = false;
+    var simpanLabel = []
     var active = 'header_po';
     var active_2 = 'header_purchase_order';
     var simpanArray = [];
+    $(document).ready(() => {
+        var barcode = document.getElementById('barcode_label').value;
+        dataSimpan.barcodeLabel = barcode
+    })
 
+    $('#barcode_label').change(() => {
+        var barcode = document.getElementById('barcode_label').value;
+        dataSimpan.barcodeLabel = barcode
+    })
+
+    $('#label_barcode_input').click(() => {
+        var quantity = $('#quantity_label').val()
+        var harga = $('#harga_jual_label').val()
+        var keterangan = $('#keterangan_label').val()
+        if (quantity == '' || harga == '' || keterangan == '') {
+            alert('Tolong diisi datanya!');
+            return false;
+        } else {
+            var save = {
+                'barcode': dataSimpan.barcodeLabel,
+                'harga': harga,
+                'keterangan': keterangan,
+                'quantity': quantity
+            }
+            $.post('purchase_order/ajax.php', {
+                request: 'cari_barcode',
+                data: dataSimpan.barcodeLabel
+            }, (datas) => {
+                datas = JSON.parse(datas);
+            })
+            simpanLabel.push(save)
+            $('#table2').append(
+                `<tr id="tr_${dataSimpan.label}">
+                    <td>${save.barcode}</td>
+                    <td>${save.quantity}</td>
+                    <td>${save.harga}</td>
+                    <td>${save.keterangan}</td>
+                    <td><button class="btn btn-danger" onclick="labelDelete(${dataSimpan.label})">Hapus</button></td>
+                </tr>
+                `
+            )
+            dataSimpan.label++
+            $('#dataLabel').val(JSON.stringify(simpanLabel));
+        }
+    })
+
+    function labelDelete(id) {
+        $('#tr_' + id).remove()
+        delete simpanLabel[id]
+        $('#dataLabel').val(JSON.stringify(simpanLabel));
+
+    }
 
     $('#buat_po').on('click', function() {
         dataSimpan.buat_po = true;

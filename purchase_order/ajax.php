@@ -5,6 +5,10 @@ header('Content-Type: Application/Json');
 if (isset($_POST['request'])) {
     $req = $_POST['request'];
     extract($_POST);
+    if ($req == 'data_barcode') {
+        $query = query("SELECT * FROM inventory");
+        echo json_encode($query);
+    }
     if ($req == 'data_inventory') {
         $query = "SELECT * FROM profil WHERE id = 1";
         $sql = mysqli_fetch_assoc(mysqli_query($conn, $query));
@@ -37,6 +41,12 @@ if (isset($_POST['request'])) {
     if ($req == "data_po") {
         $kode = $_POST['kode'];
         $query = "SELECT * FROM purchase_order_item WHERE kode_po = '$kode'";
+        $sql = query($query);
+        echo json_encode($sql);
+    }
+    if ($req == "data_label") {
+        $kode = $_POST['kode'];
+        $query = "SELECT * FROM label_barcode WHERE kode_po = '$kode'";
         $sql = query($query);
         echo json_encode($sql);
     }
