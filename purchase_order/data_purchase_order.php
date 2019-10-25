@@ -119,6 +119,7 @@ if (isset($_POST['submit'])) {
                     </div>
 
                     <!-- datatable -->
+                    <div class="table-responsive">
                     <table id="example1" class="table table-bordered table-striped">
                         <thead>
                             <tr>
@@ -130,7 +131,7 @@ if (isset($_POST['submit'])) {
                                 <th>TELP</th>
                                 <th>NO HP</th>
                                 <th>JUMLAH</th>
-                                <th>AKSI</th>
+                                <th width="13%">AKSI</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -151,13 +152,14 @@ if (isset($_POST['submit'])) {
                                     <td>
                                         <a href="purchase_order/edit_po.php?kode=<?= $row['kode'] ?>"><i class="fa fa-edit fa-lg" style="color: blue; padding: 5px;"></i></a>
                                         <a href="purchase_order/data_purchase_order.php?request=delete&kode=<?= $row['kode'] ?>"><i class="fa fa-trash fa-lg" style="color: red; padding: 5px;"></i></a>
-                                        <a href="#"><i class="fa fa-print fa-lg" style="color: green; padding: 5px;"></i></a>
+                                        <a href="purchase_order/print/purchase_order.php?kode=<?= $row['kode'] ?>" target="_blank" onclick="window.open('purchase_order/print/cetak_label_barcode.php?kode=<?= $row['kode'] ?>')"><i class="fa fa-print fa-lg" style="color: green; padding: 5px;"></i></a>
                                     </td>
                                 </tr>
                             <?php $i++;
                                 endforeach; ?>
                         </tbody>
                     </table>
+                    </div>
                     <!-- datatable -->
                     <div class="button-close pull-right" style="margin-top: 20px;">
                         <a href="#" class="btn btn-primary">Close</a>
