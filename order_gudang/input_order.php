@@ -20,8 +20,8 @@ if (isset($_POST['submit'])) {
 }
 ?>
 <script>
-	var active = 'header_sales';
-	var active_2 = 'header_sales_gudang';
+	var active = 'header_order';
+	var active_2 = 'header_order_input';
 </script>
 <?php include('../templates/header.php') ?>
 <form action="" method="POST">
@@ -147,7 +147,7 @@ if (isset($_POST['submit'])) {
 											<tbody id="cari_so_tabel">
 												<?php
 												$i_m1 = 1;
-												foreach (query("SELECT * FROM sales_order") as $data_so) : $so =  $data_so['nomor_so'];
+												foreach (query("SELECT * FROM order_gudang") as $data_so) : $so =  $data_so['nomor_so'];
 													?>
 													<tr>
 														<td><?= $i_m1 ?></td>
@@ -284,7 +284,7 @@ if (isset($_POST['submit'])) {
 			alert("Tolong diisi Kode Customernya");
 			return;
 		}
-		$.post('sales_order/ajax.php', {
+		$.post('order_gudang/ajax.php', {
 			request: 'cari_customer',
 			data: $('#kode_customer').val()
 		}, function(data) {
@@ -312,7 +312,7 @@ if (isset($_POST['submit'])) {
 			alert('Tolong diisi dahulu data Customernya');
 			return;
 		}
-		$.post('sales_order/ajax.php', {
+		$.post('order_gudang/ajax.php', {
 			request: 'cari_barcode',
 			data: $('#barcode_so').val()
 		}, function(data) {
@@ -330,7 +330,7 @@ if (isset($_POST['submit'])) {
 				} else if (parseInt(sessData.dataCust.tipe_customer) == 3) {
 					sessData.dataB.harga_jual1 = sessData.dataB.harga_jual3;
 				}
-				$.post('sales_order/ajax.php', {
+				$.post('order_gudang/ajax.php', {
 					request: 'cari_satuan',
 					data: data.satuan
 				}, function(lel) {
@@ -375,7 +375,7 @@ if (isset($_POST['submit'])) {
 		$('#tr_so_' + i).remove();
 		fix_iteration('#table_so');
 		i--;
-		var total -= parseInt(storeData[i]['quantity']);
+		total -= parseInt(storeData[i]['quantity']);
 		$('#total').val(total)
 		delete storeData[i];
 		$('#data_item').val(JSON.stringify(storeData));
@@ -390,7 +390,7 @@ if (isset($_POST['submit'])) {
 			alert('Tanggal tidak boleh kosong!');
 			return;
 		} else {
-			$.post('sales_order/ajax.php', {
+			$.post('order_gudang/ajax.php', {
 				request: 'cari_so',
 				data: d
 			}, res => {

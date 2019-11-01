@@ -20,6 +20,17 @@ function query($query)
   }
   return $rows;
 }
+function checkId($table, $id, $prefix)
+{
+  $query = "SELECT * FROM ${table} ORDER BY ${id} DESC LIMIT 1";
+  $query = query($query);
+  if (!isset($query[0][$id])) {
+    $id = $prefix . '-001';
+  } else {
+    $id = tambahId(strval($query[0][$id]), $prefix);
+  }
+  return $id;
+}
 /** 	tambahID
  * 	
  *	Untuk menambah ID secara Otomatis
