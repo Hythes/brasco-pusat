@@ -12,7 +12,7 @@ if (isset($_POST['submit'])) {
     foreach ($data_po as $data) {
         $data = (array) $data;
         extract($data);
-        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga'); ";
+        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan,satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga','$satuan'); ";
     }
     $dataLabel = json_decode($dataLabel);
     $dataLabel = array_filter($dataLabel);

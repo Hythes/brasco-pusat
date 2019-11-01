@@ -22,8 +22,8 @@ if (isset($_POST['cari'])) {
 
 ?>
 <script>
-    var active = 'header_sales';
-    var active_2 = 'header_sales_list'
+    var active = 'header_order';
+    var active_2 = 'header_order_list'
 </script>
 
 <?php include('../templates/header.php') ?>
@@ -70,7 +70,7 @@ if (isset($_POST['cari'])) {
                                 </div>
                             </div>
                             <div class="form-group pad">
-                                <a href="sales_order/order_gudang.php" class="btn btn-primary">Buat order baru</a>
+                                <a href="order_gudang/order_gudang.php" class="btn btn-primary">Buat order baru</a>
                             </div>
                         </div>
                     </form>
@@ -109,9 +109,9 @@ if (isset($_POST['cari'])) {
                                             <td><?= $total ?></td>
                                             <td><?= $keterangan ?></td>
                                             <td>
-                                                <a title="Edit" href="sales_order/edit_order.php?nomor=<?= $nomor_order ?>"><i style="color: blue;font-size:24px;" class="fa fa-pencil"></i></a>
-                                                <a title="Hapus" onclick="return confirm('Yakin ingin menghapus?')" href="sales_order/ajax.php?nomor_order=<?= $nomor_order ?>"><i style="color: red;font-size:24px;" class="fa fa-trash"></i></a>
-                                                <a title="Detail" target="_blank" href="sales_order/detail_order.php?nomor=<?= $nomor_order ?>"><i style="color: green;font-size:24px;" class="fa fa-info"></i></a>
+                                                <a title="Edit" href="order_gudang/edit_order.php?nomor=<?= $nomor_order ?>"><i style="color: blue;font-size:24px;" class="fa fa-pencil"></i></a>
+                                                <a title="Hapus" onclick="return confirm('Yakin ingin menghapus?')" href="order_gudang/ajax.php?nomor_order=<?= $nomor_order ?>"><i style="color: red;font-size:24px;" class="fa fa-trash"></i></a>
+                                                <a title="Detail" target="_blank" href="order_gudang/detail_order.php?nomor=<?= $nomor_order ?>"><i style="color: green;font-size:24px;" class="fa fa-info"></i></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
