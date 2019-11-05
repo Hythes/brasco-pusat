@@ -1,7 +1,7 @@
 <?php
 $title = "List Picking Gudang";
 require '../env.php';
-$datas = array();
+$datas =  query("SELECT * FROM picking");
 if (isset($_POST['search'])) {
     extract($_POST);
     if ($tanggal == '') {

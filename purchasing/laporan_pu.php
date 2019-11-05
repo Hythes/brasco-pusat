@@ -2,6 +2,7 @@
 require '../env.php';
 $title = "Laporan Barang Masuk";
 $done = true;
+$query = "SELECT * FROM purchasing";
 if (isset($_GET['err'])) if (intval($_GET['err']) == 1) alert('Tidak diperbolehkan!');
 if (isset($_POST['submit'])) {
     extract($_POST);
@@ -60,12 +61,13 @@ if (isset($_POST['submit'])) {
 <!-- =============================================== -->
 
 <style>
-    .dt-button.color{
+    .dt-button.color {
         background: #3A80D5;
         color: #fff;
         border-color: #3A80D5;
     }
-    .dt-button.color:hover{
+
+    .dt-button.color:hover {
         color: #000;
         background-color: tomato;
     }
@@ -219,17 +221,16 @@ if (isset($_POST['submit'])) {
 <!-- script buat button print copy csv excel pdf -->
 <script>
     $(function() {
-    $('#example1').DataTable()
-    $('#data-table').DataTable({
-      'paging': true,
-      'lengthChange': false,
-      'searching': true,
-      'ordering': true,
-      'info': true,
-      'autoWidth': false,
-      dom: 'Bfrtip',
-      buttons: [
-                {
+        $('#example1').DataTable()
+        $('#data-table').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            dom: 'Bfrtip',
+            buttons: [{
                     extend: 'pdfHtml5',
                     className: 'color',
                     orientation: 'landscape',
@@ -243,18 +244,18 @@ if (isset($_POST['submit'])) {
                     className: 'color',
                     exportOptions: {
                         columns: [0, 1, 2, 3, 4, 5, 6]
-                    }, 
-                    customize: function ( win ) {
+                    },
+                    customize: function(win) {
                         $(win.document.body)
-                            .css( 'font-size', '10pt' )
-    
-                        $(win.document.body).find( 'table' )
-                            .addClass( 'compact' )
-                            .css( 'font-size', 'inherit' );
+                            .css('font-size', '10pt')
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
                     }
                 },
                 {
-                    extend: 'excel', 
+                    extend: 'excel',
                     className: 'color',
                     text: 'Excel',
                     exportOptions: {

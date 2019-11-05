@@ -365,6 +365,9 @@
           <li id="header_customer">
             <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
           </li>
+          <li id="header_counter">
+            <a href="setting_counter"><i class="fa fa-clock-o"></i> <span>Setting Counter</span></a>
+          </li>
           <li id="header_jurnal">
             <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
           </li>
@@ -433,7 +436,7 @@
                 <a href="jatuhTempoPembayaran.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
               </li> -->
               <li id="header_supplier_tambah_saldo">
-                <a href="master_supplier/tambah_saldo"><i class="fa fa-circle-o"></i> <span>Tambah Saldo Supplier</span></a>
+                <a href="master_supplier/tambah_saldo.php"><i class="fa fa-circle-o"></i> <span>Tambah Saldo Supplier</span></a>
               </li>
             </ul>
           </li>
@@ -498,19 +501,50 @@
               <li id="header_sales_laporan">
                 <a href="sales_order/laporan_so.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
               </li>
-              <li id="header_sales_list">
-                <a href="sales_order/list_order.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
+            </ul>
+          </li>
+          <li class="treeview" id="header_diskon">
+            <a href="#">
+              <i class="fa fa-percent"></i>
+              <span>Diskon Barang Reject</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li id="header_diskon_buat">
+                <a href="diskon_barang/buat.php"><i class="fa fa-circle-o"></i> <span>Buat Diskon</span></a>
               </li>
-              <li id="header_sales_gudang">
-                <a href="sales_order/input_order.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
+              <li id="header_diskon_approval">
+                <a href="diskon_barang/approval.php"><i class="fa fa-circle-o"></i><span>Approval Diskon</span></a>
+              </li>
+
+            </ul>
+          </li>
+          <li id="header_invoice">
+            <a href="sales_invoice/buat.php"><i class="fa fa-fax"></i> <span>Sales Invoice</span></a>
+          </li>
+          <li class="header">GUDANG</li>
+          <li class="treeview" id="header_order">
+            <a href="#">
+              <i class="fa fa-flip-horizontal fa-truck"></i>
+              <span>Order Gudang</span>
+              <span class="pull-right-container">
+                <i class="fa fa-angle-left pull-right"></i>
+              </span>
+            </a>
+            <ul class="treeview-menu">
+              <li id="header_order_list">
+                <a href="order_gudang/list_order.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
+              </li>
+              <li id="header_order_input">
+                <a href="order_gudang/input_order.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
               </li>
             </ul>
           </li>
-          <li class="header">GUDANG</li>
-
           <li class="treeview" id="header_picking">
             <a href="#">
-              <i class="fa fa-truck"></i>
+              <i class="fa  fa-truck"></i>
               <span>Picking Gudang</span>
               <span class="pull-right-container">
                 <i class="fa fa-angle-left pull-right"></i>
@@ -543,23 +577,16 @@
             </ul>
           </li>
 
-
-
-          <!-- <li id="header_invoice">
-            <a href="sales.php"><i class="fa fa-circle-o"></i> <span>Menu Sales Invoice</span></a>
-          </li>
-          <li id="header_surat_jalan">
+          <!-- <li id="header_surat_jalan">
             <a href="cetaksuratjalan.php"><i class="fa fa-circle-o"></i> <span>Cetak Surat Jalan</span></a>
           </li>
           <li id="header_kwitansi">
             <a href="cetakkwitansi.php"><i class="fa fa-circle-o"></i> <span>Cetak kwitansi</span></a>
-          </li>
+          </li> -->
           <li id="header_retur">
             <a href="retpembrg.php"><i class="fa fa-circle-o"></i> <span>Retur Pembelian Barang</span></a>
           </li>
-          <li id="header_diskon">
-            <a href="diskonBarangReject.php"><i class="fa fa-circle-o"></i> <span>Diskon Barang Reject</span></a>
-          </li> -->
+
         </ul>
       </section>
       <!-- /.sidebar -->

@@ -2,6 +2,7 @@ var arrActive = [
   "header_profil",
   "header_jurnal",
   "header_customer",
+  "header_counter",
   [
     "header_inventory",
     "header_inventory_master",
@@ -46,17 +47,16 @@ var arrActive = [
     "header_sales_input",
     "header_sales_laporan",
     "header_sales_detail",
-    "header_sales_edit",
-    "header_sales_list",
-    "header_sales_gudang"
+    "header_sales_edit"
   ],
+  ["header_order", "header_order_input", "header_order_list"],
   ["header_picking", "header_picking_list", "header_picking_gudang"],
   ["header_packing", "header_packing_gudang", "header_packing_list"],
   "header_invoice",
   "header_surat_jalan",
   "header_kwitansi",
   "header_retur",
-  "header_diskon"
+  ["header_diskon", "header_diskon_buat", "header_diskon_approval"]
 ];
 $(document).ready(function() {
   for (var i in arrActive) {

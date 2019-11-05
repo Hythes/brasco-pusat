@@ -1,0 +1,63 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "f497d3cb456409e8ee6f1394ed45f550",
+    "packages": [
+        {
+            "name": "datatables.net/editor-php",
+            "version": "1.9.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/DataTables/Editor-PHP.git",
+                "reference": "623e4efce72640f992c6602331e58f478076c6f0"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/DataTables/Editor-PHP/zipball/623e4efce72640f992c6602331e58f478076c6f0",
+                "reference": "623e4efce72640f992c6602331e58f478076c6f0",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "DataTables\\": ""
+                },
+                "files": [
+                    "composer.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "SpryMedia Ltd",
+                    "homepage": "https://datatables.net"
+                }
+            ],
+            "description": "PHP server-side libraries for Editor",
+            "homepage": "https://editor.datatables.net",
+            "keywords": [
+                "datatables",
+                "editor",
+                "jquery"
+            ],
+            "time": "2019-10-18T11:06:16+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}
