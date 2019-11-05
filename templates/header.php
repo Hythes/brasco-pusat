@@ -365,6 +365,9 @@
           <li id="header_customer">
             <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
           </li>
+          <li id="header_counter">
+            <a href="setting_counter"><i class="fa fa-clock-o"></i> <span>Setting Counter</span></a>
+          </li>
           <li id="header_jurnal">
             <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
           </li>
@@ -433,7 +436,7 @@
                 <a href="jatuhTempoPembayaran.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
               </li> -->
               <li id="header_supplier_tambah_saldo">
-                <a href="master_supplier/tambah_saldo"><i class="fa fa-circle-o"></i> <span>Tambah Saldo Supplier</span></a>
+                <a href="master_supplier/tambah_saldo.php"><i class="fa fa-circle-o"></i> <span>Tambah Saldo Supplier</span></a>
               </li>
             </ul>
           </li>

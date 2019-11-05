@@ -53,11 +53,12 @@ $dataModal = array();
                 <h3 class="box-title">Menu Sales Invoice</h3>
                 <div class="box-tools pull-right">
                     <?php if (isset($success)) : ?>
+                        <a target="_blank" href="sales_invoice/cetak.php?kode=<?= $success['invoice'] ?>" class="btn btn-primary">Cetak Invoice</a>
                         <?php if ($success['kwitansi'] == 1) : ?>
                             <a target="_blank" href="sales_invoice/kwitansi.php?kode=<?= $success['invoice'] ?>" class="btn btn-primary">Cetak Kwitansi</a>
                         <?php endif ?>
                         <?php if ($success['surat_jalan'] == 1) : ?>
-                            <a target="_blank" href="sales_invoice/surat_jalan.php?kode=<?= $success['invoice'] ?>" class="btn btn-primary">Cetak Sales Invoice</a>
+                            <a target="_blank" href="sales_invoice/surat_jalan.php?kode=<?= $success['invoice'] ?>" class="btn btn-primary">Cetak Surat Jalan</a>
 
                         <?php endif; ?>
                     <?php endif; ?>

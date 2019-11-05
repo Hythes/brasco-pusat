@@ -2,6 +2,7 @@ var arrActive = [
   "header_profil",
   "header_jurnal",
   "header_customer",
+  "header_counter",
   [
     "header_inventory",
     "header_inventory_master",

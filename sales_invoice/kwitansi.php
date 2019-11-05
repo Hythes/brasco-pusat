@@ -1,95 +1,93 @@
-<script>
-    var active = 'header_kwitansi';
-</script>
+<?php
+require '../env.php';
 
-<?php include('../templates/header.php') ?>
-<!-- =============================================== -->
+$profile = query("SELECT * FROM profil")[0];
+$invoice = query("SELECT * FROM sales_invoice WHERE nomor_invoice = '$_GET[kode]'")[0];
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            Cetak Kwitansi
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Examples</a></li>
-        </ol>
-    </section>
+?>
+<!DOCTYPE html>
+<html>
 
-    <!-- Main content -->
-    <section class="content">
+<head>
+	<title>Kwitansi</title>
 
-        <!-- Default box -->
-        <div class="row">
-            <div class="col-md-12">
-                <div class="box">
-                    <div class="box-header with-border">
-                        <h3 class="box-title">MENU CETAK KWITANSI</h3>
+	<!-- Tell the browser to be responsive to screen width -->
+	<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="../assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<!-- Theme style -->
+	<link rel="stylesheet" href="../assets/dist/css/AdminLTE.min.css">
+	<style type="text/css">
+		.pt-10 {
+			padding-top: 50px;
+		}
 
-                    </div>
-                    <div class="box-body">
-                        <div class="container">
-                            <div class="row" style="width: 1060px">
-                                <div class="panel panel-default">
-                                    <div class="panel-heading">
-                                        <h4>Cetak Kwitansi</h4>
-                                    </div>
-                                    <div class="panel-body">
-                                        <form method="post" style="box-sizing: border-box; padding: 50px;">
-                                            <!-- row 1 -->
-                                            <div class="row">
-                                                <!-- col 1 -->
-                                                <div class="col-md-7 mb-1">
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-3 col-form-label">Nomor Invoice : </label>
-                                                        <div class="col-sm-7">
-                                                            <input class="form-control" type="text" name="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- col 2 -->
-                                                <div class="col-md-5 mb-1">
-                                                    <div class="form-group row">
-                                                        <div class="col-sm-7">
-                                                            <button class="btn btn-white">Cetak</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+		.pr-5 {
+			padding-right: 30px;
+			padding-left: 30px;
+		}
+	</style>
+</head>
 
-                                            <!-- 2 -->
-                                            <div class="row">
-                                                <div class="col-md-7 mb-1">
-                                                    <div class="form-group row">
-                                                        <label class="col-sm-3 col-form-label">Nomor Kwitansi : </label>
-                                                        <div class="col-sm-7">
-                                                            <input class="form-control" type="text" name="">
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
+<body>
 
+	<div class="content pt-5">
+		<div class="row">
+			<div class="col-xs-4 text-center">
+				<img src="../img/icon.png" width="30%">
+			</div>
+			<div class="col-xs-4">
+				<h4>PT. Nocole Pangan Indonesia</h4>
+				<p>Jl. Raya Hanjawar No.1 Cipanas Cianjur<br>
+					ph. +62 37917371<br>
+					e: n.chocolaterie@gmail.com</p>
+			</div>
+			<div class="col-xs-4">
+				<h2 class="text-primary">Kwitansi</h2>
+				<p>No Kwitansi : KF12345678</p>
+			</div>
+		</div>
 
-                                        </form>
+		<div class="row pt-10">
+			<div class=" ">
+				<div class="col-xs-3">
+					<p>Sudah Terima Dari</p>
+					<p>Banyaknya Uang</p>
+					<p>Untuk Melunasi Faktur</p>
+				</div>
+				<div class="col-xs-9">
+					<p>Contract Person (PT.Customer)</p>
+					<p># Satu juta lima ratus Sembilan puluh delapan ribu tiga ratus lima puluh # </p>
+					<p>IF12345678</p>
+				</div>
+				<div class="col-xs-4 pt-5 ">
+					<div class="">
+						<div class="text-center">
+							<div class="form-group">
+								<label class="col-xs-3 control-label">Rp. </label>
+								<div class="col-xs-8">
+									<input type="text" name="" class="form-control" value="1.598.350">
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-xs-4" style="padding-top: 25px;">
+					<div class="pull-right">
+						<p>Jakarta, dd-mmmm-yyyy</p>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="" style="padding-top: 20px;">
+			<div class="col-xs-4" style="border: solid 1px #000;">
+				<h4>** PERHATIAN **</h4>
+				<p>Pembayaran di lakukan dengan cheque/Giro/Wesel dsb, <br>
+					belum dianggap lunas sebelum dicairkan</p>
+			</div>
+		</div>
+	</div>
 
+</body>
 
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.box-body -->
-                    <!-- /.box-footer-->
-                </div>
-                <!-- /.box -->
-
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
-
-<?php include('../templates/footer.php') ?>
+</html>
