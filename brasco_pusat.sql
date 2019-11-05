@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 01, 2019 at 07:52 AM
+-- Generation Time: Nov 05, 2019 at 05:09 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.1.30
 
@@ -22,6 +22,42 @@ START TRANSACTION;
 --
 CREATE DATABASE IF NOT EXISTS `brasco_pusat` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `brasco_pusat`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `counter`
+--
+
+DROP TABLE IF EXISTS `counter`;
+CREATE TABLE `counter` (
+  `tabel` varchar(255) NOT NULL,
+  `nama` varchar(255) NOT NULL,
+  `header` varchar(255) NOT NULL,
+  `digit` varchar(8) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `counter`
+--
+
+INSERT INTO `counter` (`tabel`, `nama`, `header`, `digit`, `created_at`, `updated_at`) VALUES
+('customer', 'Kode Customer', 'CST', '00000000', '2019-11-05 09:36:56', NULL),
+('diskon_barang_reject', 'Diskon Barang Reject', 'RJ', '00000000', '2019-11-05 09:36:56', NULL),
+('inventory', 'Kode Inventory', 'INV', '00000000', '2019-11-05 09:36:56', NULL),
+('kwitansi_invoice', 'Kwitansi Invoice', 'KV', '00000000', '2019-11-05 09:36:56', NULL),
+('order_gudang', 'Kode Order Gudang', 'Order', '00000000', '2019-11-05 09:36:56', '2019-11-05 10:09:49'),
+('packing', 'Kode Packing Gudang', 'Pack', '00000000', '2019-11-05 09:36:56', NULL),
+('pengajuan_perubahan_harga', 'Pengajuan Perubahan Harga', 'PH', '00000000', '2019-11-05 09:36:56', NULL),
+('picking', 'Kode Packing Gudang', 'Pick', '00000000', '2019-11-05 09:36:56', NULL),
+('purchase_order', 'Kode Purchase Order', 'PO', '00000000', '2019-11-05 09:36:56', NULL),
+('purchasing', 'Kode Purchasing', 'PU', '00000000', '2019-11-05 09:36:56', NULL),
+('sales_invoice', 'Kode Sales Invoice', 'SI', '00000000', '2019-11-05 09:36:56', NULL),
+('sales_order', 'Kode Sales Order', 'SO', '00000000', '2019-11-05 09:36:56', NULL),
+('stock_opname', 'Kode Stock Opname', 'ST', '00000000', '2019-11-05 09:36:56', NULL),
+('supplier', 'Kode Supplier', 'SP', '00000000', '2019-11-05 09:36:56', NULL);
 
 -- --------------------------------------------------------
 
@@ -441,33 +477,6 @@ INSERT INTO `packing_item` (`id`, `nomor_packing`, `id_picking_item`, `quantity_
 -- --------------------------------------------------------
 
 --
--- Table structure for table `pelanggan`
---
-
-DROP TABLE IF EXISTS `pelanggan`;
-CREATE TABLE `pelanggan` (
-  `id` int(11) NOT NULL,
-  `kode` varchar(255) NOT NULL,
-  `tanggal` date NOT NULL,
-  `nama` varchar(255) NOT NULL,
-  `alamat` varchar(255) NOT NULL,
-  `kota` varchar(255) NOT NULL,
-  `kodepos` varchar(255) NOT NULL,
-  `no_telepon` varchar(255) NOT NULL,
-  `no_handphone` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Dumping data for table `pelanggan`
---
-
-INSERT INTO `pelanggan` (`id`, `kode`, `tanggal`, `nama`, `alamat`, `kota`, `kodepos`, `no_telepon`, `no_handphone`) VALUES
-(3, '123456', '2019-08-05', 'Wulan Suci N.', 'Boja', 'Semarang', '09876', '02409090', '0899812020'),
-(4, '111111', '2019-08-06', 'Idrus Gymnas Tiar', 'Pedurungan', 'Semarang', '50140', '024765987', '081234987623');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `pengajuan_perubahan_harga`
 --
 
@@ -785,7 +794,9 @@ INSERT INTO `sales_invoice` (`nomor_invoice`, `tanggal`, `kode_customer`, `data`
 ('IVC-005', '2019-11-26', 'CST-001', '[\"Pack-001\"]', 'sadijasjidasji', 0, 1, '228000', '02020', '20727', 'i', '250747', '2019-11-01 08:28:12', NULL),
 ('IVC-006', '2019-11-28', 'CST-001', '[\"Pack-001\"]', 'osasadjsdaijsadjisdidsa', 1, 1, '228000', '2222', '20727', 'i', '250949', '2019-11-01 08:33:10', NULL),
 ('IVC-007', '2019-11-06', 'CST-001', '[\"Pack-002\"]', 'ijsjasjisd', 1, 1, '65000', '222', '5909', 'i', '71131', '2019-11-01 08:38:35', NULL),
-('IVC-008', '2019-11-29', 'CST-001', '[\"Pack-002\"]', 'sidoaokdas', 1, 0, '65000', '9292', '6500', 'e', '80792', '2019-11-01 08:39:15', NULL);
+('IVC-008', '2019-11-29', 'CST-001', '[\"Pack-002\"]', 'sidoaokdas', 1, 0, '65000', '9292', '6500', 'e', '80792', '2019-11-01 08:39:15', NULL),
+('IVC-009', '2019-11-08', 'CST-001', '[\"Pack-001\",\"Pack-002\"]', 'gdffgdfgdgd', 1, 1, '293000', '33333', '26636', 'i', '352969', '2019-11-01 14:43:30', NULL),
+('IVC-010', '2019-11-19', 'CST-001', '[\"Pack-002\"]', 'adokdaok', 1, 0, '65000', '3000', '6500', 'e', '74500', '2019-11-04 07:56:30', NULL);
 
 -- --------------------------------------------------------
 
@@ -904,6 +915,8 @@ CREATE TABLE `supplier` (
   `kredit` varchar(255) NOT NULL,
   `top` varchar(255) NOT NULL,
   `pkp` varchar(2) NOT NULL,
+  `saldo_awal` varchar(255) DEFAULT '0',
+  `saldo_jalan` varchar(255) NOT NULL DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -912,9 +925,9 @@ CREATE TABLE `supplier` (
 -- Dumping data for table `supplier`
 --
 
-INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `fax`, `handphone`, `contact_name`, `email`, `kredit`, `top`, `pkp`, `created_at`, `updated_at`) VALUES
-('SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Semarang', '50246', '222', '1', '2222', 'Hanif', 'hanifsetyananda17@gmail.com', 'wadad', '121313', 'Y', '2019-09-21 00:19:02', '2019-10-01 20:11:29'),
-('SP-002', 'Nanda', 'Jl. Klipang Raya 2002', 'Semarang', '5003', '08959904423', '7790', 'Gtau', 'Nanda Reynaldi', 'nanda.reynaldi@gmail.com', '58882', '99992', 'Y', '2019-09-21 04:47:28', '2019-10-01 20:11:42');
+INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `fax`, `handphone`, `contact_name`, `email`, `kredit`, `top`, `pkp`, `saldo_awal`, `saldo_jalan`, `created_at`, `updated_at`) VALUES
+('SP-001', 'Hanif Setyananda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Semarang', '50246', '222', '1', '2222', 'Hanif', 'hanifsetyananda17@gmail.com', 'wadad', '121313', 'Y', '0', '0', '2019-09-21 00:19:02', '2019-10-01 20:11:29'),
+('SP-002', 'Nanda', 'Jl. Klipang Raya 2002', 'Semarang', '5003', '08959904423', '7790', 'Gtau', 'Nanda Reynaldi', 'nanda.reynaldi@gmail.com', '58882', '99992', 'Y', '0', '0', '2019-09-21 04:47:28', '2019-10-01 20:11:42');
 
 -- --------------------------------------------------------
 
@@ -924,14 +937,19 @@ INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, 
 
 DROP TABLE IF EXISTS `supplier_saldo`;
 CREATE TABLE `supplier_saldo` (
-  `id` int(11) NOT NULL,
   `kode_supplier` varchar(255) NOT NULL,
-  `nama_supplier` varchar(255) NOT NULL,
   `saldo_awal` varchar(255) NOT NULL,
-  `saldo_jalan` varchar(255) NOT NULL,
+  `saldo_jalan` varchar(255) DEFAULT '0',
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `supplier_saldo`
+--
+
+INSERT INTO `supplier_saldo` (`kode_supplier`, `saldo_awal`, `saldo_jalan`, `created_at`, `updated_at`) VALUES
+('SP-002', '2222', '0', '2019-11-04 14:15:42', NULL);
 
 -- --------------------------------------------------------
 
@@ -999,6 +1017,12 @@ INSERT INTO `tr_jurnal` (`nomor`, `noref`, `novoucher`, `nourut`, `kodeakun`, `d
 --
 
 --
+-- Indexes for table `counter`
+--
+ALTER TABLE `counter`
+  ADD PRIMARY KEY (`tabel`);
+
+--
 -- Indexes for table `customer`
 --
 ALTER TABLE `customer`
@@ -1056,12 +1080,6 @@ ALTER TABLE `packing`
 -- Indexes for table `packing_item`
 --
 ALTER TABLE `packing_item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indexes for table `pelanggan`
---
-ALTER TABLE `pelanggan`
   ADD PRIMARY KEY (`id`);
 
 --
@@ -1146,7 +1164,7 @@ ALTER TABLE `supplier`
 -- Indexes for table `supplier_saldo`
 --
 ALTER TABLE `supplier_saldo`
-  ADD KEY `id` (`id`);
+  ADD PRIMARY KEY (`kode_supplier`);
 
 --
 -- Indexes for table `tipe_barang`
@@ -1201,12 +1219,6 @@ ALTER TABLE `packing_item`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
--- AUTO_INCREMENT for table `pelanggan`
---
-ALTER TABLE `pelanggan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
 -- AUTO_INCREMENT for table `picking_item`
 --
 ALTER TABLE `picking_item`
@@ -1241,12 +1253,6 @@ ALTER TABLE `sales_order_item`
 --
 ALTER TABLE `satuan`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
-
---
--- AUTO_INCREMENT for table `supplier_saldo`
---
-ALTER TABLE `supplier_saldo`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tipe_barang`
