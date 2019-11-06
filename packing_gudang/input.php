@@ -14,17 +14,16 @@ if (isset($_POST['submit'])) {
         $total += intval($_POST['qty_pack_' . $i]);
     }
     $query .= sprintf("INSERT INTO packing(nomor_packing,kode_customer,tanggal,total) VALUES('%s','%s','%s','%s');", $_POST['nomor_packing'], $_POST['customer'], $_POST['tanggal'], $total);
+    $data = explode($_POST['nomor_packing'], "-")[1];
+    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'packing';";
     $sql = mysqli_multi_query($conn, $query);
+
     lanjutkan($sql, "Ditambahkan!");
     $return = true;
 }
 $title = "Packing Gudang";
-$query = query('SELECT * FROM packing ORDER BY nomor_packing DESC LIMIT 1');
-if (!isset($query[0]['nomor_packing'])) {
-    $nomor_pick = 'Pack-001';
-} else {
-    $nomor_pick = tambahId(strval($query[0]['nomor_packing']), 'Pack');
-}
+$query = query('SELECT * FROM counter WHERE tabel = "packing"')[0];
+$nomor_pick = $query['header'] . "-" . (intval($query['digit']) + 1);
 ?>
 <?php include('../templates/header.php') ?>
 <?php if (isset($return)) : ?>

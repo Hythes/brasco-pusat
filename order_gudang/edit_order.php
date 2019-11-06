@@ -5,7 +5,7 @@ $title = "Order ke Gudang";
 if (isset($_POST['submit'])) {
     extract($_POST);
     $data_item = json_decode($data_item, true);
-    $sql = "UPDATE order_gudang SET nomor_order = '$no_order',tanggal = '$tanggal',kode_customer = '$kode_customer',nomor_so = '$nomor_so',keterangan = '$keterangan',total = '$total' WHERE nomor_order = '$no_order'; ";
+    $sql = "UPDATE order_gudang SET tanggal = '$tanggal',kode_customer = '$kode_customer',nomor_so = '$nomor_so',keterangan = '$keterangan',total = '$total' WHERE nomor_order = '$no_order'; ";
     $sql .= "DELETE FROM order_gudang_item WHERE nomor_order = '$no_order';";
     foreach (array_filter($data_item) as $data) {
         extract($data);
@@ -27,8 +27,7 @@ if (isset($_GET['nomor'])) {
     </script>
 <?php endif ?>
 <script>
-    var active = 'header_sales';
-    var active_2 = 'header_sales_gudang';
+    var active = 'header_order';
 </script>
 
 <?php include('../templates/header.php') ?>

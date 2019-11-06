@@ -1,12 +1,9 @@
 <?php
 require '../env.php';
 $title = "Order Ke Gudang";
-$query = query('SELECT * FROM order_gudang ORDER BY nomor_order DESC LIMIT 1');
-if (!isset($query[0]['nomor_order'])) {
-	$id = 'Order-001';
-} else {
-	$id = tambahId(strval($query[0]['nomor_order']), 'Order');
-}
+$query = query("SELECT * FROM counter WHERE tabel = 'order_gudang'")[0];
+$id = $query['header'] . "-" . (intval($query['digit']) + 1);
+
 if (isset($_POST['submit'])) {
 	extract($_POST);
 	$data_item = json_decode($data_item, true);
@@ -15,6 +12,8 @@ if (isset($_POST['submit'])) {
 		extract($data);
 		$sql .= "INSERT INTO order_gudang_item(nomor_order,barcode,quantity) VALUES('$no_order','$barcode','$quantity');";
 	}
+	$data = explode($no_order, "-")[1];
+	$sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'order_gudang';";
 	$query = mysqli_multi_query($conn, $sql);
 	lanjutkan($query, "Ditambahkan");
 }

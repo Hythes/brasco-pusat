@@ -1,15 +1,11 @@
 <?php
 require '../env.php';
 $title = "Input Picking Gudang";
-$query = query('SELECT * FROM picking ORDER BY nomor_picking DESC LIMIT 1');
+$query = query('SELECT * FROM counter WHERE tabel = "picking"')[0];
 $nomor_order = '';
 $kode_customer = '';
 $item = array();
-if (!isset($query[0]['nomor_picking'])) {
-    $nomor_pick = 'Pick-001';
-} else {
-    $nomor_pick = tambahId(strval($query[0]['nomor_picking']), 'Pick');
-}
+$nomor_pick = $query['header'] . "-" . (intval($query['digit']) + 1);
 if (isset($_GET['nomor'])) {
     $nomor_order = $_GET['nomor'];
     $data = query("SELECT * FROM order_gudang WHERE nomor_order = '$nomor_order'")[0];
@@ -43,6 +39,8 @@ if (isset($_POST['submit'])) {
             }
         }
     }
+    $data = explode($nomor_picking, "-")[1];
+    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'picking';";
     $sql .= "INSERT INTO picking(nomor_picking,nomor_order,kode_customer,status,total,tanggal) VALUES('$nomor_picking','$nomor_order','$kode','$status','$totalQuantity','$tanggal');";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dibuat!");

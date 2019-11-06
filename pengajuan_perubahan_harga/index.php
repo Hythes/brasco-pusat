@@ -2,12 +2,10 @@
 include '../env.php';
 
 $title = 'Pengajuan Perubahan Harga';
-$query = query('SELECT * FROM pph_item ORDER BY nomor_pengajuan DESC LIMIT 1');
-if (!isset($query[0]['nomor_pengajuan'])) {
-  $id = 'PH-001';
-} else {
-  $id = tambahId(strval($query[0]['nomor_pengajuan']), 'PH');
-}
+$query = query("SELECT * FROM counter WHERE tabel = 'pengajuan_perubahan_harga'")[0];
+$c = intval($query['digit']) + 1;
+$id = $query['header'] . "-" . $c;
+
 
 ?>
 <script>
@@ -107,22 +105,22 @@ if (!isset($query[0]['nomor_pengajuan'])) {
             <!-- /.box-header -->
             <div class="box-body">
               <div class="table-responsive">
-              <table class="table table-bordered table-striped">
-                <thead align="center">
-                  <tr>
-                    <th>No</th>
-                    <th>Barcode</th>
-                    <th>Nama Item</th>
-                    <th>Harga Jual Lama</th>
-                    <th>Harga Jual Baru</th>
-                    <th>Quantity</th>
-                    <th>Keterangan</th>
-                    <th>Aksi</th>
-                  </tr>
-                </thead>
-                <tbody align="center" id="table">
-                </tbody>
-              </table>
+                <table class="table table-bordered table-striped">
+                  <thead align="center">
+                    <tr>
+                      <th>No</th>
+                      <th>Barcode</th>
+                      <th>Nama Item</th>
+                      <th>Harga Jual Lama</th>
+                      <th>Harga Jual Baru</th>
+                      <th>Quantity</th>
+                      <th>Keterangan</th>
+                      <th>Aksi</th>
+                    </tr>
+                  </thead>
+                  <tbody align="center" id="table">
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>

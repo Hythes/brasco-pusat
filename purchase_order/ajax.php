@@ -15,12 +15,8 @@ if (isset($_POST['request'])) {
         echo json_encode($sql);
     }
     if ($req == 'kode_po') {
-        $query = query('SELECT * FROM purchase_order ORDER BY kode DESC LIMIT 1');
-        if (!isset($query[0]['kode'])) {
-            $id = 'PO-001';
-        } else {
-            $id = tambahId(strval($query[0]['kode']), 'PO');
-        }
+        $query = query("SELECT * FROM counter WHERE tabel = 'purchase_order'")[0];
+        $id = $query['header'] . "-" . (intval($query['digit']) + 1);
         echo json_encode($id);
     }
     if ($req == 'data_supplier') {

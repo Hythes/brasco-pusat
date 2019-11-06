@@ -35,6 +35,8 @@ if (isset($_POST['simpan'])) {
 
         $sql .= "INSERT INTO pph_item(nomor_pengajuan,tanggal,tipe_customer,barcode_inventory,harga_jual_lama,harga_jual_baru,quantity,keterangan) VALUES('$nomor_pengajuan',CAST('$tanggal' AS DATE),'$tipe_customer','$barcode','$harga_lama','$harga_baru','$qty','$ket');";
     }
+    $data = explode($nomor_pengajuan, "-")[1];
+    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'pengajuan_perubahan_harga';";
     $query2 = mysqli_multi_query($conn, $sql);
     if ($query2) {
         echo json_encode(['msg' => 'berhasil']);

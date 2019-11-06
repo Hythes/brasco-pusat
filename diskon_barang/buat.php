@@ -2,7 +2,10 @@
 require '../env.php';
 if (isset($_POST['kirim'])) {
     $dataSemua = json_decode($_POST['dataSemua'], true);
-    $id = checkId("diskon_barang_reject", "kode_reject", "RJ");
+    $p = query("SELECT * FROM counter WHERE tabel = 'diskon_barang_reject'")[0];
+    $id = $p['header'] . "-" . (intval($p['digit']) + 1);
+    $data = explode($id, "-")[1];
+    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'diskon_barang_reject';";
     $sql = '';
     foreach ($dataSemua as $data) {
         $word = "INSERT INTO diskon_barang_reject(kode_reject,kode_customer,barcode,barcode_reject,quantity,diskon) VALUES('%s','%s','%s','%s','%s','%s');";

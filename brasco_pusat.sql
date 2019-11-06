@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 05, 2019 at 05:09 AM
+-- Generation Time: Nov 06, 2019 at 03:31 AM
 -- Server version: 10.3.16-MariaDB
 -- PHP Version: 7.1.30
 
@@ -22,6 +22,159 @@ START TRANSACTION;
 --
 CREATE DATABASE IF NOT EXISTS `brasco_pusat` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `brasco_pusat`;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank`
+--
+
+DROP TABLE IF EXISTS `bank`;
+CREATE TABLE `bank` (
+  `kode_bank` varchar(255) NOT NULL,
+  `nama_bank` varchar(255) NOT NULL,
+  `saldo_jalan` varchar(255) NOT NULL,
+  `saldo_awal` varchar(255) NOT NULL,
+  `nomor_akun` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_input_pembayaran`
+--
+
+DROP TABLE IF EXISTS `bank_input_pembayaran`;
+CREATE TABLE `bank_input_pembayaran` (
+  `nomor_kas_keluar` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `id_bank` varchar(255) NOT NULL,
+  `no_giro` varchar(255) NOT NULL,
+  `tanggal_giro` date NOT NULL,
+  `jenis_biaya` varchar(255) NOT NULL,
+  `jumlah` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_input_penerimaan`
+--
+
+DROP TABLE IF EXISTS `bank_input_penerimaan`;
+CREATE TABLE `bank_input_penerimaan` (
+  `nomor_kas_masuk` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `id_bank` varchar(255) NOT NULL,
+  `no_giro` varchar(255) NOT NULL,
+  `tanggal_giro` date NOT NULL,
+  `jenis_pendapatan` varchar(255) NOT NULL,
+  `jumlah` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_pelunasan_customer`
+--
+
+DROP TABLE IF EXISTS `bank_pelunasan_customer`;
+CREATE TABLE `bank_pelunasan_customer` (
+  `nomor_transaksi` varchar(255) NOT NULL,
+  `kode_customer` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `id_bank` varchar(255) NOT NULL,
+  `nomor_giro` varchar(255) NOT NULL,
+  `jumlah_bayar` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_pelunasan_supplier`
+--
+
+DROP TABLE IF EXISTS `bank_pelunasan_supplier`;
+CREATE TABLE `bank_pelunasan_supplier` (
+  `nomor_transaksi` varchar(255) NOT NULL,
+  `kode_supplier` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `id_bank` varchar(255) NOT NULL,
+  `nomor_giro` varchar(255) NOT NULL,
+  `jumlah_bayar` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_transfer_uang`
+--
+
+DROP TABLE IF EXISTS `bank_transfer_uang`;
+CREATE TABLE `bank_transfer_uang` (
+  `kode` varchar(255) NOT NULL,
+  `tanggal` date NOT NULL,
+  `id_bank_transfer` varchar(255) NOT NULL,
+  `jumlah_transfer` varchar(255) NOT NULL,
+  `no_transfer` varchar(255) NOT NULL,
+  `id_bank_terima` varchar(255) NOT NULL,
+  `no_terima` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_uang_muka_customer`
+--
+
+DROP TABLE IF EXISTS `bank_uang_muka_customer`;
+CREATE TABLE `bank_uang_muka_customer` (
+  `nomor_transaksi` varchar(255) NOT NULL,
+  `kode_customer` varchar(255) NOT NULL,
+  `kode_so` varchar(255) NOT NULL,
+  `tanggal` varchar(255) NOT NULL,
+  `nomor_giro` varchar(255) NOT NULL,
+  `jumlah_giro` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `bank_uang_muka_supplier`
+--
+
+DROP TABLE IF EXISTS `bank_uang_muka_supplier`;
+CREATE TABLE `bank_uang_muka_supplier` (
+  `nomor_transaksi` varchar(255) NOT NULL,
+  `kode_supplier` varchar(255) NOT NULL,
+  `kode_po` varchar(255) NOT NULL,
+  `tanggal` varchar(255) NOT NULL,
+  `nomor_giro` varchar(255) NOT NULL,
+  `jumlah_giro` varchar(255) NOT NULL,
+  `keterangan` varchar(255) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -46,13 +199,18 @@ CREATE TABLE `counter` (
 INSERT INTO `counter` (`tabel`, `nama`, `header`, `digit`, `created_at`, `updated_at`) VALUES
 ('customer', 'Kode Customer', 'CST', '00000000', '2019-11-05 09:36:56', NULL),
 ('diskon_barang_reject', 'Diskon Barang Reject', 'RJ', '00000000', '2019-11-05 09:36:56', NULL),
-('inventory', 'Kode Inventory', 'INV', '00000000', '2019-11-05 09:36:56', NULL),
+('faktur', 'Kode Faktur', 'IF', '00000000', '2019-11-05 09:36:56', NULL),
 ('kwitansi_invoice', 'Kwitansi Invoice', 'KV', '00000000', '2019-11-05 09:36:56', NULL),
+('nomor_terima', 'Nomor Terima', 'NT', '00000000', '2019-11-05 14:42:04', NULL),
+('nomor_transfer', 'Nomor Transfer', 'NF', '00000000', '2019-11-05 14:42:04', NULL),
+('no_kas_keluar', 'Nomor Kas Keluar', 'NKK', '00000000', '2019-11-05 14:42:04', NULL),
+('no_kas_masuk', 'Nomor Kas Masuk', 'NKM', '00000000', '2019-11-05 14:42:04', NULL),
+('no_transaksi', 'Nomor Transaksi', 'NTR', '00000000', '2019-11-05 14:42:04', NULL),
 ('order_gudang', 'Kode Order Gudang', 'Order', '00000000', '2019-11-05 09:36:56', '2019-11-05 10:09:49'),
 ('packing', 'Kode Packing Gudang', 'Pack', '00000000', '2019-11-05 09:36:56', NULL),
-('pengajuan_perubahan_harga', 'Pengajuan Perubahan Harga', 'PH', '00000000', '2019-11-05 09:36:56', NULL),
+('pengajuan_perubahan_harga', 'Pengajuan Perubahan Harga', 'PH', '19110001', '2019-11-05 09:36:56', '2019-11-05 22:33:11'),
 ('picking', 'Kode Packing Gudang', 'Pick', '00000000', '2019-11-05 09:36:56', NULL),
-('purchase_order', 'Kode Purchase Order', 'PO', '00000000', '2019-11-05 09:36:56', NULL),
+('purchase_order', 'Kode Purchase Order', 'PO', '10000002', '2019-11-05 09:36:56', '2019-11-06 07:26:40'),
 ('purchasing', 'Kode Purchasing', 'PU', '00000000', '2019-11-05 09:36:56', NULL),
 ('sales_invoice', 'Kode Sales Invoice', 'SI', '00000000', '2019-11-05 09:36:56', NULL),
 ('sales_order', 'Kode Sales Order', 'SO', '00000000', '2019-11-05 09:36:56', NULL),
@@ -1015,6 +1173,54 @@ INSERT INTO `tr_jurnal` (`nomor`, `noref`, `novoucher`, `nourut`, `kodeakun`, `d
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `bank`
+--
+ALTER TABLE `bank`
+  ADD PRIMARY KEY (`kode_bank`);
+
+--
+-- Indexes for table `bank_input_pembayaran`
+--
+ALTER TABLE `bank_input_pembayaran`
+  ADD PRIMARY KEY (`nomor_kas_keluar`);
+
+--
+-- Indexes for table `bank_input_penerimaan`
+--
+ALTER TABLE `bank_input_penerimaan`
+  ADD PRIMARY KEY (`nomor_kas_masuk`);
+
+--
+-- Indexes for table `bank_pelunasan_customer`
+--
+ALTER TABLE `bank_pelunasan_customer`
+  ADD PRIMARY KEY (`nomor_transaksi`);
+
+--
+-- Indexes for table `bank_pelunasan_supplier`
+--
+ALTER TABLE `bank_pelunasan_supplier`
+  ADD PRIMARY KEY (`nomor_transaksi`);
+
+--
+-- Indexes for table `bank_transfer_uang`
+--
+ALTER TABLE `bank_transfer_uang`
+  ADD PRIMARY KEY (`kode`);
+
+--
+-- Indexes for table `bank_uang_muka_customer`
+--
+ALTER TABLE `bank_uang_muka_customer`
+  ADD PRIMARY KEY (`nomor_transaksi`);
+
+--
+-- Indexes for table `bank_uang_muka_supplier`
+--
+ALTER TABLE `bank_uang_muka_supplier`
+  ADD PRIMARY KEY (`nomor_transaksi`);
 
 --
 -- Indexes for table `counter`
