@@ -1,8 +1,10 @@
 <?php
 $title = 'List Supplier';
-$tampilkan = false;
+$tampilkan = true;
 $i = 1;
 include '../../env.php';
+$result = query("SELECT * FROM supplier");
+
 if (isset($_POST['show'])) {
     extract($_POST);
     if ($kode2 == '') {
@@ -78,34 +80,34 @@ if (isset($_POST['show'])) {
                                             <label class="col-xs-2 control-label"><i class="fa fa-search fa-2x"></i></label>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="box-body">
-                                <div class="form-group">
-                                    <label class="col-sm-2 control-label">Urut Berdasarkan</label>
                                     <div class="col-sm-2">
-                                        <select class="form-control" name="sort_by" >
+                                        <label class=" control-label">Urut Berdasarkan</label>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <select class="form-control" name="sort_by">
                                             <option value="kode">Kode</option>
                                             <option value="nama">Nama</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                            <div class="box-body">
-                                <div class="">
-                                    <button type="submit" name="show" class="btn btn-primary">Tampilkan</button>
-                                </div>
+                        </div>
+                        <div class="box-body">
+                            <div class="">
+                                <button type="submit" name="show" class="btn btn-primary">Tampilkan</button>
                             </div>
                         </div>
-                    </form>
                 </div>
-                <div class="data-table">
+                </form>
+            </div>
+            <div class="data-table">
                 <?php if ($tampilkan) : ?>
                     <div class="box-body">
                         <div class="table-responsive">
                             <table id="data-table" class="table table-bordered table-striped ">
                                 <thead>
                                     <tr>
+                                        <th>Aksi</th>
                                         <th>No</th>
                                         <th>Kode Supplier</th>
                                         <th>Nama Supplier</th>
@@ -126,6 +128,7 @@ if (isset($_POST['show'])) {
                                 <tbody>
                                     <?php foreach ($result as $data) : extract($data); ?>
                                         <tr>
+                                            <td class="text-center"><a href="master_supplier/saldo.php?kode=<?= $kode ?>" target="_blank" title="Lihat Supplier dengan Saldo"><i class="fa fa-info-circle fa-lg"></i></a></td>
                                             <td><?= $i++ ?></td>
                                             <td><?= $kode ?></td>
                                             <td><?= $nama ?></td>
@@ -147,14 +150,14 @@ if (isset($_POST['show'])) {
                         </div>
                     </div>
                 <?php endif; ?>
-                </div>
             </div>
-            <!-- /.box-footer-->
         </div>
-        <!-- /.box -->
+        <!-- /.box-footer-->
+</div>
+<!-- /.box -->
 
-    </section>
-    <!-- /.content -->
+</section>
+<!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
 
@@ -163,52 +166,51 @@ if (isset($_POST['show'])) {
 <!-- button print csv excel pdf copy -->
 <script type="text/javascript">
     $(function() {
-    $('#example1').DataTable()
-    $('#data-table').DataTable({
-      'paging': true,
-      'lengthChange': false,
-      'searching': true,
-      'ordering': true,
-      'info': true,
-      'autoWidth': false,
-      dom: 'Bfrtip',
-      buttons: [
-            {
-                extend: 'pdfHtml5',
-                orientation: 'landscape',
-                pageSize: 'LEGAL'
-            },
-            {
-                extend: 'print',
-                customize: function ( win ) {
-                    $(win.document.body)
-                        .css( 'font-size', '10pt' )
- 
-                    $(win.document.body).find( 'table' )
-                        .addClass( 'compact' )
-                        .css( 'font-size', 'inherit' );
-                }
-            },
-            {
-                extend: 'excel',
-                text: 'Excel',
-                exporOptions : {
-                    modifier: {
-                        page: 'current'
+        $('#example1').DataTable()
+        $('#data-table').DataTable({
+            'paging': true,
+            'lengthChange': false,
+            'searching': true,
+            'ordering': true,
+            'info': true,
+            'autoWidth': false,
+            dom: 'Bfrtip',
+            buttons: [{
+                    extend: 'pdfHtml5',
+                    orientation: 'landscape',
+                    pageSize: 'LEGAL'
+                },
+                {
+                    extend: 'print',
+                    customize: function(win) {
+                        $(win.document.body)
+                            .css('font-size', '10pt')
+
+                        $(win.document.body).find('table')
+                            .addClass('compact')
+                            .css('font-size', 'inherit');
                     }
+                },
+                {
+                    extend: 'excel',
+                    text: 'Excel',
+                    exporOptions: {
+                        modifier: {
+                            page: 'current'
+                        }
+                    }
+                },
+                {
+                    extend: 'csv',
+                    text: 'CSV'
+                },
+                {
+                    extend: 'copy',
+                    text: 'Copy'
                 }
-            },
-            {
-                extend: 'csv',
-                text: 'CSV'
-            },
-            {
-                extend: 'copy',
-                text: 'Copy'
-            }
-        ]
+            ]
+        })
     })
-  })
 </script>
 
 <?php include('../../templates/footer.php') ?>

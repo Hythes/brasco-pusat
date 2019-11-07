@@ -8,16 +8,16 @@ if (isset($_POST['delete'])) {
 if (isset($_POST['edit'])) {
   extract($_POST);
   $fax = intval($fax);
-  $sql = "UPDATE supplier SET kode = '$kode',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kode_pos',telepon = '$telepon',fax = '$fax',handphone = '$handphone',contact_name = '$contact_name',email = '$email' ,kredit = '$kredit' ,top = '$top' ,pkp = '$pkp' WHERE kode = '$kode_old'";
+  $sql = "UPDATE supplier SET kode = '$kode',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kode_pos',telepon = '$telepon',fax = '$fax',handphone = '$handphone',contact_name = '$contact_name',email = '$email' ,kredit = '$kredit' ,top = '$top' ,pkp = '$pkp', saldo_jalan = '$saldo_jalan', saldo_awal = '$saldo_awal' WHERE kode = '$kode_old'";
   $sql = mysqli_query($conn, $sql);
   lanjutkan($sql, "Diedit");
 } else if (isset($_POST['simpan'])) {
   extract($_POST);
-  $sql = "INSERT INTO supplier(kode,nama,alamat,kota,kodepos,telepon,fax,handphone,contact_name,email,kredit,top,pkp) VALUES(
-    '$kode','$nama','$alamat','$kota','$kode_pos','$telepon','$fax','$handphone','$contact_name','$email','$kredit','$top','$pkp'
+  $sql = "INSERT INTO supplier(kode,nama,alamat,kota,kodepos,telepon,fax,handphone,contact_name,email,kredit,top,pkp,saldo_awal,saldo_jalan) VALUES(
+    '$kode','$nama','$alamat','$kota','$kode_pos','$telepon','$fax','$handphone','$contact_name','$email','$kredit','$top','$pkp','$saldo_awal','$saldo_jalan'
   )";
   $sql = mysqli_query($conn, $sql);
-  lanjutkan($sql, "Disimpan");
+  lanjutkan($sql, "Diedit");
 }
 ?>
 
@@ -119,6 +119,18 @@ include('../templates/header.php') ?>
                         </select>
                       </div>
                     </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Saldo Awal</label>
+                      <div class="col-sm-10">
+                        <input required type="number" class="form-control" name="saldo_awal" placeholder="Saldo Awal">
+                      </div>
+                    </div>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label">Saldo Jalan</label>
+                      <div class="col-sm-10">
+                        <input required type="number" class="form-control" name="saldo_jalan" placeholder="Saldo Jalan">
+                      </div>
+                    </div>
                     <div class="box-footer">
                       <button type="submit" name="simpan" class="btn btn-primary btn-block ">Save</button>
                     </div>
@@ -215,7 +227,7 @@ include('../templates/header.php') ?>
                               <div class="kanan col-xs-5">
                                 <div class="form-group pad">
                                   <label class="col-sm-2 control-label">Kredit</label>
-                                  <div class="col-sm-10">       
+                                  <div class="col-sm-10">
                                     <input required type="text" class="form-control" name="kredit" value="<?= $kredit ?>" placeholder="Kredit">
                                   </div>
                                 </div>
@@ -232,6 +244,18 @@ include('../templates/header.php') ?>
                                       <option <?php if ($pkp == "Y") echo 'selected' ?>>Y</option>
                                       <option <?php if ($pkp == "T") echo 'selected' ?>>T</option>
                                     </select>
+                                  </div>
+                                </div>
+                                <div class="form-group pad">
+                                  <label class="col-sm-2 control-label" title="Saldo Awal"> Awal</label>
+                                  <div class="col-sm-10">
+                                    <input required type="number" title="Saldo Awal" class="form-control" value="<?= $saldo_awal ?>" name="saldo_awal" placeholder="Saldo Awal">
+                                  </div>
+                                </div>
+                                <div class="form-group pad">
+                                  <label class="col-sm-2 control-label" title="Saldo Jalan"> Jalan</label>
+                                  <div class="col-sm-10">
+                                    <input required type="number" title="Saldo Jalan" class="form-control" value="<?= $saldo_jalan ?>" name="saldo_jalan" placeholder="Saldo Jalan">
                                   </div>
                                 </div>
                                 <div class="box-footer">
@@ -252,8 +276,8 @@ include('../templates/header.php') ?>
                   </div>
                 </div>
             </div>
-          </table>
-        </div>
+            </table>
+          </div>
         </div>
       </div>
       <!-- /.box-body -->

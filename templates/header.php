@@ -429,18 +429,11 @@
               <li id="header_supplier_list">
                 <a href="master_supplier/list_supplier"><i class="fa fa-circle-o"></i> <span>List Supplier</span></a>
               </li>
-              <!--
               <li id="header_supplier_hutang">
-                <a href="listHutang.php"><i class="fa fa-circle-o"></i> <span>List Hutang</span></a>
-              </li>
-              <li id="header_supplier_saldo">
-                <a href="masterSupplierDenganSaldo.php"><i class="fa fa-circle-o"></i> <span>Supplier Dengan Saldo</span></a>
+                <a href="master_supplier/list_hutang.php"><i class="fa fa-circle-o"></i> <span>List Hutang</span></a>
               </li>
               <li id="header_supplier_tempo">
-                <a href="jatuhTempoPembayaran.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
-              </li> -->
-              <li id="header_supplier_tambah_saldo">
-                <a href="master_supplier/tambah_saldo.php"><i class="fa fa-circle-o"></i> <span>Tambah Saldo Supplier</span></a>
+                <a href="master_supplier/aging.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
               </li>
             </ul>
           </li>
