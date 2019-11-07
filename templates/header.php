@@ -371,6 +371,9 @@
           <li id="header_jurnal">
             <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
           </li>
+          <li id="header_retur">
+            <a href="retur_pembelian_barang"><i class="fa  fa-cart-arrow-down"></i> <span>Retur Pembelian Barang</span></a>
+          </li>
           <li class="treeview" id="header_inventory">
             <a href="#"><i class="fa fa-cubes"></i>
               <span>Inventori</span>
@@ -412,6 +415,7 @@
               <li id="header_perubahan_status"><a href="pengajuan_perubahan_harga/status.php"><i class="fa fa-circle-o"></i>Status Perubahan Harga</a></li>
             </ul>
           </li>
+
           <li class="treeview" id="header_supplier">
             <a href="#">
               <i class="fa fa-archive"></i>
@@ -503,6 +507,7 @@
               </li>
             </ul>
           </li>
+
           <li class="treeview" id="header_diskon">
             <a href="#">
               <i class="fa fa-percent"></i>
@@ -583,9 +588,7 @@
           <li id="header_kwitansi">
             <a href="cetakkwitansi.php"><i class="fa fa-circle-o"></i> <span>Cetak kwitansi</span></a>
           </li> -->
-          <li id="header_retur">
-            <a href="retpembrg.php"><i class="fa fa-circle-o"></i> <span>Retur Pembelian Barang</span></a>
-          </li>
+
 
         </ul>
       </section>

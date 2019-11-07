@@ -267,6 +267,7 @@
       'info': true,
       'autoWidth': false
     })
+    $('#example3').DataTable()
   })
 
   $(document).ready(function() {

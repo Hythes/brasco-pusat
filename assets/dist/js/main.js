@@ -109,7 +109,6 @@ $("#cetak_barcode_input").on("click", function() {
   );
   i++;
 });
-
 function fix_iteration(nama_table) {
   var num = 1;
   $(nama_table)

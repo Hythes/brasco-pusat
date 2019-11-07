@@ -1,6 +1,21 @@
 <?php require '../env.php';
+if (isset($_POST['id_approve'])) {
+    $data = query("SELECT * FROM diskon_barang_reject WHERE id = '$_POST[id_approve]'")[0];
+    $inventory = query("SELECT * FROM inventory WHERE barcode = '$data[barcode]'")[0];
+    $customer = query("SELECT * FROM customer WHERE kode = '$data[kode_customer]'")[0];
+    $tipe_customer = $customer['tipe_customer'];
+    $inventory['harga_jual' . $tipe_customer] = intval($inventory['harga_jual' . $tipe_customer]) * (intval($data['diskon']) / 100);
 
-
+    $sql = "INSERT INTO inventory(barcode,nama_barang,satuan,id_tipe_barang,harga_jual1,harga_jual2,harga_jual3,quantity) VALUES('$data[barcode_reject]','$inventory[nama_barang]','$inventory[satuan]','$inventory[id_tipe_barang]','$inventory[harga_jual1]','$inventory[harga_jual2]','$inventory[harga_jual3]',$data[quantity]);";
+    $sql .= PHP_EOL;
+    $quantity_kurang = intval($inventory['quantity']) - intval($data['quantity']);
+    $sql .= "UPDATE diskon_barang_reject SET status = 1 WHERE id = '$_POST[id_approve]';";
+    $sql .= PHP_EOL;
+    $sql .= "UPDATE inventory SET quantity = '$quantity_kurang' WHERE barcode = '$inventory[barcode]';";
+    $query = mysqli_multi_query($conn, $sql);
+    lanjutkan($query, "Di Approve!");
+    header('Refresh:0');
+}
 ?>
 <?php $title = "Approval Diskon Barang" ?>
 <?php include('../templates/header.php') ?>
@@ -9,91 +24,45 @@
     <section class="content">
         <div class="box box-info">
             <div class="box-body">
-                <h3 class="text-center">APPROVAL DISKON REJECT</h3>
-                <div class="row" style="margin-top: 20px;">
-                    <form action="" method="POST" class="form-horizontal">
-                        <div class="box-body">
-                            <div class="col-sm-4">
-                                <div class="form-group">
-                                    <label class="col-sm-4 control-label">Tanggal PO</label>
-                                    <div class="col-sm-8">
-                                        <div class="input-group">
-                                            <input type="date" name="tanggal" id="formtanggal" class="form-control">
-                                            <div class="input-group-addon">
-                                                <i class="fa fa-calendar"></i>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <div class="input-group">
-                                        <input type="date" name="tanggal" id="formtanggal" class="form-control">
-                                        <div class="input-group-addon">
-                                            <i class="fa fa-calendar"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-3">
-                                <div class="form-group">
-                                    <label for="" class="col-sm-3 control-label">Status</label>
-                                    <div class="col-sm-9">
-                                        <select name="" class="form-control">
-                                            <option value="">Semua</option>
-                                            <option value="">pilih 1</option>
-                                            <option value="">pilih 2</option>
-                                            <option value="">pilih 3</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-sm-2">
-                                <div class="form-group">
-                                    <button type="submit" class="btn btn-info">Search</button>
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-
-        <div class="box box-info">
-            <div class="box-body">
-                <form action="" method="POST">
-                    <div class="table-responsive">
-                        <table class="table table-bordered table-striped">
-                            <thead>
-                                <th>No</th>
-                                <th>Kode Transaksi</th>
-                                <th>Tanggal Purchase Order</th>
-                                <th>Tanggal Approve</th>
-                                <th>Status</th>
-                                <th>Aksi</th>
-                                <th>Approval</th>
-                                <th>Keterangan</th>
-                            </thead>
-                            <tbody>
+                <h3 class="text-center" style="margin-bottom: 20px">APPROVAL DISKON REJECT</h3>
+                <div class="table-responsive">
+                    <table id="example1" class="table table-bordered table-striped">
+                        <thead>
+                            <th>No</th>
+                            <th>Kode Reject</th>
+                            <th>Kode Customer</th>
+                            <th>Barcode Reject</th>
+                            <th>Quantity</th>
+                            <th>Harga Diskon</th>
+                            <th>Aksi</th>
+                        </thead>
+                        <tbody>
+                            <?php $i = 1;
+                            foreach (query("SELECT * FROM diskon_barang_reject WHERE status = 0") as $data) :
+                                $inventory = query("SELECT * FROM inventory WHERE barcode = '$data[barcode]'")[0];
+                                $customer = query("SELECT * FROM customer WHERE kode = '$data[kode_customer]'")[0];
+                                $tipe_customer = $customer['tipe_customer'];
+                                $harga_satuan = intval($inventory['harga_jual' . $tipe_customer]) * (intval($data['diskon']) / 100);
+                                ?>
                                 <tr>
-                                    <td>1</td>
-                                    <td>123</td>
-                                    <td>dd/mm/yyyy</td>
-                                    <td>dd/mm/yyyy</td>
-                                    <td>status</td>
-                                    <td><a href="" class="btn btn-info">Detail</a></td>
-                                    <td><select name="" class="form-control" id="">
-                                            <option value="">Approve1</option>
-                                            <option value="">Approve2</option>
-                                            <option value="">Approve3</option>
-                                        </select></td>
-                                    <td><input type="text" class="form-control"></td>
+                                    <td><?= $i ?></td>
+                                    <td><?= $data['kode_reject'] ?></td>
+                                    <td><?= $data['kode_customer'] ?></td>
+                                    <td><?= $data['barcode_reject'] ?></td>
+                                    <td><?= $data['quantity'] ?></td>
+                                    <td><?= $harga_satuan ?></td>
+                                    <td>
+                                        <form action="" method="POST">
+                                            <input type="hidden" name="id_approve" value="<?= $data['id'] ?>">
+                                            <button class="btn btn-primary" type="submit">Approve</button>
+                                        </form>
+                                    </td>
                                 </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </form>
+                            <?php $i++;
+                            endforeach; ?>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </section>
