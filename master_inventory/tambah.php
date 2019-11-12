@@ -1,16 +1,18 @@
-<?php 
+<?php $role = "inventory" ?>
+
+<?php
 require 'functions.php';
 
 if (isset($_POST["submit"])) {
 
-	if (tambah($_POST) > 0 ) {
+	if (tambah($_POST) > 0) {
 		echo "
 		<script>
 			alert('Data Berhasil Ditambahkan!');
 			document.location.href = 'index.php';
 		</script>
 		";
-	}else{
+	} else {
 		echo "
 		<script>
 			alert('Data Gagal Ditambahkan!');
@@ -22,10 +24,12 @@ if (isset($_POST["submit"])) {
 ?>
 <!DOCTYPE html>
 <html>
+
 <head>
-	
+
 	<title>Halaman Tambah Data</title>
 </head>
+
 <body>
 	<h1>Tambah Data</h1>
 
@@ -34,7 +38,7 @@ if (isset($_POST["submit"])) {
 		<ul>
 			<li>
 				<label for="barcode">Barcode : </label>
-				<input type="text" name="barcode" id="isi_barcode"autocomplete="off">
+				<input type="text" name="barcode" id="isi_barcode" autocomplete="off">
 				<button type="button" id="barcode">Cek Barcode</button>
 			</li>
 			<li>
@@ -49,12 +53,12 @@ if (isset($_POST["submit"])) {
 				<label for="id_tipe_barang">Tipe Barang : </label>
 
 				<select name="id_tipe_barang" id="id_tipe_barang" class="form-control">
-				<?php
- 					$data = cariBarang();
-					foreach($data as $datas):
-				?>
-					<option value="<?=$datas['id']?>"><?=$datas['nama_barang']?></option>
-				<?php endforeach;?>
+					<?php
+					$data = cariBarang();
+					foreach ($data as $datas) :
+						?>
+						<option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
+					<?php endforeach; ?>
 				</select>
 			</li>
 			<li>
@@ -77,33 +81,31 @@ if (isset($_POST["submit"])) {
 
 
 	</form>
-	<script
-  src="https://code.jquery.com/jquery-3.4.1.min.js"
-  integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script>
-			$('#barcode').on('click',function(){
-				$.ajax({
-					url:'cekBarcode.php',
-					type:'POST',
-					data:{
-						"barcode":$('#isi_barcode').val()
-					},
-					complete: function(response,textStatus,jqXHR){
-							var respon = JSON.parse(response.responseText);
-							if(respon.result == 1){
-								alert("Barcode tidak bisa digunakan!");
-							}else{
-								alert("Barcode bisa digunakan!");
-							}
-							
-
-					},
-					error: function(jqXHR,textStatus,err){
-						console.log(textStatus+err+jqXHR);
+		$('#barcode').on('click', function() {
+			$.ajax({
+				url: 'cekBarcode.php',
+				type: 'POST',
+				data: {
+					"barcode": $('#isi_barcode').val()
+				},
+				complete: function(response, textStatus, jqXHR) {
+					var respon = JSON.parse(response.responseText);
+					if (respon.result == 1) {
+						alert("Barcode tidak bisa digunakan!");
+					} else {
+						alert("Barcode bisa digunakan!");
 					}
-				});
+
+
+				},
+				error: function(jqXHR, textStatus, err) {
+					console.log(textStatus + err + jqXHR);
+				}
 			});
+		});
 	</script>
 </body>
+
 </html>

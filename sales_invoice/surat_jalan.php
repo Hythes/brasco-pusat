@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <!DOCTYPE html>
 <html>
 

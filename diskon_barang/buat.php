@@ -1,3 +1,4 @@
+<?php $role = "inventory" ?>
 <?php
 require '../env.php';
 if (isset($_POST['kirim'])) {
@@ -28,7 +29,7 @@ $title = "Diskon Barang Reject";
 <?php if (isset($return)) : ?>
     <script>
         window.stop();
-        window.location.href = 'index.php';
+        window.location.href = 'buat.php';
     </script>
 <?php endif; ?>
 <script>

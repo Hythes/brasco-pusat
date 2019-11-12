@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <?php
 $title = "Edit Sales Order";
 require '../env.php';

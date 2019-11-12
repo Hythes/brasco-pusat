@@ -1,3 +1,5 @@
+<?php $role = "inventory" ?>
+
 <?php
 include '../env.php';
 $conn = mysqli_connect($host, $user, $password, $dbname);

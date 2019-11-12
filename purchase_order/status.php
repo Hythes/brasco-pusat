@@ -1,3 +1,5 @@
+<?php $role = "procurement" ?>
+
 <?php
 $title = "Approval Purchase Order Manager";
 require '../env.php';

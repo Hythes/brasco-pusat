@@ -1,3 +1,4 @@
+<?php $role = "utility" ?>
 <?php
 // Load file koneksi.php
 include "../env.php";

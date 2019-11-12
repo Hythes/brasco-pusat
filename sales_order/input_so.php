@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <?php
 $title = "Input Sales Order";
 if (isset($_POST['submit'])) {

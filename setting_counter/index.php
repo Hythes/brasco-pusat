@@ -1,3 +1,5 @@
+<?php $role = "utility" ?>
+
 <?php require_once("../env.php"); ?>
 <?php
 $title = "Setting Counter";

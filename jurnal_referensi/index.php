@@ -1,3 +1,5 @@
+<?php $role = "utility" ?>
+
 <?php
 require '../env.php';
 if (isset($_POST['submit'])) {

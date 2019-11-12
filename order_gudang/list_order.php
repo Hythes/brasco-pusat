@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <?php
 require '../env.php';
 $title = "List Order ke Gudang";

@@ -1,3 +1,5 @@
+<?php $role = "inventory" ?>
+
 <?php
 include '../env.php';
 

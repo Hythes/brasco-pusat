@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <script>
     var active = 'header_packing';
     var active_2 = 'header_packing_gudang';

@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <?php
 $title = "List Picking Gudang";
 require '../env.php';

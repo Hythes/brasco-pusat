@@ -1,3 +1,4 @@
+<?php $role = "procurement" ?>
 <?php
 include '../env.php';
 if (isset($_POST['delete'])) {
