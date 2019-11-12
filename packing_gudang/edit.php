@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <?php
 require '../env.php';
 if (isset($_GET['kode'])) {

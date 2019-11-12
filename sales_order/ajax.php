@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <?php
 include '../env.php';
 if (isset($_POST['request'])) {

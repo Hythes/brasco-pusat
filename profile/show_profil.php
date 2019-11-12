@@ -1,3 +1,5 @@
+<?php $role = "utility" ?>
+
 <?php
 $title = "Show Profile";
 include('../templates/header.php') ?>

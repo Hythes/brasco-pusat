@@ -1,9 +1,13 @@
+<?php $role = "procurement";
+$title = "List Hutang" ?>
+
 <script>
     var active = 'header_supplier';
     var active_2 = 'header_supplier_hutang';
 </script>
 
-<?php include('../templates/header.php') ?>
+<?php include('../templates/header.php');
+include '../env.php'; ?>
 <!-- =============================================== -->
 
 <!-- Content Wrapper. Contains page content -->
@@ -36,34 +40,40 @@
             <div class="box-body">
                 <div class="">
                     <form style="margin-top: 10px;">
-                        <!-- <div class="form-group">
-                            <input type="text" name="" class="" placeholder="KODE SUPLIER..." style="width: 20%;">
-                            <i class="fa fa-fw fa-search"></i>
-                            <label style="padding-left: 10px; padding-right: 10px;">s/d</label>
-                            <input type="text" name="" placeholder="KODE SUPLIER..." style="width: 20%;">
-                            <i class="fa fa-fw fa-search"></i>
-                            <button class="btn btn-default" style="margin-left: 20px;">Search</button>
-                        </div> -->
+
                         <div class="box-body">
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="KODE SUPPLIER...">
+                                    <select id="kode_supplier1" class="form-control">
+                                        <option selected disabled>Kode Supplier</option>
+                                        <?php
+                                        $query = query("SELECT kode,nama FROM supplier");
+                                        foreach ($query as $data) {
+                                            ?>
+                                            <option value="<?= $data['kode'] ?>"><?= $data['kode'] ?> - <?= $data['nama'] ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-sm-1">
-                                <div class="form-group"><i class="fa fa-search fa-2x"></i></div>
+                                <div class="form-group"><i>s.d.</i></div>
                             </div>
                             <div class="col-sm-3">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" placeholder="KODE SUPPLIER...">
+                                    <select id="kode_supplier2" class="form-control">
+                                        <option selected disabled>Kode Supplier</option>
+                                        <?php
+                                        $query = query("SELECT kode,nama FROM supplier");
+                                        foreach ($query as $data) {
+                                            ?>
+                                            <option value="<?= $data['kode'] ?>"><?= $data['kode'] ?> - <?= $data['nama'] ?></option>
+                                        <?php } ?>
+                                    </select>
                                 </div>
-                            </div>
-                            <div class="col-sm-1">
-                                <div class="form-group"><i class="fa fa-search fa-2x"></i></div>
                             </div>
                             <div class="col-sm-2">
                                 <div class="form-group">
-                                    <button class="btn btn-info">Search</button>
+                                    <button type="button" id="search" class="btn btn-info">Search</button>
                                 </div>
                             </div>
                         </div>
@@ -85,29 +95,8 @@
                             <th>JML beli 3 Tahun Lalu</th>
                         </tr>
                     </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Sup-1234</td>
-                            <td>Supplier01</td>
-                            <td>Rp. 12.000.000</td>
-                            <td>Rp. 10.000.000</td>
-                            <td>Rp. 30.000.000</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>1</td>
-                            <td>Sup-1234</td>
-                            <td>Supplier01</td>
-                            <td>Rp. 12.000.000</td>
-                            <td>Rp. 10.000.000</td>
-                            <td>Rp. 30.000.000</td>
-                            <td>-</td>
-                            <td>-</td>
-                            <td>-</td>
-                        </tr>
+                    <tbody id="tables">
+
                     </tbody>
                 </table>
                 <!-- <div class="box-body pad">
@@ -135,5 +124,36 @@
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-
+<?= jquery() ?>
+<script type="text/javascript">
+    $('#search').click(function() {
+        $('#tables').html('')
+        $.post('master_supplier/backend.php', {
+            'params': 2,
+            'kode_sup1': $('#kode_supplier1').val(),
+            'kode_sup2': $('#kode_supplier2').val()
+        }, function(response) {
+            // console.log(response)
+            res = JSON.parse(response)
+            console.log(res)
+            return false
+            no = 1
+            res.forEach(element => {
+                $('#tables').append(`
+            <tr>
+            <td>${no++}</td>
+            <td>${element.kode_supplier}</td>
+            <td>${element.nama_supplier}</td>
+            <td>${element.saldo_awal}</td>
+            <td>${element.saldo_jalan}</td>
+            <td>${element.harga_satu}</td>
+            <td>${element.harga_dua}</td>
+            <td>${element.harga_tiga}</td>
+            <td>${element.harga_empat}</td>
+            </tr>
+            `)
+            })
+        })
+    })
+</script>
 <?php include('../templates/footer.php') ?>

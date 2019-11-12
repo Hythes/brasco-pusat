@@ -1,3 +1,5 @@
+<?php $role = "inventory" ?>
+
 <?php
 $title = 'Approval Pengajuan Harga';
 include '../env.php';

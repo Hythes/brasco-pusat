@@ -17,6 +17,7 @@ if (isset($_POST['id_approve'])) {
     header('Refresh:0');
 }
 ?>
+<?php $role = "inventory" ?>
 <?php $title = "Approval Diskon Barang" ?>
 <?php include('../templates/header.php') ?>
 

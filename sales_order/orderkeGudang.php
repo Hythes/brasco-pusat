@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <?php include('../templates/header.php') ?>
 
 <div class="content-wrapper">
@@ -21,7 +23,7 @@
 										</div>
 									</div>
 								</div>
-							</div>	
+							</div>
 							<div class="form-group">
 								<label class="col-sm-2 control-label">No Order</label>
 								<div class="col-sm-8">
@@ -168,11 +170,11 @@
 						<div class="form-group pull-right">
 							<button type="" class="btn btn-default">Close</button>
 							<button class="btn btn-danger">Reset</button>
-							<button type="submit" name="" class="btn btn-info">Simpan</button>	
-						</div>	
-					</div>	
+							<button type="submit" name="" class="btn btn-info">Simpan</button>
+						</div>
+					</div>
 				</div>
-			</form>
-		</div>
+				</form>
+			</div>
 	</section>
 </div>

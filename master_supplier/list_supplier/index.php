@@ -1,3 +1,5 @@
+<?php $role = "procurement" ?>
+
 <?php
 $title = 'List Supplier';
 $tampilkan = true;

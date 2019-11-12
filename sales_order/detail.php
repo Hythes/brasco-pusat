@@ -1,3 +1,5 @@
+<?php $role = "pemasaran" ?>
+
 <?php
 $title = "Detail Sales Order";
 require '../env.php';
@@ -367,6 +369,7 @@ if (isset($_POST['submit'])) {
         fix_iteration('#table_so');
         i++;
     })
+
     function so_hapus(i) {
         $('#tr_so_' + i).remove();
         fix_iteration('#table_so');

@@ -1,3 +1,5 @@
+<?php $role = "procurement" ?>
+
 <?php
 require '../env.php';
 $no_retur1 = query("SELECT * FROM counter WHERE tabel = 'retur_pembelian_barang'")[0];

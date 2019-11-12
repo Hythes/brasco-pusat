@@ -1,3 +1,5 @@
+<?php $role = "procurement" ?>
+
 <?php
 require '../env.php';
 $title = 'Input Barang Masuk';

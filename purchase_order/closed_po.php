@@ -1,3 +1,5 @@
+<?php $role = "procurement" ?>
+
 <?php
 $title = "Close Purchase Order";
 require '../env.php';

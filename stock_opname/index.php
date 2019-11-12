@@ -1,3 +1,5 @@
+<?php $role = "inventory" ?>
+
 <?php
 
 $title = "Hasil Stock Opname";

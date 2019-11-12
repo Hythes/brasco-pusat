@@ -1,3 +1,5 @@
+<?php $role = "procurement" ?>
+
 <script>
     var active = 'header_supplier';
     var active_2 = 'header_supplier_saldo';

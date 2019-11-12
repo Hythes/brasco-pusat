@@ -1,6 +1,8 @@
 <script>
   var active = 'header_customer';
 </script>
+<?php $role = "pemasaran" ?>
+
 <?php
 $title = 'Master Data Customer';
 include '../env.php';

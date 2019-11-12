@@ -1,105 +1,176 @@
-<?php
-require '../env.php';
-$title = "Permintaan Cetak Label Barcode";
-$query = query('SELECT * FROM purchase_order ORDER BY kode DESC LIMIT 1');
-if (!isset($query[0]['kode'])) {
-    $id = 'PO-001';
-} else {
-    $id = tambahId(strval($query[0]['kode']), 'PO');
+<?php $role = "procurement" ?>
+
+<?php include('../../env.php') ?>
+<?php $query = $conn->query("SELECT * FROM purchase_order WHERE kode = '$_GET[kode]'");
+foreach ($query as $p) {
+	$kode = $p["kode"];
+	$keterangan = $p['keterangan'];
 }
-$data = query("SELECT * FROM inventory");
+$query2 = $conn->query("SELECT * FROM purchase_order_item WHERE kode_po = '$kode'");
 ?>
-<script>
-    var i = 1;
-    var active = 'header_po';
-    var active_2 = 'header_purchase_cetak';
-</script>
 
-<?php include('../templates/header.php') ?>
-<!-- =============================================== -->
+<!DOCTYPE html>
+<html>
 
-<!-- Content Wrapper. Contains page content -->
-<div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-        <h1>
-            Lampiran Label Barcode
-        </h1>
-        <ol class="breadcrumb">
-            <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-            <li><a href="#">Examples</a></li>
-            <li class="active">Blank page</li>
-        </ol>
-    </section>
+<head>
+	<title>Cetak Label Barcode</title>
+	<!-- Bootstrap 3.3.7 -->
+	<link rel="stylesheet" href="../../assets/bower_components/bootstrap/dist/css/bootstrap.min.css">
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="../../assets/bower_components/font-awesome/css/font-awesome.min.css">
 
-    <!-- Main content -->
-    <section class="content">
+	<!-- folder instead of downloading all of them to reduce the load. -->
+	<!-- <link rel="stylesheet" href="../assets/dist/css/skins/_all-skins.min.css"> -->
+	<!-- Date Picker -->
+	<link rel="stylesheet" href="../../assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+	<!-- Daterange picker -->
+	<link rel="stylesheet" href="../../assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
 
-        <!-- Default box -->
-        <div class="box">
-            <div class="box-header with-border">
-                <h1 class="box-title text-bold"><?= $id ?></h1>
+	<!-- Google Font -->
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+	<style type="text/css">
+		thead {
+			background: #B8DAFF;
+		}
+	</style>
+</head>
 
-                <div class="box-tools pull-right">
-                    <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                        <i class="fa fa-minus"></i></button>
-                </div>
-            </div>
-            <div class="box-body">
+<body>
 
-                <div>
-                    <div class="col-xs-2">
-                        <select name="barcode" id="barcode" class="form-control">
-                            <?php
-                            foreach ($data as $val) : ?>
-                                <option value="<?= $val['barcode'] ?>"><?= $val['barcode'] ?></option>
-                            <?php
-                            endforeach; ?>
-                        </select>
-                    </div>
-                    <div class="col-xs-2">
-                        <input type="number" id="quantity" class="form-control" placeholder="Qty">
-                    </div>
-                    <div class="col-xs-2">
-                        <input type="number" id="harga_jual" class="form-control" placeholder="Harga Jual">
-                    </div>
-                    <div class="col-xs-5">
-                        <input type="text" id="keterangan" class="form-control" placeholder="Keterangan">
-                    </div>
-                    <div class="col-xs-1">
-                        <i id="cetak_barcode_input" class="fa fa-plus fa-2x" style="padding-top: 5px; cursor:pointer"></i>
-                    </div>
-                </div>
+	<div class="content-wrapper">
+		<section class="content-header text-center">
+			<h2>PERMINTAAN CETAK LABEL BARCODE</h2>
+			<hr>
+		</section>
+		<section class="content">
+			<div class="box">
+				<div class="box-body">
+					<form>
+						<?php foreach ($query as $form) : ?>
+							<div class="col-xs-6">
+								<div class="form-group">
+									<label class="col-xs-4 col-form-label">Kode PO</label>
+									<div class="col-xs-8">
+										<input type="text" class="form-control" name="" value="<?= $form['kode'] ?>">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-4 col-form-label">Tanggal PO</label>
+									<div class="col-xs-8">
+										<input type="text" class="form-control" name="" value="<?= $form['tanggal'] ?>">
+									</div>
+								</div>
+							</div>
+							<div class="col-xs-6">
+								<div class="form-group">
+									<label class="col-xs-4 col-form-label">Kode Supplier</label>
+									<div class="col-xs-8">
+										<input type="text" class="form-control" name="" value="<?= $form['kode_supplier'] ?>">
+									</div>
+								</div>
+								<div class="form-group">
+									<label class="col-xs-4 col-form-label">Nama Supplier</label>
+									<div class="col-xs-8">
+										<input type="text" class="form-control" name="" value="<?= $form['nama_supplier'] ?>">
+									</div>
+								</div>
+							</div>
+						<?php endforeach; ?>
+					</form>
 
-                <div class="data-table" style="padding-top: 60px;">
-                    <table class="table table-bordered table-hover">
-                        <thead>
-                            <tr>
-                                <th>Barcode</th>
-                                <th>Qty</th>
-                                <th>Sat</th>
-                                <th>Harga Jual</th>
-                                <th>Keterangan</th>
-                                <th>Aksi</th>
-                            </tr>
-                        </thead>
-                        <tbody id="table">
-                        </tbody>
-                    </table>
-                </div>
+					<div class="data-table" style="padding: 30px;">
+						<div class="box-body">
+							<table class="table table table-bordered table-hover" style="margin-top: 70px;">
+								<thead>
+									<tr class="table-primary">
+										<th scope="col">No</th>
+										<th scope="col">Barcode</th>
+										<th scope="col">Quantity</th>
+										<th scope="col">Sat</th>
+										<th scope="col">Harga Jual</th>
+										<th scope="col">Keterangan</th>
+									</tr>
+								</thead>
+								<tbody>
+									<?php
+									$totalS = 0;
+									$no = 1;
+									foreach ($query2 as $tabel) :
+										?>
+										<tr>
+											<td><?= $no; ?></td>
+											<td><?= $tabel['barcode_inventory'] ?> </td>
+											<td><?= $tabel['quantity'] ?></td>
+											<td><?php
+													$id = $tabel["satuan"];
+													$satuan = $conn->query("SELECT * FROM satuan WHERE id = '$id'");
+													foreach ($satuan as $sat) {
+														echo $sat['satuan'];
+													}
+													?></td>
+											<td>Rp. 160.000</td>
+											<td><?= $keterangan ?></td>
+										</tr>
+										<?php
+											$totalS += intval($tabel['quantity']);
+											?>
+										<?php $no++; ?>
+									<?php endforeach; ?>
+								</tbody>
+								<tfoot>
+									<tr>
+										<td></td>
+										<td>TOTAL QTY</td>
+										<td><?= $totalS ?></td>
+										<td></td>
+										<td></td>
+										<td></td>
+									</tr>
+								</tfoot>
+							</table>
 
-            </div>
-            <!-- /.box-body -->
-            <div class="box-footer">
-                Footer
-            </div>
-            <!-- /.box-footer-->
-        </div>
-        <!-- /.box -->
+							<div class="col-xs-7">
+								<div class="col-xs-6 text-center">
+									<p>Prepared By</p>
+									<br>
+									<br>
+									<br>
+									<br>
+									<p>(...................)</p>
+								</div>
+								<div class="col-xs-6 text-center">
+									<p>Approve</p>
+									<br>
+									<br>
+									<br>
+									<br>
+									<p>(...................)</p>
+								</div>
+							</div>
 
-    </section>
-    <!-- /.content -->
-</div>
-<!-- /.content-wrapper -->
+						</div>
+					</div>
 
-<?php include('../templates/footer.php') ?>
+				</div>
+			</div>
+		</section>
+	</div>
+
+	<script>
+		function printWindow() {
+			window.print();
+			CheckWindowState();
+		}
+
+		function CheckWindowState() {
+			if (document.readyState == "complete") {
+				window.close();
+			} else {
+				setTimeout("CheckWindowState()", 11000);
+			}
+		}
+		printWindow();
+	</script>
+</body>
+
+</html>
