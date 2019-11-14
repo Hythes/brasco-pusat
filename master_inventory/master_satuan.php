@@ -7,10 +7,12 @@
 
   <!-- query -->
   <?php
+  cekAdmin($role);
   //tambah 
   if (isset($_POST['tambah'])) {
+    $id_admin = $_SESSION['admin']['id'];
     $nama = $_POST['nama'];
-    $sql = "INSERT INTO satuan (satuan) VALUE ('$nama')";
+    $sql = "INSERT INTO satuan (satuan, id_admin, id_edit_admin) VALUE ('$nama', '$id_admin', '0')";
     $query = mysqli_query($conn, $sql);
     if ($query) {
       echo "<script>alert('Data Added')</script>";
@@ -22,9 +24,10 @@
 
   // edit
   if (isset($_POST['edit'])) {
+  $id_admin = $_SESSION['admin']['id'];
     $nama = $_POST['nama'];
     $id = $_POST['id'];
-    $edit = $conn->query("UPDATE satuan SET satuan='$nama' WHERE id='$id'");
+    $edit = $conn->query("UPDATE satuan SET satuan='$nama', id_edit_admin = '$id_admin' WHERE id='$id'");
     if ($edit) {
       echo "<script>alert('Data Added')</script>";
       echo "<script>location='master_satuan.php'</script>";

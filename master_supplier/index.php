@@ -1,22 +1,24 @@
-<?php $role = "procurement" ?>
+<?php $role = "procurement";
+?>
 <?php
 include '../env.php';
+cekAdmin($role);
 if (isset($_POST['delete'])) {
   extract($_POST);
   $sql = "DELETE FROM supplier WHERE kode = '$kode_old'";
   lanjutkan($sql, "Dihapus");
 }
+$id = $_SESSION['admin']['id'];
 if (isset($_POST['edit'])) {
   extract($_POST);
   $fax = intval($fax);
-  $sql = "UPDATE supplier SET kode = '$kode',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kode_pos',telepon = '$telepon',fax = '$fax',handphone = '$handphone',contact_name = '$contact_name',email = '$email' ,kredit = '$kredit' ,top = '$top' ,pkp = '$pkp', saldo_jalan = '$saldo_jalan', saldo_awal = '$saldo_awal' WHERE kode = '$kode_old'";
+  $sql = "UPDATE supplier SET kode = '$kode',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kode_pos',telepon = '$telepon',fax = '$fax',handphone = '$handphone',contact_name = '$contact_name',email = '$email' ,kredit = '$kredit' ,top = '$top' ,pkp = '$pkp', saldo_jalan = '$saldo_jalan', saldo_awal = '$saldo_awal', id_edit_admin='$id' WHERE kode = '$kode_old'";
   $sql = mysqli_query($conn, $sql);
   lanjutkan($sql, "Diedit");
 } else if (isset($_POST['simpan'])) {
   extract($_POST);
-  $sql = "INSERT INTO supplier(kode,nama,alamat,kota,kodepos,telepon,fax,handphone,contact_name,email,kredit,top,pkp,saldo_awal,saldo_jalan) VALUES(
-    '$kode','$nama','$alamat','$kota','$kode_pos','$telepon','$fax','$handphone','$contact_name','$email','$kredit','$top','$pkp','$saldo_awal','$saldo_jalan'
-  )";
+  $sql = "INSERT INTO supplier(kode,nama,alamat,kota,kodepos,telepon,fax,handphone,contact_name,email,kredit,top,pkp,saldo_awal,saldo_jalan,id_admin,id_edit_admin) VALUES(
+      '$kode','$nama','$alamat','$kota','$kode_pos','$telepon','$fax','$handphone','$contact_name','$email','$kredit','$top','$pkp','$saldo_awal','$saldo_jalan','$id','0')";
   $sql = mysqli_query($conn, $sql);
   lanjutkan($sql, "Diedit");
 }

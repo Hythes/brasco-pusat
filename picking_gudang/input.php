@@ -2,6 +2,8 @@
 
 <?php
 require '../env.php';
+cekAdmin($role);
+$id_admin = $_SESSION['admin']['id'];
 $title = "Input Picking Gudang";
 $query = query('SELECT * FROM counter WHERE tabel = "picking"')[0];
 $nomor_order = '';
@@ -36,14 +38,14 @@ if (isset($_POST['submit'])) {
             if (intval($now['id']) == intval($id)) {
                 $quantity_pick = $_POST['quantity_pick_' . $i2];
                 extract($now);
-                $sql .= "INSERT INTO picking_item(nomor_picking,barcode,id_order_item,quantity_picking,quantity_order) VALUES('$nomor_picking','$barcode','$id','$quantity_pick','$quantity');";
+                $sql .= "INSERT INTO picking_item(nomor_picking,barcode,id_order_item,quantity_picking,quantity_order,id_admin,id_edit_admin) VALUES('$nomor_picking','$barcode','$id','$quantity_pick','$quantity','$id_admin','0');";
                 $totalQuantity += intval($quantity_pick);
             }
         }
     }
     $data = explode($nomor_picking, "-")[1];
-    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'picking';";
-    $sql .= "INSERT INTO picking(nomor_picking,nomor_order,kode_customer,status,total,tanggal) VALUES('$nomor_picking','$nomor_order','$kode','$status','$totalQuantity','$tanggal');";
+    $sql .= "UPDATE counter SET digit = '$data',id_edit_admin = '$id_admin' WHERE tabel = 'picking';";
+    $sql .= "INSERT INTO picking(nomor_picking,nomor_order,kode_customer,status,total,tanggal,id_item,id_admin,id_edit_admin) VALUES('$nomor_picking','$nomor_order','$kode','$status','$totalQuantity','$tanggal','$id_admin','0');";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dibuat!");
     $return = true;

@@ -1,5 +1,4 @@
 <?php $role = "procurement" ?>
-
 <script>
     var active = 'header_supplier';
     var active_2 = 'header_supplier_tempo';
@@ -136,10 +135,7 @@ require '../env.php' ?>
             'tanggal_satu': tanggal1,
             'tanggal_dua': tanggal2
         }, function(response) {
-            console.log(response)
-            return false
             res = JSON.parse(response)
-            
             no = 1
             res.forEach(element => {
                 $('#tabl').append(`
@@ -148,61 +144,33 @@ require '../env.php' ?>
                     <td> ${element.invoice} </td>
                     <td> ${element.nama_supplier} </td>
                     <td> ${element.tanggal_jatuh_tempo} </td>
-                    <td> ${element.belum_jatuh_tempo} </td>
-                    <td> ${element.tiga_puluh} </td>
-                    <td> ${element.enam_puluh} </td>
-                    <td> ${element.sembilan_puluh} </td>
-                    <td> ${element.lebih_sembilan_puluh} </td>
+                    <td> 
+                         ${
+                            (!element.belum_jatuh_tempo) ? "-" : element.belum_jatuh_tempo 
+                        }
+                    </td>
+                    <td> 
+                    ${
+                        (!element.satu_bulan) ? "-" : element.satu_bulan 
+                        }
+                    </td>
+                    <td> 
+                    ${
+                        (!element.dua_bulan) ? "-" : element.dua_bulan 
+                        }
+                    </td>
+                    <td>
+                    ${
+                        (!element.tiga_bulan) ? "-" : element.tiga_bulan 
+                        }
+                    </td>
+                    <td>
+                    ${
+                        (!element.lebih_dari_tiga_bulan) ? "-" : element.lebih_dari_tiga_bulan 
+                        }
+                    </td>
                     </tr>`)
             })
-        })
-    })
-</script>
-<script>
-    $(function() {
-        $('#example1').DataTable()
-        $('#data-table').DataTable({
-            'paging': true,
-            'lengthChange': false,
-            'searching': true,
-            'ordering': true,
-            'info': true,
-            'autoWidth': false,
-            dom: 'Bfrtip',
-            buttons: [{
-                    extend: 'pdfHtml5',
-                    orientation: 'landscape',
-                    pageSize: 'LEGAL'
-                },
-                {
-                    extend: 'print',
-                    customize: function(win) {
-                        $(win.document.body)
-                            .css('font-size', '10pt')
-
-                        $(win.document.body).find('table')
-                            .addClass('compact')
-                            .css('font-size', 'inherit');
-                    }
-                },
-                {
-                    extend: 'excel',
-                    text: 'Excel',
-                    exporOptions: {
-                        modifier: {
-                            page: 'current'
-                        }
-                    }
-                },
-                {
-                    extend: 'csv',
-                    text: 'CSV'
-                },
-                {
-                    extend: 'copy',
-                    text: 'Copy'
-                }
-            ]
         })
     })
 </script>

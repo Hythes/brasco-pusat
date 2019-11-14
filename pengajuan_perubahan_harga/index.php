@@ -2,7 +2,7 @@
 
 <?php
 include '../env.php';
-
+cekAdmin($role);
 $title = 'Pengajuan Perubahan Harga';
 $query = query("SELECT * FROM counter WHERE tabel = 'pengajuan_perubahan_harga'")[0];
 $c = intval($query['digit']) + 1;
@@ -185,6 +185,11 @@ $id = $query['header'] . "-" . $c;
     console.log(number);
   }
   $('#simpan_pph').on('click', function() {
+    if ($('#formtanggal').val() == '') {
+      alert("Tolong diisi tanggalnya");
+      return false;
+
+    }
     var owo = {
       'nomor_pengajuan': $('#nomorpengajuan').val(),
       'tanggal': $('#formtanggal').val(),
@@ -199,6 +204,8 @@ $id = $query['header'] . "-" . $c;
         'inti': owo
       },
       complete: function(res) {
+        // console.log(res.responseText)
+        // return false;
         var response = JSON.parse(res.responseText);
         console.log(response);
         if (response.msg == "berhasil") {

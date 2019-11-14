@@ -2,23 +2,26 @@
 
 <?php
 require '../env.php';
+session_start();
+cekAdmin($role);
+$id = $_SESSION['admin']['id'];
 if (isset($_POST['submit'])) {
     extract($_POST);
-    $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga,keterangan) VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga','$keterangan'); ";
+    $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga,keterangan,id_admin,id_edit_admin) VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga','$keterangan','$id','0'); ";
     $data_po = json_decode($data_po);
     foreach ($data_po as $data) {
         $data = (array) $data;
         extract($data);
-        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan,satuan) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga','$satuan'); ";
+        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan,satuan,id_admin,id_edit_admin) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga','$satuan','$id','0'); ";
     }
     $dataLabel = json_decode($dataLabel);
     foreach ($dataLabel as $data) {
         $data = (array) $data;
         extract($data);
-        $sql .= "INSERT INTO label_barcode(kode_po,barcode,harga,keterangan,quantity) VALUES ('$kode','$barcode','$harga','$keterangan','$quantity');";
+        $sql .= "INSERT INTO label_barcode(kode_po,barcode,harga,keterangan,quantity,id_admin,id_edit_admin) VALUES ('$kode','$barcode','$harga','$keterangan','$quantity','$id','0');";
     }
     $data = explode($kode, "-")[1];
-    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'purchase_order';";
+    $sql .= "UPDATE counter SET digit = '$data', id_edit_admin = '$id' WHERE tabel = 'purchase_order';";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dibuat");
 }

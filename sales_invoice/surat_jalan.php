@@ -1,5 +1,34 @@
 <?php $role = "pemasaran" ?>
+<?php
+require '../env.php';
+if (isset($_GET)) {
+    $kode = $_GET['kode'];
+    $invoice = query("SELECT * FROM sales_invoice WHERE nomor_invoice = '$kode'")[0];
+    $kode_customer = $invoice['kode_customer'];
+    $kounter = query("SELECT * FROM counter WHERE tabel = 'sales_invoice'")[0];
+    $kounter2 = query("SELECT * FROM counter WHERE tabel = 'purchase_order'")[0];
+    $customer = query("SELECT * FROM customer WHERE kode = '$kode_customer' ")[0];
 
+    $no_si = $kounter['header'] . "-" . $kounter['digit'];
+    $no_po = $kounter2['header'] . "-" . $kounter['digit'];
+
+    $profil = query("SELECT * FROM profil")[0];
+    $foto = $profil['logo'];
+    $phone = $profil['no_telp'];
+    $alamat = $profil['alamat'];
+    $cabang_nama = $profil['nama_cabang'];
+    $kota = $profil['kota'];
+    $tanggal = $invoice['tanggal'];
+    $tanggal2 = date("d-m-Y", strtotime($tanggal));
+
+    $kepada = $customer['nama'];
+    $alamat = $customer['alamat'];
+    $kota = $customer['kota'];
+    $kode_pos = $customer['kodepos'];
+    $telepon = $customer['telepon'];
+    $handphone = $customer['handphone'];
+}
+?>
 <!DOCTYPE html>
 <html>
 
@@ -29,13 +58,12 @@
         <div class="row">
             <div class="col-xs-4">
                 <div class="col-xs-3">
-                    <img src="../img/icon.png" width="50px">
+                    <img src="../profile/images/<?= $foto ?>" width="50px">
                 </div>
                 <div class="col-xs-9">
-                    PT. Nocole Pangan Indonesia <br>
-                    Jl. Raya Hanjawar No. 1 Cipanas Cianjur <br>
-                    Ph. +62 878 0012 5750 <br>
-                    e : n.chocolaterie@gmail.com
+                    <?= $cabang_nama ?> <br>
+                    <?= $alamat ?> <br>
+                    <?= $phone ?>
                 </div>
             </div>
             <div class="col-xs-4">
@@ -43,8 +71,8 @@
             </div>
             <div class="col-xs-4">
                 <div class="pull-right pr-5">
-                    <p>No SI : SF12345678</p>
-                    <p>Tgl SI : dd-mm-yyyy</p>
+                    <p>No SI : <?= $no_si ?></p>
+                    <p>Tgl SI : <?= $tanggal2 ?></p>
                 </div>
             </div>
         </div>
@@ -56,18 +84,13 @@
                     <div class="form-group">
                         <label class="col-xs-2 control-label">Kepada</label>
                         <div class="col-xs-10">
-                            <input type="text" readonly="" name="" class="form-control" value="Tujuan Pengiriman">
+                            <input type="text" readonly="" name="" class="form-control" value="<?= $kepada ?>">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-xs-2 control-label">Alamat</label>
                         <div class="col-xs-10">
-                            <div class="">
-                                <input type="text" readonly="" name="" class="form-control">
-                            </div>
-                            <div class="pt-5">
-                                <input type="text" readonly="" name="" class="form-control">
-                            </div>
+                            <textarea name="" class="form-control" rows="3" readonly><?= $alamat ?></textarea>
                         </div>
                     </div>
                     <div class="form-group">
@@ -75,7 +98,7 @@
                             <div class="row">
                                 <label class="col-xs-4 control-label">Kota</label>
                                 <div class="col-xs-8">
-                                    <input type="text" readonly="" name="" class="form-control">
+                                    <input type="text" readonly="" name="" class="form-control" value="<?= $kota ?>">
                                 </div>
                             </div>
                         </div>
@@ -83,7 +106,7 @@
                             <div class="row">
                                 <label class="col-xs-4 control-label">Kd Pos</label>
                                 <div class="col-xs-8">
-                                    <input type="text" readonly="" name="" class="form-control">
+                                    <input type="text" readonly="" name="" class="form-control" value="<?= $kode_pos ?>">
                                 </div>
                             </div>
                         </div>
@@ -93,7 +116,7 @@
                             <div class="row">
                                 <label class="col-xs-4 control-label">Telp</label>
                                 <div class="col-xs-8">
-                                    <input type="text" readonly="" name="" class="form-control">
+                                    <input type="text" readonly="" name="" class="form-control" value="<?= $telepon ?>">
                                 </div>
                             </div>
                         </div>
@@ -101,7 +124,7 @@
                             <div class="row">
                                 <label class="col-xs-4 control-label">HP</label>
                                 <div class="col-xs-8">
-                                    <input type="text" readonly="" name="" class="form-control">
+                                    <input type="text" readonly="" name="" class="form-control" value="<?= $handphone ?>">
                                 </div>
                             </div>
                         </div>
@@ -110,8 +133,8 @@
             </div>
             <div class="col-xs-6">
                 <div class="pull-right pr-5">
-                    <p>No SI : IF12345678</p>
-                    <p>No PO : PNC1000001</p>
+                    <p>No SI : <?= $no_si ?></p>
+                    <p>No PO : <?= $no_po ?></p>
                 </div>
                 <div style="border: solid 1px #000; display: inline-block; margin-top: 70px;" class="pad pr-5">
                     <p>**Perhatian**</p>
@@ -131,6 +154,9 @@
                     </tr>
                 </thead>
                 <tbody>
+                <?php 
+                    $pack = query("SELECT * FROM ")
+                ?>
                     <tr>
                         <td>1</td>
                         <td></td>
@@ -181,6 +207,15 @@
         </div>
 
     </div>
+
+</body>
+
+</html> <br>
+(....................)
+</div>
+</div>
+
+</div>
 
 </body>
 

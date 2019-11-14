@@ -2,13 +2,14 @@
 
 <?php
 include '../env.php';
+cekAdmin($role);
 $conn = mysqli_connect($host, $user, $password, $dbname);
 
 
 function tambah($data)
 {
 	global $conn;
-
+	$id_admin = $_SESSION['admin']['id'];
 	$barcode = htmlspecialchars($data['barcode']);
 	$nama_barang = htmlspecialchars($data['nama_barang']);
 	$satuan = htmlspecialchars($data['satuan']);
@@ -16,9 +17,9 @@ function tambah($data)
 	$harga_jual1 = htmlspecialchars($data['harga_jual1']);
 	$harga_jual2 = htmlspecialchars($data['harga_jual2']);
 	$harga_jual3 = htmlspecialchars($data['harga_jual3']);
-	$query = " INSERT INTO inventory(barcode,nama_barang,satuan,id_tipe_barang,harga_jual1,harga_jual2,harga_jual3)         
+	$query = " INSERT INTO inventory(barcode,nama_barang,satuan,id_tipe_barang,harga_jual1,harga_jual2,harga_jual3, id_admin, id_edit_admin)         
 	VALUES 
-	('$barcode','$nama_barang','$satuan','$id_tipe_barang','$harga_jual1','$harga_jual2','$harga_jual3')";
+	('$barcode','$nama_barang','$satuan','$id_tipe_barang','$harga_jual1','$harga_jual2','$harga_jual3', '$id_admin', '0')";
 	$thread = mysqli_query($conn, $query);
 	if (!$thread) {
 		echo mysqli_error($conn);
@@ -37,6 +38,7 @@ function hapus($id)
 function ubah($data)
 {
 	global $conn;
+	$id_admin = $_SESSION['admin']['id'];
 	$barcode = htmlspecialchars($data['barcode']);
 	$nama_barang = htmlspecialchars($data['nama_barang']);
 	$satuan = htmlspecialchars($data['satuan']);
@@ -52,7 +54,8 @@ function ubah($data)
 	id_tipe_barang = '$id_tipe_barang',
 	harga_jual1 = '$harga_jual1',
 	harga_jual2 = '$harga_jual2',
-	harga_jual3 = '$harga_jual3'
+	harga_jual3 = '$harga_jual3',
+	id_edit_admin = '$id_admin'
 	WHERE id='$id'
 	";
 	$thread = mysqli_query($conn, $query);

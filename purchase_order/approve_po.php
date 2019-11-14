@@ -1,4 +1,4 @@
-<?php $role = "procurement" ?>
+<?php $role = "manager" ?>
 
 <?php
 $title = "Approval Purchase Order Manager";

@@ -1,23 +1,25 @@
+<?php $role = "manager" ?>
+
 <?php require '../env.php';
+cekAdmin($role);
 if (isset($_POST['id_approve'])) {
     $data = query("SELECT * FROM diskon_barang_reject WHERE id = '$_POST[id_approve]'")[0];
     $inventory = query("SELECT * FROM inventory WHERE barcode = '$data[barcode]'")[0];
     $customer = query("SELECT * FROM customer WHERE kode = '$data[kode_customer]'")[0];
     $tipe_customer = $customer['tipe_customer'];
     $inventory['harga_jual' . $tipe_customer] = intval($inventory['harga_jual' . $tipe_customer]) * (intval($data['diskon']) / 100);
-
-    $sql = "INSERT INTO inventory(barcode,nama_barang,satuan,id_tipe_barang,harga_jual1,harga_jual2,harga_jual3,quantity) VALUES('$data[barcode_reject]','$inventory[nama_barang]','$inventory[satuan]','$inventory[id_tipe_barang]','$inventory[harga_jual1]','$inventory[harga_jual2]','$inventory[harga_jual3]',$data[quantity]);";
+    $id_admin = $_SESSION['admin']['id'];
+    $sql = "INSERT INTO inventory(barcode,nama_barang,satuan,id_tipe_barang,harga_jual1,harga_jual2,harga_jual3,quantity, id_admin, id_edit_admin) VALUES('$data[barcode_reject]','$inventory[nama_barang]','$inventory[satuan]','$inventory[id_tipe_barang]','$inventory[harga_jual1]','$inventory[harga_jual2]','$inventory[harga_jual3]',$data[quantity], '$id_admin', '0' );";
     $sql .= PHP_EOL;
     $quantity_kurang = intval($inventory['quantity']) - intval($data['quantity']);
-    $sql .= "UPDATE diskon_barang_reject SET status = 1 WHERE id = '$_POST[id_approve]';";
+    $sql .= "UPDATE diskon_barang_reject SET status = 1 , id_edit_admin = '$id_admin' WHERE id = '$_POST[id_approve]';";
     $sql .= PHP_EOL;
-    $sql .= "UPDATE inventory SET quantity = '$quantity_kurang' WHERE barcode = '$inventory[barcode]';";
+    $sql .= "UPDATE inventory SET quantity = '$quantity_kurang', id_edit_admin = '$id_admin' WHERE barcode = '$inventory[barcode]';";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Di Approve!");
     header('Refresh:0');
 }
 ?>
-<?php $role = "inventory" ?>
 <?php $title = "Approval Diskon Barang" ?>
 <?php include('../templates/header.php') ?>
 

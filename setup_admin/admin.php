@@ -2,17 +2,17 @@
 
 <?php
 require '../env.php';
-if (isset($_POST['set'])) {
-  extract($_POST);
-  $password = password_hash($password, PASSWORD_DEFAULT);
-  $sql = "INSERT INTO admin(username,password,nomor_hp,groupType,alamat) VALUES ('$username','$password','$nomor_hp','$group','$alamat') ";
-  lanjutkan(mysqli_query($conn, $sql), "Ditambahkan!");
-}
+// if (isset($_POST['set'])) {
+//   extract($_POST);
+//   $password_buat = password_hash($password_buat, PASSWORD_DEFAULT);
+//   $sql = "INSERT INTO admin(username,password,nomor_hp,groupType,alamat) VALUES ('$username_buat','$password_buat','$nomor_hp_buat','$group_buat','$alamat_buat') ";
+//   lanjutkan(mysqli_query($conn, $sql), "Ditambahkan!");
+// }
 if (isset($_POST['edit'])) {
   extract($_POST);
   $password = password_hash($password, PASSWORD_DEFAULT);
   $sql = "UPDATE admin SET username = '$username', password = '$password', nomor_hp = '$nomor_hp', groupType = '$group', alamat = '$alamat' WHERE id = '$id'";
-  lanjutkan(mysqli_query($conn, $sql), "Ditambahkan!");
+  lanjutkan(mysqli_query($conn, $sql), "Diedit!");
 }
 ?>
 
@@ -47,75 +47,75 @@ $title = 'Admin Panel'
         <div class="box box-info">
           <div class="box-header with-border">
             <h3 class="box-title">Buat Admin</h3>
-
-            <div class="box-tools pull-right">
-              <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
-                <i class="fa fa-minus"></i></button>
-              <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
-                <i class="fa fa-times"></i></button>
-            </div>
+            <form class="form-horizontal" method="post" id="data_simpan">
+              <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse" data-toggle="tooltip" title="Collapse">
+                  <i class="fa fa-minus"></i></button>
+                <button type="button" class="btn btn-box-tool" data-widget="remove" data-toggle="tooltip" title="Remove">
+                  <i class="fa fa-times"></i></button>
+              </div>
           </div>
+
           <div class="box-body">
-            <form class="form-horizontal" method="post">
-              <div class="form-group">
-                <label class="col-sm-4">Username</label>
-                <div class="col-sm-8">
-                  <input type="text" class="form-control" name="username">
-                </div>
+
+            <div class="form-group">
+              <label class="col-sm-4">Username</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" name="username_buat">
               </div>
-              <div class="form-group">
-                <label class="col-sm-4">Password</label>
-                <div class="col-sm-8">
-                  <div class="input-group" id="show_hide_password1">
-                    <input type="password" class="form-control" name="password" id="password_input">
-                    <div class="input-group-addon">
-                      <i class="fa fa-eye-slash" aria-hidden="true"></i>
-                    </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4">Password</label>
+              <div class="col-sm-8">
+                <div class="input-group" id="show_hide_password1">
+                  <input type="password" class="form-control" name="password_buat" id="password_input">
+                  <div class="input-group-addon">
+                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
                   </div>
                 </div>
               </div>
-              <!-- <div class="form-group">
-                <label class="col-sm-4">Verify Password</label>
-                <div class="col-sm-8">
-                  <div class="input-group">
-                    <input type="password" class="form-control" id="verify_password_input">
-                    <span class="input-group-addon">
-                      <i class="fa fa-eye"></i>
-                      <i class="fa fa-eye-slash"></i>
-                    </span>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4">Verify Password</label>
+              <div class="col-sm-8">
+                <div class="input-group" id="show_hide_password_verify">
+                  <input type="password" class="form-control" id="verify_password_input">
+                  <div class="input-group-addon">
+                    <i class="fa fa-eye-slash" aria-hidden="true"></i>
                   </div>
                 </div>
-              </div> -->
-              <div class="form-group">
-                <label class="col-sm-4">Nomor HP</label>
-                <div class="col-sm-8">
-                  <input type="number" class="form-control" name="nomor_hp">
-                </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-4">Group</label>
-                <div class="col-sm-8">
-                  <select class="form-control" name="group" required>
-                    <option disabled selected>Pilih Group</option>
-                    <option value="inventory">Inventory</option>
-                    <option value="pemasaran">Pemasaran</option>
-                    <option value="procurement">Procurement</option>
-                    <option value="utility">Utility</option>
-                    <option value="manager">Manager</option>
-                  </select>
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4">Nomor HP</label>
+              <div class="col-sm-8">
+                <input type="number" class="form-control" name="nomor_hp_buat">
               </div>
-              <div class="form-group">
-                <label class="col-sm-4">Alamat</label>
-                <div class="col-sm-8">
-                  <textarea class="form-control" name="alamat" rows="3"></textarea>
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4">Group</label>
+              <div class="col-sm-8">
+                <select class="form-control" name="group_buat" required>
+                  <option disabled selected>Pilih Group</option>
+                  <option value="inventory">Inventory</option>
+                  <option value="pemasaran">Pemasaran</option>
+                  <option value="procurement">Procurement</option>
+                  <option value="utility">Utility</option>
+                  <option value="manager">Manager</option>
+                </select>
               </div>
-              <div class="form-group">
-                <div class="box-body">
-                  <button class="btn btn-primary col-sm-12" type="submit" name="set" value="kirim">Submit</button>
-                </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-4">Alamat</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" name="alamat_buat" rows="3"></textarea>
               </div>
+            </div>
+            <div class="form-group">
+              <div class="box-body">
+                <button class="btn btn-primary col-sm-12" type="button" name="set" value="kirim" id="kirim">Submit</button>
+              </div>
+            </div>
           </div>
           <!-- /.box-body -->
         </div>
@@ -153,7 +153,7 @@ $title = 'Admin Panel'
                         <td><?= ucfirst($data['groupType']) ?></td>
                         <td class="text-center">
                           <a href="#" data-toggle="modal" data-target="#edit<?= $i ?>"><i class="fa fa-edit fa-lg text-green"></i></a>&nbsp&nbsp
-                          <a onclick="hapus(<?= $data['id']?>)" ><i class="fa fa-trash-o fa-lg text-red"></i></button>
+                          <a onclick="hapus(<?= $data['id'] ?>)"><i class="fa fa-trash-o fa-lg text-red"></i></button>
                         </td>
                       </tr>
 
@@ -199,7 +199,7 @@ $title = 'Admin Panel'
                                 <div class="form-group">
                                   <label class="col-sm-4">Nomor HP</label>
                                   <div class="col-sm-8">
-                                    <input type="number" class="form-control" name="nomor_hp" value="<?= $data['nomor_hp'] ?>" required>
+                                    <input type="number" class="form-control" name="nomor_hp" value="<?= $data['nomor_hp'] ?>">
                                   </div>
                                 </div>
                                 <div class="form-group">
@@ -251,28 +251,17 @@ $title = 'Admin Panel'
 <?= jquery() ?>
 
 <script>
-  // $('#verify_password1').keyup(function() {
-  //   let password = $('#password1').val();
-  //   let verify_password = $('#verify_password1').val();
-  //   if ($('#password1').val() == $('#verify_password1').val()) {
-  //     console.log("anjayy");
-  //     $('#verify_password1').css('border', '1px solid green');
-  //   } else {
-  //     console.log("salah");
-  //     $('#verify_password1').css('border', '1px solid red');
-  //   }
-  // });
-  // $('#password1').keyup(function() {
-  //   let password = $('#password1').val();
-  //   let verify_password = $('#verify_password1').val();
-  //   if ($('#password1').val() == $('#verify_password1').val()) {
-  //     console.log("anjayy");
-  //     $('#verify_password1').css('border', '1px solid green');
-  //   } else {
-  //     console.log("salah");
-  //     $('#verify_password1').css('border', '1px solid red');
-  //   }
-  // });
+  $('#verify_password_input,#password_input').keyup(function() {
+    let password = $('#password_input').val();
+    let verify_password = $('#verify_password_input').val();
+    if ($('#password_input').val() == $('#verify_password_input').val()) {
+      console.log("anjayy");
+      $('#verify_password_input').css('border', '1px solid green');
+    } else {
+      console.log("salah");
+      $('#verify_password_input').css('border', '1px solid red');
+    }
+  });
   $("#show_hide_password i").on('click', function(event) {
     event.preventDefault();
     if ($('#show_hide_password input').attr("type") == "text") {
@@ -297,22 +286,45 @@ $title = 'Admin Panel'
       $('#show_hide_password1 i').addClass("fa-eye");
     }
   });
-  // $("#show_hide_password_verify i").on('click', function(event) {
-  //     event.preventDefault();
-  //     if($('#show_hide_password_verify input').attr("type") == "text"){
-  //         $('#show_hide_password_verify input').attr('type', 'password');
-  //         $('#show_hide_password_verify i').addClass( "fa-eye-slash" );
-  //         $('#show_hide_password_verify i').removeClass( "fa-eye" );
-  //     }else if($('#show_hide_password_verify input').attr("type") == "password"){
-  //         $('#show_hide_password_verify input').attr('type', 'text');
-  //         $('#show_hide_password_verify i').removeClass( "fa-eye-slash" );
-  //         $('#show_hide_password_verify i').addClass( "fa-eye" );
-  //     }
-  // });
+  $("#show_hide_password_verify i").on('click', function(event) {
+    event.preventDefault();
+    if ($('#show_hide_password_verify input').attr("type") == "text") {
+      $('#show_hide_password_verify input').attr('type', 'password');
+      $('#show_hide_password_verify i').addClass("fa-eye-slash");
+      $('#show_hide_password_verify i').removeClass("fa-eye");
+    } else if ($('#show_hide_password_verify input').attr("type") == "password") {
+      $('#show_hide_password_verify input').attr('type', 'text');
+      $('#show_hide_password_verify i').removeClass("fa-eye-slash");
+      $('#show_hide_password_verify i').addClass("fa-eye");
+    }
+  });
+
   function hapus(id) {
-    console.log(id);
-    $.post("setup_admin/backend.php", { id: id, params: "2"});
+    let data_id = id;
+    $.post("setup_admin/backend.php", {
+      id: data_id,
+      params: "2"
+    }, function(data) {
+      location.reload();
+    });
   }
+  $('#kirim').click((e) => {
+    // e.preventDefault();
+    if(!$('#verify_password_input').val()){
+      alert("verifikasi password kosong");
+    }else if (!$("#password_input").val()) {
+      alert("password kosong");
+    }else{
+    if ($('#verify_password_input').val() == $("#password_input").val()) {
+      let data = $("#data_simpan").serialize() + "&params=3";
+        $.post("setup_admin/backend.php", data, function() {
+          location.reload();
+        });
+      } else {
+        alert("Tolog samain password");
+      }
+    }
+  });
 </script>
 
 

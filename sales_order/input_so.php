@@ -4,12 +4,16 @@
 $title = "Input Sales Order";
 if (isset($_POST['submit'])) {
     require '../env.php';
+    cekAdmin($role);
+    $id_admin = $_SESSION['admin']['id'];
+    
+
     extract($_POST);
     $data_item = json_decode($data_item, true);
-    $sql = "INSERT INTO sales_order(nomor_so, tanggal_so, kode_customer, keterangan, total) VALUES('$nomor_so', '$tanggal','$kode_customer','$keterangan','$total'); ";
+    $sql = "INSERT INTO sales_order(nomor_so, tanggal_so, kode_customer, keterangan, total, id_admin, id_edit_admin) VALUES('$nomor_so', '$tanggal','$kode_customer','$keterangan','$total', '$id_admin', '0'); ";
     foreach (array_filter($data_item) as $data) {
         extract($data);
-        $sql .= "INSERT INTO sales_order_item(nomor_so,barcode,quantity) VALUES('$nomor_so','$barcode','$quantity');";
+        $sql .= "INSERT INTO sales_order_item(nomor_so,barcode,quantity, id_admin, id_edit_admin) VALUES('$nomor_so','$barcode','$quantity', '$id_admin', '0');";
     }
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Ditambahkan");

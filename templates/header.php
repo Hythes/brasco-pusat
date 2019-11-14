@@ -1,10 +1,18 @@
 <?php
-$base = "http://192.168.0.109:80/brasco/";
-session_start();
+$base = "http://192.168.0.105:8080/brasco/";
+// $base = "http://localhost:8080/brasco/";
+if (session_status() == PHP_SESSION_NONE) {
+  session_start();
+}
 if (!isset($_SESSION['is_admin'])) {
   return header("Location: " . $base . "login.php?err=1  ");
 }
-if ($_SESSION['admin']['groupType'] !== $role) {
+if (!isset($_SESSION['is_admin'])) {
+  return header("Location: " . $base . "login.php?err=1  ");
+}
+if ($_SESSION['admin']['groupType'] == 'superadmin') {
+  $role = 'superadmin';
+} elseif ($_SESSION['admin']['groupType'] !== $role) {
   if (is_null($role_index)) {
     return header("Location: " . $base . "index.php?err=1  ");
   } else {
@@ -12,6 +20,8 @@ if ($_SESSION['admin']['groupType'] !== $role) {
   }
 }
 
+// $role = 'manager';
+// ngapain ikutan
 ?>
 <!DOCTYPE html>
 <html>
@@ -148,7 +158,7 @@ if ($_SESSION['admin']['groupType'] !== $role) {
         <!-- /.search form -->
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu" data-widget="tree">
-          <?php if ($role == 'inventory') : ?>
+          <?php if ($role == 'inventory' || $role == 'superadmin') : ?>
             <li class="header">INVENTORY</li>
             <li class="treeview" id="header_diskon">
               <a href="#">
@@ -162,9 +172,6 @@ if ($_SESSION['admin']['groupType'] !== $role) {
                 <li id="header_diskon_buat">
                   <a href="diskon_barang/buat.php"><i class="fa fa-circle-o"></i> <span>Buat Diskon</span></a>
                 </li>
-                <li id="header_diskon_approval">
-                  <a href="diskon_barang/approval.php"><i class="fa fa-circle-o"></i><span>Approval Diskon</span></a>
-                </li>
               </ul>
             </li>
             <li class="treeview" id="header_perubahan">
@@ -177,7 +184,6 @@ if ($_SESSION['admin']['groupType'] !== $role) {
               </a>
               <ul class="treeview-menu">
                 <li id="header_perubahan_pengajuan"><a href="pengajuan_perubahan_harga"><i class="fa fa-circle-o"></i>Pengajuan Perubahan Harga</a></li>
-                <li id="header_perubahan_approval"><a href="pengajuan_perubahan_harga/approval.php"><i class="fa fa-circle-o"></i>Approval Perubahan Harga</a></li>
                 <li id="header_perubahan_status"><a href="pengajuan_perubahan_harga/status.php"><i class="fa fa-circle-o"></i>Status Perubahan Harga</a></li>
               </ul>
             </li>
@@ -209,8 +215,8 @@ if ($_SESSION['admin']['groupType'] !== $role) {
                 <li id="header_stock_selisih"><a href="selisihStokOpname.php"><i class="fa fa-circle-o"></i>Selisih Stock Opname</a></li>
               </ul>
             </li>
-          <?php elseif ($role == 'pemasaran') : ?>
-
+          <?php endif; ?>
+          <?php if ($role == 'pemasaran' || $role == 'superadmin') : ?>
             <li class="header">PEMASARAN</li>
             <li class="treeview" id="header_order">
               <a href="#">
@@ -269,9 +275,42 @@ if ($_SESSION['admin']['groupType'] !== $role) {
             <li id="header_invoice">
               <a href="sales_invoice/buat.php"><i class="fa fa-fax"></i> <span>Sales Invoice</span></a>
             </li>
-            <li id="header_invoice">
-              <a href="sales_invoice/buat.php"><i class="fa fa-fax"></i> <span>Kas Dan Bank (Joko)</span></a>
+            <li class="treeview" id="header_bank">
+              <a href="#">
+                <i class="fa fa-bank"></i>
+                <span>Kas dan Bank</span>
+                <span class="pull-right-container">
+                  <i class="fa fa-angle-left pull-right"></i>
+                </span>
+              </a>
+              <ul class="treeview-menu">
+                <li id="header_bank_pembayaran">
+                  <a href="kas_bank/pembayaran.php"><i class="fa fa-circle-o"></i> <span>Pembayaran</span></a>
+                </li>
+                <li id="header_bank_penerimaan">
+                  <a href="kas_bank/penerimaan.php"><i class="fa fa-circle-o"></i> <span>Penerimaan</span></a>
+                </li>
+                <li id="header_bank_master">
+                  <a href="kas_bank/master_bank.php"><i class="fa fa-circle-o"></i> <span>Master Bank</span></a>
+                </li>
+                <li id="header_bank_transfer">
+                  <a href="kas_bank/transfer.php"><i class="fa fa-circle-o"></i> <span>Transfer Uang Antar Bank</span></a>
+                </li>
+                <li id="header_bank_pelunasan_customer">
+                  <a href="kas_bank/pelunasan_customer.php"><i class="fa fa-circle-o"></i> <span>Pelunasan Customer</span></a>
+                </li>
+                <li id="header_bank_pelunasan_supplier">
+                  <a href="kas_bank/pelunasan_supplier.php"><i class="fa fa-circle-o"></i> <span>Pelunasan Supplier</span></a>
+                </li>
+                <li id="header_bank_uang_muka_ke_supplier">
+                  <a href="kas_bank/uang_muka_ke_supplier.php"><i class="fa fa-circle-o"></i> <span>Uang Muka ke Supplier</span></a>
+                </li>
+                <li id="header_bank_uang_muka_dari_customer">
+                  <a href="kas_bank/uang_muka_dari_customer.php"><i class="fa fa-circle-o"></i> <span>Uang Muka dari Customer</span></a>
+                </li>
+              </ul>
             </li>
+
             <li class="treeview" id="header_sales">
               <a href="#">
                 <i class="fa fa-user-secret"></i>
@@ -289,7 +328,9 @@ if ($_SESSION['admin']['groupType'] !== $role) {
                 </li>
               </ul>
             </li>
-          <?php elseif ($role == 'procurement') : ?>
+          <?php endif; ?>
+
+          <?php if ($role == 'procurement' || $role == 'superadmin') : ?>
             <li class="header">PROCUREMENT</li>
             <li id="header_retur">
               <a href="retur_pembelian_barang"><i class="fa  fa-cart-arrow-down"></i> <span>Retur Pembelian Barang</span></a>
@@ -333,9 +374,7 @@ if ($_SESSION['admin']['groupType'] !== $role) {
                 <li id="header_purchase_data">
                   <a href="purchase_order/data_purchase_order.php"><i class="fa fa-circle-o"></i> <span>Data Purchase Order</span></a>
                 </li>
-                <li id="header_purchase_approval">
-                  <a href="purchase_order/approve_po.php"><i class="fa fa-circle-o"></i> <span>Approval PO Manager</span></a>
-                </li>
+
                 <li id="header_purchase_status">
                   <a href="purchase_order/status.php"><i class="fa fa-circle-o"></i> <span>Status Approval PO</span></a>
                 </li>
@@ -361,16 +400,29 @@ if ($_SESSION['admin']['groupType'] !== $role) {
                 </li>
               </ul>
             </li>
-          <?php elseif ($role == 'utility') : ?>
+          <?php endif; ?>
+
+          <?php if ($role == 'utility' || $role == 'superadmin') : ?>
             <li class="header">UTILITY</li>
             <li id="header_admin">
               <a href="setup_admin"><i class="fa fa-users"></i> <span>Setup Admin</span></a>
             </li>
-            <li id="header_profil"> 
+            <li id="header_profil">
               <a href="setting_counter"><i class="fa fa-clock-o"></i> <span>Setup Counter</span></a>
             </li>
             <li id="header_jurnal">
               <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
+            </li>
+          <?php endif; ?>
+
+          <?php if ($role == 'manager' || $role == 'superadmin') : ?>
+            <li class="header">MANAGER</li>
+            <li id="header_diskon_approval">
+              <a href="diskon_barang/approval.php"><i class="fa fa-percent"></i><span>Approval Diskon</span></a>
+            </li>
+            <li id="header_perubahan_approval"><a href="pengajuan_perubahan_harga/approval.php"><i class="fa fa-dollar"></i>Approval Perubahan Harga</a></li>
+            <li id="header_purchase_approval">
+              <a href="purchase_order/approve_po.php"><i class="fa fa-shopping-cart"></i> <span>Approval PO Manager</span></a>
             </li>
           <?php endif; ?>
         </ul>

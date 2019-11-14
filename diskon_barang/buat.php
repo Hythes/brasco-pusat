@@ -1,22 +1,26 @@
 <?php $role = "inventory" ?>
 <?php
 require '../env.php';
+cekAdmin($role);
 if (isset($_POST['kirim'])) {
     $dataSemua = json_decode($_POST['dataSemua'], true);
     $p = query("SELECT * FROM counter WHERE tabel = 'diskon_barang_reject'")[0];
     $id = $p['header'] . "-" . (intval($p['digit']) + 1);
     $data = explode($id, "-")[1];
-    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'diskon_barang_reject';";
+    $id_admin = $_SESSION['admin']['id'];
+    $sql .= "UPDATE counter SET digit = '$data', id_edit_admin = '$id_admin' WHERE tabel = 'diskon_barang_reject';";
     $sql = '';
     foreach ($dataSemua as $data) {
-        $word = "INSERT INTO diskon_barang_reject(kode_reject,kode_customer,barcode,barcode_reject,quantity,diskon) VALUES('%s','%s','%s','%s','%s','%s');";
+        $word = "INSERT INTO diskon_barang_reject(kode_reject,kode_customer,barcode,barcode_reject,quantity,diskon, id_admin, id_edit_admin) VALUES('%s','%s','%s','%s','%s','%s','%s','%s');";
         $array = [
             $id, //kode reject
             $data['customer']['kode'], // kode customer
             $data['barang']['barcode'], // barcode
             $data['input']['barcodeReject'], // barcode reject
             $data['input']['quantityInput'], // Quantity 
-            $data['input']['diskon'] // Diskon
+            $data['input']['diskon'], // Diskon
+            $id_admin,
+            '0'
         ];
         $sql .= vsprintf($word, $array);
     }

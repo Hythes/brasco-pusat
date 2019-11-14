@@ -1,18 +1,20 @@
 <?php $role = "pemasaran" ?>
 
 <?php
+session_start();
 require '../env.php';
+cekAdmin($role);
 $title = "Order Ke Gudang";
 $query = query("SELECT * FROM counter WHERE tabel = 'order_gudang'")[0];
 $id = $query['header'] . "-" . (intval($query['digit']) + 1);
-
 if (isset($_POST['submit'])) {
+	$id = $_SESSION['admin']['id'];
 	extract($_POST);
 	$data_item = json_decode($data_item, true);
-	$sql = "INSERT INTO order_gudang(nomor_order,tanggal,nomor_so,kode_customer,keterangan,total) VALUES('$no_order', '$tanggal','$nomor_so','$kode_customer','$keterangan','$total'); ";
+	$sql = "INSERT INTO order_gudang(nomor_order,tanggal,nomor_so,kode_customer,keterangan,total,id_admin,id_edit_admin) VALUES('$no_order', '$tanggal','$nomor_so','$kode_customer','$keterangan','$total','$id','0'); ";
 	foreach (array_filter($data_item) as $data) {
 		extract($data);
-		$sql .= "INSERT INTO order_gudang_item(nomor_order,barcode,quantity) VALUES('$no_order','$barcode','$quantity');";
+		$sql .= "INSERT INTO order_gudang_item(nomor_order,barcode,quantity,id_admin,id_edit_admin) VALUES('$no_order','$barcode','$quantity','$id','0');";
 	}
 	$data = explode($no_order, "-")[1];
 	$sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'order_gudang';";

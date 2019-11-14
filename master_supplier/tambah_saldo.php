@@ -2,6 +2,7 @@
 
 <?php
 include '../env.php';
+cekAdmin($role);
 if (isset($_POST['simpan'])) {
     $search = query("SELECT * FROM supplier_saldo WHERE kode_supplier = '$_POST[kode_supplier]'");
     if (!isset($search[0])) {

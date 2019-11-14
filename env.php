@@ -1,12 +1,31 @@
 <?php
+$base_url = "http://192.168.0.105:8080/brasco/";
 
-
-$base_url = 'http://localhost/brasco/';
+// $base_url = 'http://localhost:8080/brasco/';
 $host = "localhost";
 $user = "root";
 $password = "";
 $dbname = "brasco_pusat";
 $conn = mysqli_connect($host, $user, $password, $dbname);
+function cekAdmin($role)
+{
+  global $base_url;
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+  if (!isset($_SESSION['is_admin'])) {
+    return header("Location: " . $base . "login.php?err=1  ");
+  }
+  if ($_SESSION['admin']['groupType'] == 'superadmin') {
+    $role = 'superadmin';
+  } elseif ($_SESSION['admin']['groupType'] !== $role) {
+    if (is_null($role_index)) {
+      return header("Location: " . $base . "index.php?err=1  ");
+    } else {
+      $role = $_SESSION['admin']['groupType'];
+    }
+  }
+}
 
 function jquery()
 {

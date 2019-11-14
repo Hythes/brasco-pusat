@@ -133,10 +133,7 @@ include '../env.php'; ?>
             'kode_sup1': $('#kode_supplier1').val(),
             'kode_sup2': $('#kode_supplier2').val()
         }, function(response) {
-            // console.log(response)
             res = JSON.parse(response)
-            console.log(res)
-            return false
             no = 1
             res.forEach(element => {
                 $('#tables').append(`
@@ -146,10 +143,10 @@ include '../env.php'; ?>
             <td>${element.nama_supplier}</td>
             <td>${element.saldo_awal}</td>
             <td>${element.saldo_jalan}</td>
-            <td>${element.harga_satu}</td>
-            <td>${element.harga_dua}</td>
-            <td>${element.harga_tiga}</td>
-            <td>${element.harga_empat}</td>
+            <td>${(!element.nol_tahun)? "-" :element.nol_tahun}</td>
+            <td>${(!element.satu_tahun)? "-" :element.satu_tahun}</td>
+            <td>${(!element.dua_tahun)? "-" :element.dua_tahun}</td>
+            <td>${(!element.tiga_tahun)? "-" :element.tiga_tahun}</td>
             </tr>
             `)
             })

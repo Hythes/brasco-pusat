@@ -8,13 +8,15 @@ require '../env.php';
 <!-- query -->
 <?php
 //tambah 
+cekAdmin($role);
 if (isset($_POST['tambah'])) {
+  $id_admin = $_SESSION['admin']['id'];
   $nama = $_POST['nama'];
-  $sql = "INSERT INTO tipe_barang (nama_barang) VALUE ('$nama')";
+  $sql = "INSERT INTO tipe_barang (nama_barang, id_admin, id_edit_admin) VALUE ('$nama', '$id_admin', '0')";
   $query = mysqli_query($conn, $sql);
   if ($query) {
     echo "<script>alert('Data Added')</script>";
-    // echo "<script>location='type_barang.php'</script>";
+    echo "<script>location='type_barang.php'</script>";
   } else {
     echo "<script>alert('F')</script>";
   }
@@ -22,9 +24,10 @@ if (isset($_POST['tambah'])) {
 
 // edit
 if (isset($_POST['edit'])) {
+  $id_admin = $_SESSION['admin']['id'];
   $nama = $_POST['nama'];
-  // $id= $_POST['id'];
-  $edit = $conn->query("UPDATE tipe_barang SET nama_barang='$nama' WHERE id='$_GET[id]'");
+  $id= $_POST['id'];
+  $edit = $conn->query("UPDATE tipe_barang SET nama_barang='$nama', id_edit_admin='$id_admin' WHERE id='$id'");
   if ($edit) {
     echo "<script>alert('Data Added')</script>";
     echo "<script>location='type_barang.php'</script>";
@@ -108,6 +111,7 @@ if (isset($_GET['stats'])) {
           <table id="example1" class="table table-bordered table-striped text-center">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Type Barang</th>
                 <th>Aksi</th>
               </tr>
@@ -142,7 +146,7 @@ if (isset($_GET['stats'])) {
                             <div class="form-group">
                               <label class="col-sm-4 control-label">Masukan Type Barang</label>
                               <div class="col-sm-7">
-                                <input type="text" class="form-control" required="" name="nama" value="<?php echo $p['satuan'] ?>">
+                                <input type="text" class="form-control" required="" name="nama" value="<?php echo $p['nama_barang'] ?>">
                               </div>
                               <input type="hidden" name="id" value="<?php echo $p['id'] ?>">
                               <button type="text" class="btn btn-info col-sm-1" name="edit">Save</button>

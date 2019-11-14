@@ -1,8 +1,10 @@
-<?php $role = "inventory" ?>
+<?php $role = "manager" ?>
 
 <?php
 $title = 'Approval Pengajuan Harga';
 include '../env.php';
+cekAdmin($role);
+$id_admin = $_SESSION['admin']['id'];
 if (isset($_POST['kirim'])) {
     extract($_POST);
     $sql = '';
@@ -11,19 +13,19 @@ if (isset($_POST['kirim'])) {
         $tanggal_approve = $_POST['tanggal'];
         $approve = $_POST['approve' . $i];
         $keterangan = $_POST['keterangan' . $i];
-        $sql .= "UPDATE pengajuan_perubahan_harga SET tanggal_approve = CAST('$tanggal_approve' AS DATE), keterangan = '$keterangan',status = '$approve'  WHERE nomor_pengajuan = '$nomor_pengajuan';";
+        $sql .= "UPDATE pengajuan_perubahan_harga SET tanggal_approve = CAST('$tanggal_approve' AS DATE), keterangan = '$keterangan',status = '$approve',id_edit_admin = '$id_admin'  WHERE nomor_pengajuan = '$nomor_pengajuan';";
         if ($approve == 'approve') {
             $sql2 = query("SELECT * FROM pph_item WHERE nomor_pengajuan = '$nomor_pengajuan'");
             foreach ($sql2 as $d) {
                 extract($d);
                 if ($tipe_customer == '3') {
-                    $sql .= "UPDATE inventory SET harga_jual3 = '$harga_jual_baru', quantity = '$quantity' WHERE barcode = '$barcode_inventory';";
+                    $sql .= "UPDATE inventory SET harga_jual3 = '$harga_jual_baru', quantity = '$quantity',id_edit_admin = '$id_admin' WHERE barcode = '$barcode_inventory';";
                 }
                 if ($tipe_customer == '2') {
-                    $sql .= "UPDATE inventory SET harga_jual2 = '$harga_jual_baru', quantity = '$quantity' WHERE barcode = '$barcode_inventory';";
+                    $sql .= "UPDATE inventory SET harga_jual2 = '$harga_jual_baru', quantity = '$quantity' ,id_edit_admin = '$id_admin' WHERE barcode = '$barcode_inventory';";
                 }
                 if ($tipe_customer == '1') {
-                    $sql .= "UPDATE inventory SET harga_jual1 = '$harga_jual_baru', quantity = '$quantity' WHERE barcode = '$barcode_inventory';";
+                    $sql .= "UPDATE inventory SET harga_jual1 = '$harga_jual_baru', quantity = '$quantity' ,id_edit_admin = '$id_admin' WHERE barcode = '$barcode_inventory';";
                 }
             }
         }

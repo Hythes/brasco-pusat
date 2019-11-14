@@ -5,6 +5,8 @@ require '../env.php';
 $title = 'Input Barang Masuk';
 $total = 0;
 $query = query("SELECT * FROM purchase_order");
+
+
 if (isset($_POST['submit'])) {
     extract($_POST);
     $sql = '';

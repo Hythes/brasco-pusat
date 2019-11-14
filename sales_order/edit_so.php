@@ -8,14 +8,19 @@ $kode = $_GET['nomor'];
 $myData = query("SELECT * FROM sales_order WHERE nomor_so = '$kode'")[0];
 $f = $myData['kode_customer'];
 $myDataCustomer = query("SELECT * FROM customer WHERE kode = '$f' ")[0];
+
+cekAdmin($role);
+$id_admin = $_SESSION['admin']['id'];
+
 if (isset($_POST['submit'])) {
+    
     extract($_POST);
     $data_item = json_decode($data_item, true);
-    $sql = "UPDATE sales_order SET nomor_so ='$nomor_so',tanggal_so = '$tanggal',kode_customer = '$kode_customer',keterangan = '$keterangan',total = '$total' WHERE nomor_so = '$nomor_so'; ";
+    $sql = "UPDATE sales_order SET nomor_so ='$nomor_so',tanggal_so = '$tanggal',kode_customer = '$kode_customer',keterangan = '$keterangan',total = '$total' WHERE nomor_so = '$nomor_so', id_edit_admin= '$id_admin';";
     $sql .= "DELETE FROM sales_order_item WHERE nomor_so = '$nomor_so';";
     foreach (array_filter($data_item) as $data) {
         extract($data);
-        $sql .= "INSERT INTO sales_order_item(nomor_so,barcode,quantity) VALUES('$nomor_so','$barcode','$quantity');";
+        $sql .= "INSERT INTO sales_order_item(nomor_so,barcode,quantity, id_admin, id_edit_admin) VALUES('$nomor_so','$barcode','$quantity','$id_admin', '0');";
     }
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Diedit");

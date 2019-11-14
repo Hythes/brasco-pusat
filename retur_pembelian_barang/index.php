@@ -2,30 +2,37 @@
 
 <?php
 require '../env.php';
+cekAdmin($role);
+$id_admin = $_SESSION['admin']['id'];
 $no_retur1 = query("SELECT * FROM counter WHERE tabel = 'retur_pembelian_barang'")[0];
 $see = intval($no_retur1['digit']) + 1;
 $no_retur = $no_retur1['header'] . "-" . $see;
 if (isset($_POST['simpan'])) {
     extract($_POST);
-    $sql = "INSERT INTO retur_pembelian_barang(nomor_retur,nomor_invoice,tanggal,kode_supplier,keterangan) VALUES(
+    $sql = "INSERT INTO retur_pembelian_barang(nomor_retur,nomor_invoice,tanggal,kode_supplier,keterangan,id_admin, id_edit_admin) VALUES(
         '$nomor_retur',
         '$nomor_invoice',
-        '$tanggal',
+        '$tanggal', 
         '$kode_supplier',
-        '$keterangan_transaksi'
+        '$keterangan_transaksi',
+        '$id_admin',
+        '0'
     );";
     $sql .= PHP_EOL;
     $digit = explode('-', $nomor_retur)[1];
-    $sql .= "UPDATE counter SET digit = '$digit' WHERE tabel = 'retur_pembelian_barang';";
+    $sql .= "UPDATE counter SET digit = '$digit', id_edit_admin = '$id_admin' WHERE tabel = 'retur_pembelian_barang';";
     $sql .= PHP_EOL;
     foreach ($_POST['data'] as $my) {
         $my = json_decode($my, true);
         extract($my);
-        $sql .= "INSERT INTO retur_pembelian_barang_item(nomor_retur,barcode,jumlah,keterangan) VALUES(
+        $id_admin = $_SESSION['admin']['id'];
+        $sql .= "INSERT INTO retur_pembelian_barang_item(nomor_retur,barcode,jumlah,keterangan,id_admin, id_edit_admin) VALUES(
             '$nomor_retur',
             '$barcode',
             '$jumlah',
-            '$keterangan'
+            '$keterangan',
+            '$id_admin',
+            '0'
         );";
     }
     $query = mysqli_multi_query($conn, $sql);

@@ -1,7 +1,8 @@
 <?php
 
+$base_url = "http://192.168.0.105:8080/brasco/";
 
-$base_url = 'http://localhost/brasco/';
+// $base_url = 'http://localhost:8080/brasco/';
 $host = "localhost";
 $user = "root";
 $password = "";

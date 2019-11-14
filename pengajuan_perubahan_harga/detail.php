@@ -1,4 +1,4 @@
-<?php $role = "inventory" ?>
+<?php $role = "manager" ?>
 
 <?php
 include '../env.php';

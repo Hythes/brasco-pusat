@@ -6,11 +6,18 @@
 <?php
 $title = 'Master Data Customer';
 include '../env.php';
+cekAdmin($role);
+
+$customer_counter = query("SELECT * FROM counter WHERE tabel = 'customer'")[0];
+$see = intval($customer_counter['digit']) + 1;
+$kode_customer = $customer_counter['header'] . "-" . $see;
+
 if (isset($_POST['edit'])) {
   extract($_POST);
+  $id_admin = $_SESSION['admin']['id'];
   $query = "UPDATE customer 
   SET
-  kode = '$kode',
+  kode = '$kode_customer',
   nama = '$nama',
   kota = '$kota',
   alamat = '$alamat',
@@ -29,7 +36,8 @@ if (isset($_POST['edit'])) {
   tanggal_jual_akhir = '$tanggal',
   saldo_awal = '$saldo_awal',
   saldo_jalan = '$saldo_jalan',
-  keterangan = '$keterangan'
+  keterangan = '$keterangan',
+  id_edit_admin = '$id_admin'
   WHERE kode = '$kode_old'";
   $sql = mysqli_query($conn, $query);
   lanjutkan($sql, "Diedit");
@@ -41,8 +49,9 @@ if (isset($_POST['edit'])) {
   lanjutkan($sql, "Dihapus");
 } else if (isset($_POST['simpan'])) {
   extract($_POST);
-  $query =  "INSERT INTO customer(kode,nama,alamat,kota,kodepos,telepon,handphone,npwp,ktp,tipe_customer,kredit,contact_name,email,kode_sales,top,batas_kredit,tanggal_jual_akhir,saldo_awal,saldo_jalan,keterangan) VALUES(
-    '$kode','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$npwp','$ktp','$tipe_customer','$kredit','$contact_name','$email','$kode_sales','$top','$batas_kredit','$tanggal','$saldo_awal','$saldo_jalan','$keterangan'
+  $id_admin = $_SESSION['admin']['id'];
+  $query =  "INSERT INTO customer(kode,nama,alamat,kota,kodepos,telepon,handphone,npwp,ktp,tipe_customer,kredit,contact_name,email,kode_sales,top,batas_kredit,tanggal_jual_akhir,saldo_awal,saldo_jalan,keterangan, id_admin, id_edit_admin) VALUES(
+    '$kode','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$npwp','$ktp','$tipe_customer','$kredit','$contact_name','$email','$kode_sales','$top','$batas_kredit','$tanggal','$saldo_awal','$saldo_jalan','$keterangan', '$id_admin', '0'
   )";
   $sql = mysqli_query($conn, $query);
   lanjutkan($sql, "Disimpan");
@@ -86,7 +95,7 @@ $show = query("SELECT * FROM customer");
             <div class="form-group">
               <label class="col-sm-3">Kode Customer</label>
               <div class="col-sm-9">
-                <input type="text" name="kode" class="form-control" style="width: 40%;">
+                <input type="text" disabled name="kode" value="<?= $kode_customer; ?>" class="form-control" style="width: 40%;">
               </div>
             </div>
             <div class="form-group">

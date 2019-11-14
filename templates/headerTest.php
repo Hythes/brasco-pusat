@@ -1,12 +1,20 @@
 <?php
-$base = "http://192.168.0.109:80/brasco/";
+// $base = "http://192.168.0.109:80/brasco/";
+$base = "http://192.168.0.102:8080/brasco/";
+// $base = "http://localhost:8080/brasco/";
 session_start();
 if (!isset($_SESSION['is_admin'])) {
     return header("Location: " . $base . "login.php?err=1  ");
 }
-if ($_SESSION['admin']['groupType'] !== $role && $role !== 'index') {
-    return header("Location: " . $base . "index.php?err=1  ");
+if ($_SESSION['admin']['groupType'] !== $role) {
+    if (is_null($role_index)) {
+        return header("Location: " . $base . "index.php?err=1  ");
+    } else {
+        $role = $_SESSION['admin']['groupType'];
+    }
 }
+// $role = 'manager';
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -80,7 +88,7 @@ if ($_SESSION['admin']['groupType'] !== $role && $role !== 'index') {
             <!-- Logo -->
             <a href="index.php" class="logo">
                 <!-- mini logo for sidebar mini 50x50 pixels -->
-                <span class="logo-mini"><b>A</b>LT</span>
+                <span class="logo-mini"><b>B</b>PT</span>
                 <!-- logo for regular state and mobile devices -->
                 <span class="logo-lg"><b>BRASCO </b>PUSAT</span>
             </a>
@@ -103,7 +111,7 @@ if ($_SESSION['admin']['groupType'] !== $role && $role !== 'index') {
                                 <!-- Menu Footer-->
                                 <li class="user-footer">
                                     <div class="mx-auto">
-                                        <a href="logout.php" class="btn btn-default btn-flat" onclick="return confirm('Anda yakin ingin logout?')>Logout</a>
+                                        <a href="logout.php" class="btn btn-default btn-flat" onclick="return confirm('Anda yakin ingin logout?'" )>Logout</a>
                                     </div>
                                 </li>
                             </ul>
@@ -111,8 +119,8 @@ if ($_SESSION['admin']['groupType'] !== $role && $role !== 'index') {
                         <!-- Control Sidebar Toggle Button -->
                         <!-- <li>
                             <a href=" #" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
-                                </li> -->
-                            </ul>
+                </li> -->
+                    </ul>
                 </div>
             </nav>
         </header>
@@ -143,229 +151,234 @@ if ($_SESSION['admin']['groupType'] !== $role && $role !== 'index') {
                 <!-- /.search form -->
                 <!-- sidebar menu: : style can be found in sidebar.less -->
                 <ul class="sidebar-menu" data-widget="tree">
-                    <li class="header">INVENTORY</li>
-                    <li class="treeview" id="header_diskon">
-                        <a href="#">
-                            <i class="fa fa-percent"></i>
-                            <span>Diskon Barang Reject</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_diskon_buat">
-                                <a href="diskon_barang/buat.php"><i class="fa fa-circle-o"></i> <span>Buat Diskon</span></a>
-                            </li>
-                            <li id="header_diskon_approval">
-                                <a href="diskon_barang/approval.php"><i class="fa fa-circle-o"></i><span>Approval Diskon</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview" id="header_perubahan">
-                        <a href="#">
-                            <i class="fa fa-dollar"></i>
-                            <span>Perubahan Harga</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_perubahan_pengajuan"><a href="pengajuan_perubahan_harga"><i class="fa fa-circle-o"></i>Pengajuan Perubahan Harga</a></li>
-                            <li id="header_perubahan_approval"><a href="pengajuan_perubahan_harga/approval.php"><i class="fa fa-circle-o"></i>Approval Perubahan Harga</a></li>
-                            <li id="header_perubahan_status"><a href="pengajuan_perubahan_harga/status.php"><i class="fa fa-circle-o"></i>Status Perubahan Harga</a></li>
-                        </ul>
-                    </li>
+                    <?php if ($role == 'inventory') : ?>
+                        <li class="header">INVENTORY</li>
+                        <li class="treeview" id="header_diskon">
+                            <a href="#">
+                                <i class="fa fa-percent"></i>
+                                <span>Diskon Barang Reject</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_diskon_buat">
+                                    <a href="diskon_barang/buat.php"><i class="fa fa-circle-o"></i> <span>Buat Diskon</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="header_perubahan">
+                            <a href="#">
+                                <i class="fa fa-dollar"></i>
+                                <span>Perubahan Harga</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_perubahan_pengajuan"><a href="pengajuan_perubahan_harga"><i class="fa fa-circle-o"></i>Pengajuan Perubahan Harga</a></li>
+                                <li id="header_perubahan_status"><a href="pengajuan_perubahan_harga/status.php"><i class="fa fa-circle-o"></i>Status Perubahan Harga</a></li>
+                            </ul>
+                        </li>
 
-                    <li class="treeview" id="header_inventory">
-                        <a href="#"><i class="fa fa-cubes"></i>
-                            <span>Inventori</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_inventory_master"><a href="master_inventory"><i class="fa fa-circle-o"></i> Master Inventori</a></li>
-                            <li id="header_satuan_master"><a href="master_inventory/master_satuan.php"><i class="fa fa-circle-o"></i> Master Satuan</a></li>
-                            <li id="header_type_barang"><a href="master_inventory/type_barang.php"><i class="fa fa-circle-o"></i>Type Barang</a></li>
-                            <!-- <li id="header_inventory_search"><a href="master_inventory/"><i class="fa fa-circle-o"></i>Search Data Inventory</a></li> -->
-                            <!-- <li id="header_inventory_edit"><a href="master_inventory/ubah.php"><i class="fa fa-circle-o"></i>Edit Data Inventory</a></li> -->
-                        </ul>
-                    </li>
-                    <li class="treeview" id="header_stock">
-                        <a href="#"><i class="fa fa-cube"></i>
-                            <span>Stock Opname</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_stock_input"><a href="stock_opname"><i class="fa fa-circle-o"></i>Input Hasil Stock Opname</a></li>
-                            <li id="header_stock_selisih"><a href="selisihStokOpname.php"><i class="fa fa-circle-o"></i>Selisih Stock Opname</a></li>
-                        </ul>
-                    </li>
-                    <li class="header">PEMASARAN</li>
-                    <li class="treeview" id="header_order">
-                        <a href="#">
-                            <i class="fa fa-flip-horizontal fa-truck"></i>
-                            <span>Order Gudang</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_order_list">
-                                <a href="order_gudang/list_order.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
-                            </li>
-                            <li id="header_order_input">
-                                <a href="order_gudang/input_order.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview" id="header_picking">
-                        <a href="#">
-                            <i class="fa  fa-truck"></i>
-                            <span>Picking Gudang</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_picking_list">
-                                <a href="picking_gudang/list.php"><i class="fa fa-circle-o"></i> <span>List Picking Gudang</span></a>
-                            </li>
-                            <li id="header_picking_gudang">
-                                <a href="picking_gudang/input.php"><i class="fa fa-circle-o"></i> <span> Picking Gudang</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview" id="header_packing">
-                        <a href="#">
-                            <i class="fa fa-dropbox"></i>
-                            <span>Packing Gudang</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_packing_list">
-                                <a href="packing_gudang/list.php"><i class="fa fa-circle-o"></i> <span>List Packing Gudang</span></a>
-                            </li>
-                            <li id="header_packing_gudang">
-                                <a href="packing_gudang/input.php"><i class="fa fa-circle-o"></i> <span> Packing Gudang</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li id="header_customer">
-                        <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
-                    </li>
-                    <li id="header_invoice">
-                        <a href="sales_invoice/buat.php"><i class="fa fa-fax"></i> <span>Sales Invoice</span></a>
-                    </li>
-                    <li id="header_invoice">
-                        <a href="sales_invoice/buat.php"><i class="fa fa-fax"></i> <span>Kas Dan Bank (Joko)</span></a>
-                    </li>
-                    <li class="treeview" id="header_sales">
-                        <a href="#">
-                            <i class="fa fa-user-secret"></i>
-                            <span>Sales Order</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_sales_input">
-                                <a href="sales_order/input_so.php"><i class="fa fa-circle-o"></i> <span>Input Sales Order</span></a>
-                            </li>
-                            <li id="header_sales_laporan">
-                                <a href="sales_order/laporan_so.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="header">PROCUREMENT</li>
-                    <li id="header_retur">
-                        <a href="retur_pembelian_barang"><i class="fa  fa-cart-arrow-down"></i> <span>Retur Pembelian Barang</span></a>
-                    </li>
-                    <li class="treeview" id="header_supplier">
-                        <a href="#">
-                            <i class="fa fa-archive"></i>
-                            <span>Supplier</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_supplier_master"><a href="master_supplier"><i class="fa fa-circle-o"></i>Master Supplier</a></li>
-                            <li id="header_supplier_list">
-                                <a href="master_supplier/list_supplier"><i class="fa fa-circle-o"></i><span>List Supplier</span></a>
-                            </li>
-                            <li id="header_supplier_hutang">
-                                <a href="master_supplier/list_hutang.php"><i class="fa fa-circle-o"></i><span>List Hutang</span></a>
-                            </li>
-                            <li id="header_supplier_tempo">
-                                <a href="master_supplier/aging.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview" id="header_po">
-                        <a href="#">
-                            <i class="fa fa-shopping-cart"></i>
-                            <span>Purchase Order</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_purchase_order">
-                                <a href="purchase_order"><i class="fa fa-circle-o"></i>Purchase Order</a>
-                            </li>
-                            <!-- <li id="header_purchase_cetak">
+                        <li class="treeview" id="header_inventory">
+                            <a href="#"><i class="fa fa-cubes"></i>
+                                <span>Inventori</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_inventory_master"><a href="master_inventory"><i class="fa fa-circle-o"></i> Master Inventori</a></li>
+                                <li id="header_satuan_master"><a href="master_inventory/master_satuan.php"><i class="fa fa-circle-o"></i> Master Satuan</a></li>
+                                <li id="header_type_barang"><a href="master_inventory/type_barang.php"><i class="fa fa-circle-o"></i>Type Barang</a></li>
+                                <!-- <li id="header_inventory_search"><a href="master_inventory/"><i class="fa fa-circle-o"></i>Search Data Inventory</a></li> -->
+                                <!-- <li id="header_inventory_edit"><a href="master_inventory/ubah.php"><i class="fa fa-circle-o"></i>Edit Data Inventory</a></li> -->
+                            </ul>
+                        </li>
+                        <li class="treeview" id="header_stock">
+                            <a href="#"><i class="fa fa-cube"></i>
+                                <span>Stock Opname</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_stock_input"><a href="stock_opname"><i class="fa fa-circle-o"></i>Input Hasil Stock Opname</a></li>
+                                <li id="header_stock_selisih"><a href="selisihStokOpname.php"><i class="fa fa-circle-o"></i>Selisih Stock Opname</a></li>
+                            </ul>
+                        </li>
+                    <?php elseif ($role == 'pemasaran') : ?>
+
+                        <li class="header">PEMASARAN</li>
+                        <li class="treeview" id="header_order">
+                            <a href="#">
+                                <i class="fa fa-flip-horizontal fa-truck"></i>
+                                <span>Order Gudang</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_order_list">
+                                    <a href="order_gudang/list_order.php"><i class="fa fa-circle-o"></i> <span>List Order ke Gudang</span></a>
+                                </li>
+                                <li id="header_order_input">
+                                    <a href="order_gudang/input_order.php"><i class="fa fa-circle-o"></i> <span>Order ke Gudang</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="header_picking">
+                            <a href="#">
+                                <i class="fa  fa-truck"></i>
+                                <span>Picking Gudang</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_picking_list">
+                                    <a href="picking_gudang/list.php"><i class="fa fa-circle-o"></i> <span>List Picking Gudang</span></a>
+                                </li>
+                                <li id="header_picking_gudang">
+                                    <a href="picking_gudang/input.php"><i class="fa fa-circle-o"></i> <span> Picking Gudang</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="header_packing">
+                            <a href="#">
+                                <i class="fa fa-dropbox"></i>
+                                <span>Packing Gudang</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_packing_list">
+                                    <a href="packing_gudang/list.php"><i class="fa fa-circle-o"></i> <span>List Packing Gudang</span></a>
+                                </li>
+                                <li id="header_packing_gudang">
+                                    <a href="packing_gudang/input.php"><i class="fa fa-circle-o"></i> <span> Packing Gudang</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li id="header_customer">
+                            <a href="master_customer"><i class="fa fa-users"></i> <span>Data Master Customer</span></a>
+                        </li>
+                        <li id="header_invoice">
+                            <a href="sales_invoice/buat.php"><i class="fa fa-fax"></i> <span>Sales Invoice</span></a>
+                        </li>
+                        <li id="header_invoice">
+                            <a href="sales_invoice/buat.php"><i class="fa fa-fax"></i> <span>Kas Dan Bank (Joko)</span></a>
+                        </li>
+                        <li class="treeview" id="header_sales">
+                            <a href="#">
+                                <i class="fa fa-user-secret"></i>
+                                <span>Sales Order</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_sales_input">
+                                    <a href="sales_order/input_so.php"><i class="fa fa-circle-o"></i> <span>Input Sales Order</span></a>
+                                </li>
+                                <li id="header_sales_laporan">
+                                    <a href="sales_order/laporan_so.php"><i class="fa fa-circle-o"></i> <span>Laporan Sales Order</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php elseif ($role == 'procurement') : ?>
+                        <li class="header">PROCUREMENT</li>
+                        <li id="header_retur">
+                            <a href="retur_pembelian_barang"><i class="fa  fa-cart-arrow-down"></i> <span>Retur Pembelian Barang</span></a>
+                        </li>
+                        <li class="treeview" id="header_supplier">
+                            <a href="#">
+                                <i class="fa fa-archive"></i>
+                                <span>Supplier</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_supplier_master"><a href="master_supplier"><i class="fa fa-circle-o"></i>Master Supplier</a></li>
+                                <li id="header_supplier_list">
+                                    <a href="master_supplier/list_supplier"><i class="fa fa-circle-o"></i><span>List Supplier</span></a>
+                                </li>
+                                <li id="header_supplier_hutang">
+                                    <a href="master_supplier/list_hutang.php"><i class="fa fa-circle-o"></i><span>List Hutang</span></a>
+                                </li>
+                                <li id="header_supplier_tempo">
+                                    <a href="master_supplier/aging.php"><i class="fa fa-circle-o"></i> <span>Jatuh Tempo Pembayaran</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="header_po">
+                            <a href="#">
+                                <i class="fa fa-shopping-cart"></i>
+                                <span>Purchase Order</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_purchase_order">
+                                    <a href="purchase_order"><i class="fa fa-circle-o"></i>Purchase Order</a>
+                                </li>
+                                <!-- <li id="header_purchase_cetak">
                 <a href="purchase_order/cetak_label_barcode.php"><i class="fa fa-circle-o"></i> <span>Cetak Label Barcode</span></a>
               </li> -->
-                            <li id="header_purchase_data">
-                                <a href="purchase_order/data_purchase_order.php"><i class="fa fa-circle-o"></i> <span>Data Purchase Order</span></a>
-                            </li>
-                            <li id="header_purchase_approval">
-                                <a href="purchase_order/approve_po.php"><i class="fa fa-circle-o"></i> <span>Approval PO Manager</span></a>
-                            </li>
-                            <li id="header_purchase_status">
-                                <a href="purchase_order/status.php"><i class="fa fa-circle-o"></i> <span>Status Approval PO</span></a>
-                            </li>
-                            <li id="header_purchase_closed">
-                                <a href="purchase_order/closed_po.php"><i class="fa fa-circle-o"></i> <span>Menu Closed PO</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="treeview" id="header_purchasing">
-                        <a href="#">
-                            <i class="fa fa-usd"></i>
-                            <span>Purchasing</span>
-                            <span class="pull-right-container">
-                                <i class="fa fa-angle-left pull-right"></i>
-                            </span>
-                        </a>
-                        <ul class="treeview-menu">
-                            <li id="header_purchasing_input">
-                                <a href="purchasing/input_pu.php"><i class="fa fa-circle-o"></i> <span>Input Barang Masuk</span></a>
-                            </li>
-                            <li id="header_purchasing_masuk">
-                                <a href="purchasing/laporan_pu.php"><i class="fa fa-circle-o"></i> <span>Laporan Barang Masuk</span></a>
-                            </li>
-                        </ul>
-                    </li>
-                    <li class="header">UTILITY</li>
-                    <li id="header_admin">
-                        <a href="setup_admin"><i class="fa fa-users"></i> <span>Setup Admin</span></a>
-                    </li>
-                    <li id="header_profil">
-                        <a href="profile"><i class="fa fa-user"></i> <span>Setup Profile</span></a>
-                    </li>
-                    <li id="header_counter">
-                        <a href="setting_counter"><i class="fa fa-clock-o"></i> <span>Setup Counter</span></a>
-                    </li>
-                    <li id="header_jurnal">
-                        <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
-                    </li>
+                                <li id="header_purchase_data">
+                                    <a href="purchase_order/data_purchase_order.php"><i class="fa fa-circle-o"></i> <span>Data Purchase Order</span></a>
+                                </li>
 
+                                <li id="header_purchase_status">
+                                    <a href="purchase_order/status.php"><i class="fa fa-circle-o"></i> <span>Status Approval PO</span></a>
+                                </li>
+                                <li id="header_purchase_closed">
+                                    <a href="purchase_order/closed_po.php"><i class="fa fa-circle-o"></i> <span>Menu Closed PO</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li class="treeview" id="header_purchasing">
+                            <a href="#">
+                                <i class="fa fa-usd"></i>
+                                <span>Purchasing</span>
+                                <span class="pull-right-container">
+                                    <i class="fa fa-angle-left pull-right"></i>
+                                </span>
+                            </a>
+                            <ul class="treeview-menu">
+                                <li id="header_purchasing_input">
+                                    <a href="purchasing/input_pu.php"><i class="fa fa-circle-o"></i> <span>Input Barang Masuk</span></a>
+                                </li>
+                                <li id="header_purchasing_masuk">
+                                    <a href="purchasing/laporan_pu.php"><i class="fa fa-circle-o"></i> <span>Laporan Barang Masuk</span></a>
+                                </li>
+                            </ul>
+                        </li>
+                    <?php elseif ($role == 'utility') : ?>
+                        <li class="header">UTILITY</li>
+                        <li id="header_admin">
+                            <a href="setup_admin"><i class="fa fa-users"></i> <span>Setup Admin</span></a>
+                        </li>
+                        <li id="header_profil">
+                            <a href="setting_counter"><i class="fa fa-clock-o"></i> <span>Setup Counter</span></a>
+                        </li>
+                        <li id="header_jurnal">
+                            <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>
+                        </li>
+                    <?php elseif ($role == 'manager') : ?>
+                        <li class="header">MANAGER</li>
+                        <li id="header_diskon_approval">
+                            <a href="diskon_barang/approval.php"><i class="fa fa-percent"></i><span>Approval Diskon</span></a>
+                        </li>
+                        <li id="header_perubahan_approval"><a href="pengajuan_perubahan_harga/approval.php"><i class="fa fa-dollar"></i>Approval Perubahan Harga</a></li>
+                        <li id="header_purchase_approval">
+                            <a href="purchase_order/approve_po.php"><i class="fa fa-shopping-cart"></i> <span>Approval PO Manager</span></a>
+                        </li>
+                    <?php endif; ?>
                 </ul>
             </section>
             <!-- /.sidebar -->
