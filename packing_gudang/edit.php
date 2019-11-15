@@ -1,7 +1,10 @@
 <?php $role = "pemasaran" ?>
 
 <?php
+session_start();
 require '../env.php';
+cekAdmin($role);
+$sess = $_SESSION['admin']['id'];
 if (isset($_GET['kode'])) {
     header('Content-Type: Application/Json');
     $nomor_pack = $_GET['kode'];
@@ -31,15 +34,15 @@ if (isset($_POST['submit'])) {
     $total = 0;
     for ($i = 1; $i <= $_POST['total']; $i++) {
         if (isset($_POST['id_packing_' . $i])) {
-            $query .= sprintf("UPDATE packing_item SET id_picking_item ='%s',quantity_packing='%s' WHERE id=%s;", $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i], $_POST['id_packing_' . $i]);
+            $query .= sprintf("UPDATE packing_item SET id_picking_item ='%s',quantity_packing='%s',id_edit_admin='%s' WHERE id=%s;", $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i], $sess, $_POST['id_packing_' . $i]);
         } else {
-            $query .= sprintf("INSERT INTO packing_item(nomor_packing,id_picking_item,quantity_packing) VALUES('%s',%s,%s); ", $_POST['nomor_packing'], $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i]);
+            $query .= sprintf("INSERT INTO packing_item(nomor_packing,id_picking_item,quantity_packing,id_admin,id_edit_admin) VALUES('%s',%s,%s,'%s','%s'); ", $_POST['nomor_packing'], $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i], $sess, 0);
         }
 
-        $query .= sprintf("UPDATE picking_item SET quantity_packing = '%s' WHERE id = %s;", $_POST['qty_pack_' . $i], $_POST['id_picking_' . $i]);
+        $query .= sprintf("UPDATE picking_item SET quantity_packing = '%s',id_edit_admin = '%s' WHERE id = %s;", $_POST['qty_pack_' . $i], $sess, $_POST['id_picking_' . $i]);
         $total += intval($_POST['qty_pack_' . $i]);
     }
-    $query .= sprintf("UPDATE packing SET nomor_packing='%s',kode_customer='%s',tanggal='%s',total='%s' WHERE nomor_packing='%s';", $_POST['nomor_packing'], $_POST['customer'], $_POST['tanggal'], $total, $_POST['nomor_packing']);
+    $query .= sprintf("UPDATE packing SET nomor_packing='%s',kode_customer='%s',tanggal='%s',total='%s',id_edit_admin='%s' WHERE nomor_packing='%s';", $_POST['nomor_packing'], $_POST['customer'], $_POST['tanggal'], $total, $sess, $_POST['nomor_packing']);
     $sql = mysqli_multi_query($conn, $query);
     lanjutkan($sql, "Diedit!");
     $return = true;

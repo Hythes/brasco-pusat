@@ -6,16 +6,19 @@
 </script>
 
 <?php
+session_start();
 require '../env.php';
+cekAdmin($role);
+$sess = $_SESSION['admin']['id'];
 if (isset($_POST['submit'])) {
     $query = '';
     $total = 0;
     for ($i = 1; $i <= $_POST['total']; $i++) {
-        $query .= sprintf("INSERT INTO packing_item(nomor_packing,id_picking_item,quantity_packing) VALUES('%s',%s,%s); ", $_POST['nomor_packing'], $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i]);
-        $query .= sprintf("UPDATE picking_item SET quantity_packing = '%s' WHERE id = %s;", $_POST['qty_pack_' . $i], $_POST['id_picking_' . $i]);
+        $query .= sprintf("INSERT INTO packing_item(nomor_packing,id_picking_item,quantity_packing,id_admin,id_edit_admin) VALUES('%s',%s,%s,%s,%s); ", $_POST['nomor_packing'], $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i], $sess, 0);
+        $query .= sprintf("UPDATE picking_item SET quantity_packing = '%s', id_edit_admin = '%s' WHERE id = %s;", $_POST['qty_pack_' . $i], $sess, $_POST['id_picking_' . $i]);
         $total += intval($_POST['qty_pack_' . $i]);
     }
-    $query .= sprintf("INSERT INTO packing(nomor_packing,kode_customer,tanggal,total) VALUES('%s','%s','%s','%s');", $_POST['nomor_packing'], $_POST['customer'], $_POST['tanggal'], $total);
+    $query .= sprintf("INSERT INTO packing(nomor_packing,kode_customer,tanggal,total,id_admin,id_edit_admin) VALUES('%s','%s','%s','%s','%s','%s');", $_POST['nomor_packing'], $_POST['customer'], $_POST['tanggal'], $total, $sess, 0);
     $data = explode($_POST['nomor_packing'], "-")[1];
     $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'packing';";
     $sql = mysqli_multi_query($conn, $query);
@@ -74,8 +77,9 @@ $nomor_pick = $query['header'] . "-" . (intval($query['digit']) + 1);
                                         <label class="col-xs-3">Pilih Customer</label>
                                         <div class="col-xs-9">
                                             <select name="customer" id="customer" class="form-control">
+                                                <option value="0" disabled selected>- Pilih Customer -</option>
+
                                                 <?php foreach (query("SELECT * FROM customer") as $cust) : ?>
-                                                    <option value="0">- Pilih Customer -</option>
                                                     <option value="<?= $cust['kode'] ?>"><?= $cust['nama'] ?> </option>
                                                 <?php endforeach; ?>
                                             </select>

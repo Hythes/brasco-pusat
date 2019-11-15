@@ -2,6 +2,7 @@
 
 <?php
 require '../env.php';
+cekAdmin($role);
 $title = 'Input Barang Masuk';
 $total = 0;
 $query = query("SELECT * FROM purchase_order");
@@ -12,6 +13,7 @@ if (isset($_POST['submit'])) {
     $sql = '';
     $total_quantity = 0;
     for ($i = 1; $i <= $total_item; $i++) {
+        $id_admin = $_SESSION['admin']['id'];
         $quantity_terima = $_POST['quantity_terima_' . $i];
         $barcode = $_POST['barcode_' . $i];
         $inven = query("SELECT * FROM inventory WHERE barcode = '$barcode'")[0];
@@ -19,10 +21,11 @@ if (isset($_POST['submit'])) {
         $sql .= "UPDATE inventory SET quantity = '$quantity_inven' WHERE barcode = '$barcode';";
         $harga_satuan = $_POST['harga_satuan_' . $i];
         $quantity_order = $_POST['quantity_order_' . $i];
-        $sql .= "INSERT INTO purchasing_item(kode_pu,barcode,quantity_order,quantity_terima,harga_satuan) VALUES('$nomor_invoice','$barcode','$quantity_order','$quantity_terima','$harga_satuan');";
+        $sql .= "INSERT INTO purchasing_item(kode_pu,barcode,quantity_order,quantity_terima,harga_satuan, id_admin, id_edit_admin) VALUES('$nomor_invoice','$barcode','$quantity_order','$quantity_terima','$harga_satuan', '$id_admin', '0');";
         $total_quantity += intval($quantity_terima);
     }
-    $sql .= "INSERT INTO purchasing(kode,nomor_surat_jalan,kode_supplier,diterima_oleh,tanggal_terima,tanggal_jatuh_tempo,total_quantity) VALUES('$nomor_invoice','$nomor_surat_jalan','$kode_supplier','$diterima_oleh',CAST('$tanggal_terima' AS DATE),CAST('$tanggal_jatuh_tempo' AS DATE),'$total_quantity');";
+    $id_admin = $_SESSION['admin']['id'];
+    $sql .= "INSERT INTO purchasing(kode,nomor_surat_jalan,kode_supplier,diterima_oleh,tanggal_terima,tanggal_jatuh_tempo,total_quantity, id_admin, id_edit_admin) VALUES('$nomor_invoice','$nomor_surat_jalan','$kode_supplier','$diterima_oleh',CAST('$tanggal_terima' AS DATE),CAST('$tanggal_jatuh_tempo' AS DATE),'$total_quantity', '$id_admin', '0');";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dimasukkan");
     $reload = true;

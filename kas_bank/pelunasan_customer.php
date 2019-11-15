@@ -140,7 +140,7 @@ cekAdmin($role); ?>
                     <div class="form-group">
                       <label class="col-sm-3">Jml Beli 1 thn</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" name="" placeholder="Statis">
+                        <input type="text" class="form-control" id="jumlah_satu_tahun" readonly>
                       </div>
                     </div>
                   </div>
@@ -160,9 +160,9 @@ cekAdmin($role); ?>
                       <label class="col-sm-2">No Transaksi</label>
                       <div class="col-sm-3">
                         <?php
-                        $query = mysqli_fetch_array(mysqli_query($conn, "SELECT header FROM counter WHERE nama='Kas Masuk'"));
+                        $query = mysqli_fetch_array(mysqli_query($conn, "SELECT header FROM counter WHERE nama='no_kas_masuk'"));
                         $km = $query['header'];
-                        $digit = mysqli_fetch_array(mysqli_query($conn, "SELECT max(digit) as digie FROM counter WHERE nama='Kas Masuk'"));
+                        $digit = mysqli_fetch_array(mysqli_query($conn, "SELECT max(digit) as digie FROM counter WHERE nama='no_kas_masuk'"));
                         $angka = $digit['digie'];
                         $angka++;
                         $char = "$km-";
@@ -334,6 +334,7 @@ cekAdmin($role); ?>
         $('#telepon').val(res.telepon)
         $('#hp').val(res.handphone)
         $('#top').val(res.top)
+        $('#jumlah_satu_tahun').val(res.total.toFixed(3))
         $('#tanggal_jual_akhir').val(res.tanggal_jual_akhir)
       } else {
         $('#nama_customer').val('')
@@ -344,7 +345,8 @@ cekAdmin($role); ?>
         $('#telepon').val('')
         $('#hp').val('')
         $('#top').val('')
-        $('tanggal_jual_akhir').val('')
+        $('#tanggal_jual_akhir').val('')
+        $('#jumlah_satu_tahun').val('')
       }
     })
   })

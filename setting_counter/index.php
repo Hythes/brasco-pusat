@@ -3,12 +3,13 @@
 <?php require_once("../env.php"); ?>
 <?php
 $title = "Setting Counter";
-
+cekAdmin($role);
+$sess = $_SESSION['admin']['id'];
 if (isset($_POST['simpan'])) {
     $sql = '';
     extract($_POST);
     for ($i = 0; $i < count($_POST['header']); $i++) {
-        $sql .= "UPDATE counter SET header = '$header[$i]', digit = '$digit[$i]' WHERE tabel = '$tabel[$i]';" . PHP_EOL;
+        $sql .= "UPDATE counter SET header = '$header[$i]', digit = '$digit[$i]',id_edit_admin = '$sess' WHERE tabel = '$tabel[$i]';" . PHP_EOL;
     }
     lanjutkan(mysqli_multi_query($conn, $sql), "Diubah!");
     header('Refresh:0');

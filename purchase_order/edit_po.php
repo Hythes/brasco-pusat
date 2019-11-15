@@ -2,10 +2,11 @@
 
 <?php
 require '../env.php';
-
+cekAdmin($role);
 if (isset($_POST['submit'])) {
     extract($_POST);
-    $sql = "UPDATE purchase_order SET kode = '$kode',tanggal = '$tanggal',kode_supplier ='$kode_supplier',nama_supplier = '$nama_supplier',alamat_supplier = '$alamat_supplier',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kodepos',telepon = '$telepon',handphone = '$handphone',dpp ='$dpp',tipe_ppn = '$tipe_ppn',tipe_ppn_input = '$tipe_ppn_teks',total_harga = '$total_harga',keterangan = '$keterangan'  WHERE kode = '$kode'; ";
+    $id_admin = $_SESSION['admin']['id'];
+    $sql = "UPDATE purchase_order SET kode = '$kode',tanggal = '$tanggal',kode_supplier ='$kode_supplier',nama_supplier = '$nama_supplier',alamat_supplier = '$alamat_supplier',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kodepos',telepon = '$telepon',handphone = '$handphone',dpp ='$dpp',tipe_ppn = '$tipe_ppn',tipe_ppn_input = '$tipe_ppn_teks',total_harga = '$total_harga',keterangan = '$keterangan', id_edit_admin = '$id_admin' WHERE kode = '$kode'; ";
     $sql .= "DELETE FROM purchase_order_item WHERE kode_po = '$kode';";
     $sql .= "DELETE FROM label_barcode WHERE kode_po = '$kode';";
 

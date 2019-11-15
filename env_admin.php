@@ -1,6 +1,6 @@
 <?php
 
-$base_url = "http://192.168.0.105:8080/brasco/";
+$base_url = "http://192.168.0.101:8080/brasco/";
 
 // $base_url = 'http://localhost:8080/brasco/';
 $host = "localhost";

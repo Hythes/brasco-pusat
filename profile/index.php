@@ -3,10 +3,12 @@
 <?php
 // Load file koneksi.php
 include "../env.php";
+cekAdmin($role);
 if (isset($_POST['kode_cabang'])) {
   $_POST['id'] = 1;
   $logo = $_FILES['logo']['name'];
-  $query =  "UPDATE profil SET id ='{$_POST['id']}', kode_cabang = '{$_POST['kode_cabang']}',nama_cabang = '{$_POST['nama_cabang']}',alamat = '{$_POST['alamat']}',alamat2 = '{$_POST['alamat2']}',kota = '{$_POST['kota']}',kodepos = '{$_POST['kodepos']}',no_telp = '{$_POST['no_telp']}',no_hp = '{$_POST['no_hp']}',chief = '{$_POST['chief']}'";
+  $id_admin = $_SESSION['admin']['id'];
+  $query =  "UPDATE profil SET id ='{$_POST['id']}', kode_cabang = '{$_POST['kode_cabang']}',nama_cabang = '{$_POST['nama_cabang']}',alamat = '{$_POST['alamat']}',alamat2 = '{$_POST['alamat2']}',kota = '{$_POST['kota']}',kodepos = '{$_POST['kodepos']}',no_telp = '{$_POST['no_telp']}',no_hp = '{$_POST['no_hp']}',chief = '{$_POST['chief']}', id_edit_admin = '$id_admin'";
   if (!empty($logo)) {
     $hapus = mysqli_query($conn, "SELECT * FROM profil where id='{$_POST['id']}'");
     // menghapus gambar yang lama

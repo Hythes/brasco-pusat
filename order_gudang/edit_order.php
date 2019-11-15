@@ -1,17 +1,20 @@
 <?php $role = "pemasaran" ?>
 
 <?php
+session_start();
 require '../env.php';
+cekAdmin($role);
 $title = "Order ke Gudang";
 
 if (isset($_POST['submit'])) {
+    $id = $_SESSION['admin']['id'];
     extract($_POST);
     $data_item = json_decode($data_item, true);
-    $sql = "UPDATE order_gudang SET tanggal = '$tanggal',kode_customer = '$kode_customer',nomor_so = '$nomor_so',keterangan = '$keterangan',total = '$total' WHERE nomor_order = '$no_order'; ";
+    $sql = "UPDATE order_gudang SET tanggal = '$tanggal',kode_customer = '$kode_customer',nomor_so = '$nomor_so',keterangan = '$keterangan',total = '$total', id_edit_admin = '$id' WHERE nomor_order = '$no_order'; ";
     $sql .= "DELETE FROM order_gudang_item WHERE nomor_order = '$no_order';";
     foreach (array_filter($data_item) as $data) {
         extract($data);
-        $sql .= "INSERT INTO order_gudang_item(nomor_order,barcode,quantity) VALUES('$no_order','$barcode','$quantity');";
+        $sql .= "INSERT INTO order_gudang_item(nomor_order,barcode,quantity,id_admin,id_edit_admin) VALUES('$no_order','$barcode','$quantity','$id','0');";
     }
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Diedit");

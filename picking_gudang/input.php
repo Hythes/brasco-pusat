@@ -3,7 +3,6 @@
 <?php
 require '../env.php';
 cekAdmin($role);
-$id_admin = $_SESSION['admin']['id'];
 $title = "Input Picking Gudang";
 $query = query('SELECT * FROM counter WHERE tabel = "picking"')[0];
 $nomor_order = '';
@@ -29,23 +28,25 @@ if (isset($_GET['nomor'])) {
 if (isset($_POST['submit'])) {
     $sql = '';
     $totalQuantity = 0;
+    $sess = $_SESSION['admin']['id'];
     extract($_POST);
     $time = strtotime($tanggal);
     $tanggal  = date('Y-m-d', $time);
     for ($i2 = 1; $i2 <= $total; $i2++) {
         foreach ($item as $now) {
+
             $id = $_POST['id_' . $i2];
             if (intval($now['id']) == intval($id)) {
                 $quantity_pick = $_POST['quantity_pick_' . $i2];
                 extract($now);
-                $sql .= "INSERT INTO picking_item(nomor_picking,barcode,id_order_item,quantity_picking,quantity_order,id_admin,id_edit_admin) VALUES('$nomor_picking','$barcode','$id','$quantity_pick','$quantity','$id_admin','0');";
+                $sql .= "INSERT INTO picking_item(nomor_picking,barcode,id_order_item,quantity_picking,quantity_order,id_admin,id_edit_admin) VALUES('$nomor_picking','$barcode','$id','$quantity_pick','$quantity','$sess','0');";
                 $totalQuantity += intval($quantity_pick);
             }
         }
     }
-    $data = explode($nomor_picking, "-")[1];
-    $sql .= "UPDATE counter SET digit = '$data',id_edit_admin = '$id_admin' WHERE tabel = 'picking';";
-    $sql .= "INSERT INTO picking(nomor_picking,nomor_order,kode_customer,status,total,tanggal,id_item,id_admin,id_edit_admin) VALUES('$nomor_picking','$nomor_order','$kode','$status','$totalQuantity','$tanggal','$id_admin','0');";
+    $data = explode("-", $nomor_picking)[1];
+    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'picking';";
+    $sql .= "INSERT INTO picking(nomor_picking,nomor_order,kode_customer,status,total,tanggal,id_admin,id_edit_admin) VALUES('$nomor_picking','$nomor_order','$kode','$status','$totalQuantity','$tanggal','$sess','0');";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dibuat!");
     $return = true;

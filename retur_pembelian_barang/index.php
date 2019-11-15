@@ -20,7 +20,7 @@ if (isset($_POST['simpan'])) {
     );";
     $sql .= PHP_EOL;
     $digit = explode('-', $nomor_retur)[1];
-    $sql .= "UPDATE counter SET digit = '$digit', id_edit_admin = '$id_admin' WHERE tabel = 'retur_pembelian_barang';";
+    $sql .= "UPDATE counter SET digit = '$digit' WHERE tabel = 'retur_pembelian_barang';";
     $sql .= PHP_EOL;
     foreach ($_POST['data'] as $my) {
         $my = json_decode($my, true);

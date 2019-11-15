@@ -145,7 +145,7 @@ $show = query("SELECT * FROM customer");
                   <div class="form-group">
                     <label class="col-sm-3">Handphone</label>
                     <div class="col-sm-9" style="margin-top: 10px;">
-                      <input type="text" name="handphone" required class="form-control" style="width: 60%;">
+                      <input type="number" name="handphone" required class="form-control" style="width: 60%;">
                     </div>
                   </div>
                 </div>
@@ -156,7 +156,7 @@ $show = query("SELECT * FROM customer");
                   <div class="form-group">
                     <label class="col-sm-3">NPWP</label>
                     <div class="col-sm-9">
-                      <input type="text" name="npwp" class="form-control" required style="width: 60%;">
+                      <input type="number" name="npwp" class="form-control" required style="width: 60%;">
                     </div>
                   </div>
                   <div class="form-group">

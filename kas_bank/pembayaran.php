@@ -51,9 +51,9 @@ cekAdmin($role); ?>
                 <label class="col-sm-2 ">No kas Keluar</label>
                 <div class="col-sm-2">
                   <?php
-                  $query = mysqli_fetch_array(mysqli_query($conn, "SELECT header FROM counter WHERE nama='Kas Keluar'"));
+                  $query = mysqli_fetch_array(mysqli_query($conn, "SELECT header FROM counter WHERE tabel='no_kas_keluar'"));
                   $kk = $query['header'];
-                  $digit = mysqli_fetch_array(mysqli_query($conn, "SELECT max(digit) as digie FROM counter WHERE nama='Kas Keluar'"));
+                  $digit = mysqli_fetch_array(mysqli_query($conn, "SELECT max(digit) as digie FROM counter WHERE tabel='no_kas_keluar'"));
                   $angka = $digit['digie'];
                   $angka++;
                   $char = "$kk-";

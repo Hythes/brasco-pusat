@@ -1,23 +1,41 @@
 <?php $role = "pemasaran" ?>
 
 <?php
+session_start();
+$id = $_SESSION['admin']['id'];
 require '../env.php';
+cekAdmin($role);
+
+$sales_invoice_counter = query("SELECT * FROM counter WHERE tabel = 'sales_invoice'")[0];
+$digit = intval($sales_invoice_counter['digit']) + 1;
+$no_sales_invoice = $sales_invoice_counter['header'] . "-" . $digit;
+
+
+$kwitansi_invoice_counter = query("SELECT * FROM counter WHERE tabel = 'kwitansi_invoice'")[0];
+$digit = intval($kwitansi_invoice_counter['digit']) + 1;
+$kwitansi_invoice = $kwitansi_invoice_counter['header'] . "-" . $digit;
+
+$faktur_counter = query("SELECT * FROM counter WHERE tabel = 'faktur'")[0];
+$digit = intval($faktur_counter['digit']) + 1;
+$faktur = $faktur_counter['header'] . "-" . $digit;
+
 
 if (isset($_POST)) {
     extract($_POST);
     if (isset($_POST['kirim'])) {
         if (isset($suratJalan)) {
-            $suratJalan = 1;
+            $suratJalan = $faktur;
         } else {
             $suratJalan = 0;
         }
+
         if (isset($kwitansi)) {
-            $kwitansi = 1;
+            $kwitansi = $kwitansi_invoice;
         } else {
             $kwitansi = 0;
         }
 
-        $sql = "INSERT INTO sales_invoice(nomor_invoice,tanggal,kode_customer,data,catatan,surat_jalan,kwitansi,subtotal,ongkir,ppn,tipe_ppn,total) VALUES('$nomor_invoice','$tanggal','$kode_customer','$dataJs','$catatan','$suratJalan','$kwitansi','$subtotal','$ongkir','$ppn','$tipe_ppn','$total')";
+        $sql = "INSERT INTO sales_invoice(nomor_invoice,tanggal,kode_customer,data,catatan,surat_jalan,kwitansi,subtotal,ongkir,ppn,tipe_ppn,total,id_admin,id_edit_admin) VALUES('$no_sales_invoice','$tanggal','$kode_customer','$dataJs','$catatan','$suratJalan','$kwitansi','$subtotal','$ongkir','$ppn','$tipe_ppn','$total','$id','0')";
         $query = mysqli_query($conn, $sql);
         lanjutkan($sql, "Ditambahkan");
         $success = [
@@ -133,7 +151,7 @@ $dataModal = array();
                                     <div class="form-group">
                                         <label class="col-sm-4">Nomor Invoice</label>
                                         <div class="col-sm-8">
-                                            <input type="text" value="<?= $invoice ?>" class="form-control" name="nomor_invoice" readonly>
+                                            <input type="text" value="<?= $no_sales_invoice ?>" class="form-control" name="nomor_invoice" readonly>
                                         </div>
                                     </div>
                                     <div class="form-group">

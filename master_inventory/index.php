@@ -64,6 +64,7 @@ $title = "Master Inventory";
           <div class="box-body">
             <div class="form-group">
               <div class="col-sm-2" style="padding: 5px;">
+                <input type="hidden" id="status" value="">
                 <input type="text" id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
               </div>
               <div class="col-sm-2" style="padding: 5px;">
@@ -190,9 +191,33 @@ $title = "Master Inventory";
 <script>
   $('#barcode_inv').on('click', function() {
     console.log($('#isi_barcode').val());
-
+    // if ($('#isi_barcode').val() == '') {
+    //   alert('Tolong diisi barcodenya');
+    //   return;
+    // }
+    // $.ajax({
+    //   url: './master_inventory/cekBarcode.php',
+    //   type: 'POST',
+    //   data: {
+    //     "barcode": $('#isi_barcode').val()
+    //   },
+    //   complete: function(response, textStatus, jqXHR) {
+    //     var respon = JSON.parse(response.responseText);
+    //     if (respon.result == 0) {
+    //       alert("Barcode bisa digunakan!");
+    //     } else {
+    //       alert("Barcode tidak bisa digunakan!");
+    //     }
+    //   },
+    //   error: function(jqXHR, textStatus, err) {
+    //     console.log(textStatus + err + jqXHR);
+    //   }
+    // });
+  });
+  $('#isi_barcode').keyup(function() {
+    var data = $('#isi_barcode').val();
     if ($('#isi_barcode').val() == '') {
-      alert('Tolong diisi barcodenya');
+      $('#isi_barcode').css('border', '1px solid red');
       return;
     }
     $.ajax({
@@ -204,18 +229,29 @@ $title = "Master Inventory";
       complete: function(response, textStatus, jqXHR) {
         var respon = JSON.parse(response.responseText);
         if (respon.result == 0) {
-          alert("Barcode bisa digunakan!");
+          $('#isi_barcode').css('border', '1px solid green');
+          $('#status').val("0");
+
         } else {
-          alert("Barcode tidak bisa digunakan!");
+          $('#isi_barcode').css('border', '1px solid red');
+          $('#status').val("1");
         }
-
-
       },
       error: function(jqXHR, textStatus, err) {
         console.log(textStatus + err + jqXHR);
       }
+
     });
-  })
+  });
+  $("#submit").submit(e => {
+    e.preventDefault();
+    var hasil = $('#status').val();
+    if (parseInt(hasil) == 1) {
+      alert("Barcode tidak bisa digunakan!");
+      e.preventDefault();
+      return false;
+    }
+  });
 </script>
 <!-- /.content-wrapper -->
 

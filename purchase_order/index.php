@@ -21,7 +21,7 @@ if (isset($_POST['submit'])) {
         $sql .= "INSERT INTO label_barcode(kode_po,barcode,harga,keterangan,quantity,id_admin,id_edit_admin) VALUES ('$kode','$barcode','$harga','$keterangan','$quantity','$id','0');";
     }
     $data = explode($kode, "-")[1];
-    $sql .= "UPDATE counter SET digit = '$data', id_edit_admin = '$id' WHERE tabel = 'purchase_order';";
+    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'purchase_order';";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dibuat");
 }

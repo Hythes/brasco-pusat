@@ -2,6 +2,8 @@
 
 <?php
 require '../env.php';
+cekAdmin($role);
+
 $title = "Input Picking Gudang";
 $query = query('SELECT * FROM picking ORDER BY nomor_picking DESC LIMIT 1');
 $nomor_order = '';
@@ -24,6 +26,7 @@ if (isset($_GET['kode'])) {
 
 if (isset($_POST['submit'])) {
     $sql = '';
+    $id_ad = $_SESSION['admin']['id'];
     $totalQuantity = 0;
     extract($_POST);
     $time = strtotime($tanggal);
@@ -38,12 +41,12 @@ if (isset($_POST['submit'])) {
 
                 $quantity_pick = $_POST['quantity_pick_' . $i2];
                 extract($now);
-                $sql .= "UPDATE picking_item SET nomor_picking='$nomor_picking',barcode='$barcode',id_order_item='$id_order',quantity_picking='$quantity_pick',quantity_order='$quantity' WHERE id = '$id';";
+                $sql .= "UPDATE picking_item SET nomor_picking='$nomor_picking',barcode='$barcode',id_order_item='$id_order',quantity_picking='$quantity_pick',quantity_order='$quantity',id_edit_admin='$id_ad' WHERE id = '$id';";
                 $totalQuantity += intval($quantity_pick);
             }
         }
     }
-    $sql .= "UPDATE picking SET nomor_order = '$nomor_order',kode_customer = '$kode',status = '$status',total = '$totalQuantity',tanggal = '$tanggal' WHERE nomor_picking = '$nomor_picking';";
+    $sql .= "UPDATE picking SET nomor_order = '$nomor_order',kode_customer = '$kode',status = '$status',total = '$totalQuantity',tanggal = '$tanggal', id_edit_admin = '$id_ad' WHERE nomor_picking = '$nomor_picking';";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Diedit!");
     $return = true;

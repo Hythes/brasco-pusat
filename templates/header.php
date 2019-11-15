@@ -1,5 +1,5 @@
 <?php
-$base = "http://192.168.0.105:8080/brasco/";
+$base = "http://192.168.0.101:8080/brasco/";
 // $base = "http://localhost:8080/brasco/";
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
@@ -212,7 +212,7 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
               </a>
               <ul class="treeview-menu">
                 <li id="header_stock_input"><a href="stock_opname"><i class="fa fa-circle-o"></i>Input Hasil Stock Opname</a></li>
-                <li id="header_stock_selisih"><a href="selisihStokOpname.php"><i class="fa fa-circle-o"></i>Selisih Stock Opname</a></li>
+                <li id="header_stock_selisih"><a href="stock_opname/selisihStokOpname.php"><i class="fa fa-circle-o"></i>Selisih Stock Opname</a></li>
               </ul>
             </li>
           <?php endif; ?>
