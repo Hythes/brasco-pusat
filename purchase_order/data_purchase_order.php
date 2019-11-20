@@ -5,6 +5,7 @@ $title = "Data Purchase Order";
 require '../env.php';
 cekAdmin($role);
 $query = "SELECT * FROM purchase_order";
+
 if (isset($_GET['request'])) {
     if ($_GET['request'] == "delete") {
         $kode = $_GET['kode'];
@@ -141,13 +142,15 @@ if (isset($_POST['submit'])) {
                                 $i = 1;
                                 $sql = query($query);
                                 foreach ($sql as $row) :
+                                    $kode = $row['kode_supplier'];
+                                    $querys = query("SELECT * FROM supplier WHERE kode='$kode'")[0];
                                     ?>
                                 <tr>
                                     <td><?= $i ?></td>
                                     <td><?= $row['kode'] ?></td>
                                     <td><?= $row['tanggal'] ?></td>
-                                    <td><?= $row['kode_supplier'] ?></td>
-                                    <td><?= $row['nama_supplier'] ?></td>
+                                    <td><?= $kode ?></td>
+                                    <td><?= $querys['nama']?></td>
                                     <td><?= $row['telepon'] ?></td>
                                     <td><?= $row['handphone'] ?></td>
                                     <td><?= $row['total_harga'] ?></td>

@@ -1,7 +1,9 @@
 <?php $title = 'Master Bank' ?>
 <?php $role = 'pemasaran';
 include '../env.php';
-cekAdmin($role); ?>
+cekAdmin($role);
+$id_add = $_SESSION['admin']['id'];
+?>
 <?php include('../templates/header.php');
 ?>
 <!-- =============================================== -->
@@ -14,7 +16,7 @@ cekAdmin($role); ?>
 <?php
 if (isset($_POST['edit'])) {
   extract($_POST);
-  $query = mysqli_query($conn, "UPDATE bank SET kode_bank = '$kode_bank_edit',nama_bank = '$nama_bank_edit',saldo_jalan = '$saldo_jalan_edit',saldo_awal = '$saldo_awal_edit',nomor_akun = '$nomor_akun_edit' WHERE kode_bank = '$kode_bank_edit'");
+  $query = mysqli_query($conn, "UPDATE bank SET kode_bank = '$kode_bank_edit',nama_bank = '$nama_bank_edit',saldo_jalan = '$saldo_jalan_edit',saldo_awal = '$saldo_awal_edit',tipe='$tipe_edit',nomor_akun = '$nomor_akun_edit',id_edit_admin = '$id_add' WHERE kode_bank = '$kode_bank_edit'");
   if ($query) {
     ?>
     <script type="text/javascript">
@@ -23,21 +25,6 @@ if (isset($_POST['edit'])) {
   <?php } else { ?>
     <script type="text/javascript">
       alert("Data Gagal Diedit !")
-    </script>
-  <?php }
-  } elseif (isset($_GET['kode_bank'])) {
-    $kode_bank = $_GET['kode_bank'];
-    $query = mysqli_query($conn, "DELETE FROM bank WHERE kode_bank = '$kode_bank'");
-    if ($query) {
-      header('Refresh: 0'); ?>
-    <script type="text/javascript">
-      alert("Data Berhasil Dihapus !")
-    </script>
-  <?php
-    } else {
-      header('Refresh: 0'); ?>
-    <script type="text/javascript">
-      alert("Data Gagal Dihapus !")
     </script>
 <?php }
 }
@@ -91,6 +78,15 @@ if (isset($_POST['edit'])) {
                 </div>
               </div>
               <div class="form-group">
+                <label class="col-sm-2">Tipe</label>
+                <div class="col-sm-4">
+                  <select id="tipe" class="form-control">
+                    <option value="kas">Kas</option>
+                    <option value="bank">Bank</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2">Kode Akun</label>
                 <div class="col-sm-4">
                   <select class="form-control" id="nomor_akun">
@@ -121,6 +117,7 @@ if (isset($_POST['edit'])) {
                 <th>Nama Bank</th>
                 <th>Saldo Awal</th>
                 <th>Saldo Jalan</th>
+                <th>Tipe</th>
                 <th>Nomor Akun</th>
                 <th>Aksi</th>
               </thead>
@@ -139,20 +136,22 @@ if (isset($_POST['edit'])) {
                         <td><?= $datas['nama_bank'] ?></td>
                         <td><?= $datas['saldo_awal'] ?></td>
                         <td><?= $datas['saldo_jalan'] ?></td>
+                        <td><?= $datas['tipe'] ?></td>
                         <td><?= $datas['nomor_akun'] ?></td>
                         <td>
-                          <a><button type="button" data-toggle="modal" data-target="#prev_edit<?= $no ?>" class="pad"><i class="fa fa-edit text-success fa-lg"></i></button></a>
-                          <a href="kas_bank/master_bank.php?kode_bank=<?= $datas['kode_bank'] ?>"><button type="button" class="pad"><i class="fa fa-trash-o text-red fa-lg"></i></button></a>
+                          <a><button type="button" class="btn btn-success" data-toggle="modal" data-target="#prev_edit<?= $no ?>" class="pad"><i class="fa fa-edit fa-lg"></i></button></a>
+                          <a href="kas_bank/delete.php?kode_bank=<?= $datas['kode_bank'] ?>"><button type="button" class="btn btn-danger"><i class="fa fa-trash-o fa-lg"></i></button></a>
                         </td>
                       </tr>
                       <div class="modal fade" id="prev_edit<?= $no ?>" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog modal-lg" role="document">
                           <div class="modal-content">
-                            <div class="modal-header">
-                              <h5 class="modal-title" id="exampleModalLabel">Edit Data</h5>
+                            <div class="modal-header bg-primary">
                               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span>
                               </button>
+                              <h4 class="modal-title">Edit Data</h4>
+
                             </div>
                             <div class="modal-body">
                               <div class="box-body">
@@ -181,6 +180,19 @@ if (isset($_POST['edit'])) {
                                   </div>
                                 </div>
                                 <div class="form-group" style="padding-bottom: 50px">
+                                  <label class="col-sm-2">Tipe</label>
+                                  <div class="col-sm-10">
+                                    <select name="tipe_edit" class="form-control">
+                                      <option value="kas" <?php if ($datas['tipe'] == "kas") {
+                                                              echo "selected";
+                                                            } ?>>Kas</option>
+                                      <option value="bank" <?php if ($datas['tipe'] == "bank") {
+                                                                echo "selected";
+                                                              } ?>>Bank</option>
+                                    </select>
+                                  </div>
+                                </div>
+                                <div class="form-group" style="padding-bottom: 50px">
                                   <label class="col-sm-2">Kode Akun</label>
                                   <div class="col-sm-10">
                                     <select class="form-control" name="nomor_akun_edit">
@@ -188,23 +200,21 @@ if (isset($_POST['edit'])) {
                                         $nomor_akun = $datas['nomor_akun'];
                                         $tam = mysqli_fetch_array(mysqli_query($conn, "SELECT kodeakun,namaakun FROM ms_akun WHERE kodeakun = '$nomor_akun'"));
                                         ?>
-                                      <option selected="" disabled=""><?= $tam['kodeakun'] ?> - <?= $tam['namaakun'] ?></option>
                                       <?php
                                         $query = mysqli_query($conn, "SELECT kodeakun,namaakun FROM ms_akun");
                                         foreach ($query as $data) {
                                           ?>
-                                        <option value="<?= $data['kodeakun'] ?>"><?= $data['kodeakun'] ?> - <?= $data['namaakun'] ?></option>
+                                        <option <?= ($tam['kodeakun'] == $data['kodeakun']) ? 'selected' : null ?> value="<?= $data['kodeakun'] ?>"><?= $data['kodeakun'] ?> - <?= $data['namaakun'] ?></option>
                                       <?php } ?>
                                     </select>
                                   </div>
-                                  <label></label>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                  <button type="submit" name="edit" class="btn btn-warning">Edit</button>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" name="edit" class="btn btn-warning">Edit</button>
                           </div>
                     </form>
                   </div>
@@ -235,6 +245,7 @@ if (isset($_POST['edit'])) {
     var nama_bank = $('#nama_bank').val()
     var saldo_awal = $('#saldo_awal').val()
     var saldo_jalan = $('#saldo_jalan').val()
+    var tipe = $('#tipe').val()
     var nomor_akun = $('#nomor_akun').val()
     $.post('kas_bank/ajax.php', {
       'params': 5,
@@ -242,6 +253,7 @@ if (isset($_POST['edit'])) {
       'nama_bank': nama_bank,
       'saldo_awal': saldo_awal,
       'saldo_jalan': saldo_jalan,
+      'tipe': tipe,
       'nomor_akun': nomor_akun
     }, function(res) {
       var message = JSON.parse(res)
@@ -250,8 +262,12 @@ if (isset($_POST['edit'])) {
       $('#nama_bank').val('')
       $('#saldo_awal').val('')
       $('#saldo_jalan').val('')
+      $('#tipe').val()
       $('#nomor_akun').val('')
       location.reload(true)
     })
   })
+</script>ation.reload(true)
+})
+})
 </script>

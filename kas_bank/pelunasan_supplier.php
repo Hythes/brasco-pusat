@@ -138,7 +138,7 @@ cekAdmin($role); ?>
                     <div class="form-group">
                       <label class="col-sm-3">Jml Beli 1 thn</label>
                       <div class="col-sm-9">
-                        <input type="text" class="form-control" id="jumlah_beli_satu" placeholder="Statis" readonly="">
+                        <input type="text" class="form-control" id="jumlah_beli_satu" placeholder="Belum ada Pembelian" readonly="">
                       </div>
                     </div>
                   </div>
@@ -158,9 +158,9 @@ cekAdmin($role); ?>
                       <label class="col-sm-2">No Transaksi</label>
                       <div class="col-sm-3">
                         <?php
-                        $query = mysqli_fetch_array(mysqli_query($conn, "SELECT header FROM counter WHERE nama='Kas Keluar'"));
+                        $query = mysqli_fetch_array(mysqli_query($conn, "SELECT header FROM counter WHERE tabel='no_kas_keluar'"));
                         $kk = $query['header'];
-                        $digit = mysqli_fetch_array(mysqli_query($conn, "SELECT max(digit) as digie FROM counter WHERE nama='Kas Keluar'"));
+                        $digit = mysqli_fetch_array(mysqli_query($conn, "SELECT max(digit) as digie FROM counter WHERE tabel='no_kas_keluar'"));
                         $angka = $digit['digie'];
                         $angka++;
                         $char = "$kk-";
@@ -199,7 +199,7 @@ cekAdmin($role); ?>
                     <div class="form-group">
                       <label class="col-sm-2">Giro No</label>
                       <div class="col-sm-3">
-                        <input type="number" class="form-control" id="no_giro">
+                        <input type="text" class="form-control" id="no_giro">
                       </div>
                       <label class="col-sm-1">Jumlah Bayar</label>
                       <div class="col-sm-3">
@@ -208,11 +208,11 @@ cekAdmin($role); ?>
                     </div>
                     <div class="form-group">
                       <div class="col-sm-6">
-                        <textarea class="form-control" id="ket" rows="3">Keterangan. . . . .</textarea>
+                        <textarea class="form-control" id="ket" rows="3" placeholder="Keterangan ..."></textarea>
                       </div>
                       <label class="col-sm-1">Sisa</label>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control" id="sisa">
+                        <input type="text" class="form-control" readonly id="sisa">
                       </div>
                     </div>
                   </div>
@@ -225,7 +225,7 @@ cekAdmin($role); ?>
             <div class="box-body">
               <div class="data-table">
                 <div class="table-responsive">
-                  <table id="example2" class="table table-bordered table-striped">
+                  <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>No</th>
@@ -238,21 +238,7 @@ cekAdmin($role); ?>
                         <th>Bayar</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <?php
-                      $no = 1;
-                      //$query = query("SELECT purchasing.*");
-                      ?>
-                      <tr>
-                        <td>1</td>
-                        <td>Inv1000001</td>
-                        <td>dd-mm-yyyy</td>
-                        <td>dd-mm-yyyy</td>
-                        <td>150.000.000,00</td>
-                        <td>130.000.000,00</td>
-                        <td>PU</td>
-                        <td>V</td>
-                      </tr>
+                    <tbody id="dataSemua">
                     </tbody>
                   </table>
                 </div>
@@ -262,8 +248,7 @@ cekAdmin($role); ?>
             <!-- button -->
             <div class="box-body">
               <div class="button pull-right">
-                <button type="" class="btn btn-danger">Keluar</button>
-                <button type="" class="btn btn-info">Simpan</button>
+                <button id="simpan" type="button" class="btn btn-info">Simpan</button>
               </div>
             </div>
 
@@ -284,6 +269,8 @@ cekAdmin($role); ?>
 
 <?php include('../templates/footer.php') ?>
 <script type="text/javascript">
+  var outstanding = 0;
+  var save = [];
   $('#kode_supplier').change(function() {
     var kode_supplier = $(this).val()
     $.post('kas_bank/ajax.php', {
@@ -291,6 +278,7 @@ cekAdmin($role); ?>
       'kode_supplier': kode_supplier
     }, function(response) {
       res = JSON.parse(response)
+      console.log(res)
       $('#nama_supplier').val(res.nama)
       $('#alamat').val(res.alamat)
       $('#kota').val(res.kota)
@@ -299,8 +287,29 @@ cekAdmin($role); ?>
       $('#telepon').val(res.telepon)
       $('#hp').val(res.handphone)
       $('#top').val(res.top)
-      var tanggal = new Date(res.tanggal_beli_akhir)
-      $('#tanggal_beli_akhir').val(tanggal.getFullYear() + "-" + tanggal.getMonth() + "-" + tanggal.getDate())
+      $('#tanggal_beli_akhir').val((res.tanggal_beli_akhir == '0000-00-00') ? 'Belum ada pembelian' : res.tanggal_beli_akhir)
+      $('#jumlah_beli_satu').val(res.total)
+      if (typeof res.item_all != "undefined") {
+        var iter = 1;
+        res.item_all.forEach((si) => {
+          $('#dataSemua').append(`
+              <tr>
+                  <td>${iter}</td>
+                  <td>${si.kode}</td>
+                  <td>${si.tanggal_terima}</td>
+                  <td>${si.tanggal_jatuh_tempo}</td>
+                  <td>${si.total}</td>
+                  <td>${si.outstanding}</td>
+                  <td>PU</td>
+                  <td><button ${(si.outstanding == 0) ? 'disabled' : null } onclick="bayar('${si.kode}','${si.outstanding}')" type="button" class="btn btn-primary">Pilih</button></td>
+                </tr>
+            `)
+          iter++;
+        })
+
+      } else {
+        $('#dataSemua').html('<tr><td></td><td></td><td></td><td>Tidak Ada Data</td><td></td><td></td><td></td><td></td></tr>')
+      }
     })
   })
   $('#kode_bank').change(function() {
@@ -308,9 +317,66 @@ cekAdmin($role); ?>
     $.post('kas_bank/ajax.php', {
       'params': 1,
       'kode_bank': kode_bank
-    }, function(res) {
-      res = JSON.parse(res)
-      $('#nama_bank').val(res.nama_bank)
+    }, function(response) {
+      res = JSON.parse(response)
+      if (res) {
+        $('#nama_bank').val(res.nama_bank)
+        save.bank = res;
+      } else {
+        $('#nama_bank').val('')
+      }
     })
+  })
+
+  function bayar(kode, outstandings) {
+    save.outstanding = outstandings
+    outstanding = outstandings;
+    $('#jumlah').val(outstandings);
+    save.kode = kode;
+    save.bayar = $('#jumlah').val()
+    $('#sisa').val('0')
+  }
+  $('#simpan').click(() => {
+    console.log(save)
+    save.giro = $('#no_giro').val()
+    save.no_transaksi = $('#no_kas_keluar').val()
+    save.tanggal = $('#tanggal_now').val()
+    save.keterangan = $('#ket').val()
+    if (save.giro == '' || save.no_transaksi == '' || save.keterangan == '') {
+      alert("Tolong diisi semua datanya!");
+      return false;
+    } else {
+      $.post('kas_bank/ajax.php', {
+        'params': 11,
+        'kode_bank': save.bank.kode_bank,
+        'nomor_akun': save.bank.nomor_akun,
+        'no_transaksi': save.no_transaksi,
+        'outstanding': save.outstanding,
+        'bayar': save.bayar,
+        'saldo_jalan': save.bank.saldo_jalan,
+        'kode': save.kode,
+        'tanggal': save.tanggal,
+        'giro': save.giro,
+        'keterangan': save.keterangan,
+        'tipe': save.bank.tipe
+      }, (res) => {
+        res = JSON.parse(res);
+        alert(res.msg);
+        console.log(res)
+        if (res.status == 201) {
+          window.location.reload(true)
+        }
+      })
+    }
+  })
+  $('#jumlah').keyup(() => {
+    save.bayar = $('#jumlah').val()
+    var sisa = outstanding - parseInt($('#jumlah').val());
+    if (sisa < 0) {
+      alert('Jumlah Bayar tidak boleh minus!')
+      return false;
+    } else {
+      $('#sisa').val(sisa)
+    }
   })
 </script>

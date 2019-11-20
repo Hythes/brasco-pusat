@@ -51,9 +51,10 @@ if (isset($_POST['edit'])) {
   extract($_POST);
   $id_admin = $_SESSION['admin']['id'];
   $query =  "INSERT INTO customer(kode,nama,alamat,kota,kodepos,telepon,handphone,npwp,ktp,tipe_customer,kredit,contact_name,email,kode_sales,top,batas_kredit,tanggal_jual_akhir,saldo_awal,saldo_jalan,keterangan, id_admin, id_edit_admin) VALUES(
-    '$kode','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$npwp','$ktp','$tipe_customer','$kredit','$contact_name','$email','$kode_sales','$top','$batas_kredit','$tanggal','$saldo_awal','$saldo_jalan','$keterangan', '$id_admin', '0'
-  )";
-  $sql = mysqli_query($conn, $query);
+    '$kode_customer','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$npwp','$ktp','$tipe_customer','$kredit','$contact_name','$email','$kode_sales','$top','$batas_kredit','$tanggal','$saldo_awal','$saldo_jalan','$keterangan', '$id_admin', '0'
+  );";
+  $query .=  "UPDATE counter SET digit = '$see' WHERE tabel = 'customer'";
+  $sql = mysqli_multi_query($conn, $query);
   lanjutkan($sql, "Disimpan");
 }
 $show = query("SELECT * FROM customer");

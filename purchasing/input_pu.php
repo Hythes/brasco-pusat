@@ -5,35 +5,31 @@ require '../env.php';
 cekAdmin($role);
 $title = 'Input Barang Masuk';
 $total = 0;
-$query = query("SELECT * FROM purchase_order");
+$query = query("SELECT * FROM purchase_order WHERE status = 'Approve'");
 
+$jurnal_referensi = query("SELECT * FROM jurnal_referensi")[0];
+$persediaan = $jurnal_referensi['persediaan'];
+$ppn_masuk = $jurnal_referensi['ppnmasuk'];
+$hutang = $jurnal_referensi['hutang'];
 
-if (isset($_POST['submit'])) {
-    extract($_POST);
-    $sql = '';
-    $total_quantity = 0;
-    for ($i = 1; $i <= $total_item; $i++) {
-        $id_admin = $_SESSION['admin']['id'];
-        $quantity_terima = $_POST['quantity_terima_' . $i];
-        $barcode = $_POST['barcode_' . $i];
-        $inven = query("SELECT * FROM inventory WHERE barcode = '$barcode'")[0];
-        $quantity_inven  =  intval($inven['quantity']) + intval($quantity_terima);
-        $sql .= "UPDATE inventory SET quantity = '$quantity_inven' WHERE barcode = '$barcode';";
-        $harga_satuan = $_POST['harga_satuan_' . $i];
-        $quantity_order = $_POST['quantity_order_' . $i];
-        $sql .= "INSERT INTO purchasing_item(kode_pu,barcode,quantity_order,quantity_terima,harga_satuan, id_admin, id_edit_admin) VALUES('$nomor_invoice','$barcode','$quantity_order','$quantity_terima','$harga_satuan', '$id_admin', '0');";
-        $total_quantity += intval($quantity_terima);
-    }
-    $id_admin = $_SESSION['admin']['id'];
-    $sql .= "INSERT INTO purchasing(kode,nomor_surat_jalan,kode_supplier,diterima_oleh,tanggal_terima,tanggal_jatuh_tempo,total_quantity, id_admin, id_edit_admin) VALUES('$nomor_invoice','$nomor_surat_jalan','$kode_supplier','$diterima_oleh',CAST('$tanggal_terima' AS DATE),CAST('$tanggal_jatuh_tempo' AS DATE),'$total_quantity', '$id_admin', '0');";
-    $query = mysqli_multi_query($conn, $sql);
-    lanjutkan($query, "Dimasukkan");
-    $reload = true;
-}
 if (isset($_GET['kode_po'])) {
     if (!isset($reload)) {
         $kode = $_GET['kode_po'];
         $query_po = query("SELECT * FROM purchase_order WHERE kode='$kode'");
+        $counter = query("SELECT * FROM counter WHERE tabel='purchasing'")[0];
+        $see = intval($counter['digit']) + 1;
+        $see = sprintf('%08s', $see);
+        $no_retur = $counter['header'] . "-" . $see;
+
+        $query_po_saja = query("SELECT * FROM purchase_order WHERE kode='$kode'")[0];
+        
+        $purchase_order = query("SELECT * FROM purchase_order WHERE kode='$kode'")[0];
+        $ini_kode = $query_po_saja['kode_supplier'];
+        $supplier = query("SELECT * FROM supplier WHERE kode='$ini_kode'")[0];
+
+        $ppn = $query_po_saja['tipe_ppn_input'];
+        $ppn_harga = $query_po_saja['total_harga'];
+
         if (!isset($query_po[0])) {
             alert('Data tidak ditemukan!');
         } else {
@@ -41,9 +37,69 @@ if (isset($_GET['kode_po'])) {
             $query_item = query("SELECT * FROM purchase_order_item WHERE kode_po='$kode'");
             $accept = true;
         }
+        $kode_supplier = $query_po_saja['kode_supplier'];
+        $data_supplier = query("SELECT * FROM supplier WHERE kode = '$kode_supplier'")[0];
+        $top = $data_supplier['top'];
+        $tanggal_now = date("Y-m-d");
+        $tanggal_jatuh_tempo = date('Y-m-d', strtotime('+' . $top . ' days'));
     }
 }
+if (isset($_POST['submit'])) {
+    extract($_POST);
+    $sql = '';
+    $total_quantity = 0;
+    $total_harga = 0;
+    $id_admin = $_SESSION['admin']['id'];
+    for ($i = 1; $i <= $total_item; $i++) {
+        $id_admin = $_SESSION['admin']['id'];
+        $quantity_terima = $_POST['quantity_terima_' . $i];
+        $barcode = $_POST['barcode_' . $i];
+        $inven = query("SELECT * FROM inventory WHERE barcode = '$barcode'")[0];
+        $quantity_inven  =  intval($inven['quantity']) + intval($quantity_terima);
+        $sql .= "UPDATE inventory SET quantity = '$quantity_inven' WHERE barcode = '$barcode';";
+        $sql .= PHP_EOL;
+        $harga_satuan = $_POST['harga_satuan_' . $i];
+        $quantity_order = $_POST['quantity_order_' . $i];
+        $sql .= "INSERT INTO purchasing_item(kode_pu,barcode,quantity_order,quantity_terima,harga_satuan, id_admin, id_edit_admin) VALUES('$nomor_invoice','$barcode','$quantity_order','$quantity_terima','$harga_satuan', '$id_admin', '0');";
+        $sql .= PHP_EOL;
 
+        $hpp = $harga_satuan*$quantity_inven;
+        $sql .= "INSERT INTO intrn(tanggal,kode_item,quantity,satuan,harga_beli,hpp,harga_jual,discount,keterangan,tipe_transaksi,kode_user) 
+        VALUES('$tanggal_terima','$barcode','$quantity_terima','$quantity_inven','$harga_satuan','$hpp','0','0','Purchasing','PU','$id_admin');";
+        $sql .= PHP_EOL;
+
+        $sql .= "UPDATE inventory SET status = 'Closed' WHERE kode = '$kode_po';";
+        $sql .= PHP_EOL;
+
+        $total_quantity += intval($quantity_terima);
+        $total_harga += intval($harga_satuan * $quantity_terima);
+    }
+    $hutang_all = $total_harga + $ppn;
+    
+    $outstanding = $hutang_all-$uang_muka;
+
+    $sql .= "INSERT INTO purchasing(kode,no_invoice,nomor_surat_jalan,kode_supplier,diterima_oleh,tanggal_terima,tanggal_jatuh_tempo,total_quantity, id_admin, id_edit_admin,kode_po,total,outstanding) VALUES('$kode_pu','$nomor_invoice','$nomor_surat_jalan','$kode_supplier','$diterima_oleh',CAST('$tanggal_terima' AS DATE),CAST('$tanggal_jatuh_tempo' AS DATE),'$total_quantity', '$id_admin', '0','$kode_po','$total_harga','$outstanding');";
+    $sql .= PHP_EOL;
+
+    $sql .= "UPDATE purchase_order SET status = 'Closed' WHERE kode = '$kode_po';";
+    $sql .= PHP_EOL;
+
+    $sql .= "UPDATE supplier SET tanggal_beli_akhir = CAST('$tanggal_terima' AS DATE) WHERE kode = '$kode_supplier';";
+    $sql .= PHP_EOL;
+
+    $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,debet,keterangan,tanggal,userid) VALUES('$kode_pu','1','$persediaan','$total_harga','Persediaan Purchasing','$tanggal_terima','$id_admin');";
+    $sql .= PHP_EOL;
+
+    $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,debet,keterangan,tanggal,userid) VALUES('$kode_pu','2','$ppn_masuk','$ppn','PPN Purchasing','$tanggal_terima','$id_admin');";
+    $sql .= PHP_EOL;
+
+    $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','4','$hutang','$hutang_all','Hutang Purchasing','$tanggal_terima','$id_admin');";
+    $sql .= PHP_EOL;
+
+    $query = mysqli_multi_query($conn, $sql);
+    lanjutkan($query, "Dimasukkan");
+    $reload = true;
+}
 ?>
 
 <!-- =============================================== -->
@@ -97,25 +153,29 @@ if (isset($_GET['kode_po'])) {
                                         <i class="fa fa-search text-dark fa-2x col-md-4"></i>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" name="nomor_surat_jalan" class="form-control" placeholder="NOMOR SURAT JALAN" style="width: 80%">
+                                        <input type="text" name="kode_pu" class="form-control" value="" style="width: 80%" placeholder="Kode Purchasing">
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" name="nomor_invoice" class="form-control" placeholder="NOMOR INVOICE" style="width: 80%">
+                                        <input type="text" name="nomor_surat_jalan" class="form-control" placeholder="Nomor Surat Jalan" style="width: 80%">
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" name="nomor_invoice" class="form-control" placeholder="Nomor Invoice" style="width: 80%">
                                     </div>
                                     <div class="form-group">
                                         <div class="col-md-4">
                                             <div class="form-group" style="padding-right: 10px;">
                                                 <input type="text" class="form-control" name="kode_supplier" readonly value="<?= $query_po['kode_supplier'] ?>" placeholder="KODE SUPP">
+                                                <input type="hidden" name="uang_muka" value="<?= $purchase_order["uangmuka_beli"]?>">
                                             </div>
                                         </div>
                                         <div class="col-md-7">
                                             <div class="form-group">
-                                                <input type="text" class="form-control" name="nama_supplier" readonly value="<?= $query_po['nama_supplier'] ?>" placeholder="SUPPLIER">
+                                                <input type="text" class="form-control" name="nama_supplier" readonly value="<?= $supplier['nama'] ?>" placeholder="SUPPLIER">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <textarea class="form-control" rows="3" placeholder="ALAMAT" readonly><?= $query_po['alamat'] ?></textarea>
+                                        <textarea class="form-control" rows="3" placeholder="ALAMAT" readonly><?= $supplier['alamat'] ?></textarea>
                                     </div>
                                 </div>
                             </div>
@@ -131,7 +191,7 @@ if (isset($_GET['kode_po'])) {
                                         <label class="col-md-4 control-label">Tanggal Terima</label>
                                         <div class="col-md-8">
                                             <div class="input-group">
-                                                <input type="date" required id="formtanggal" name="tanggal_terima" class="form-control">
+                                                <input type="date" required id="formtanggal" name="tanggal_terima" class="form-control" readonly value="<?= $tanggal_now ?>">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
@@ -142,7 +202,7 @@ if (isset($_GET['kode_po'])) {
                                         <label class="col-md-4 control-label">Tgl Jatuh Tempo</label>
                                         <div class="col-md-8">
                                             <div class="input-group">
-                                                <input type="date" required id="formtanggal" name="tanggal_jatuh_tempo" class="form-control">
+                                                <input type="date" required id="formtanggal" name="tanggal_jatuh_tempo" readonly value="<?= $tanggal_jatuh_tempo ?>" class="form-control">
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
@@ -180,7 +240,7 @@ if (isset($_GET['kode_po'])) {
                                             <td><?= $data['barcode_inventory'] ?></td>
                                             <td><?= $data['nama_inventory'] ?></td>
                                             <td><?= $data['quantity'] ?></td>
-                                            <td><input size="1px" type="text" name="quantity_terima_<?= $i ?>"></td>
+                                            <td><input style="width:3em;" type="number" name="quantity_terima_<?= $i ?>"></td>
                                             <td><?= $satuan['satuan'] ?></td>
                                             <td><?= $data['harga_satuan'] ?></td>
                                             <td><?= intval($data['quantity']) * intval($data['harga_satuan']) ?></td>
@@ -236,7 +296,8 @@ if (isset($_GET['kode_po'])) {
                             </thead>
                             <tbody>
                                 <?php $i = 1;
-                                    foreach ($query as $data) : extract($data); ?>
+                                    foreach ($query as $data) :
+                                        extract($data); ?>
                                     <tr>
                                         <td><?= $i ?></td>
                                         <td><?= $kode ?></td>

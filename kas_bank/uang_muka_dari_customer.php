@@ -1,4 +1,4 @@
-<?php $title = 'Form uang muka dari customer' ?>
+<?php $title = 'Uang Muka Dari Customer' ?>
 <?php $role = 'pemasaran';
 include '../env.php';
 cekAdmin($role);

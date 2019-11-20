@@ -52,24 +52,24 @@ $title = "Master Inventory";
         <h1>MASTER INVENTORY</h1>
         <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
           <div class="border bg-light " style="width: 100%; margin-bottom: 20px;">
-            <div class="alert alert-danger alert-dismissible">
+            <!-- <div class="alert alert-danger alert-dismissible">
               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
               <h4><i class="icon fa fa-info"></i> Informasi </h4>
               Pastikan Barcode sudah dibuat dan disetujui <br>
               Harap Cek Duplikasi Barcode sebelum lanjut ke langkah berikutnya
-            </div>
+            </div> -->
           </div>
         </div>
-        <form class="inline-form" action="" method="post">
+        <form class="inline-form" action="" method="post" id="form_simpan">
           <div class="box-body">
             <div class="form-group">
               <div class="col-sm-2" style="padding: 5px;">
                 <input type="hidden" id="status" value="">
-                <input type="text" id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
+                <input type="number" id="isi_barcode" name="barcode" class="form-control" placeholder="Barcode . . ." required>
               </div>
-              <div class="col-sm-2" style="padding: 5px;">
+              <!-- <div class="col-sm-2" style="padding: 5px;">
                 <button type="button" class="btn btn-danger" id="barcode_inv">Cek Duplikasi</button>
-              </div>
+              </div> -->
               <div class="col-sm-4" style="padding: 5px;">
                 <input type="text" name="nama_barang" class="form-control" placeholder="Nama Barang . . ." required>
               </div>
@@ -97,16 +97,16 @@ $title = "Master Inventory";
             </div>
             <div class="form-group">
               <div class="col-sm-3" style="padding: 5px;">
-                <input type="text" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
+                <input type="number" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
               </div>
               <div class="col-sm-3" style="padding: 5px;">
-                <input type="text" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
+                <input type="number" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
               </div>
               <div class="col-sm-3" style="padding: 5px;">
-                <input type="text" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
+                <input type="number" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
               </div>
             </div>
-            <button type="submit" class="btn btn-info pull-right" name="submit">Tambah</button>
+            <button type="submit" id="submit" class="btn btn-info pull-right" name="submit">Tambah</button>
           </div>
         </form>
         <div style="width: 100%">
@@ -243,10 +243,9 @@ $title = "Master Inventory";
 
     });
   });
-  $("#submit").submit(e => {
-    e.preventDefault();
+  $("#form_simpan").submit((e) => {
     var hasil = $('#status').val();
-    if (parseInt(hasil) == 1) {
+    if (hasil == 1) {
       alert("Barcode tidak bisa digunakan!");
       e.preventDefault();
       return false;

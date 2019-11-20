@@ -1,5 +1,6 @@
 <?php
-$base = "http://192.168.0.101:8080/brasco/";
+$base = "http://192.168.0.107:8080/brasco/";
+
 // $base = "http://localhost:8080/brasco/";
 if (session_status() == PHP_SESSION_NONE) {
   session_start();
@@ -21,7 +22,6 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
 }
 
 // $role = 'manager';
-// ngapain ikutan
 ?>
 <!DOCTYPE html>
 <html>
@@ -111,8 +111,7 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
               <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                <?= ucfirst($_SESSION['admin']['username']) ?>
-                <!-- <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image"> -->
+                <?= ucfirst($_SESSION['admin']['username']); ?>
               </a>
               <ul class="dropdown-menu">
                 <!-- Menu Footer-->
@@ -305,9 +304,9 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
                 <li id="header_bank_uang_muka_ke_supplier">
                   <a href="kas_bank/uang_muka_ke_supplier.php"><i class="fa fa-circle-o"></i> <span>Uang Muka ke Supplier</span></a>
                 </li>
-                <li id="header_bank_uang_muka_dari_customer">
+                <!-- <li id="header_bank_uang_muka_dari_customer">
                   <a href="kas_bank/uang_muka_dari_customer.php"><i class="fa fa-circle-o"></i> <span>Uang Muka dari Customer</span></a>
-                </li>
+                </li> -->
               </ul>
             </li>
 
@@ -405,7 +404,7 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
           <?php if ($role == 'utility' || $role == 'superadmin') : ?>
             <li class="header">UTILITY</li>
             <li id="header_admin">
-              <a href="setup_admin"><i class="fa fa-users"></i> <span>Setup Admin</span></a>
+              <a href="setup_admin/admin.php"><i class="fa fa-users"></i> <span>Setup Admin</span></a>
             </li>
             <li id="header_profil">
               <a href="setting_counter"><i class="fa fa-clock-o"></i> <span>Setup Counter</span></a>

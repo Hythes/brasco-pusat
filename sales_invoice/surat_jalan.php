@@ -154,27 +154,37 @@ if (isset($_GET)) {
                     </tr>
                 </thead>
                 <tbody>
-                <?php 
-                    $pack = query("SELECT * FROM ")
-                ?>
-                    <tr>
-                        <td>1</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td></td>
-                        <td></td>
-                        <td></td>
-                    </tr>
+                    <?php
+                    $no = 1;
+                    $salin = query("SELECT * FROM sales_invoice WHERE nomor_invoice = '$kode'");
+                    foreach ($salin as $pick_item) :
+                        $k = $pick_item['data'];
+                        $o = json_decode($k);
+                        $asd = array();
+                        foreach ($o as $oe => $ok) :
+                            $pack_item = query("SELECT * FROM packing_item WHERE nomor_packing = '$ok'");
+                            foreach ($pack_item as $kode) :
+                                $id_pik = $kode['id_picking_item'];
+                                $pick_item1 = query("SELECT * FROM picking_item WHERE id = '$id_pik'")[0];
+                                $item = query("SELECT * FROM inventory WHERE barcode  = '$pick_item1[barcode]'")[0];
+                                $nama_item = $item['nama_barang'];
+                                $qty = $pick_item1['quantity_packing'];
+                                $satuan = query("SELECT * FROM satuan WHERE id = '$item[satuan]'")[0]['satuan'];
+                                ?>
+                                <tr>
+
+                                    <td><?= $no; ?></td>
+                                    <td><?= $nama_item ?></td>
+                                    <td><?= $qty ?></td>
+                                    <td><?= $satuan ?></td>
+                                </tr>
+                            <?php $no++;
+                                    endforeach; ?>
+                        <?php endforeach; ?>
+
+                    <?php
+                    endforeach;
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -207,15 +217,7 @@ if (isset($_GET)) {
         </div>
 
     </div>
-
-</body>
-
-</html> <br>
-(....................)
-</div>
-</div>
-
-</div>
+    </div>
 
 </body>
 

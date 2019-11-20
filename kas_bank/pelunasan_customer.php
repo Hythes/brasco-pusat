@@ -160,9 +160,9 @@ cekAdmin($role); ?>
                       <label class="col-sm-2">No Transaksi</label>
                       <div class="col-sm-3">
                         <?php
-                        $query = mysqli_fetch_array(mysqli_query($conn, "SELECT header FROM counter WHERE nama='no_kas_masuk'"));
+                        $query = mysqli_fetch_array(mysqli_query($conn, "SELECT header FROM counter WHERE tabel='no_kas_masuk'"));
                         $km = $query['header'];
-                        $digit = mysqli_fetch_array(mysqli_query($conn, "SELECT max(digit) as digie FROM counter WHERE nama='no_kas_masuk'"));
+                        $digit = mysqli_fetch_array(mysqli_query($conn, "SELECT max(digit) as digie FROM counter WHERE tabel='no_kas_masuk'"));
                         $angka = $digit['digie'];
                         $angka++;
                         $char = "$km-";
@@ -210,11 +210,11 @@ cekAdmin($role); ?>
                     </div>
                     <div class="form-group">
                       <div class="col-sm-6">
-                        <textarea class="form-control" id="ket" rows="3">Keterangan. . . . .</textarea>
+                        <textarea class="form-control" id="ket" rows="3" placeholder="keterangan"></textarea>
                       </div>
                       <label class="col-sm-1">Sisa</label>
                       <div class="col-sm-2">
-                        <input type="text" class="form-control" id="sisa">
+                        <input type="text" class="form-control" id="sisa" readonly>
                       </div>
                     </div>
                   </div>
@@ -227,7 +227,7 @@ cekAdmin($role); ?>
             <div class="box-body">
               <div class="data-table">
                 <div class="table-responsive">
-                  <table id="example2" class="table table-bordered table-striped">
+                  <table class="table table-bordered table-striped">
                     <thead>
                       <tr>
                         <th>No</th>
@@ -240,37 +240,8 @@ cekAdmin($role); ?>
                         <th>Bayar</th>
                       </tr>
                     </thead>
-                    <tbody>
-                      <tr>
-                        <td>1</td>
-                        <td>Inv1000001</td>
-                        <td>dd-mm-yyyy</td>
-                        <td>dd-mm-yyyy</td>
-                        <td>150.000.000,00</td>
-                        <td>130.000.000,00</td>
-                        <td>PU</td>
-                        <td>V</td>
-                      </tr>
-                      <tr>
-                        <td>2</td>
-                        <td>Inv1000001</td>
-                        <td>dd-mm-yyyy</td>
-                        <td>dd-mm-yyyy</td>
-                        <td>150.000.000,00</td>
-                        <td>130.000.000,00</td>
-                        <td>PU</td>
-                        <td>V</td>
-                      </tr>
-                      <tr>
-                        <td>3</td>
-                        <td>Inv1000001</td>
-                        <td>dd-mm-yyyy</td>
-                        <td>dd-mm-yyyy</td>
-                        <td>150.000.000,00</td>
-                        <td>130.000.000,00</td>
-                        <td>PU</td>
-                        <td>V</td>
-                      </tr>
+                    <tbody id="dataSemua">
+
                     </tbody>
                   </table>
                 </div>
@@ -280,8 +251,8 @@ cekAdmin($role); ?>
             <!-- button -->
             <div class="box-body">
               <div class="button pull-right">
-                <button type="" class="btn btn-danger">Keluar</button>
-                <button type="" class="btn btn-info">Simpan</button>
+                <!-- <button type="" class="btn btn-danger">Keluar</button> -->
+                <button type="button" id="simpan" class="btn btn-info">Simpan</button>
               </div>
             </div>
 
@@ -302,6 +273,8 @@ cekAdmin($role); ?>
 
 <?php include('../templates/footer.php'); ?>
 <script type="text/javascript">
+  var outstanding = 0;
+  var save = [];
   $('#kode_bank').change(function() {
     var kode_bank = $(this).val()
     $.post('kas_bank/ajax.php', {
@@ -311,21 +284,73 @@ cekAdmin($role); ?>
       res = JSON.parse(response)
       if (res) {
         $('#nama_bank').val(res.nama_bank)
+        save.bank = res;
       } else {
         $('#nama_bank').val('')
       }
     })
   })
 
-  $('#kode_customer').click(function() {
+  function bayar(kode, outstandings) {
+    save.outstanding = outstandings
+    outstanding = outstandings;
+    $('#jumlah').val(outstandings);
+    save.kode = kode;
+    save.bayar = $('#jumlah').val()
+    $('#sisa').val('0')
+  }
+  $('#simpan').click(() => {
+    console.log(save)
+    save.giro = $('#no_giro').val()
+    save.no_transaksi = $('#no_kas_masuk').val()
+    save.tanggal = $('#tanggal_now').val()
+    save.keterangan = $('#ket').val()
+    if (save.giro == '' || save.no_transaksi == '' || save.keterangan == '') {
+      alert("Tolong diisi semua datanya!");
+      return false;
+    } else {
+      $.post('kas_bank/ajax.php', {
+        'params': 10,
+        'kode_bank': save.bank.kode_bank,
+        'nomor_akun': save.bank.nomor_akun,
+        'no_transaksi': save.no_transaksi,
+        'outstanding': save.outstanding,
+        'bayar': save.bayar,
+        'saldo_jalan': save.bank.saldo_jalan,
+        'kode': save.kode,
+        'tanggal': save.tanggal,
+        'giro': save.giro,
+        'keterangan': save.keterangan,
+        'tipe': save.bank.tipe
+      }, (res) => {
+        res = JSON.parse(res);
+        alert(res.msg);
+        console.log(res)
+        if (res.status == 201) {
+          window.location.reload(true)
+        }
+      })
+    }
+  })
+  $('#jumlah').keyup(() => {
+    save.bayar = $('#jumlah').val()
+    var sisa = outstanding - parseInt($('#jumlah').val());
+    if (sisa < 0) {
+      alert('Jumlah Bayar tidak boleh minus!')
+      return false;
+    } else {
+      $('#sisa').val(sisa)
+    }
+  })
+  $('#kode_customer').change(function() {
     var kode_customer = $(this).val()
     $.post('kas_bank/ajax.php', {
       'params': 8,
       'kode_customer': kode_customer
     }, function(res) {
       res = JSON.parse(res)
-      console.log(res)
       if (res) {
+        $('#dataSemua').html('')
         $('#nama_customer').val(res.nama)
         $('#alamat').val(res.alamat)
         $('#kota').val(res.kota)
@@ -334,8 +359,31 @@ cekAdmin($role); ?>
         $('#telepon').val(res.telepon)
         $('#hp').val(res.handphone)
         $('#top').val(res.top)
-        $('#jumlah_satu_tahun').val(res.total.toFixed(3))
+        $('#jumlah_satu_tahun').val(res.total)
         $('#tanggal_jual_akhir').val(res.tanggal_jual_akhir)
+        if (typeof res.item_all != "undefined") {
+          var iter = 1;
+          res.item_all.forEach((si) => {
+            var part = si.tanggal.split('-')
+            var jatuh_tempo = new Date(part[0], part[1], parseInt(part[2]) + parseInt(res.top));
+            $('#dataSemua').append(`
+              <tr>
+                  <td>${iter}</td>
+                  <td>${si.nomor_invoice}</td>
+                  <td>${si.tanggal}</td>
+                  <td>${jatuh_tempo.getFullYear()}-${jatuh_tempo.getMonth()}-${jatuh_tempo.getDate()}</td>
+                  <td>${si.total}</td>
+                  <td>${si.outstanding}</td>
+                  <td>${si.nomor_invoice.split('-')[0]}</td>
+                  <td><button ${(si.outstanding == 0) ? 'disabled' : null } onclick="bayar('${si.nomor_invoice}','${si.outstanding}')" type="button" class="btn btn-primary">Pilih</button></td>
+                </tr>
+            `)
+            iter++;
+          })
+
+        } else {
+          $('#dataSemua').html('<tr><td></td><td></td><td></td><td>Tidak Ada Data</td><td></td><td></td><td></td><td></td></tr>')
+        }
       } else {
         $('#nama_customer').val('')
         $('#alamat').val('')
@@ -347,6 +395,7 @@ cekAdmin($role); ?>
         $('#top').val('')
         $('#tanggal_jual_akhir').val('')
         $('#jumlah_satu_tahun').val('')
+        $('#dataSemua').html('')
       }
     })
   })

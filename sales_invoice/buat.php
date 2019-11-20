@@ -1,42 +1,63 @@
 <?php $role = "pemasaran" ?>
 
 <?php
-session_start();
-$id = $_SESSION['admin']['id'];
 require '../env.php';
 cekAdmin($role);
+$id = $_SESSION['admin']['id'];
+
+$jurnal_referensi = query("SELECT * FROM jurnal_referensi")[0];
+$persediaan = $jurnal_referensi['persediaan'];
+$ppn_masuk = $jurnal_referensi['ppnmasuk'];
+$ongkir_beli = $jurnal_referensi['ongkirbeli'];
+$hutang = $jurnal_referensi['hutang'];
 
 $sales_invoice_counter = query("SELECT * FROM counter WHERE tabel = 'sales_invoice'")[0];
-$digit = intval($sales_invoice_counter['digit']) + 1;
+$digit = sprintf("%08s", ++$sales_invoice_counter['digit']);
+$digit_si = $digit;
 $no_sales_invoice = $sales_invoice_counter['header'] . "-" . $digit;
 
-
 $kwitansi_invoice_counter = query("SELECT * FROM counter WHERE tabel = 'kwitansi_invoice'")[0];
-$digit = intval($kwitansi_invoice_counter['digit']) + 1;
+$digit = sprintf("%08s", ++$kwitansi_invoice_counter['digit']);
+$digit_kwitansi = $digit;
 $kwitansi_invoice = $kwitansi_invoice_counter['header'] . "-" . $digit;
 
 $faktur_counter = query("SELECT * FROM counter WHERE tabel = 'faktur'")[0];
-$digit = intval($faktur_counter['digit']) + 1;
+$digit = sprintf("%08s", ++$faktur_counter['digit']);
+$digit_faktur = $digit;
 $faktur = $faktur_counter['header'] . "-" . $digit;
 
+$profile = query("SELECT * FROM profil WHERE id = '1'")[0];
+$title = "Sales Invoice";
 
 if (isset($_POST)) {
     extract($_POST);
     if (isset($_POST['kirim'])) {
+        $sql = '';
         if (isset($suratJalan)) {
-            $suratJalan = $faktur;
+            $suratJalan = 1;
+            $sql .= "UPDATE counter SET digit = '$digit_faktur' WHERE tabel = 'faktur';";
         } else {
             $suratJalan = 0;
         }
+        $sql .= PHP_EOL;
 
         if (isset($kwitansi)) {
-            $kwitansi = $kwitansi_invoice;
+            $kwitansi = 1;
+            $sql .= "UPDATE counter SET digit = '$digit_kwitansi' WHERE tabel = 'kwitansi_invoice';";
         } else {
             $kwitansi = 0;
         }
-
-        $sql = "INSERT INTO sales_invoice(nomor_invoice,tanggal,kode_customer,data,catatan,surat_jalan,kwitansi,subtotal,ongkir,ppn,tipe_ppn,total,id_admin,id_edit_admin) VALUES('$no_sales_invoice','$tanggal','$kode_customer','$dataJs','$catatan','$suratJalan','$kwitansi','$subtotal','$ongkir','$ppn','$tipe_ppn','$total','$id','0')";
-        $query = mysqli_query($conn, $sql);
+        $sql .= PHP_EOL;
+        $sql .= "INSERT INTO sales_invoice(nomor_invoice,tanggal,kode_customer,data,catatan,surat_jalan,kwitansi,subtotal,ongkir,ppn,tipe_ppn,total,id_admin,id_edit_admin,outstanding) VALUES('$no_sales_invoice','$tanggal','$kode_customer','$dataJs','$catatan','$suratJalan','$kwitansi','$subtotal','$ongkir','$ppn','$tipe_ppn','$total','$id','0','$total');";
+        $sql .= PHP_EOL;
+        $sql .= "UPDATE counter SET digit = '$digit_si' WHERE tabel = 'sales_invoice';";
+        $no_sales_invoice = $sales_invoice_counter['header'] . "-" . sprintf("%08s", ++$digit_si);
+        $sql .= PHP_EOL;
+        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,debet,keterangan,tanggal,userid) VALUES('$no_sales_invoice','1','$persediaan','$subtotal','Persediaan Sales Invoice','$today','$id');";
+        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,debet,keterangan,tanggal,userid) VALUES('$no_sales_invoice','2','$ppn_masuk','$ppn','PPN Beli Sales Invoice','$today','$id');";
+        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,debet,keterangan,tanggal,userid) VALUES('$no_sales_invoice','3','$ongkir_beli','$ongkir','Ongkir Beli Sales Invoice','$today','$id');";
+        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$no_sales_invoice','4','$hutang','$total','Hutang Sales Invoice','$today','$id');";
+        $query = mysqli_multi_query($conn, $sql);
         lanjutkan($sql, "Ditambahkan");
         $success = [
             'surat_jalan' => $suratJalan,
@@ -46,17 +67,10 @@ if (isset($_POST)) {
     }
 }
 
-$profile = query("SELECT * FROM profil")[0];
-$title = "Sales Invoice";
 if (isset($_GET['kode'])) {
     $kodeCustomer = $_GET['kode'];
 }
-$query = query('SELECT * FROM sales_invoice ORDER BY nomor_invoice DESC LIMIT 1');
-if (!isset($query[0]['nomor_invoice'])) {
-    $invoice = 'IVC-001';
-} else {
-    $invoice = tambahId(strval($query[0]['nomor_invoice']), 'IVC');
-}
+
 $dataModal = array();
 ?>
 <?php include('../templates/header.php') ?>

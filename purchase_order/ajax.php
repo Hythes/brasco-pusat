@@ -18,7 +18,7 @@ if (isset($_POST['request'])) {
     }
     if ($req == 'kode_po') {
         $query = query("SELECT * FROM counter WHERE tabel = 'purchase_order'")[0];
-        $id = $query['header'] . "-" . (intval($query['digit']) + 1);
+        $id = $query['header'] . "-" . (sprintf('%08s', intval($query['digit']) + 1));
         echo json_encode($id);
     }
     if ($req == 'data_supplier') {

@@ -14,18 +14,19 @@ if (isset($_POST['submit'])) {
         } else {
             $sql .= "WHERE tanggal = CAST('$tanggal' AS DATE) ";
         }
-        $t = true;
+        $sql .= "AND status != 'Closed' ";
+        // $t = true;
     }
-    if ($t && $status !== "Semua") {
-        $sql .= "AND status = '$status' ";
-    }
-    if (!$t && $status !== "Semua") {
-        $sql .= "WHERE status = '$status'";
-    }
-    if ($tanggal2 !== '' && $tanggal == '') {
-        alert("Tolong diisi tanggal pertamanya");
-        $sql = '';
-    }
+    // if ($t && $status !== "Semua") {
+    //     $sql .= "AND status = '$status' ";
+    // }
+    // if (!$t && $status !== "Semua") {
+    //     $sql .= "WHERE status = '$status'";
+    // }
+    // if ($tanggal2 !== '' && $tanggal == '') {
+    //     alert("Tolong diisi tanggal pertamanya");
+    //     $sql = '';
+    // }
     $query = query($sql);
 }
 
@@ -88,21 +89,6 @@ if (isset($_POST['submit'])) {
                                     </div>
                                 </div>
 
-                            </div>
-                        </div>
-                        <div class="col-md-3">
-                            <div class="form-group">
-                                <label for="" class="col-sm-4 control-label">Status</label>
-                                <div class="col-sm-8">
-                                    <div class="input-group">
-                                        <select style="width: auto" name="status" class="form-control">
-                                            <option>Semua</option>
-                                            <option>Approve</option>
-                                            <option>Belum Approve</option>
-                                            <option>Batal</option>
-                                        </select>
-                                    </div>
-                                </div>
                             </div>
                         </div>
                         <div class="col-md-2">

@@ -1,5 +1,5 @@
 <?php
-$base_url = "http://192.168.0.101:8080/brasco/";
+$base_url = "http://192.168.0.107:8080/brasco/";
 
 // $base_url = 'http://localhost:8080/brasco/';
 $host = "localhost";
@@ -14,16 +14,17 @@ function cekAdmin($role)
     session_start();
   }
   if (!isset($_SESSION['is_admin'])) {
-    return header("Location: " . $base . "login.php?err=1  ");
+    return header("Location: " . $base_url . "login.php?err=1  ");
   }
   if ($_SESSION['admin']['groupType'] == 'superadmin') {
     $role = 'superadmin';
   } elseif ($_SESSION['admin']['groupType'] !== $role) {
-    if (is_null($role_index)) {
-      return header("Location: " . $base . "index.php?err=1  ");
-    } else {
-      $role = $_SESSION['admin']['groupType'];
-    }
+    // if (is_null($role_index)) {
+    //   return header("Location: " . $base_url . "index.php?err=1  ");
+    // } else {
+    $role = $_SESSION['admin']['groupType'];
+    // }
+
   }
 }
 
@@ -36,6 +37,10 @@ function query($query)
   global $conn;
   $result = mysqli_query($conn, $query);
   $rows = [];
+  if (mysqli_affected_rows($conn) < 1) {
+    return false;
+    exit();
+  }
   while ($row = mysqli_fetch_assoc($result)) {
     $rows[] = $row;
   }

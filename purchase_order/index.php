@@ -7,21 +7,26 @@ cekAdmin($role);
 $id = $_SESSION['admin']['id'];
 if (isset($_POST['submit'])) {
     extract($_POST);
-    $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama_supplier,alamat_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga,keterangan,id_admin,id_edit_admin) VALUES('$kode','$tanggal','$kode_supplier','$nama_supplier','$alamat_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga','$keterangan','$id','0'); ";
+    $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga,keterangan,id_admin,id_edit_admin) VALUES('$kode','$tanggal','$kode_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga','$keterangan','$id','0'); ";
+    $sql .= PHP_EOL;
     $data_po = json_decode($data_po);
     foreach ($data_po as $data) {
         $data = (array) $data;
         extract($data);
         $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan,satuan,id_admin,id_edit_admin) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga','$satuan','$id','0'); ";
+        $sql .= PHP_EOL;
     }
     $dataLabel = json_decode($dataLabel);
     foreach ($dataLabel as $data) {
         $data = (array) $data;
         extract($data);
         $sql .= "INSERT INTO label_barcode(kode_po,barcode,harga,keterangan,quantity,id_admin,id_edit_admin) VALUES ('$kode','$barcode','$harga','$keterangan','$quantity','$id','0');";
+        $sql .= PHP_EOL;
     }
-    $data = explode($kode, "-")[1];
+    $data = explode("-", $kode)[1];
+
     $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'purchase_order';";
+
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dibuat");
 }
@@ -68,15 +73,19 @@ $title = 'Purchase Order';
                                 </div>
                                 <div class="kode-nama">
                                     <div class="row">
+
                                         <div class="textbox col-xs-5">
-                                            <input type="text" name="kode_supplier" id="kode_supplier" class="form-control" placeholder="KODE SUPPLIER">
+                                            <select class="form-control" name="kode_supplier" id="kode_supplier">
+                                                <option selected disabled>Pilih Supplier</option>
+                                                <?php foreach (query("SELECT * FROM supplier") as $data) : ?>
+                                                    <option value="<?= $data['kode'] ?>"><?= $data['kode'] ?></option>
+                                                <?php endforeach; ?>
+                                            </select>
                                         </div>
-                                        <div class="textbox col-xs-6">
+                                        <div class="textbox col-xs-7">
                                             <input type="text" readonly name="nama_supplier" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
                                         </div>
-                                        <div class="col-xs-1">
-                                            <i id="cari_supplier_po" style="cursor:pointer" class="fa fa-search fa-2x"></i>
-                                        </div>
+
                                     </div>
                                 </div>
                                 <div class="textbox form-group" style="margin-top: 15px;">
@@ -122,7 +131,12 @@ $title = 'Purchase Order';
                     <div class="form bawah">
                         <div class="row">
                             <div class="col-sm-2">
-                                <input type="text" name="barcode" id="barcode_po" class="form-control" placeholder="BARCODE">
+                                <select name="barcode" id="barcode_po" class="form-control select2">
+                                    <option selected disabled>Pilih Barcode</option>
+                                    <?php foreach (query("SELECT * FROM inventory") as $data) : ?>
+                                        <option value="<?= $data['barcode'] ?>"><?= $data['barcode'] ?></option>
+                                    <?php endforeach; ?>
+                                </select>
                             </div>
                             <div class="col-sm-2">
                                 <input type="text" name="kode_item_supplier" id="kode_item_supplier" class="form-control" placeholder="KODE ITEM SUPPLI">
@@ -312,7 +326,8 @@ $title = 'Purchase Order';
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<script type="text/javascript" src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+<?php include('../templates/footer.php') ?>
+
 <script>
     var dataSimpan = {
         'buat_po': false,
@@ -334,7 +349,7 @@ $title = 'Purchase Order';
         dataSimpan.barcodeLabel = barcode
     })
 
-    $('#barcode_label').change(() => {
+    $('#barcode_label').on('select2:change', () => {
         var barcode = document.getElementById('barcode_label').value;
         dataSimpan.barcodeLabel = barcode
     })
@@ -403,11 +418,7 @@ $title = 'Purchase Order';
         })
     })
 
-    $('#cari_supplier_po').on('click', function() {
-        if ($('#kode_supplier').val() == '') {
-            alert('Tolong diisi Kode Suppliernya');
-            return;
-        }
+    $('#kode_supplier').on('change', function() {
         $.post('purchase_order/ajax.php', {
             request: 'data_supplier',
             data: $('#kode_supplier').val()
@@ -446,7 +457,7 @@ $title = 'Purchase Order';
             })
             $('#table_po').append(
                 '<tr id="tr_po_' + dataSimpan.i + '">' +
-                '<td>' + dataSimpan.i + '</td>' +
+                '<td id="icr">' + dataSimpan.i + '</td>' +
                 '<td>' + barcode + '</td>' +
                 '<td>' + kode_item_supplier + '</td>' +
                 '<td>' + nama_item + '</td>' +
@@ -457,6 +468,7 @@ $title = 'Purchase Order';
                 '<td>' + '<button type="button" onclick="po_hapus(' + dataSimpan.i + ')" class="btn btn-danger"> Hapus</button>' + '</td>' +
                 '</tr>'
             );
+            fix_iteration('#table_po')
             cek_tipe_ppn();
             dataSimpan.i++;
             dataSimpan.total += (parseInt(quantity) * parseInt(harga));
@@ -472,38 +484,38 @@ $title = 'Purchase Order';
         var dpp = parseInt($('#dpp').val());
         if ($('#tipe_ppn_t').is(':checked')) {
             ppn = 0;
-            $('#ppn').val(ppn);
+            $('#ppn').val(parseInt(ppn));
         }
         if ($('#tipe_ppn_i').is(':checked')) {
             dpp = dpp * (10 / 11);
             ppn = dpp * (10 / 100);
-            $('#ppn').val('(10/11) * 10%');
+            $('#ppn').val(parseInt(ppn));
         }
         if ($('#tipe_ppn_e').is(':checked')) {
             ppn = dpp * (10 / 100);
-            $('#ppn').val("10%");
+            $('#ppn').val(parseInt(ppn));
         }
         return ppn;
     }
     $('#tipe_ppn_t').on('click', function() {
         if ($('#dpp').val() == '') alert('Tolong diisi DPP nya');
         var ppn = cek_tipe_ppn();
-        var p = parseFloat(dataSimpan.total) - ppn;
-        $('#total').val(parseFloat(p).toFixed(2));
+        var p = parseFloat(dataSimpan.total) + ppn;
+        $('#total').val(parseInt(p));
     });
     $('#tipe_ppn_i').on('click', function() {
         if ($('#dpp').val() == '') alert('Tolong diisi DPP nya');
 
         var ppn = cek_tipe_ppn();
-        var p = parseFloat(dataSimpan.total) - ppn;
-        $('#total').val(parseFloat(p).toFixed(2));
+        var p = parseFloat(dataSimpan.total) + ppn;
+        $('#total').val(parseInt(p));
     });
     $('#tipe_ppn_e').on('click', function() {
         if ($('#dpp').val() == '') alert('Tolong diisi DPP nya');
 
         var ppn = cek_tipe_ppn();
-        var p = parseFloat(dataSimpan.total) - ppn;
-        $('#total').val(parseFloat(p).toFixed(2));
+        var p = parseFloat(dataSimpan.total) + ppn;
+        $('#total').val(parseInt(p));
     });
 
     function po_hapus(id) {
@@ -511,13 +523,16 @@ $title = 'Purchase Order';
         id--;
         var total = parseInt(simpanArray[id].quantity) * parseInt(simpanArray[id].harga);
         dataSimpan.total = parseInt(dataSimpan.total) - parseInt(total);
-        $('#total').val(dataSimpan.total);
+        var ppn = cek_tipe_ppn()
+        $('#total').val(parseInt(dataSimpan.total) + parseInt(ppn));
+        $('#dpp').val(dataSimpan.total)
         delete simpanArray[id];
         $('#data_po').val(JSON.stringify(simpanArray));
+        fix_iteration('#table_po')
 
 
     }
-    $('#barcode_po').keyup(delayTimes(function() {
+    $('#barcode_po').change(function() {
         var barcode = $('#barcode_po').val();
         $.post('purchase_order/ajax.php', {
             request: 'cari_barcode',
@@ -527,7 +542,7 @@ $title = 'Purchase Order';
             $('#nama_item').val(data.nama_barang);
             dataSimpan.satuan = data.satuan;
         })
-    }, 500));
+    });
 
     function delayTimes(callback, ms) {
         var timer = 0;
@@ -541,4 +556,3 @@ $title = 'Purchase Order';
         };
     }
 </script>
-<?php include('../templates/footer.php') ?>
