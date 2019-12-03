@@ -72,7 +72,7 @@ if (isset($_POST['cari'])) {
                                 </div>
                             </div>
                             <div class="form-group pad">
-                                <a href="order_gudang/order_gudang.php" class="btn btn-primary">Buat order baru</a>
+                                <a href="order_gudang/input_order.php" class="btn btn-primary">Buat order baru</a>
                             </div>
                         </div>
                     </form>

@@ -34,6 +34,7 @@ if (isset($_GET['request'])) {
 
                 $sessData['barcode'] = $dataPickingItem['barcode'];
                 $sessData['nomor_packing'] = $data['nomor_packing'];
+                $sessData['quantity_packing'] = $dataPickingItem['quantity_packing'];
                 $sessData['quantity'] = $dataInventory['quantity'];
                 $sessData['totalHarga'] = intval($sessData['quantity']) * intval($hargaSatuan);
                 $sessData['harga_satuan'] = $hargaSatuan;

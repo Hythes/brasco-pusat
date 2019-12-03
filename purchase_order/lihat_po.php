@@ -61,7 +61,7 @@ $var = $var[0];
                                             <input readonly type="text" value="<?= $var['kode_supplier'] ?>" name="kode_supplier" id="kode_supplier" class="form-control" placeholder="KODE SUPPLIER">
                                         </div>
                                         <div class="textbox col-xs-6">
-                                            <input readonly type="text" readonly name="nama_supplier" value="<?= $var['nama_supplier'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
+                                            <input readonly type="text" readonly name="nama_supplier" value="<?= $var['nama'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
                                         </div>
                                         <div class="col-xs-1">
                                             <i id="cari_supplier_po" style="cursor:pointer" class="fa fa-search fa-2x"></i>

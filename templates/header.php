@@ -1,5 +1,5 @@
 <?php
-$base = "http://192.168.0.107:8080/brasco/";
+$base = "http://192.168.100.3:8080/brasco/";
 
 // $base = "http://localhost:8080/brasco/";
 if (session_status() == PHP_SESSION_NONE) {
@@ -117,7 +117,7 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="mx-auto">
-                    <a href="logout.php" class="btn btn-default btn-flat" onclick="return confirm('Anda yakin ingin logout?'" )>Logout</a>
+                    <a href="logout.php" class="btn btn-default btn-flat" onclick="return confirm('Anda yakin ingin logout?')">Logout</a>
                   </div>
                 </li>
               </ul>
@@ -214,6 +214,7 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
                 <li id="header_stock_selisih"><a href="stock_opname/selisihStokOpname.php"><i class="fa fa-circle-o"></i>Selisih Stock Opname</a></li>
               </ul>
             </li>
+            <!-- <li id="laporan_stock_opname"><a href="stock_opname/laporan.php"><i class="fa fa-book"></i>Laporan Stock Opname</a></li> -->
           <?php endif; ?>
           <?php if ($role == 'pemasaran' || $role == 'superadmin') : ?>
             <li class="header">PEMASARAN</li>
@@ -406,8 +407,11 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
             <li id="header_admin">
               <a href="setup_admin/admin.php"><i class="fa fa-users"></i> <span>Setup Admin</span></a>
             </li>
-            <li id="header_profil">
+            <li id="header_counter">
               <a href="setting_counter"><i class="fa fa-clock-o"></i> <span>Setup Counter</span></a>
+            </li>
+            <li id="header_profil">
+              <a href="profile"><i class="fa fa-clock-o"></i> <span>Setup Profile</span></a>
             </li>
             <li id="header_jurnal">
               <a href="jurnal_referensi"><i class="fa fa-calendar-o"></i> <span>Jurnal Referensi</span></a>

@@ -112,7 +112,7 @@ function tambahItem(kode, btn) {
                 <td>${data.nomor_packing}</td>
                 <td>${data.barcode}</td>
                 <td>${data.nama_item}</td>
-                <td>${data.quantity}</td>
+                <td>${data.quantity_packing}</td>
                 <td>${data.harga_satuan}</td>
                 <td>${data.totalHarga}</td>
             </tr>

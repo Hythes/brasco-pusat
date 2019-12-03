@@ -22,7 +22,7 @@ if (isset($_GET['kode_po'])) {
         $no_retur = $counter['header'] . "-" . $see;
 
         $query_po_saja = query("SELECT * FROM purchase_order WHERE kode='$kode'")[0];
-        
+
         $purchase_order = query("SELECT * FROM purchase_order WHERE kode='$kode'")[0];
         $ini_kode = $query_po_saja['kode_supplier'];
         $supplier = query("SELECT * FROM supplier WHERE kode='$ini_kode'")[0];
@@ -56,27 +56,25 @@ if (isset($_POST['submit'])) {
         $barcode = $_POST['barcode_' . $i];
         $inven = query("SELECT * FROM inventory WHERE barcode = '$barcode'")[0];
         $quantity_inven  =  intval($inven['quantity']) + intval($quantity_terima);
-        $sql .= "UPDATE inventory SET quantity = '$quantity_inven' WHERE barcode = '$barcode';";
-        $sql .= PHP_EOL;
         $harga_satuan = $_POST['harga_satuan_' . $i];
         $quantity_order = $_POST['quantity_order_' . $i];
+        $sql .= "UPDATE inventory SET quantity = '$quantity_inven',harga_beli = '$harga_satuan' WHERE barcode = '$barcode';";
+        $sql .= PHP_EOL;
         $sql .= "INSERT INTO purchasing_item(kode_pu,barcode,quantity_order,quantity_terima,harga_satuan, id_admin, id_edit_admin) VALUES('$nomor_invoice','$barcode','$quantity_order','$quantity_terima','$harga_satuan', '$id_admin', '0');";
         $sql .= PHP_EOL;
 
-        $hpp = $harga_satuan*$quantity_inven;
+        $hpp = $harga_satuan * $quantity_inven;
         $sql .= "INSERT INTO intrn(tanggal,kode_item,quantity,satuan,harga_beli,hpp,harga_jual,discount,keterangan,tipe_transaksi,kode_user) 
         VALUES('$tanggal_terima','$barcode','$quantity_terima','$quantity_inven','$harga_satuan','$hpp','0','0','Purchasing','PU','$id_admin');";
         $sql .= PHP_EOL;
 
-        $sql .= "UPDATE inventory SET status = 'Closed' WHERE kode = '$kode_po';";
-        $sql .= PHP_EOL;
 
         $total_quantity += intval($quantity_terima);
         $total_harga += intval($harga_satuan * $quantity_terima);
     }
     $hutang_all = $total_harga + $ppn;
-    
-    $outstanding = $hutang_all-$uang_muka;
+
+    $outstanding = $hutang_all - $uang_muka;
 
     $sql .= "INSERT INTO purchasing(kode,no_invoice,nomor_surat_jalan,kode_supplier,diterima_oleh,tanggal_terima,tanggal_jatuh_tempo,total_quantity, id_admin, id_edit_admin,kode_po,total,outstanding) VALUES('$kode_pu','$nomor_invoice','$nomor_surat_jalan','$kode_supplier','$diterima_oleh',CAST('$tanggal_terima' AS DATE),CAST('$tanggal_jatuh_tempo' AS DATE),'$total_quantity', '$id_admin', '0','$kode_po','$total_harga','$outstanding');";
     $sql .= PHP_EOL;
@@ -165,7 +163,7 @@ if (isset($_POST['submit'])) {
                                         <div class="col-md-4">
                                             <div class="form-group" style="padding-right: 10px;">
                                                 <input type="text" class="form-control" name="kode_supplier" readonly value="<?= $query_po['kode_supplier'] ?>" placeholder="KODE SUPP">
-                                                <input type="hidden" name="uang_muka" value="<?= $purchase_order["uangmuka_beli"]?>">
+                                                <input type="hidden" name="uang_muka" value="<?= $purchase_order["uangmuka_beli"] ?>">
                                             </div>
                                         </div>
                                         <div class="col-md-7">

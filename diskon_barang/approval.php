@@ -9,7 +9,14 @@ if (isset($_POST['id_approve'])) {
     $tipe_customer = $customer['tipe_customer'];
     $inventory['harga_jual' . $tipe_customer] = intval($inventory['harga_jual' . $tipe_customer]) * (intval($data['diskon']) / 100);
     $id_admin = $_SESSION['admin']['id'];
-    $sql = "INSERT INTO inventory(barcode,nama_barang,satuan,id_tipe_barang,harga_jual1,harga_jual2,harga_jual3,quantity, id_admin, id_edit_admin) VALUES('$data[barcode_reject]','$inventory[nama_barang]','$inventory[satuan]','$inventory[id_tipe_barang]','$inventory[harga_jual1]','$inventory[harga_jual2]','$inventory[harga_jual3]',$data[quantity], '$id_admin', '0' );";
+
+    $str = mysqli_fetch_assoc(mysqli_query($conn, "SELECT * FROM inventory WHERE barcode =  '$data[barcode_reject]'"));
+    if ($str) {
+        $dataDitambahkan = intval($str['quantity']) + intval($data['quantity']);
+        $sql = "UPDATE inventory SET harga_jual1='$inventory[harga_jual1]',harga_jual2='$inventory[harga_jual2]',harga_jual3='$inventory[harga_jual3]',quantity='$dataDitambahkan',id_edit_admin = '$id_admin' WHERE barcode = '$data[barcode_reject]';";
+    } else {
+        $sql = "INSERT INTO inventory(barcode,nama_barang,satuan,id_tipe_barang,harga_jual1,harga_jual2,harga_jual3,quantity, id_admin, id_edit_admin) VALUES('$data[barcode_reject]','$inventory[nama_barang]','$inventory[satuan]','$inventory[id_tipe_barang]','$inventory[harga_jual1]','$inventory[harga_jual2]','$inventory[harga_jual3]',$data[quantity], '$id_admin', '0' );";
+    }
     $sql .= PHP_EOL;
     $quantity_kurang = intval($inventory['quantity']) - intval($data['quantity']);
     $sql .= "UPDATE diskon_barang_reject SET status = 1 , id_edit_admin = '$id_admin' WHERE id = '$_POST[id_approve]';";
@@ -20,7 +27,7 @@ if (isset($_POST['id_approve'])) {
     header('Refresh:0');
 }
 ?>
-<?php $title = "Approval Diskon Barang" ?>
+<?php $title = "Approval Barang Reject" ?>
 <?php include('../templates/header.php') ?>
 
 <div class="content-wrapper">
@@ -36,6 +43,8 @@ if (isset($_POST['id_approve'])) {
                             <th>Kode Customer</th>
                             <th>Barcode Reject</th>
                             <th>Quantity</th>
+                            <th>Harga</th>
+                            <th>Diskon</th>
                             <th>Harga Diskon</th>
                             <th>Aksi</th>
                         </thead>
@@ -53,6 +62,8 @@ if (isset($_POST['id_approve'])) {
                                     <td><?= $data['kode_customer'] ?></td>
                                     <td><?= $data['barcode_reject'] ?></td>
                                     <td><?= $data['quantity'] ?></td>
+                                    <td><?= $inventory['harga_jual' . $tipe_customer] ?></td>
+                                    <td><?= $data['diskon'] ?>%</td>
                                     <td><?= $harga_satuan ?></td>
                                     <td>
                                         <form action="" method="POST">

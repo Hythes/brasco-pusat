@@ -114,13 +114,13 @@ cekAdmin($role); ?>
               <div class="form-group">
                 <label class="col-sm-2">Jenis Biaya</label>
                 <div class="col-sm-3">
-                  <select id="kode_akun" class="form-control">
-                    <option selected="">Kode Akun</option>
+                  <select class="form-control select2" id="kode_akun">
+                    <option selected="" disabled="">Kode Akun</option>
                     <?php
-                    $query = mysqli_query($conn, "SELECT kodeakun FROM ms_akun");
-                    foreach ($query as $datas) {
+                    $query = mysqli_query($conn, "SELECT kodeakun,namaakun FROM ms_akun");
+                    foreach ($query as $data) {
                       ?>
-                      <option value="<?= $datas['kodeakun'] ?>"><?= $datas['kodeakun'] ?></option>
+                      <option value="<?= $data['kodeakun'] ?>"><?= $data['kodeakun'] ?> - <?= $data['namaakun'] ?></option>
                     <?php } ?>
                   </select>
                 </div>
@@ -140,7 +140,7 @@ cekAdmin($role); ?>
               <!-- #7 -->
               <div class="form-group">
                 <div class="col-sm-9">
-                  <textarea class="form-control" id="ket" rows="3">Keterangan. . . . . </textarea>
+                  <textarea class="form-control" id="ket" rows="3" placeholder="Keterangan"></textarea>
                 </div>
               </div>
               <div class="form-group">

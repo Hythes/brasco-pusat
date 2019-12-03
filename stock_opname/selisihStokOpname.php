@@ -11,6 +11,7 @@ if (isset($_POST['search'])) {
 	extract($_POST);
 	$arr = array();
 	$hasil_cari = array();
+	$kodeku = $kode;
 	$cari_stock = query("SELECT * FROM stock_opname WHERE barcode_inventory BETWEEN '$barcode1' AND '$barcode2' AND kode='$kode' AND MONTH(CAST(created_at AS DATE))='$bulan'");
 	foreach ($cari_stock as $opname) {
 		$arr['kode'] = $kode;
@@ -74,6 +75,7 @@ if (isset($_POST['search'])) {
 											<option value="12">Desember</option>
 										</select>
 									</div>
+
 								</div>
 								<div class="form-group">
 									<div class="col-sm-3">
@@ -104,6 +106,8 @@ if (isset($_POST['search'])) {
 									<div class="col-sm-1">
 										<button name="search" type="submit" class="btn btn-info">Cari</button>
 									</div>
+
+
 								</div>
 							</div>
 						</div>

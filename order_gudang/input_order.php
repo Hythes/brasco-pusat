@@ -150,7 +150,7 @@ if (isset($_POST['submit'])) {
 											<tbody id="cari_so_tabel">
 												<?php
 												$i_m1 = 1;
-												foreach (query("SELECT * FROM order_gudang") as $data_so) : $so =  $data_so['nomor_so'];
+												foreach (query("SELECT * FROM sales_order") as $data_so) : $so =  $data_so['nomor_so'];
 													?>
 													<tr>
 														<td><?= $i_m1 ?></td>

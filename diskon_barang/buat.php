@@ -6,10 +6,11 @@ if (isset($_POST['kirim'])) {
     $dataSemua = json_decode($_POST['dataSemua'], true);
     $p = query("SELECT * FROM counter WHERE tabel = 'diskon_barang_reject'")[0];
     $id = $p['header'] . "-" . (intval($p['digit']) + 1);
-    $data = explode($id, "-")[1];
+    $data = explode("-", $id)[1];
     $id_admin = $_SESSION['admin']['id'];
-    $sql .= "UPDATE counter SET digit = '$data', id_edit_admin = '$id_admin' WHERE tabel = 'diskon_barang_reject';";
     $sql = '';
+    $sql .= "UPDATE counter SET digit = '$data', id_edit_admin = '$id_admin' WHERE tabel = 'diskon_barang_reject';";
+    $dataSemua = array_filter($dataSemua);
     foreach ($dataSemua as $data) {
         $word = "INSERT INTO diskon_barang_reject(kode_reject,kode_customer,barcode,barcode_reject,quantity,diskon, id_admin, id_edit_admin) VALUES('%s','%s','%s','%s','%s','%s','%s','%s');";
         $array = [
@@ -81,9 +82,9 @@ $title = "Diskon Barang Reject";
                             <select class="form-control " id="barcode" name="barcode">
                                 <option value="0">Pilih Barcode</option>
                                 <?php foreach (query("SELECT * FROM inventory") as $data) : ?>
-                                    <option value="<?= $data['barcode'] ?>">
-                                        <?= $data['barcode'] . " - " . $data['nama_barang'] ?>
-                                    </option>
+                                    <?php if (is_numeric($data['barcode'])) : ?>
+                                        <option value="<?= $data['barcode'] ?>"><?= $data['barcode'] ?> - <?= $data['nama_barang'] ?></option>
+                                    <?php endif; ?>
                                 <?php endforeach ?>
                             </select>
                         </div>

@@ -54,13 +54,13 @@ if (isset($_POST['edit'])) {
           <form method="POST" class="form-horizontal" action="kas_bank/master_bank.php">
             <div class="box-body">
               <div class="form-group">
-                <label class="col-sm-2">Kode Bank</label>
+                <label class="col-sm-2">Kode Bank / Kas</label>
                 <div class="col-sm-4">
-                  <input type="number" id="kode_bank" class="form-control">
+                  <input type="text" id="kode_bank" class="form-control">
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2">Nama Bank</label>
+                <label class="col-sm-2">Nama Bank / Kas</label>
                 <div class="col-sm-4">
                   <input type="text" class="form-control" id="nama_bank">
                 </div>
@@ -80,7 +80,7 @@ if (isset($_POST['edit'])) {
               <div class="form-group">
                 <label class="col-sm-2">Tipe</label>
                 <div class="col-sm-4">
-                  <select id="tipe" class="form-control">
+                  <select id="tipe" class="form-control ">
                     <option value="kas">Kas</option>
                     <option value="bank">Bank</option>
                   </select>
@@ -89,7 +89,7 @@ if (isset($_POST['edit'])) {
               <div class="form-group">
                 <label class="col-sm-2">Kode Akun</label>
                 <div class="col-sm-4">
-                  <select class="form-control" id="nomor_akun">
+                  <select class="form-control select2" id="nomor_akun">
                     <option selected="" disabled="">Kode Akun</option>
                     <?php
                     $query = mysqli_query($conn, "SELECT kodeakun,namaakun FROM ms_akun");

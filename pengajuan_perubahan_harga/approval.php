@@ -33,6 +33,7 @@ if (isset($_POST['kirim'])) {
     $l = mysqli_multi_query($conn, $sql);
     lanjutkan($l, "Di Approve");
 }
+$result = query("SELECT * FROM pengajuan_perubahan_harga");
 if (isset($_POST['submit'])) {
     extract($_POST);
     $i = false;
@@ -184,7 +185,7 @@ if (isset($_POST['submit'])) {
                                                 <td><?= $nomor_pengajuan ?></td>
                                                 <td><?= $tanggal_pengajuan ?></td>
                                                 <td>Customer <?= $tipe_customer ?></td>
-                                                <td><?= ($tanggal_approve == '' ? 'Unknown' : $tanggal_approve) ?></td>
+                                                <td><?= ($tanggal_approve == '' ? '0' : $tanggal_approve) ?></td>
                                                 <td><?= status($status) ?></td>
                                                 <td><a href="pengajuan_perubahan_harga/detail.php?kode=<?= $nomor_pengajuan ?>" target="_blank" class="btn btn-info">Detail</a></td>
                                                 <td><select name="approve<?= $i ?>" class="form-control" required="">

@@ -345,12 +345,12 @@ $title = 'Purchase Order';
     var active_2 = 'header_purchase_order';
     var simpanArray = [];
     $(document).ready(() => {
-        var barcode = document.getElementById('barcode_label').value;
+        var barcode = $('#barcode_label').val()
         dataSimpan.barcodeLabel = barcode
     })
 
     $('#barcode_label').on('select2:change', () => {
-        var barcode = document.getElementById('barcode_label').value;
+        var barcode = $('#barcode_label').val()
         dataSimpan.barcodeLabel = barcode
     })
 
@@ -363,7 +363,7 @@ $title = 'Purchase Order';
             return false;
         } else {
             var save = {
-                'barcode': dataSimpan.barcodeLabel,
+                'barcode': $('#barcode_label').val(),
                 'harga': harga,
                 'keterangan': keterangan,
                 'quantity': quantity

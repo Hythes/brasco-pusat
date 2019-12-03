@@ -11,17 +11,17 @@
     $st = $counter['header'];
     $dg = $counter['digit'];
     $dg++;
-    $char = $st."-".sprintf("%08s",$dg);
+    $char = $st . "-" . sprintf("%08s", $dg);
     $sql = '';
     for ($i = 0; $i < $_POST['total']; $i++) {
       $barcode = $_POST['barcode'][$i];
       $qty = $_POST['qty'][$i];
       $sql  .= "INSERT INTO stock_opname(id,kode,barcode_inventory,quantity,id_admin,id_edit_admin) VALUES(null,'$char','$barcode','$qty','$id','0');";
     }
-    $angka = explode("-",$char)[1];
+    $angka = explode("-", $char)[1];
     $update = query("UPDATE counter SET digit='$angka' WHERE tabel='stock_opname'");
     $query = mysqli_multi_query($conn, $sql);
-    lanjutkan($query,"Dibuat");
+    lanjutkan($query, "Dibuat");
   }
   if (isset($_POST['cariBarcode'])) {
     extract($_POST);
@@ -108,6 +108,9 @@
                       </select>
                     </div>
                     <button class="btn btn-info" type="submit" name="cariBarcode">Search</button>
+                    <?php if (isset($_POST['cariBarcode'])) : ?>
+                      <a target="_blank" href="stock_opname/laporan.php?<?= "barcode1=$barcode1&barcode2=$barcode2" ?>" class="btn btn-success">Print</a>
+                    <?php endif; ?>
                   </div>
                 </div>
               </form>

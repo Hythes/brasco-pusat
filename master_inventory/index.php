@@ -19,7 +19,9 @@ if (isset($_POST["submit"])) {
       ";
   }
 }
+$data = [];
 $data = query("SELECT * FROM inventory");
+
 $title = "Master Inventory";
 ?>
 <script>
@@ -75,6 +77,8 @@ $title = "Master Inventory";
               </div>
               <div class="col-sm-2" style="padding: 5px;">
                 <select class="form-control" name="satuan">
+                  <option disabled selected>Satuan</option>
+
                   <?php
                   $datat = query("SELECT * FROM satuan");
                   foreach ($datat as $datas) :
@@ -85,6 +89,7 @@ $title = "Master Inventory";
               </div>
               <div class="col-sm-2" style="padding: 5px;">
                 <select class="form-control" name="id_tipe_barang">
+                  <option disabled selected>Tipe Barang</option>
                   <?php
                   $datat = cariBarang();
                   foreach ($datat as $datas) :
@@ -97,13 +102,13 @@ $title = "Master Inventory";
             </div>
             <div class="form-group">
               <div class="col-sm-3" style="padding: 5px;">
-                <input type="number" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
+                <input type="number" min="0" class="form-control" name="harga_jual1" placeholder="Harga Jual 1 . . ." required>
               </div>
               <div class="col-sm-3" style="padding: 5px;">
-                <input type="number" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
+                <input type="number" min="0" class="form-control" name="harga_jual2" placeholder="Harga Jual 2 . . ." required>
               </div>
               <div class="col-sm-3" style="padding: 5px;">
-                <input type="number" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
+                <input type="number" min="0" class="form-control" name="harga_jual3" placeholder="Harga Jual 3 . . ." required>
               </div>
             </div>
             <button type="submit" id="submit" class="btn btn-info pull-right" name="submit">Tambah</button>
