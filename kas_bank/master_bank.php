@@ -68,13 +68,13 @@ if (isset($_POST['edit'])) {
               <div class="form-group">
                 <label class="col-sm-2">Saldo Awal</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="saldo_awal">
+                  <input type="number" class="form-control" id="saldo_awal">
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2">Saldo Jalan</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" id="saldo_jalan">
+                  <input type="number" class="form-control" id="saldo_jalan">
                 </div>
               </div>
               <div class="form-group">
@@ -158,7 +158,7 @@ if (isset($_POST['edit'])) {
                                 <div class="form-group" style="padding-bottom: 50px">
                                   <label class="col-sm-2">Kode Bank</label>
                                   <div class="col-sm-10">
-                                    <input type="number" readonly="" name="kode_bank_edit" value="<?= $datas['kode_bank'] ?>" class="form-control">
+                                    <input type="text" readonly="" name="kode_bank_edit" value="<?= $datas['kode_bank'] ?>" class="form-control">
                                   </div>
                                 </div>
                                 <div class="form-group" style="padding-bottom: 50px">
@@ -170,13 +170,13 @@ if (isset($_POST['edit'])) {
                                 <div class="form-group" style="padding-bottom: 50px">
                                   <label class="col-sm-2">Saldo Awal</label>
                                   <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="<?= $datas['saldo_awal'] ?>" name="saldo_awal_edit">
+                                    <input type="number" class="form-control" value="<?= $datas['saldo_awal'] ?>" name="saldo_awal_edit">
                                   </div>
                                 </div>
                                 <div class="form-group" style="padding-bottom: 50px">
                                   <label class="col-sm-2">Saldo Jalan</label>
                                   <div class="col-sm-10">
-                                    <input type="text" value="<?= $datas['saldo_jalan'] ?>" class="form-control" name="saldo_jalan_edit">
+                                    <input type="number" value="<?= $datas['saldo_jalan'] ?>" class="form-control" name="saldo_jalan_edit">
                                   </div>
                                 </div>
                                 <div class="form-group" style="padding-bottom: 50px">
@@ -240,6 +240,36 @@ if (isset($_POST['edit'])) {
 
 <?php include('../templates/footer.php') ?>
 <script type="text/javascript">
+  var status;
+  $('#kode_bank').keyup(function() {
+    var data = $('#kode_bank').val();
+    if ($('#kode_bank').val() == '') {
+      $('#').css('border', '1px solid red');
+      return;
+    }
+    $.ajax({
+      url: './kas_bank/ajax.php',
+      type: 'POST',
+      data: {
+        "kode": $('#kode_bank').val(),
+        "params": 15
+      },
+      complete: function(response, textStatus, jqXHR) {
+        var respon = JSON.parse(response.responseText);
+        if (respon == 0) {
+          $('#kode_bank').css('border', '1px solid green');
+          status = 1;
+        } else {
+          $('#kode_bank').css('border', '1px solid red');
+          status = 0;
+        }
+      },
+      error: function(jqXHR, textStatus, err) {
+        console.log(textStatus + err + jqXHR);
+      }
+
+    });
+  });
   $('#save').click(function() {
     var kode_bank = $('#kode_bank').val()
     var nama_bank = $('#nama_bank').val()
@@ -247,25 +277,30 @@ if (isset($_POST['edit'])) {
     var saldo_jalan = $('#saldo_jalan').val()
     var tipe = $('#tipe').val()
     var nomor_akun = $('#nomor_akun').val()
-    $.post('kas_bank/ajax.php', {
-      'params': 5,
-      'kode_bank': kode_bank,
-      'nama_bank': nama_bank,
-      'saldo_awal': saldo_awal,
-      'saldo_jalan': saldo_jalan,
-      'tipe': tipe,
-      'nomor_akun': nomor_akun
-    }, function(res) {
-      var message = JSON.parse(res)
-      alert(message)
-      $('#kode_bank').val('')
-      $('#nama_bank').val('')
-      $('#saldo_awal').val('')
-      $('#saldo_jalan').val('')
-      $('#tipe').val()
-      $('#nomor_akun').val('')
-      location.reload(true)
-    })
+    if (status == 1) {
+      $.post('kas_bank/ajax.php', {
+        'params': 5,
+        'kode_bank': kode_bank,
+        'nama_bank': nama_bank,
+        'saldo_awal': saldo_awal,
+        'saldo_jalan': saldo_jalan,
+        'tipe': tipe,
+        'nomor_akun': nomor_akun
+      }, function(res) {
+        var message = JSON.parse(res)
+        alert(message)
+        $('#kode_bank').val('')
+        $('#nama_bank').val('')
+        $('#saldo_awal').val('')
+        $('#saldo_jalan').val('')
+        $('#tipe').val()
+        $('#nomor_akun').val('')
+        location.reload(true)
+      })
+    } else {
+      alert("Tolong dibetulkan kode banknya");
+    }
+
   })
 </script>ation.reload(true)
 })

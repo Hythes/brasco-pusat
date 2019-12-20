@@ -243,6 +243,15 @@ if ($parameter == 1) {
 	echo json_encode($query);
 } elseif ($parameter == 14) {
 	extract($_POST);
-	$query = query("SELECT * FROM purchase_order WHERE kode = '$kode'")[0];
+	$query = query("SELECT *  purchase_order WHERE kode = '$kode'")[0];
 	echo json_encode($query);
+} elseif ($parameter == 15) {
+	extract($_POST);
+	$query = mysqli_query($conn, "SELECT * FROM bank WHERE kode_bank = '$kode'");
+	if ($query) {
+		$row = mysqli_num_rows($query);
+		echo json_encode($row);
+	} else {
+		echo json_encode(mysqli_error($conn));
+	}
 }

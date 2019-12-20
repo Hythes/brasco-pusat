@@ -163,11 +163,10 @@ if (isset($_POST['submit'])) {
                                                         </tr>
                                                     </thead>
                                                     <tbody id="cari_so_tabel">
-                                                        <?php
-                                                        $i_m1 = 1;
-                                                        foreach (query("SELECT * FROM order_gudang") as $data_so) : $so =  $data_so['nomor_order'];
-                                                            $ko = $data_so['kode_customer'];
-                                                            ?>
+                                                        <?php                                                                    $i_m1 = 1;
+                                                                                                                                foreach (query("SELECT * FROM order_gudang") as $data_so) : $so =  $data_so['nomor_order'];
+                                                                                                                                    $ko = $data_so['kode_customer'];
+                                                        ?>
                                                             <tr>
                                                                 <td><?= $i_m1 ?></td>
                                                                 <td><?= $data_so['nomor_order'];  ?></td>
@@ -176,8 +175,8 @@ if (isset($_POST['submit'])) {
                                                                 <td><a class="btn btn-primary" href="picking_gudang/input.php?nomor=<?= $so ?>">Pilih</button></td>
                                                             </tr>
                                                         <?php
-                                                            $i_m1++;
-                                                        endforeach;
+                                                                                                                                    $i_m1++;
+                                                                                                                                endforeach;
                                                         ?>
                                                     </tbody>
                                                 </table>
@@ -210,18 +209,21 @@ if (isset($_POST['submit'])) {
                                 </thead>
                                 <tbody align="center">
                                     <?php $i = 1;
-                                    foreach ($item as $now) : ?>
+                                                                                                                                foreach ($item as $now) : ?>
                                         <tr>
                                             <td><?= $i ?></td>
                                             <td><?= $now['barcode'] ?></td>
                                             <td><?= $now['nama_item'] ?></td>
                                             <td><?= $now['satuan'] ?></td>
                                             <td><?= $now['quantity'] ?></td>
-                                            <td><input type="text" class="form-control" name="quantity_pick_<?= $i ?>"></td>
+                                            <td><?php 
+                                            $data_gan = query("SELECT * FROM picking_item WHERE barcode = '$now['barcode']'")[0];
+                                            ?>
+                                                <input type="text" class="form-control" name="quantity_pick_<?= $i ?>"></td>
                                             <input type="hidden" name="id_<?= $i ?>" value="<?= $now['id'] ?>">
                                         </tr>
                                     <?php $i++;
-                                    endforeach; ?>
+                                                                                                                                endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

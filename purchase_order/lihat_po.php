@@ -60,8 +60,11 @@ $var = $var[0];
                                         <div class="textbox col-xs-5">
                                             <input readonly type="text" value="<?= $var['kode_supplier'] ?>" name="kode_supplier" id="kode_supplier" class="form-control" placeholder="KODE SUPPLIER">
                                         </div>
+                                        <?php
+                                        $supplier = query("SELECT * FROM supplier where kode = '$var[kode_supplier]'")[0];
+                                        ?>
                                         <div class="textbox col-xs-6">
-                                            <input readonly type="text" readonly name="nama_supplier" value="<?= $var['nama'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
+                                            <input readonly type="text" readonly name="nama_supplier" value="<?= $supplier['nama'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
                                         </div>
                                         <div class="col-xs-1">
                                             <i id="cari_supplier_po" style="cursor:pointer" class="fa fa-search fa-2x"></i>
@@ -69,7 +72,7 @@ $var = $var[0];
                                     </div>
                                 </div>
                                 <div class="textbox form-group" style="margin-top: 15px;">
-                                    <textarea class="form-control" id="alamat_supplier" readonly rows="3" name="alamat_supplier" placeholder="ALAMAT"><?= $var['alamat_supplier'] ?></textarea>
+                                    <textarea class="form-control" id="alamat_supplier" readonly rows="3" name="alamat_supplier" placeholder="ALAMAT"><?= $supplier['alamat'] ?></textarea>
                                 </div>
                             </div>
                             <!-- div class md-6 -->

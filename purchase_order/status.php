@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
                                             <option>Semua</option>
                                             <option>Approve</option>
                                             <option>Belum Approve</option>
-                                            <option>Batal</option>
+                                            <option>Reject</option>
                                             <option>Closed</option>
                                         </select>
                                     </div>

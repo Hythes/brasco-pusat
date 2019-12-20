@@ -41,7 +41,7 @@ function ubah($data)
 	$id_admin = $_SESSION['admin']['id'];
 	$barcode = htmlspecialchars($data['barcode']);
 	$nama_barang = htmlspecialchars($data['nama_barang']);
-	$satuan = htmlspecialchars($data['satuan']);
+	$satuan = htmlspecialchars($data['id_satuan']);
 	$id_tipe_barang = htmlspecialchars($data['id_tipe_barang']);
 	$harga_jual1 = htmlspecialchars($data['harga_jual1']);
 	$harga_jual2 = htmlspecialchars($data['harga_jual2']);

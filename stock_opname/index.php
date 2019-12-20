@@ -16,20 +16,26 @@
     for ($i = 0; $i < $_POST['total']; $i++) {
       $barcode = $_POST['barcode'][$i];
       $qty = $_POST['qty'][$i];
-      $sql  .= "INSERT INTO stock_opname(id,kode,barcode_inventory,quantity,id_admin,id_edit_admin) VALUES(null,'$char','$barcode','$qty','$id','0');";
+      $inven = mysqli_fetch_assoc(mysqli_query($conn,"SELECT quantity FROM inventory WHERE barcode='$barcode'"));
+      $qty_selisih = $inven['quantity']-$qty;
+      $sql .="UPDATE inventory SET quantity='$qty' WHERE barcode='$barcode';";
+      $sql  .= "INSERT INTO stock_opname(id,kode,barcode_inventory,quantity_opname,quantity_selisih,id_admin,id_edit_admin) VALUES(null,'$char','$barcode','$qty','$qty_selisih','$id','0');";
     }
     $angka = explode("-", $char)[1];
     $update = query("UPDATE counter SET digit='$angka' WHERE tabel='stock_opname'");
     $query = mysqli_multi_query($conn, $sql);
-    lanjutkan($query, "Dibuat");
+   if ($query == true) {
+    echo "<script>
+    location = 'index.php'
+    </script>";
+   }
   }
   if (isset($_POST['cariBarcode'])) {
     extract($_POST);
     $query = "SELECT * FROM inventory WHERE barcode BETWEEN '$barcode1' AND '$barcode2'";
-    $result = query($query);
+    $result = mysqli_query($conn,$query);
   }
   ?>
-
   <script>
     var active = 'header_stock';
     var active_2 = 'header_stock_input';
@@ -80,7 +86,7 @@
                       <select name="barcode1" class="form-control">
                         <option selected disabled>Barcode</option>
                         <?php
-                        $query = query("SELECT * FROM inventory");
+                        $query = mysqli_query($conn,"SELECT * FROM inventory");
                         foreach ($query as $data) {
                           ?>
                           <?php if (is_numeric($data['barcode'])) : ?>
@@ -96,7 +102,7 @@
                       <select name="barcode2" class="form-control">
                         <option selected disabled>Barcode</option>
                         <?php
-                        $query = query("SELECT * FROM inventory");
+                        $query = mysqli_query($conn,"SELECT * FROM inventory");
                         foreach ($query as $data) {
                           ?>
                           <?php if (is_numeric($data['barcode'])) : ?>
@@ -132,7 +138,7 @@
                   <?php if (isset($result)) : ?>
                     <?php $i = 1;
                       foreach ($result as $res) :
-                        $satuan = query("SELECT satuan FROM satuan WHERE id='$res[satuan]'");
+                        $satuan = mysqli_query($conn,"SELECT satuan FROM satuan WHERE id='$res[satuan]'");
                         foreach ($satuan as $asSatuan) {
                           ?>
                         <tr>

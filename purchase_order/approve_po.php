@@ -13,7 +13,7 @@ if (isset($_POST['kirim'])) {
         $sql .= "UPDATE purchase_order SET tanggal_approve = '$tanggal', keterangan_approve = '$keterangan_approve', status = '$status' WHERE kode = '$kode' ;";
     }
     $query2 = mysqli_multi_query($conn, $sql);
-    lanjutkan($query2, "Di Approve");
+    lanjutkan($query2, "Di Update");
 }
 if (isset($_POST['submit'])) {
     extract($_POST);
@@ -110,7 +110,7 @@ if (isset($_POST['submit'])) {
                                             <option>Semua</option>
                                             <option>Approve</option>
                                             <option>Belum Approve</option>
-                                            <option>Batal</option>
+                                            <option>Reject</option>
                                         </select>
                                     </div>
                                 </div>
@@ -158,7 +158,7 @@ if (isset($_POST['submit'])) {
                                             <div class="input-group">
                                                 <select style="width: auto" name="status<?= $i ?>" class="form-control">
                                                     <option>Approve</option>
-                                                    <option>Batal</option>
+                                                    <option>Reject</option>
                                                 </select>
                                             </div>
                                         </td>

@@ -27,16 +27,15 @@ if (isset($_POST['simpan'])) {
     $tanggal = $inti['tanggal'];
 
 
-    
+
     $sql = "INSERT INTO pengajuan_perubahan_harga(nomor_pengajuan,tipe_customer,tanggal_pengajuan,id_admin, id_edit_admin) VALUES('$nomor_pengajuan','$tipe_customer',CAST('$tanggal' AS DATE),'$id_admin','0');";
     foreach ($input as $data) {
         $barcode = $data['barcode'];
         $harga_lama = $data['harga_jual_lama'];
         $harga_baru = $data['harga_jual_baru'];
         $ket = $data['keterangan'];
-        $qty = $data['quantity'];
 
-        $sql .= "INSERT INTO pph_item(nomor_pengajuan,tanggal,tipe_customer,barcode_inventory,harga_jual_lama,harga_jual_baru,quantity,keterangan,id_admin, id_edit_admin) VALUES('$nomor_pengajuan',CAST('$tanggal' AS DATE),'$tipe_customer','$barcode','$harga_lama','$harga_baru','$qty','$ket','$id_admin','0');";
+        $sql .= "INSERT INTO pph_item(nomor_pengajuan,tanggal,tipe_customer,barcode_inventory,harga_jual_lama,harga_jual_baru,keterangan,id_admin, id_edit_admin) VALUES('$nomor_pengajuan',CAST('$tanggal' AS DATE),'$tipe_customer','$barcode','$harga_lama','$harga_baru','$ket','$id_admin','0');";
     }
     $dataW = explode("-", $nomor_pengajuan)[1];
     $sql .= "UPDATE counter SET digit = '$dataW' WHERE tabel = 'pengajuan_perubahan_harga';";
@@ -52,6 +51,8 @@ if (isset($_POST['simpan'])) {
 
 if (isset($_POST['request'])) {
     extract($_POST);
-    if ($request == "cari") { }
-    if ($request == 'kirim') { }
+    if ($request == "cari") {
+    }
+    if ($request == 'kirim') {
+    }
 }

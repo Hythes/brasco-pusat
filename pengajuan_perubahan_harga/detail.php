@@ -79,7 +79,6 @@ $q = query("SELECT * FROM pph_item WHERE nomor_pengajuan = '$nomor'");
                                         <th>Nama Item</th>
                                         <th>Harga Jual Lama</th>
                                         <th>Harga Jual Baru</th>
-                                        <th>Quantity</th>
                                         <th>Keterangan</th>
                                     </tr>
                                 </thead>
@@ -94,7 +93,6 @@ $q = query("SELECT * FROM pph_item WHERE nomor_pengajuan = '$nomor'");
                                             <td><?= $r['nama_barang'] ?></td>
                                             <td><?= $harga_jual_lama ?></td>
                                             <td><?= $harga_jual_baru ?></td>
-                                            <td><?= $quantity ?></td>
                                             <td><?= $keterangan ?></td>
                                         </tr>
                                     <?php $i++;

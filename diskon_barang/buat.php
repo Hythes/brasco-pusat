@@ -23,6 +23,7 @@ if (isset($_POST['kirim'])) {
             $id_admin,
             '0'
         ];
+        print_r($data);exit();
         $sql .= vsprintf($word, $array);
     }
     $last = mysqli_multi_query($conn, $sql);

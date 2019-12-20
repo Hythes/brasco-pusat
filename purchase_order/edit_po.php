@@ -30,7 +30,11 @@ if (isset($_POST['submit'])) {
 }
 $data = query("SELECT * FROM inventory");
 $kode = $_GET['kode'];
-$query = "SELECT * FROM purchase_order WHERE kode ='$kode'";
+$query = $conn->query("SELECT * FROM purchase_order WHERE kode ='$kode'");
+foreach ($query as $supp) {
+    $kode_supp = $supp['kode_supplier'];
+}
+$query3 = $conn->query("SELECT * FROM supplier WHERE kode='$kode_supp'");
 $var = query($query);
 $title = 'Edit Purchase Order';
 $var = $var[0];
@@ -70,7 +74,7 @@ $var = $var[0];
         <!-- Default box -->
         <div class="box">
             <div class="box-body">
-                <h3 class="header text-center">PURCHASE ORDER <span><button id="buat_po" class="btn btn-primary pull-right">Create PO</button></span></h3>
+                <h3 class="header text-center">PURCHASE ORDER <span><a href="purchase_order/cetak/cetak_label_barcode.php?kode" class="btn btn-primary pull-right">Create PO</a></span></h3>
                 <!-- form -->
                 <input type="hidden" id="kode" value="<?= $_GET['kode'] ?>">
                 <div class="form-body" style="margin-top: 20px;">
@@ -90,7 +94,7 @@ $var = $var[0];
                                             <input type="text" value="<?= $var['kode_supplier'] ?>" name="kode_supplier" id="kode_supplier" class="form-control" placeholder="KODE SUPPLIER">
                                         </div>
                                         <div class="textbox col-xs-6">
-                                            <input type="text" readonly name="nama_supplier" value="<?= $var['nama_supplier'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
+                                            <input type="text" readonly name="nama_supplier" value="<?= $var['nama'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
                                         </div>
                                         <div class="col-xs-1">
                                             <i id="cari_supplier_po" style="cursor:pointer" class="fa fa-search fa-2x"></i>

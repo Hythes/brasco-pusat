@@ -135,37 +135,6 @@ $title = "Profile"; ?>
     $('#foto_input').show()
     $('#foto').hide()
   })
-  $("#form").submit(function(e) {
-    var form = this
-    e.preventDefault(); //Stop the submit for now
-    //Replace with your selector to find the file input in your $('#form')
-    var fileInput = $(this).find("input[type=file]")[0],
-      file = fileInput.files && fileInput.files[0];
 
-    if (file) {
-      var img = new Image();
-
-      img.src = window.URL.createObjectURL(file);
-
-      img.onload = function() {
-        var width = img.naturalWidth,
-          height = img.naturalHeight;
-
-        window.URL.revokeObjectURL(img.src);
-        if (width == 100 && height == 100) {
-          form.submit();
-          return true;
-        } else {
-          alert('Foto harus 100x100 Pixes')
-          return false;
-        }
-      };
-    } else { //No file was input or browser doesn't support client side reading
-      this.submit();
-      return true;
-
-    }
-
-  });
 </script>
 <?php include('../templates/footer.php') ?>

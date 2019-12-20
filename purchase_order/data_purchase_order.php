@@ -130,38 +130,40 @@ if (isset($_POST['submit'])) {
                                 <th>PO NUMBER</th>
                                 <th>Tanggal</th>
                                 <th>KODE SUPPLIER</th>
-                                <th>NAMA SUPPLIER</th>
-                                <th>TELP</th>
-                                <th>NO HP</th>
+                                <th>STATUS</th>
                                 <th>JUMLAH</th>
                                 <th>AKSI</th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php
-                                $i = 1;
-                                $sql = query($query);
-                                foreach ($sql as $row) :
-                                    $kode = $row['kode_supplier'];
-                                    $querys = query("SELECT * FROM supplier WHERE kode='$kode'")[0];
-                                    ?>
+                            $i = 1;
+                            $sql = query($query);
+                            foreach ($sql as $row) :
+                                $kode = $row['kode_supplier'];
+                            ?>
                                 <tr>
                                     <td><?= $i ?></td>
                                     <td><?= $row['kode'] ?></td>
                                     <td><?= $row['tanggal'] ?></td>
                                     <td><?= $kode ?></td>
-                                    <td><?= $querys['nama']?></td>
-                                    <td><?= $row['telepon'] ?></td>
-                                    <td><?= $row['handphone'] ?></td>
+                                    <td><?= $row['status'] ?></td>
                                     <td><?= $row['total_harga'] ?></td>
                                     <td>
                                         <a href="purchase_order/edit_po.php?kode=<?= $row['kode'] ?>"><i class="fa fa-edit fa-lg" style="color: blue; padding: 5px;"></i></a>
-                                        <a href="purchase_order/data_purchase_order.php?request=delete&kode=<?= $row['kode'] ?>"><i class="fa fa-trash fa-lg" style="color: red; padding: 5px;"></i></a>
-                                        <a href="#"><i class="fa fa-print fa-lg" style="color: green; padding: 5px;"></i></a>
+                                        <?php if ($row['status'] == 'Approve') : ?>
+                                            <a href="purchase_order/data_purchase_order.php?request=delete&kode=<?= $row['kode'] ?>"><i class="fa fa-trash fa-lg" style="color: red; padding: 5px;"></i></a>
+                                            <a href="purchase_order/cetak/cetak_purchase_order.php?kode=<?= $row['kode'] ?>" target="_blank"><i class="fa fa-print fa-lg" style="color: green; padding: 5px;"></i></a>
+
+                                        <?php else : ?>
+                                            <a><i class="fa fa-trash fa-lg" style="color: grey; padding: 5px;"></i></a>
+                                            <a><i class="fa fa-print fa-lg" style="color: grey; padding: 5px;"></i></a>
+
+                                        <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php $i++;
-                                endforeach; ?>
+                                                                                                        endforeach; ?>
                         </tbody>
                     </table>
                     <!-- datatable -->

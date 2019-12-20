@@ -8,11 +8,15 @@ $sess = $_SESSION['admin']['id'];
 if (isset($_POST['simpan'])) {
     $sql = '';
     extract($_POST);
-    for ($i = 0; $i < count($_POST['header']); $i++) {
-        $sql .= "UPDATE counter SET header = '$header[$i]', digit = '$digit[$i]',id_edit_admin = '$sess' WHERE tabel = '$tabel[$i]';" . PHP_EOL;
+    if (count(array_unique($_POST['header'])) < count($_POST['header'])) {
+        alert("Header ada yang sama!");
+    } else {
+        for ($i = 0; $i < count($_POST['header']); $i++) {
+            $sql .= "UPDATE counter SET header = '$header[$i]', digit = '$digit[$i]',id_edit_admin = '$sess' WHERE tabel = '$tabel[$i]';" . PHP_EOL;
+        }
+        lanjutkan(mysqli_multi_query($conn, $sql), "Diubah!");
+        header('Refresh:0');
     }
-    lanjutkan(mysqli_multi_query($conn, $sql), "Diubah!");
-    header('Refresh:0');
 }
 
 ?>

@@ -69,19 +69,21 @@ $title = "Edit Data Inventory";
           <input type="hidden" name="id" value="<?= $_GET['id'] ?>">
           <div class="form-group" style="width: 10%">
             <label for="Satuan">Satuan</label>
-            <?php
-
-            $datat = query("SELECT * FROM satuan");
-            foreach ($datat as $datas) : ?>
-              <?php if ($datas['id'] ==  $data['satuan']) : ?>
-                <input value="<?= $datas['satuan'] ?>" type="text" readonly>
-              <?php endif; ?>
-            <?php endforeach; ?>
+            <select name="id_satuan" class="form-control">
+              <?php
+              $datat = query("SELECT * FROM satuan");
+              foreach ($datat as $datas) : ?>
+                <?php if ($datas['id'] ==  $data['satuan']) : ?>
+                  <option selected value="<?= $datas['id'] ?>"><?= $datas['satuan'] ?></option>
+                <?php else : ?>
+                  <option value="<?= $datas['id'] ?>"><?= $datas['satuan'] ?></option>
+                <?php endif; ?>
+              <?php endforeach; ?>
             </select>
           </div>
           <div class="form-group" style="width: 70%">
             <label>Tipe Barang</label>
-            <select class="form-control" name="id_tipe_barang" readonly id="id_tipe_barang" class="form-control">
+            <select class="form-control" name="id_tipe_barang" id="id_tipe_barang" class="form-control">
               <?php
               $datat = cariBarang();
               foreach ($datat as $datas) : ?>

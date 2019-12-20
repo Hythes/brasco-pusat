@@ -16,13 +16,13 @@ if (isset($_POST['search'])) {
 	foreach ($cari_stock as $opname) {
 		$arr['kode'] = $kode;
 		$arr['barcode'] = $opname['barcode_inventory'];
-		$arr['qty_opname'] = $opname['quantity'];
+		$arr['qty_opname'] = $opname['quantity_opname'];
+		$arr['qty_selisih'] = $opname['quantity_selisih'];
 		$barcode = $arr['barcode'];
 		$quin = query("SELECT * FROM inventory WHERE barcode='$barcode'");
 		foreach ($quin as $inventory) {
 			$arr['nama_item'] = $inventory['nama_barang'];
 			$arr['satuan'] = $inventory['satuan'];
-			$arr['qty_selisih'] = $inventory['quantity'] - $arr['qty_opname'];
 			$arr['jumlah_selisih'] = $arr['qty_selisih'] * $inventory['harga_beli'];
 		}
 		array_push($hasil_cari, $arr);
@@ -138,7 +138,12 @@ if (isset($_POST['search'])) {
 											<input type="hidden" id="nobukti" value="<?= $data['kode'] ?>">
 											<td><?= $data['barcode'] ?></td>
 											<td><?= $data['nama_item'] ?></td>
-											<td><?= $data['satuan'] ?></td>
+											<?php
+											$query = mysqli_query($conn,"SELECT * FROM satuan WHERE id='$data[satuan]'");
+											foreach ($query as $sat) {
+											?>
+											<td><?= $sat['satuan']?></td>
+											<?php } ?>	
 											<td><?= $data['qty_opname'] ?></td>
 											<td><?= $data['qty_selisih'] ?></td>
 											<td><?= $data['jumlah_selisih'] ?></td>
@@ -160,7 +165,7 @@ if (isset($_POST['search'])) {
 										<select id="kode_akun" class="form-control">
 											<option selected disabled>Kode Akun</option>
 											<?php
-											$query = query("SELECT * FROM ms_akun");
+											$query = mysqli_query($conn,"SELECT * FROM ms_akun");
 											foreach ($query as $data) {
 												?>
 												<option value="<?= $data['kodeakun'] ?>"><?= $data['kodeakun'] ?> - <?= $data['namaakun'] ?></option>
@@ -228,13 +233,13 @@ if (isset($_POST['search'])) {
 	var simpanData = []
 	var no = 1
 	$('#kode_akun').change(function() {
-		$.post('stock_opname/save.php', {
-			'params': 1,
-			'kode_akun': $(this).val()
-		}, (res) => {
-			element = JSON.parse(res)
-			$('#nama_akun').val(element.namaakun)
-		})
+		 $.post('stock_opname/save.php', {
+		 	'params': 1,
+		 	'kode_akun': $(this).val()
+		 }, (res) => {
+		 	element = JSON.parse(res)
+		 	$('#nama_akun').val(element.namaakun)
+		 })
 	})
 	$('#add').click(function() {
 		var kode_akun = $('#kode_akun').val()

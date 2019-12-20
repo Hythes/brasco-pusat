@@ -7,6 +7,9 @@ cekAdmin($role);
 $id = $_SESSION['admin']['id'];
 if (isset($_POST['submit'])) {
     extract($_POST);
+    if (!isset($keterangan)) {
+        $keterangan = '';
+    }
     $sql = "INSERT INTO purchase_order(kode,tanggal,kode_supplier,nama,alamat,kota,kodepos,telepon,handphone,dpp,tipe_ppn,tipe_ppn_input,total_harga,keterangan,id_admin,id_edit_admin) VALUES('$kode','$tanggal','$kode_supplier','$nama','$alamat','$kota','$kodepos','$telepon','$handphone','$dpp','$tipe_ppn','$tipe_ppn_teks','$total_harga','$keterangan','$id','0'); ";
     $sql .= PHP_EOL;
     $data_po = json_decode($data_po);
@@ -132,7 +135,7 @@ $title = 'Purchase Order';
                         <div class="row">
                             <div class="col-sm-2">
                                 <select name="barcode" id="barcode_po" class="form-control select2">
-                                    <option selected disabled>Pilih Barcode</option>
+                                    <option selected value="001">Pilih Barcode</option>
                                     <?php foreach (query("SELECT * FROM inventory") as $data) : ?>
                                         <option value="<?= $data['barcode'] ?>"><?= $data['barcode'] ?></option>
                                     <?php endforeach; ?>
@@ -473,6 +476,11 @@ $title = 'Purchase Order';
             dataSimpan.i++;
             dataSimpan.total += (parseInt(quantity) * parseInt(harga));
             dataSimpan.dpp = dataSimpan.total;
+            $('#harga').val('')
+            $('#quantity').val('')
+            $('#nama_item').val('')
+            $('#kode_item_supplier').val('')
+            $('#barcode_po').val('001').trigger('change')
             $('#total').val(dataSimpan.total);
             $('#dpp').val(dataSimpan.dpp);
             $('#data_po').val(JSON.stringify(simpanArray));
@@ -540,6 +548,7 @@ $title = 'Purchase Order';
         }, function(data) {
             data = JSON.parse(data);
             $('#nama_item').val(data.nama_barang);
+            $('#harga').val(data.harga_beli);
             dataSimpan.satuan = data.satuan;
         })
     });

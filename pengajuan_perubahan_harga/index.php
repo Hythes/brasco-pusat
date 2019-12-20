@@ -83,7 +83,12 @@ $id = $query['header'] . "-" . $c;
           <div class="box-body">
             <div class="row" style="margin-left: 5px">
               <div class="col-sm-2">
-                <input type="text" class="form-control" placeholder="Barcode" id="barcode_pph">
+                <select id="barcode_pph" class="form-control">
+                  <option value="0">Pilih Barcode</option>
+                  <?php foreach (query("SELECT * FROM inventory") as $barcode) : ?>
+                    <option value="<?= $barcode['barcode'] ?>"><?= $barcode['barcode'] ?> - <?= $barcode['nama_barang'] ?></option>
+                  <?php endforeach; ?>
+                </select>
               </div>
               <div class="col-sm-2">
                 <input type="text" class="form-control" disabled placeholder="Nama Item" id="item_pph">
@@ -94,9 +99,7 @@ $id = $query['header'] . "-" . $c;
               <div class="col-sm-2">
                 <input type="text" class="form-control" placeholder="H. Jual Baru" id='harga_baru'>
               </div>
-              <div class="col-sm-1">
-                <input type="text" class="form-control" placeholder="Qty" id="qty">
-              </div>
+
               <div class="col-sm-2 col-xs-10 ">
                 <input type="text" class="form-control" placeholder="Keterangan" id="keterangan">
               </div>
@@ -115,7 +118,6 @@ $id = $query['header'] . "-" . $c;
                       <th>Nama Item</th>
                       <th>Harga Jual Lama</th>
                       <th>Harga Jual Baru</th>
-                      <th>Quantity</th>
                       <th>Keterangan</th>
                       <th>Aksi</th>
                     </tr>
@@ -144,13 +146,11 @@ $id = $query['header'] . "-" . $c;
       'barcode': $('#barcode_pph').val(),
       'harga_jual_lama': $('#jual_pph').val(),
       'harga_jual_baru': $('#harga_baru').val(),
-      'quantity': $('#qty').val(),
       'keterangan': $('#keterangan').val()
     }
-    if (!Number.isInteger(parseInt(data.harga_jual_baru)) || !Number.isInteger(parseInt(data.quantity))) {
-      alert('Harga / Quantity Harus Berbentuk angka');
+    if (!Number.isInteger(parseInt(data.harga_jual_baru))) {
+      alert('Harga  Harus Berbentuk angka');
       return;
-
     }
     simpanData.push(data);
     $('#table').append(
@@ -160,7 +160,6 @@ $id = $query['header'] . "-" . $c;
       '<td>' + $('#item_pph').val() + '</td>' +
       '<td>' + data.harga_jual_lama + '</td>' +
       '<td>' + data.harga_jual_baru + '</td>' +
-      '<td>' + data.quantity + '</td>' +
       '<td>' + data.keterangan + '</td>' +
       '<td onclick="hapus_pph(' + i + ')" style="cursor:pointer; color: red;" > Hapus' + '</td>' +
       '</tr>'
@@ -206,8 +205,9 @@ $id = $query['header'] . "-" . $c;
       complete: function(res) {
         // console.log(res.responseText)
         // return false;
-        var response = JSON.parse(res.responseText);
         console.log(response);
+
+        var response = JSON.parse(res.responseText);
         if (response.msg == "berhasil") {
           alert('Data Berhasil Masuk');
           window.location.reload();
@@ -244,7 +244,7 @@ $id = $query['header'] . "-" . $c;
       }
     })
   })
-  $('#barcode_pph').keyup(delayTimes(function() {
+  $('#barcode_pph').change(() => {
     $.ajax({
       url: './pengajuan_perubahan_harga/ajax_barcode.php',
       type: 'POST',
@@ -264,7 +264,7 @@ $id = $query['header'] . "-" . $c;
         }
       }
     })
-  }, 500));
+  });
 </script>
 
 <?php include('../templates/footer.php') ?>

@@ -11,16 +11,23 @@ if (isset($_POST['delete'])) {
 $id = $_SESSION['admin']['id'];
 if (isset($_POST['edit'])) {
   extract($_POST);
-  $fax = intval($fax);
+  if (!isset($fax)) {
+    $fax = "";
+  } else {
+    $fax = intval($fax);
+  }
   $sql = "UPDATE supplier SET kode = '$kode',nama = '$nama',alamat = '$alamat',kota = '$kota',kodepos = '$kode_pos',telepon = '$telepon',fax = '$fax',handphone = '$handphone',contact_name = '$contact_name',email = '$email' ,kredit = '$kredit' ,top = '$top' ,pkp = '$pkp', saldo_jalan = '$saldo_jalan', saldo_awal = '$saldo_awal', id_edit_admin='$id' WHERE kode = '$kode_old'";
   $sql = mysqli_query($conn, $sql);
   lanjutkan($sql, "Diedit");
 } else if (isset($_POST['simpan'])) {
   extract($_POST);
+  if (!isset($fax)) {
+    $fax = "";
+  }
   $sql = "INSERT INTO supplier(kode,nama,alamat,kota,kodepos,telepon,fax,handphone,contact_name,email,kredit,top,pkp,saldo_awal,saldo_jalan,id_admin,id_edit_admin) VALUES(
       '$kode','$nama','$alamat','$kota','$kode_pos','$telepon','$fax','$handphone','$contact_name','$email','$kredit','$top','$pkp','$saldo_awal','$saldo_jalan','$id','0')";
   $sql = mysqli_query($conn, $sql);
-  lanjutkan($sql, "Diedit");
+  lanjutkan($sql, "Disimpan");
 }
 ?>
 
@@ -84,7 +91,7 @@ include('../templates/header.php') ?>
                         <input required type="number" class="form-control" name="telepon" placeholder="Telepon">
                       </div>
                       <div class="col-xs-6">
-                        <input required type="number" class="form-control" name="fax" placeholder="Fax">
+                        <input type="number" class="form-control" name="fax" placeholder="Fax">
                       </div>
                     </div>
                     <div class="row phone-kontak" style="padding: 5px;">
@@ -104,13 +111,13 @@ include('../templates/header.php') ?>
                     <div class="form-group">
                       <label class="col-sm-2 control-label">Kredit</label>
                       <div class="col-sm-10">
-                        <input required type="text" class="form-control" name="kredit" placeholder="Kredit">
+                        <input required type="number" class="form-control" name="kredit" placeholder="Kredit">
                       </div>
                     </div>
                     <div class="form-group">
                       <label class="col-sm-2 control-label">TOP</label>
                       <div class="col-sm-10">
-                        <input required type="text" class="form-control" name="top" placeholder="TOP">
+                        <input required type="number" class="form-control" name="top" placeholder="TOP">
                       </div>
                     </div>
                     <div class="form-group">
@@ -211,7 +218,7 @@ include('../templates/header.php') ?>
                                     <input required type="number" class="form-control" name="telepon" value="<?= $telepon ?>" placeholder="Telepon">
                                   </div>
                                   <div class="col-xs-6">
-                                    <input required type="text" class="form-control" name="fax" placeholder="Fax" value=" <?= intval($fax) ?>">
+                                    <input type="text" class="form-control" name="fax" placeholder="Fax" value=" <?= $fax ?>">
                                   </div>
                                 </div>
                                 <div class="row phone-kontak" style="padding: 5px;">
@@ -231,13 +238,13 @@ include('../templates/header.php') ?>
                                 <div class="form-group pad">
                                   <label class="col-sm-2 control-label">Kredit</label>
                                   <div class="col-sm-10">
-                                    <input required type="text" class="form-control" name="kredit" value="<?= $kredit ?>" placeholder="Kredit">
+                                    <input required type="number" class="form-control" name="kredit" value="<?= $kredit ?>" placeholder="Kredit">
                                   </div>
                                 </div>
                                 <div class="form-group pad">
                                   <label class="col-sm-2 control-label">TOP</label>
                                   <div class="col-sm-10">
-                                    <input required type="text" class="form-control" value="<?= $top ?>" name="top" placeholder="TOP">
+                                    <input required type="number" class="form-control" value="<?= $top ?>" name="top" placeholder="TOP">
                                   </div>
                                 </div>
                                 <div class="form-group pad">
