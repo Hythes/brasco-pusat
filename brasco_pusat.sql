@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Des 2019 pada 04.00
+-- Waktu pembuatan: 26 Des 2019 pada 19.28
 -- Versi server: 10.3.16-MariaDB
 -- Versi PHP: 7.1.30
 
@@ -21,6 +21,8 @@ SET time_zone = "+00:00";
 --
 -- Database: `brasco_pusat`
 --
+CREATE DATABASE IF NOT EXISTS `brasco_pusat` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+USE `brasco_pusat`;
 
 -- --------------------------------------------------------
 
@@ -28,16 +30,18 @@ SET time_zone = "+00:00";
 -- Struktur dari tabel `admin`
 --
 
-CREATE TABLE `admin` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE IF NOT EXISTS `admin` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
   `groupType` varchar(255) NOT NULL,
   `alamat` varchar(255) NOT NULL,
   `nomor_hp` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `admin`
@@ -58,7 +62,8 @@ INSERT INTO `admin` (`id`, `username`, `password`, `groupType`, `alamat`, `nomor
 -- Struktur dari tabel `bank`
 --
 
-CREATE TABLE `bank` (
+DROP TABLE IF EXISTS `bank`;
+CREATE TABLE IF NOT EXISTS `bank` (
   `kode_bank` varchar(255) NOT NULL,
   `nama_bank` varchar(255) NOT NULL,
   `saldo_jalan` varchar(255) NOT NULL,
@@ -68,7 +73,8 @@ CREATE TABLE `bank` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`kode_bank`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -86,7 +92,8 @@ INSERT INTO `bank` (`kode_bank`, `nama_bank`, `saldo_jalan`, `saldo_awal`, `tipe
 -- Struktur dari tabel `bank_input_pembayaran`
 --
 
-CREATE TABLE `bank_input_pembayaran` (
+DROP TABLE IF EXISTS `bank_input_pembayaran`;
+CREATE TABLE IF NOT EXISTS `bank_input_pembayaran` (
   `nomor_kas_keluar` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
   `id_bank` varchar(255) NOT NULL,
@@ -98,7 +105,8 @@ CREATE TABLE `bank_input_pembayaran` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_kas_keluar`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -114,7 +122,8 @@ INSERT INTO `bank_input_pembayaran` (`nomor_kas_keluar`, `tanggal`, `id_bank`, `
 -- Struktur dari tabel `bank_input_penerimaan`
 --
 
-CREATE TABLE `bank_input_penerimaan` (
+DROP TABLE IF EXISTS `bank_input_penerimaan`;
+CREATE TABLE IF NOT EXISTS `bank_input_penerimaan` (
   `nomor_kas_masuk` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
   `id_bank` varchar(255) NOT NULL,
@@ -126,7 +135,8 @@ CREATE TABLE `bank_input_penerimaan` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_kas_masuk`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -135,14 +145,16 @@ CREATE TABLE `bank_input_penerimaan` (
 -- Struktur dari tabel `counter`
 --
 
-CREATE TABLE `counter` (
+DROP TABLE IF EXISTS `counter`;
+CREATE TABLE IF NOT EXISTS `counter` (
   `tabel` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `header` varchar(255) NOT NULL,
   `digit` varchar(8) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`tabel`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -159,15 +171,15 @@ INSERT INTO `counter` (`tabel`, `nama`, `header`, `digit`, `id_edit_admin`, `cre
 ('no_kas_masuk', 'Nomor Kas Masuk', 'NKM', '00000006', '30', '2019-11-05 07:42:04', '2019-11-16 12:26:34'),
 ('no_transaksi', 'Nomor Transaksi', 'NTR', '00000000', '30', '2019-11-05 07:42:04', '2019-11-14 08:36:50'),
 ('order_gudang', 'Kode Order Gudang', 'OD', '19110000', '30', '2019-11-05 02:36:56', '2019-12-09 08:09:09'),
-('packing', 'Kode Packing Gudang', 'PK', '19110000', '30', '2019-11-05 02:36:56', '2019-11-26 06:28:23'),
+('packing', 'Kode Packing Gudang', 'PK', '19110001', '30', '2019-11-05 02:36:56', '2019-12-25 13:15:55'),
 ('pengajuan_perubahan_harga', 'Pengajuan Perubahan Harga', 'PH', '10004568', '30', '2019-11-05 02:36:56', '2019-12-16 07:02:36'),
-('picking', 'Kode Picking Gudang', 'PI', '19110002', '30', '2019-11-05 02:36:56', '2019-11-26 07:57:33'),
+('picking', 'Kode Picking Gudang', 'PI', '19110003', '30', '2019-11-05 02:36:56', '2019-12-25 12:25:46'),
 ('purchase_order', 'Kode Purchase Order', 'PO', '19110002', '30', '2019-11-05 02:36:56', '2019-12-09 09:01:27'),
 ('purchasing', 'Kode Purchasing', 'PU', '19110000', '30', '2019-11-05 02:36:56', '2019-11-26 06:28:24'),
-('retur_pembelian_barang', 'Kode Retur Pembelian Barang', 'RT', '19110001', '30', '2019-11-06 06:49:06', '2019-11-26 08:45:50'),
+('retur_pembelian_barang', 'Kode Retur Pembelian Barang', 'RT', '19110003', '30', '2019-11-06 06:49:06', '2019-12-26 17:12:49'),
 ('sales_invoice', 'Kode Sales Invoice', 'SI', '19110000', '30', '2019-11-05 02:36:56', '2019-11-26 06:28:24'),
 ('sales_order', 'Kode Sales Order', 'SO', '00000000', '30', '2019-11-05 02:36:56', '2019-11-14 08:37:11'),
-('stock_opname', 'Kode Stock Opname', 'ST', '00000056', '30', '2019-11-05 02:36:56', '2019-12-16 07:21:36'),
+('stock_opname', 'Kode Stock Opname', 'ST', '00000057', '30', '2019-11-05 02:36:56', '2019-12-26 16:22:51'),
 ('supplier', 'Kode Supplier', 'SP', '00000000', '30', '2019-11-05 02:36:56', '2019-11-14 08:36:49');
 
 -- --------------------------------------------------------
@@ -176,7 +188,8 @@ INSERT INTO `counter` (`tabel`, `nama`, `header`, `digit`, `id_edit_admin`, `cre
 -- Struktur dari tabel `customer`
 --
 
-CREATE TABLE `customer` (
+DROP TABLE IF EXISTS `customer`;
+CREATE TABLE IF NOT EXISTS `customer` (
   `kode` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `alamat` varchar(255) NOT NULL,
@@ -200,7 +213,8 @@ CREATE TABLE `customer` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`kode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -216,8 +230,9 @@ INSERT INTO `customer` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, 
 -- Struktur dari tabel `diskon_barang_reject`
 --
 
-CREATE TABLE `diskon_barang_reject` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `diskon_barang_reject`;
+CREATE TABLE IF NOT EXISTS `diskon_barang_reject` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `kode_reject` varchar(255) NOT NULL,
   `kode_customer` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
@@ -228,8 +243,9 @@ CREATE TABLE `diskon_barang_reject` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `diskon_barang_reject`
@@ -256,8 +272,9 @@ INSERT INTO `diskon_barang_reject` (`id`, `kode_reject`, `kode_customer`, `barco
 -- Struktur dari tabel `intrn`
 --
 
-CREATE TABLE `intrn` (
-  `kode` int(11) NOT NULL,
+DROP TABLE IF EXISTS `intrn`;
+CREATE TABLE IF NOT EXISTS `intrn` (
+  `kode` int(11) NOT NULL AUTO_INCREMENT,
   `tanggal` date NOT NULL,
   `kode_item` varchar(255) NOT NULL,
   `quantity` varchar(255) NOT NULL,
@@ -270,8 +287,9 @@ CREATE TABLE `intrn` (
   `tipe_transaksi` varchar(255) NOT NULL,
   `kode_user` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`kode`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `intrn`
@@ -280,7 +298,12 @@ CREATE TABLE `intrn` (
 INSERT INTO `intrn` (`kode`, `tanggal`, `kode_item`, `quantity`, `satuan`, `harga_beli`, `hpp`, `harga_jual`, `discount`, `keterangan`, `tipe_transaksi`, `kode_user`, `created_at`, `updated_at`) VALUES
 (1, '2019-11-26', '112233', '100', '100', '60000', '6000000', '0', '0', 'Purchasing', 'PU', '30', '2019-11-26 07:10:22', NULL),
 (2, '2019-11-26', '445566', '100', '100', '100000', '10000000', '0', '0', 'Purchasing', 'PU', '30', '2019-11-26 07:10:22', NULL),
-(3, '2019-11-26', '778899', '100', '100', '130000', '13000000', '0', '0', 'Purchasing', 'PU', '30', '2019-11-26 07:10:22', NULL);
+(3, '2019-11-26', '778899', '100', '100', '130000', '13000000', '0', '0', 'Purchasing', 'PU', '30', '2019-11-26 07:10:22', NULL),
+(4, '2019-12-24', '778899R', '3', '124', '232', '28768', '0', '0', 'Purchasing', 'PU', '30', '2019-12-24 12:25:23', NULL),
+(5, '2019-12-26', '445566', '10', '1', '100000', '1000000', '0', '0', 'Retur Barang Pembelian', 'RB', '30', '2019-12-26 17:00:09', NULL),
+(6, '2019-12-26', '778899', '19', '1', '130000', '2470000', '0', '0', 'Retur Barang Pembelian', 'RB', '30', '2019-12-26 17:00:09', NULL),
+(7, '2019-12-27', '112233', '5', '2', '60000', '300000', '0', '0', 'Retur Barang Pembelian', 'RB', '30', '2019-12-26 17:12:49', NULL),
+(8, '2019-12-27', '778899R', '4', '1', '232', '928', '0', '0', 'Retur Barang Pembelian', 'RB', '30', '2019-12-26 17:12:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -288,8 +311,9 @@ INSERT INTO `intrn` (`kode`, `tanggal`, `kode_item`, `quantity`, `satuan`, `harg
 -- Struktur dari tabel `inventory`
 --
 
-CREATE TABLE `inventory` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `inventory`;
+CREATE TABLE IF NOT EXISTS `inventory` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `barcode` varchar(255) NOT NULL,
   `nama_barang` varchar(255) NOT NULL,
   `satuan` varchar(255) NOT NULL,
@@ -302,18 +326,19 @@ CREATE TABLE `inventory` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `inventory`
 --
 
 INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_barang`, `harga_jual1`, `harga_jual2`, `harga_jual3`, `harga_beli`, `quantity`, `id_admin`, `id_edit_admin`, `created_at`, `update_at`) VALUES
-(1, '112233', 'Baju Batik BRASCO', '2', '4', '72000', '77000', '80000', '60000', '90', '30', '30', '2019-11-26 06:34:40', '2019-12-16 07:21:36'),
-(2, '445566', 'Celana BRASCO', '1', '3', '120000', '130000', '140000', '100000', '90', '30', '30', '2019-11-26 06:35:58', '2019-12-16 07:21:36'),
-(3, '778899', 'Sepatu BRASCO', '1', '3', '150000', '160000', '170000', '130000', '69', '30', '30', '2019-11-26 06:36:30', '2019-12-16 07:44:38'),
-(4, '778899R', 'Sepatu BRASCO', '1', '3', '30000', '160000', '170000', '45000', '121', '30', '30', '2019-11-26 08:13:59', '2019-12-16 07:44:38'),
+(1, '112233', 'Baju Batik BRASCO', '2', '4', '72000', '77000', '80000', '60000', '75', '30', '30', '2019-11-26 06:34:40', '2019-12-26 17:12:49'),
+(2, '445566', 'Celana BRASCO', '1', '3', '120000', '130000', '140000', '100000', '70', '30', '30', '2019-11-26 06:35:58', '2019-12-26 17:00:09'),
+(3, '778899', 'Sepatu BRASCO', '1', '3', '150000', '160000', '170000', '130000', '50', '30', '30', '2019-11-26 06:36:30', '2019-12-26 17:00:09'),
+(4, '778899R', 'Sepatu BRASCO', '1', '3', '30000', '160000', '170000', '232', '120', '30', '30', '2019-11-26 08:13:59', '2019-12-26 17:12:49'),
 (5, '445566R', 'Celana BRASCO', '1', '3', '60000', '130000', '140000', '25000', '90', '30', '30', '2019-11-26 08:16:30', '2019-12-16 06:58:38');
 
 -- --------------------------------------------------------
@@ -322,8 +347,9 @@ INSERT INTO `inventory` (`id`, `barcode`, `nama_barang`, `satuan`, `id_tipe_bara
 -- Struktur dari tabel `jurnal_referensi`
 --
 
-CREATE TABLE `jurnal_referensi` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `jurnal_referensi`;
+CREATE TABLE IF NOT EXISTS `jurnal_referensi` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `kas` char(13) NOT NULL,
   `bank` char(13) NOT NULL,
   `umbeli` char(13) NOT NULL,
@@ -351,8 +377,9 @@ CREATE TABLE `jurnal_referensi` (
   `ppnkeluar` char(13) NOT NULL,
   `ongkirjual` char(13) NOT NULL,
   `hpp` char(13) NOT NULL,
-  `retur_penjualan` char(13) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `retur_penjualan` char(13) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `jurnal_referensi`
@@ -367,8 +394,9 @@ INSERT INTO `jurnal_referensi` (`id`, `kas`, `bank`, `umbeli`, `hutang`, `persed
 -- Struktur dari tabel `label_barcode`
 --
 
-CREATE TABLE `label_barcode` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `label_barcode`;
+CREATE TABLE IF NOT EXISTS `label_barcode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `kode_po` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
   `harga` varchar(255) NOT NULL,
@@ -377,8 +405,9 @@ CREATE TABLE `label_barcode` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `label_barcode`
@@ -398,7 +427,8 @@ INSERT INTO `label_barcode` (`id`, `kode_po`, `barcode`, `harga`, `keterangan`, 
 -- Struktur dari tabel `ms_akun`
 --
 
-CREATE TABLE `ms_akun` (
+DROP TABLE IF EXISTS `ms_akun`;
+CREATE TABLE IF NOT EXISTS `ms_akun` (
   `kodeakun` varchar(20) NOT NULL,
   `namaakun` varchar(100) DEFAULT NULL,
   `jenis` char(1) DEFAULT NULL,
@@ -410,7 +440,8 @@ CREATE TABLE `ms_akun` (
   `lvl` int(11) DEFAULT 0,
   `perusahaan` varchar(2) DEFAULT '0',
   `divisi` varchar(2) DEFAULT '0',
-  `lrj` char(1) DEFAULT 'N'
+  `lrj` char(1) DEFAULT 'N',
+  PRIMARY KEY (`kodeakun`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -520,7 +551,8 @@ INSERT INTO `ms_akun` (`kodeakun`, `namaakun`, `jenis`, `status`, `kelompok`, `a
 -- Struktur dari tabel `order_gudang`
 --
 
-CREATE TABLE `order_gudang` (
+DROP TABLE IF EXISTS `order_gudang`;
+CREATE TABLE IF NOT EXISTS `order_gudang` (
   `nomor_order` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
   `nomor_so` varchar(255) NOT NULL,
@@ -530,7 +562,8 @@ CREATE TABLE `order_gudang` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_order`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -546,25 +579,27 @@ INSERT INTO `order_gudang` (`nomor_order`, `tanggal`, `nomor_so`, `kode_customer
 -- Struktur dari tabel `order_gudang_item`
 --
 
-CREATE TABLE `order_gudang_item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `order_gudang_item`;
+CREATE TABLE IF NOT EXISTS `order_gudang_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nomor_order` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
   `quantity` varchar(255) NOT NULL,
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `order_gudang_item`
 --
 
 INSERT INTO `order_gudang_item` (`id`, `nomor_order`, `barcode`, `quantity`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-(1, 'OD-19110001', '112233', '50', '30', '0', '2019-11-26 07:54:37', NULL),
-(2, 'OD-19110001', '445566', '50', '30', '0', '2019-11-26 07:54:37', NULL),
-(3, 'OD-19110001', '778899', '50', '30', '0', '2019-11-26 07:54:37', NULL);
+(1, 'OD-19110001', '112233', '50', '30', '0', '2019-11-26 07:54:37', '2019-12-25 12:00:42'),
+(2, 'OD-19110001', '445566', '50', '30', '0', '2019-11-26 07:54:37', '2019-12-25 12:00:45'),
+(3, 'OD-19110001', '778899', '50', '30', '0', '2019-11-26 07:54:37', '2019-12-25 12:00:48');
 
 -- --------------------------------------------------------
 
@@ -572,7 +607,8 @@ INSERT INTO `order_gudang_item` (`id`, `nomor_order`, `barcode`, `quantity`, `id
 -- Struktur dari tabel `packing`
 --
 
-CREATE TABLE `packing` (
+DROP TABLE IF EXISTS `packing`;
+CREATE TABLE IF NOT EXISTS `packing` (
   `nomor_packing` varchar(255) NOT NULL,
   `kode_customer` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
@@ -580,7 +616,8 @@ CREATE TABLE `packing` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_packing`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -588,7 +625,7 @@ CREATE TABLE `packing` (
 --
 
 INSERT INTO `packing` (`nomor_packing`, `kode_customer`, `tanggal`, `total`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-('PK-19110001', 'CUST-001', '2019-11-26', '150', '30', '0', '2019-11-26 08:02:09', NULL);
+('PK-19110001', 'CUST-001', '2019-12-25', '105', '30', '0', '2019-12-25 13:07:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -596,26 +633,27 @@ INSERT INTO `packing` (`nomor_packing`, `kode_customer`, `tanggal`, `total`, `id
 -- Struktur dari tabel `packing_item`
 --
 
-CREATE TABLE `packing_item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `packing_item`;
+CREATE TABLE IF NOT EXISTS `packing_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nomor_packing` varchar(255) NOT NULL,
   `id_picking_item` int(11) NOT NULL,
   `quantity_packing` int(11) NOT NULL,
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `packing_item`
 --
 
 INSERT INTO `packing_item` (`id`, `nomor_packing`, `id_picking_item`, `quantity_packing`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-(1, 'PK-19110001', 2, 50, '30', '0', '2019-11-26 08:02:09', NULL),
-(2, 'PK-19110001', 1, 30, '30', '0', '2019-11-26 08:02:09', NULL),
-(3, 'PK-19110001', 3, 50, '30', '0', '2019-11-26 08:02:09', NULL),
-(4, 'PK-19110001', 4, 20, '30', '0', '2019-11-26 08:02:09', NULL);
+(1, 'PK-19110001', 1, 35, '30', '0', '2019-12-25 13:07:33', NULL),
+(2, 'PK-19110001', 2, 35, '30', '0', '2019-12-25 13:07:33', NULL),
+(3, 'PK-19110001', 3, 35, '30', '0', '2019-12-25 13:07:34', NULL);
 
 -- --------------------------------------------------------
 
@@ -623,7 +661,8 @@ INSERT INTO `packing_item` (`id`, `nomor_packing`, `id_picking_item`, `quantity_
 -- Struktur dari tabel `pengajuan_perubahan_harga`
 --
 
-CREATE TABLE `pengajuan_perubahan_harga` (
+DROP TABLE IF EXISTS `pengajuan_perubahan_harga`;
+CREATE TABLE IF NOT EXISTS `pengajuan_perubahan_harga` (
   `nomor_pengajuan` varchar(255) NOT NULL,
   `tipe_customer` varchar(255) NOT NULL,
   `tanggal_approve` date DEFAULT NULL,
@@ -633,7 +672,8 @@ CREATE TABLE `pengajuan_perubahan_harga` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_pengajuan`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -650,7 +690,8 @@ INSERT INTO `pengajuan_perubahan_harga` (`nomor_pengajuan`, `tipe_customer`, `ta
 -- Struktur dari tabel `picking`
 --
 
-CREATE TABLE `picking` (
+DROP TABLE IF EXISTS `picking`;
+CREATE TABLE IF NOT EXISTS `picking` (
   `nomor_picking` varchar(255) NOT NULL,
   `nomor_order` varchar(255) NOT NULL,
   `kode_customer` varchar(255) NOT NULL,
@@ -661,7 +702,8 @@ CREATE TABLE `picking` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_picking`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -669,8 +711,7 @@ CREATE TABLE `picking` (
 --
 
 INSERT INTO `picking` (`nomor_picking`, `nomor_order`, `kode_customer`, `status`, `total`, `total_picking`, `tanggal`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-('PI-19110001', 'OD-19110001', 'CUST-001', 'Proses', '130', 0, '2019-11-26', '30', '0', '2019-11-26 07:55:14', NULL),
-('PI-19110002', 'OD-19110001', 'CUST-001', 'Proses', '20', 0, '2019-11-26', '30', '0', '2019-11-26 07:57:33', NULL);
+('PI-19110003', 'OD-19110001', 'CUST-001', 'Proses', '105', 0, '2019-12-25', '30', '30', '2019-12-25 12:25:47', '2019-12-25 12:33:53');
 
 -- --------------------------------------------------------
 
@@ -678,8 +719,9 @@ INSERT INTO `picking` (`nomor_picking`, `nomor_order`, `kode_customer`, `status`
 -- Struktur dari tabel `picking_item`
 --
 
-CREATE TABLE `picking_item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `picking_item`;
+CREATE TABLE IF NOT EXISTS `picking_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nomor_picking` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
   `id_order_item` varchar(255) NOT NULL,
@@ -689,20 +731,18 @@ CREATE TABLE `picking_item` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `picking_item`
 --
 
 INSERT INTO `picking_item` (`id`, `nomor_picking`, `barcode`, `id_order_item`, `quantity_picking`, `quantity_packing`, `quantity_order`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-(1, 'PI-19110001', '112233', '1', '30', '30', '50', '30', '30', '2019-11-26 07:55:14', '2019-11-26 08:02:09'),
-(2, 'PI-19110001', '445566', '2', '50', '50', '50', '30', '30', '2019-11-26 07:55:14', '2019-11-26 08:02:09'),
-(3, 'PI-19110001', '778899', '3', '50', '50', '50', '30', '30', '2019-11-26 07:55:14', '2019-11-26 08:02:09'),
-(4, 'PI-19110002', '112233', '1', '20', '20', '50', '30', '30', '2019-11-26 07:57:33', '2019-11-26 08:02:09'),
-(5, 'PI-19110002', '445566', '2', '', '0', '50', '30', '0', '2019-11-26 07:57:33', NULL),
-(6, 'PI-19110002', '778899', '3', '', '0', '50', '30', '0', '2019-11-26 07:57:33', NULL);
+(1, 'PI-19110003', '112233', '1', '35', '35', '50', '30', '30', '2019-12-25 12:25:46', '2019-12-25 13:07:33'),
+(2, 'PI-19110003', '445566', '2', '35', '35', '50', '30', '30', '2019-12-25 12:25:46', '2019-12-25 13:07:33'),
+(3, 'PI-19110003', '778899', '3', '35', '35', '50', '30', '30', '2019-12-25 12:25:46', '2019-12-25 13:07:34');
 
 -- --------------------------------------------------------
 
@@ -710,8 +750,9 @@ INSERT INTO `picking_item` (`id`, `nomor_picking`, `barcode`, `id_order_item`, `
 -- Struktur dari tabel `pph_item`
 --
 
-CREATE TABLE `pph_item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `pph_item`;
+CREATE TABLE IF NOT EXISTS `pph_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nomor_pengajuan` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
   `tipe_customer` varchar(255) NOT NULL,
@@ -722,8 +763,10 @@ CREATE TABLE `pph_item` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `pph_item`
@@ -739,8 +782,9 @@ INSERT INTO `pph_item` (`id`, `nomor_pengajuan`, `tanggal`, `tipe_customer`, `ba
 -- Struktur dari tabel `profil`
 --
 
-CREATE TABLE `profil` (
-  `id` int(60) NOT NULL,
+DROP TABLE IF EXISTS `profil`;
+CREATE TABLE IF NOT EXISTS `profil` (
+  `id` int(60) NOT NULL AUTO_INCREMENT,
   `kode_cabang` varchar(255) NOT NULL,
   `nama_cabang` varchar(255) NOT NULL,
   `alamat` varchar(255) NOT NULL,
@@ -751,8 +795,9 @@ CREATE TABLE `profil` (
   `no_hp` varchar(255) NOT NULL,
   `chief` varchar(255) NOT NULL,
   `logo` varchar(255) NOT NULL,
-  `id_edit_admin` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_edit_admin` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `profil`
@@ -767,7 +812,8 @@ INSERT INTO `profil` (`id`, `kode_cabang`, `nama_cabang`, `alamat`, `alamat2`, `
 -- Struktur dari tabel `purchase_order`
 --
 
-CREATE TABLE `purchase_order` (
+DROP TABLE IF EXISTS `purchase_order`;
+CREATE TABLE IF NOT EXISTS `purchase_order` (
   `kode` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
   `tanggal_approve` date DEFAULT NULL,
@@ -789,7 +835,8 @@ CREATE TABLE `purchase_order` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`kode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -806,30 +853,33 @@ INSERT INTO `purchase_order` (`kode`, `tanggal`, `tanggal_approve`, `kode_suppli
 -- Struktur dari tabel `purchase_order_item`
 --
 
-CREATE TABLE `purchase_order_item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `purchase_order_item`;
+CREATE TABLE IF NOT EXISTS `purchase_order_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `kode_po` varchar(255) NOT NULL,
   `barcode_inventory` varchar(255) NOT NULL,
   `kode_item_supplier` varchar(255) DEFAULT NULL,
   `nama_inventory` varchar(255) NOT NULL,
   `quantity` varchar(255) NOT NULL,
+  `quantity_purchasing` varchar(255) DEFAULT NULL,
   `harga_satuan` varchar(255) NOT NULL,
   `satuan` varchar(255) NOT NULL,
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `purchase_order_item`
 --
 
-INSERT INTO `purchase_order_item` (`id`, `kode_po`, `barcode_inventory`, `kode_item_supplier`, `nama_inventory`, `quantity`, `harga_satuan`, `satuan`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-(1, 'PO-19110001', '112233', '112233', 'Baju Batik BRASCO', '150', '60000', '1', '30', '0', '2019-11-26 06:58:22', NULL),
-(2, 'PO-19110001', '445566', '445566', 'Celana BRASCO', '150', '100000', '1', '30', '0', '2019-11-26 06:58:22', NULL),
-(3, 'PO-19110001', '778899', '778899', 'Sepatu BRASCO', '150', '130000', '1', '30', '0', '2019-11-26 06:58:23', NULL),
-(4, 'PO-19110002', '778899R', '4', 'Sepatu BRASCO', '5', '232', '1', '30', '0', '2019-12-09 09:01:27', NULL);
+INSERT INTO `purchase_order_item` (`id`, `kode_po`, `barcode_inventory`, `kode_item_supplier`, `nama_inventory`, `quantity`, `quantity_purchasing`, `harga_satuan`, `satuan`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
+(1, 'PO-19110001', '112233', '112233', 'Baju Batik BRASCO', '150', '', '60000', '1', '30', '0', '2019-11-26 06:58:22', NULL),
+(2, 'PO-19110001', '445566', '445566', 'Celana BRASCO', '150', '', '100000', '1', '30', '0', '2019-11-26 06:58:22', NULL),
+(3, 'PO-19110001', '778899', '778899', 'Sepatu BRASCO', '150', '', '130000', '1', '30', '0', '2019-11-26 06:58:23', NULL),
+(4, 'PO-19110002', '778899R', '4', 'Sepatu BRASCO', '5', '2', '232', '1', '30', '0', '2019-12-09 09:01:27', '2019-12-24 12:25:22');
 
 -- --------------------------------------------------------
 
@@ -837,7 +887,8 @@ INSERT INTO `purchase_order_item` (`id`, `kode_po`, `barcode_inventory`, `kode_i
 -- Struktur dari tabel `purchasing`
 --
 
-CREATE TABLE `purchasing` (
+DROP TABLE IF EXISTS `purchasing`;
+CREATE TABLE IF NOT EXISTS `purchasing` (
   `kode` varchar(255) NOT NULL,
   `nomor_surat_jalan` varchar(255) NOT NULL,
   `no_invoice` varchar(255) NOT NULL,
@@ -852,7 +903,8 @@ CREATE TABLE `purchasing` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`kode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -860,6 +912,7 @@ CREATE TABLE `purchasing` (
 --
 
 INSERT INTO `purchasing` (`kode`, `nomor_surat_jalan`, `no_invoice`, `kode_supplier`, `kode_po`, `diterima_oleh`, `tanggal_terima`, `tanggal_jatuh_tempo`, `total_quantity`, `total`, `outstanding`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
+('PU-5000', 'FFFF', '23232323', 'SP-002', 'PO-19110002', 'Rando', '2019-12-24', '2357-02-06', '3', '696', '696', '30', '0', '2019-12-24 12:25:23', NULL),
 ('pu01', 'sj01', 'in01', 'AB-001', 'PO-19110001', 'ipan', '2019-11-26', '2020-02-24', '300', '29000000', '9000000', '30', '30', '2019-11-26 07:10:22', '2019-11-26 08:36:07');
 
 -- --------------------------------------------------------
@@ -868,8 +921,9 @@ INSERT INTO `purchasing` (`kode`, `nomor_surat_jalan`, `no_invoice`, `kode_suppl
 -- Struktur dari tabel `purchasing_item`
 --
 
-CREATE TABLE `purchasing_item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `purchasing_item`;
+CREATE TABLE IF NOT EXISTS `purchasing_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `kode_pu` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
   `quantity_order` varchar(255) NOT NULL,
@@ -878,8 +932,9 @@ CREATE TABLE `purchasing_item` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `purchasing_item`
@@ -888,7 +943,8 @@ CREATE TABLE `purchasing_item` (
 INSERT INTO `purchasing_item` (`id`, `kode_pu`, `barcode`, `quantity_order`, `quantity_terima`, `harga_satuan`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
 (1, 'in01', '112233', '150', '100', '60000', '30', '0', '2019-11-26 07:10:22', NULL),
 (2, 'in01', '445566', '150', '100', '100000', '30', '0', '2019-11-26 07:10:22', NULL),
-(3, 'in01', '778899', '150', '100', '130000', '30', '0', '2019-11-26 07:10:22', NULL);
+(3, 'in01', '778899', '150', '100', '130000', '30', '0', '2019-11-26 07:10:22', NULL),
+(4, '23232323', '778899R', '5', '3', '232', '30', '0', '2019-12-24 12:25:23', NULL);
 
 -- --------------------------------------------------------
 
@@ -896,7 +952,8 @@ INSERT INTO `purchasing_item` (`id`, `kode_pu`, `barcode`, `quantity_order`, `qu
 -- Struktur dari tabel `retur_pembelian_barang`
 --
 
-CREATE TABLE `retur_pembelian_barang` (
+DROP TABLE IF EXISTS `retur_pembelian_barang`;
+CREATE TABLE IF NOT EXISTS `retur_pembelian_barang` (
   `nomor_retur` varchar(255) NOT NULL,
   `nomor_invoice` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
@@ -905,7 +962,8 @@ CREATE TABLE `retur_pembelian_barang` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_retur`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -913,7 +971,9 @@ CREATE TABLE `retur_pembelian_barang` (
 --
 
 INSERT INTO `retur_pembelian_barang` (`nomor_retur`, `nomor_invoice`, `tanggal`, `kode_supplier`, `keterangan`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-('RT-19110001', '123', '2019-11-26', 'AB-001', 'a', '30', '0', '2019-11-26 08:45:50', NULL);
+('RT-19110001', '123', '2019-11-26', 'AB-001', 'a', '30', '0', '2019-11-26 08:45:50', NULL),
+('RT-19110002', 'INV-22222', '2019-12-26', 'SP-002', 'SUP NIBB', '30', '0', '2019-12-26 17:00:09', NULL),
+('RT-19110003', 'TT-2', '2019-12-27', 'SP-002', 'wot?', '30', '0', '2019-12-26 17:12:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -921,8 +981,9 @@ INSERT INTO `retur_pembelian_barang` (`nomor_retur`, `nomor_invoice`, `tanggal`,
 -- Struktur dari tabel `retur_pembelian_barang_item`
 --
 
-CREATE TABLE `retur_pembelian_barang_item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `retur_pembelian_barang_item`;
+CREATE TABLE IF NOT EXISTS `retur_pembelian_barang_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `barcode` varchar(255) NOT NULL,
   `jumlah` varchar(255) NOT NULL,
   `keterangan` varchar(255) NOT NULL,
@@ -930,15 +991,20 @@ CREATE TABLE `retur_pembelian_barang_item` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `retur_pembelian_barang_item`
 --
 
 INSERT INTO `retur_pembelian_barang_item` (`id`, `barcode`, `jumlah`, `keterangan`, `nomor_retur`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-(1, '445566', '2', 'rusak', 'RT-19110001', '30', '0', '2019-11-26 08:45:50', NULL);
+(1, '445566', '2', 'rusak', 'RT-19110001', '30', '0', '2019-11-26 08:45:50', NULL),
+(2, '445566', '10', 'WAHAHAHA', 'RT-19110002', '30', '0', '2019-12-26 17:00:09', NULL),
+(3, '778899', '19', 'TEEHHEHEHE', 'RT-19110002', '30', '0', '2019-12-26 17:00:09', NULL),
+(4, '112233', '5', 'eeee', 'RT-19110003', '30', '0', '2019-12-26 17:12:49', NULL),
+(5, '778899R', '4', 'aaaa', 'RT-19110003', '30', '0', '2019-12-26 17:12:49', NULL);
 
 -- --------------------------------------------------------
 
@@ -946,7 +1012,8 @@ INSERT INTO `retur_pembelian_barang_item` (`id`, `barcode`, `jumlah`, `keteranga
 -- Struktur dari tabel `sales_invoice`
 --
 
-CREATE TABLE `sales_invoice` (
+DROP TABLE IF EXISTS `sales_invoice`;
+CREATE TABLE IF NOT EXISTS `sales_invoice` (
   `nomor_invoice` varchar(255) NOT NULL,
   `tanggal` date NOT NULL,
   `kode_customer` varchar(255) NOT NULL,
@@ -963,7 +1030,8 @@ CREATE TABLE `sales_invoice` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_invoice`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -972,7 +1040,8 @@ CREATE TABLE `sales_invoice` (
 -- Struktur dari tabel `sales_order`
 --
 
-CREATE TABLE `sales_order` (
+DROP TABLE IF EXISTS `sales_order`;
+CREATE TABLE IF NOT EXISTS `sales_order` (
   `nomor_so` varchar(255) NOT NULL,
   `tanggal_so` date NOT NULL,
   `kode_customer` varchar(255) NOT NULL,
@@ -982,7 +1051,8 @@ CREATE TABLE `sales_order` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`nomor_so`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -998,16 +1068,18 @@ INSERT INTO `sales_order` (`nomor_so`, `tanggal_so`, `kode_customer`, `keteranga
 -- Struktur dari tabel `sales_order_item`
 --
 
-CREATE TABLE `sales_order_item` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `sales_order_item`;
+CREATE TABLE IF NOT EXISTS `sales_order_item` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nomor_so` varchar(255) NOT NULL,
   `barcode` varchar(255) NOT NULL,
   `quantity` varchar(255) NOT NULL,
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `sales_order_item`
@@ -1024,12 +1096,14 @@ INSERT INTO `sales_order_item` (`id`, `nomor_so`, `barcode`, `quantity`, `id_adm
 -- Struktur dari tabel `satuan`
 --
 
-CREATE TABLE `satuan` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `satuan`;
+CREATE TABLE IF NOT EXISTS `satuan` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `satuan` varchar(50) NOT NULL,
   `id_admin` varchar(255) NOT NULL,
-  `id_edit_admin` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `id_edit_admin` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `satuan`
@@ -1045,8 +1119,9 @@ INSERT INTO `satuan` (`id`, `satuan`, `id_admin`, `id_edit_admin`) VALUES
 -- Struktur dari tabel `stock_opname`
 --
 
-CREATE TABLE `stock_opname` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `stock_opname`;
+CREATE TABLE IF NOT EXISTS `stock_opname` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `kode` varchar(255) NOT NULL,
   `barcode_inventory` varchar(255) NOT NULL,
   `quantity_opname` varchar(255) NOT NULL,
@@ -1055,18 +1130,17 @@ CREATE TABLE `stock_opname` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `stock_opname`
 --
 
 INSERT INTO `stock_opname` (`id`, `kode`, `barcode_inventory`, `quantity_opname`, `quantity_selisih`, `approved`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
-(204, 'ST-00000056', '112233', '90', '10', 1, '30', '0', '2019-12-16 07:21:36', '2019-12-16 08:38:18'),
-(205, 'ST-00000056', '445566', '90', '8', 1, '30', '0', '2019-12-16 07:21:36', '2019-12-16 08:38:18'),
-(206, 'ST-00000056', '778899', '90', '7', 1, '30', '0', '2019-12-16 07:21:37', '2019-12-16 08:38:18'),
-(207, 'ST-00000056', '445566R', '90', '0', 1, '30', '0', '2019-12-16 07:21:37', '2019-12-16 08:38:18');
+(1, 'ST-00000057', '112233', '80', '10', 1, '30', '0', '2019-12-26 16:22:51', '2019-12-26 16:23:30'),
+(2, 'ST-00000057', '445566', '80', '10', 1, '30', '0', '2019-12-26 16:22:52', '2019-12-26 16:23:30');
 
 -- --------------------------------------------------------
 
@@ -1074,7 +1148,8 @@ INSERT INTO `stock_opname` (`id`, `kode`, `barcode_inventory`, `quantity_opname`
 -- Struktur dari tabel `supplier`
 --
 
-CREATE TABLE `supplier` (
+DROP TABLE IF EXISTS `supplier`;
+CREATE TABLE IF NOT EXISTS `supplier` (
   `kode` varchar(255) NOT NULL,
   `nama` varchar(255) NOT NULL,
   `alamat` varchar(255) NOT NULL,
@@ -1094,7 +1169,8 @@ CREATE TABLE `supplier` (
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`kode`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -1103,7 +1179,7 @@ CREATE TABLE `supplier` (
 
 INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, `fax`, `handphone`, `contact_name`, `email`, `kredit`, `top`, `pkp`, `saldo_awal`, `saldo_jalan`, `tanggal_beli_akhir`, `id_admin`, `id_edit_admin`, `created_at`, `updated_at`) VALUES
 ('AB-001', 'Supplier AB', 'Alamat AB', 'Jakarta', '99999', '082133333333', '123123', '081111112121', 'Kontak AB', 'ab@gmail.com', '1000000000', '90', 'Y', '0', '0', '2019-11-26', '30', '0', '2019-11-26 06:41:23', '2019-11-26 07:10:23'),
-('SP-002', 'Nanda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Semarang', '50246', '2323212', '', '6281542464268', 'Hanif', 'hanifsetyananda17@gmail.com', '213123', '123131', 'Y', '1111111111111111', '0', '0000-00-00', '30', '0', '2019-12-09 08:25:07', NULL);
+('SP-002', 'Nanda', 'Jl. Basudewo 1086C\r\nJl. Kanguru Raya No. 2 AB', 'Semarang', '50246', '2323212', '', '6281542464268', 'Hanif', 'hanifsetyananda17@gmail.com', '213123', '123131', 'Y', '1111111111111111', '0', '2019-12-24', '30', '0', '2019-12-09 08:25:07', '2019-12-24 12:25:23');
 
 -- --------------------------------------------------------
 
@@ -1111,14 +1187,16 @@ INSERT INTO `supplier` (`kode`, `nama`, `alamat`, `kota`, `kodepos`, `telepon`, 
 -- Struktur dari tabel `supplier_saldo`
 --
 
-CREATE TABLE `supplier_saldo` (
+DROP TABLE IF EXISTS `supplier_saldo`;
+CREATE TABLE IF NOT EXISTS `supplier_saldo` (
   `kode_supplier` varchar(255) NOT NULL,
   `saldo_awal` varchar(255) NOT NULL,
   `saldo_jalan` varchar(255) DEFAULT '0',
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
+  `updated_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`kode_supplier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1127,14 +1205,16 @@ CREATE TABLE `supplier_saldo` (
 -- Struktur dari tabel `tipe_barang`
 --
 
-CREATE TABLE `tipe_barang` (
-  `id` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tipe_barang`;
+CREATE TABLE IF NOT EXISTS `tipe_barang` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nama_barang` varchar(255) NOT NULL,
   `id_admin` varchar(255) NOT NULL,
   `id_edit_admin` varchar(255) NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `update_at` timestamp NULL DEFAULT NULL ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tipe_barang`
@@ -1151,8 +1231,9 @@ INSERT INTO `tipe_barang` (`id`, `nama_barang`, `id_admin`, `id_edit_admin`, `cr
 -- Struktur dari tabel `tr_jurnal`
 --
 
-CREATE TABLE `tr_jurnal` (
-  `nomor` int(11) NOT NULL,
+DROP TABLE IF EXISTS `tr_jurnal`;
+CREATE TABLE IF NOT EXISTS `tr_jurnal` (
+  `nomor` int(11) NOT NULL AUTO_INCREMENT,
   `noref` varchar(20) NOT NULL,
   `novoucher` varchar(20) NOT NULL,
   `nourut` int(11) NOT NULL,
@@ -1166,12 +1247,13 @@ CREATE TABLE `tr_jurnal` (
   `kodecbg` char(3) NOT NULL DEFAULT '1',
   `userid` varchar(20) NOT NULL,
   `tglrekam` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `wbs` varchar(10) NOT NULL,
-  `useredit` varchar(20) NOT NULL,
+  `wbs` varchar(10) DEFAULT NULL,
+  `useredit` varchar(20) DEFAULT NULL,
   `tgledit` timestamp NULL DEFAULT NULL,
-  `statusid` int(11) NOT NULL,
-  `ket` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `statusid` int(11) DEFAULT NULL,
+  `ket` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`nomor`)
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `tr_jurnal`
@@ -1181,346 +1263,12 @@ INSERT INTO `tr_jurnal` (`nomor`, `noref`, `novoucher`, `nourut`, `kodeakun`, `d
 (1, '', 'pu01', 1, '103.100', 29000000.00, 0.00, 'Persediaan Purchasing', '2019-11-26', 'JK', 'T', '1', '30', '2019-11-26 07:10:23', '', '', NULL, 0, ''),
 (2, '', 'pu01', 2, '103.110', 4350000.00, 0.00, 'PPN Purchasing', '2019-11-26', 'JK', 'T', '1', '30', '2019-11-26 07:10:23', '', '', NULL, 0, ''),
 (3, '', 'pu01', 4, '401.000', 0.00, 33350000.00, 'Hutang Purchasing', '2019-11-26', 'JK', 'T', '1', '30', '2019-11-26 07:10:23', '', '', NULL, 0, ''),
-(5, '', 'ST-00000056', 1, 'AKTIVA', 0.00, 99999999.00, 'Adjust Selisih Stock Opname', '2019-12-16', 'JK', 'T', '1', '30', '2019-12-16 08:38:18', '', '0', NULL, 0, '');
-
---
--- Indexes for dumped tables
---
-
---
--- Indeks untuk tabel `admin`
---
-ALTER TABLE `admin`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `bank`
---
-ALTER TABLE `bank`
-  ADD PRIMARY KEY (`kode_bank`);
-
---
--- Indeks untuk tabel `bank_input_pembayaran`
---
-ALTER TABLE `bank_input_pembayaran`
-  ADD PRIMARY KEY (`nomor_kas_keluar`);
-
---
--- Indeks untuk tabel `bank_input_penerimaan`
---
-ALTER TABLE `bank_input_penerimaan`
-  ADD PRIMARY KEY (`nomor_kas_masuk`);
-
---
--- Indeks untuk tabel `counter`
---
-ALTER TABLE `counter`
-  ADD PRIMARY KEY (`tabel`);
-
---
--- Indeks untuk tabel `customer`
---
-ALTER TABLE `customer`
-  ADD PRIMARY KEY (`kode`);
-
---
--- Indeks untuk tabel `diskon_barang_reject`
---
-ALTER TABLE `diskon_barang_reject`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `intrn`
---
-ALTER TABLE `intrn`
-  ADD PRIMARY KEY (`kode`);
-
---
--- Indeks untuk tabel `inventory`
---
-ALTER TABLE `inventory`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `jurnal_referensi`
---
-ALTER TABLE `jurnal_referensi`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `label_barcode`
---
-ALTER TABLE `label_barcode`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `ms_akun`
---
-ALTER TABLE `ms_akun`
-  ADD PRIMARY KEY (`kodeakun`);
-
---
--- Indeks untuk tabel `order_gudang`
---
-ALTER TABLE `order_gudang`
-  ADD PRIMARY KEY (`nomor_order`);
-
---
--- Indeks untuk tabel `order_gudang_item`
---
-ALTER TABLE `order_gudang_item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `packing`
---
-ALTER TABLE `packing`
-  ADD PRIMARY KEY (`nomor_packing`);
-
---
--- Indeks untuk tabel `packing_item`
---
-ALTER TABLE `packing_item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `pengajuan_perubahan_harga`
---
-ALTER TABLE `pengajuan_perubahan_harga`
-  ADD PRIMARY KEY (`nomor_pengajuan`);
-
---
--- Indeks untuk tabel `picking`
---
-ALTER TABLE `picking`
-  ADD PRIMARY KEY (`nomor_picking`);
-
---
--- Indeks untuk tabel `picking_item`
---
-ALTER TABLE `picking_item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `pph_item`
---
-ALTER TABLE `pph_item`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `id` (`id`);
-
---
--- Indeks untuk tabel `profil`
---
-ALTER TABLE `profil`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `purchase_order`
---
-ALTER TABLE `purchase_order`
-  ADD PRIMARY KEY (`kode`);
-
---
--- Indeks untuk tabel `purchase_order_item`
---
-ALTER TABLE `purchase_order_item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `purchasing`
---
-ALTER TABLE `purchasing`
-  ADD PRIMARY KEY (`kode`);
-
---
--- Indeks untuk tabel `purchasing_item`
---
-ALTER TABLE `purchasing_item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `retur_pembelian_barang`
---
-ALTER TABLE `retur_pembelian_barang`
-  ADD PRIMARY KEY (`nomor_retur`);
-
---
--- Indeks untuk tabel `retur_pembelian_barang_item`
---
-ALTER TABLE `retur_pembelian_barang_item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `sales_invoice`
---
-ALTER TABLE `sales_invoice`
-  ADD PRIMARY KEY (`nomor_invoice`);
-
---
--- Indeks untuk tabel `sales_order`
---
-ALTER TABLE `sales_order`
-  ADD PRIMARY KEY (`nomor_so`);
-
---
--- Indeks untuk tabel `sales_order_item`
---
-ALTER TABLE `sales_order_item`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `satuan`
---
-ALTER TABLE `satuan`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `stock_opname`
---
-ALTER TABLE `stock_opname`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `supplier`
---
-ALTER TABLE `supplier`
-  ADD PRIMARY KEY (`kode`);
-
---
--- Indeks untuk tabel `supplier_saldo`
---
-ALTER TABLE `supplier_saldo`
-  ADD PRIMARY KEY (`kode_supplier`);
-
---
--- Indeks untuk tabel `tipe_barang`
---
-ALTER TABLE `tipe_barang`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indeks untuk tabel `tr_jurnal`
---
-ALTER TABLE `tr_jurnal`
-  ADD PRIMARY KEY (`nomor`);
-
---
--- AUTO_INCREMENT untuk tabel yang dibuang
---
-
---
--- AUTO_INCREMENT untuk tabel `admin`
---
-ALTER TABLE `admin`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
-
---
--- AUTO_INCREMENT untuk tabel `diskon_barang_reject`
---
-ALTER TABLE `diskon_barang_reject`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
-
---
--- AUTO_INCREMENT untuk tabel `intrn`
---
-ALTER TABLE `intrn`
-  MODIFY `kode` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `inventory`
---
-ALTER TABLE `inventory`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `jurnal_referensi`
---
-ALTER TABLE `jurnal_referensi`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `label_barcode`
---
-ALTER TABLE `label_barcode`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `order_gudang_item`
---
-ALTER TABLE `order_gudang_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `packing_item`
---
-ALTER TABLE `packing_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `picking_item`
---
-ALTER TABLE `picking_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT untuk tabel `pph_item`
---
-ALTER TABLE `pph_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `profil`
---
-ALTER TABLE `profil`
-  MODIFY `id` int(60) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
-
---
--- AUTO_INCREMENT untuk tabel `purchase_order_item`
---
-ALTER TABLE `purchase_order_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT untuk tabel `purchasing_item`
---
-ALTER TABLE `purchasing_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `retur_pembelian_barang_item`
---
-ALTER TABLE `retur_pembelian_barang_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-
---
--- AUTO_INCREMENT untuk tabel `sales_order_item`
---
-ALTER TABLE `sales_order_item`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
-
---
--- AUTO_INCREMENT untuk tabel `satuan`
---
-ALTER TABLE `satuan`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT untuk tabel `stock_opname`
---
-ALTER TABLE `stock_opname`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=208;
-
---
--- AUTO_INCREMENT untuk tabel `tipe_barang`
---
-ALTER TABLE `tipe_barang`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
--- AUTO_INCREMENT untuk tabel `tr_jurnal`
---
-ALTER TABLE `tr_jurnal`
-  MODIFY `nomor` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+(5, '', 'ST-00000056', 1, 'AKTIVA', 0.00, 99999999.00, 'Adjust Selisih Stock Opname', '2019-12-16', 'JK', 'T', '1', '30', '2019-12-16 08:38:18', '', '0', NULL, 0, ''),
+(6, '', 'PU-5000', 1, '103.100', 696.00, 0.00, 'Persediaan Purchasing', '2019-12-24', 'JK', 'T', '1', '30', '2019-12-24 12:25:23', '', '', NULL, 0, ''),
+(7, '', 'PU-5000', 2, '103.110', 0.00, 0.00, 'PPN Purchasing', '2019-12-24', 'JK', 'T', '1', '30', '2019-12-24 12:25:23', '', '', NULL, 0, ''),
+(8, '', 'PU-5000', 4, '401.000', 0.00, 696.00, 'Hutang Purchasing', '2019-12-24', 'JK', 'T', '1', '30', '2019-12-24 12:25:23', '', '', NULL, 0, ''),
+(9, '', 'ST-00000057', 1, 'Persediaan Barang Da', 200000.00, 0.00, 'Adjust Selisih Stock Opname', '2019-12-26', 'JK', 'T', '1', '30', '2019-12-26 16:23:30', '', '0', NULL, 0, ''),
+(10, '', 'ST-00000057', 2, 'Kas', 0.00, 200000.00, 'Adjust Selisih Stock Opname', '2019-12-26', 'JK', 'T', '1', '30', '2019-12-26 16:23:30', '', '0', NULL, 0, '');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

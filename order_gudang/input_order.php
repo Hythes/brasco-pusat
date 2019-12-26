@@ -75,11 +75,14 @@ if (isset($_POST['submit'])) {
 						<div class="box-body">
 							<div class="form-group">
 								<div class="col-xs-6">
-									<input type="text" class="form-control" id="kode_customer" name="kode_customer" placeholder="Kode Customer">
+									<select name="kode_customer" id="kode_customer" class="form-control ">
+										<option value="0" selected disabled>Pilih Customer</option>
+										<?php foreach (query("SELECT * FROM customer") as $cust) : ?>
+											<option value="<?= $cust['kode'] ?>"><?= $cust['kode'] ?></option>
+										<?php endforeach; ?>
+									</select>
 								</div>
-								<div class="col-xs-2">
-									<i id="cari_customer" class="fa fa-search fa-2x" style="cursor: pointer"></i>
-								</div>
+
 							</div>
 							<div class="form-group">
 								<div class="col-xs-10">
@@ -151,7 +154,7 @@ if (isset($_POST['submit'])) {
 												<?php
 												$i_m1 = 1;
 												foreach (query("SELECT * FROM sales_order") as $data_so) : $so =  $data_so['nomor_so'];
-													?>
+												?>
 													<tr>
 														<td><?= $i_m1 ?></td>
 														<td><?= $data_so['nomor_so'];  ?></td>
@@ -186,12 +189,12 @@ if (isset($_POST['submit'])) {
 				<div class="box-body">
 					<div class="row">
 						<div class="col-sm-3">
-							<div class="form-group">
-								<div style="display: inline-flex">
-									<input style="margin-right: 20px;" type="text" id="barcode_so" placeholder="Barcode" class="form-control">
-									<i style="font-size: 30px;cursor:pointer" class="fa fa-search" id="cari_barcode"></i>
-								</div>
-							</div>
+							<select name="barcode_so" id="barcode_so" class="form-control">
+								<option value="0" selected disabled>Pilih Barcode</option>
+								<?php foreach (query("SELECT * FROM inventory") as $barc) : ?>
+									<option value="<?= $barc['barcode'] ?>"><?= $barc['barcode'] ?></option>
+								<?php endforeach; ?>
+							</select>
 						</div>
 						<div class="col-sm-3">
 							<div class="form-group">
@@ -227,7 +230,7 @@ if (isset($_POST['submit'])) {
 											<center>No</center>
 										</th>
 										<th>
-											<center>Barocde</center>
+											<center>Barcode</center>
 										</th>
 										<th>
 											<center>Nama Item</center>
@@ -282,11 +285,8 @@ if (isset($_POST['submit'])) {
 	var storeData = [];
 	var i = 1;
 	var total = 0;
-	$('#cari_customer').on('click', function() {
-		if ($('#kode_customer').val() == '') {
-			alert("Tolong diisi Kode Customernya");
-			return;
-		}
+	$('#kode_customer').change(() => {
+
 		$.post('order_gudang/ajax.php', {
 			request: 'cari_customer',
 			data: $('#kode_customer').val()
@@ -306,11 +306,7 @@ if (isset($_POST['submit'])) {
 			}
 		})
 	})
-	$('#cari_barcode').on('click', function() {
-		if ($('#barcode_so').val() == '') {
-			alert("Tolong diisi Kode Barcodenya");
-			return;
-		}
+	$('#barcode_so').change(function() {
 		if ($('#nama_cust').val() == '') {
 			alert('Tolong diisi dahulu data Customernya');
 			return;
@@ -385,7 +381,45 @@ if (isset($_POST['submit'])) {
 	}
 
 	function cari_so(kode) {
-		$('#nomor_so').val(kode)
+		if ($('#kode_customer').val() == null) {
+			alert("Tolong dipilih customernya!")
+		} else {
+			$('#nomor_so').val(kode)
+			$.post('order_gudang/ajax.php', {
+				find: 'cari_so_item',
+				data: kode,
+				customer: $('#kode_customer').val()
+			}, res => {
+				res = JSON.parse(res)
+				res.forEach(data => {
+					storeData.push({
+						'barcode': data.inventory.barcode,
+						'quantity': data.so_item.quantity
+					})
+					$('#data_item').val(JSON.stringify(storeData));
+					$('#table_so').append(
+						'<tr id="tr_so_' + i + '">' +
+						'<td id="icr">' + i + '</td>' +
+						'<td>' + data.inventory.barcode + '</td>' +
+						'<td>' + data.inventory.nama_barang + '</td>' +
+						'<td>' + data.so_item.quantity + '</td>' +
+						'<td>' + data.satuan.satuan + '</td>' +
+						'<td>' + data.harga_jual + '</td>' +
+						'<td>' + parseInt(data.harga_jual) * parseInt(data.so_item.quantity) + '</td>' +
+						'<td>' +
+						'<i style="color: red;cursor:pointer" onclick="so_hapus(' + i + ')" class="fa fa-trash fa-lg"></i>' + '</td>' +
+						'</tr>'
+					)
+					total += parseInt(data.so_item.quantity);
+					$('#total').val(total);
+					fix_iteration('#table_so');
+					i++;
+
+				})
+
+			})
+		}
+
 	}
 	$('#cari_so_tanggal').on('click', () => {
 		var d = $('#cari_so_tanggal_val').val()

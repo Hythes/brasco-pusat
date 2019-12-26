@@ -3,7 +3,9 @@
 
 // $base_url = "http://192.168.100.3:8080/brasco/";
 
-$base_url = 'http://192.168.0.112:8080/brasco/';
+// $base_url = 'http://192.168.0.112:8080/brasco/';
+$base_url = "http://localhost:8080/brasco/";
+
 
 $host = "localhost";
 $user = "root";

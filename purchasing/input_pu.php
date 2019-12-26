@@ -51,10 +51,22 @@ if (isset($_POST['submit'])) {
     $total_quantity = 0;
     $total_harga = 0;
     $id_admin = $_SESSION['admin']['id'];
+    $switch = false; // untuk bikin closed atau tidaknya pembelian, 1 lunas, 0 tidak
     for ($i = 1; $i <= $total_item; $i++) {
-        $id_admin = $_SESSION['admin']['id'];
+        $id_item = $_POST['id_' . $i];
         $quantity_terima = $_POST['quantity_terima_' . $i];
+        $quantity_order = $_POST['quantity_order_' . $i];
         $barcode = $_POST['barcode_' . $i];
+
+        $quantity_selisih = intval($quantity_order) - intval($quantity_terima);
+
+        if ($quantity_selisih <= 0) {
+            $switch = true;
+        }
+
+        $sql .= "UPDATE purchase_order_item SET quantity_purchasing = '$quantity_selisih' WHERE id = '$id_item';";
+        $sql .= PHP_EOL;
+
         $inven = query("SELECT * FROM inventory WHERE barcode = '$barcode'")[0];
         $quantity_inven  =  intval($inven['quantity']) + intval($quantity_terima);
         $harga_satuan = $_POST['harga_satuan_' . $i];
@@ -67,6 +79,7 @@ if (isset($_POST['submit'])) {
         $hpp = $harga_satuan * $quantity_inven;
         $sql .= "INSERT INTO intrn(tanggal,kode_item,quantity,satuan,harga_beli,hpp,harga_jual,discount,keterangan,tipe_transaksi,kode_user) 
         VALUES('$tanggal_terima','$barcode','$quantity_terima','$quantity_inven','$harga_satuan','$hpp','0','0','Purchasing','PU','$id_admin');";
+        // Bentar maksudnya satuan = quantity_inven apa?
         $sql .= PHP_EOL;
 
 
@@ -81,8 +94,11 @@ if (isset($_POST['submit'])) {
 
     $sql .= PHP_EOL;
 
-    $sql .= "UPDATE purchase_order SET status = 'Closed' WHERE kode = '$kode_po';";
-    $sql .= PHP_EOL;
+    if ($switch == true) {
+        $sql .= "UPDATE purchase_order SET status = 'Closed' WHERE kode = '$kode_po';";
+        $sql .= PHP_EOL;
+    }
+
 
     $sql .= "UPDATE supplier SET tanggal_beli_akhir = CAST('$tanggal_terima' AS DATE) WHERE kode = '$kode_supplier';";
     $sql .= PHP_EOL;
@@ -107,444 +123,6 @@ if (isset($_POST['submit'])) {
         $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
 
         $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
-
-        $sql .= PHP_EOL;
-
-        $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,kredit,keterangan,tanggal,userid) VALUES('$kode_pu','2','$uang_muka_jurnal','$uang_muka','Uang Muka Beli','$tanggal_terima','$id_admin');";
     }
 
     $query = mysqli_multi_query($conn, $sql);
@@ -683,18 +261,19 @@ if (isset($_POST['submit'])) {
                                 </thead>
                                 <tbody align="center" class="text-center">
                                     <?php $i = 1;
-                                                                                                                                                        foreach ($query_item as $data) :
-                                                                                                                                                            $id_s = $data['satuan'];
-                                                                                                                                                            $satuan = query("SELECT * FROM satuan WHERE id = '$id_s'")[0] ?>
+                                    foreach ($query_item as $data) :
+                                        $id_s = $data['satuan'];
+                                        $satuan = query("SELECT * FROM satuan WHERE id = '$id_s'")[0] ?>
                                         <tr class="text-center">
                                             <td><?= $i ?></td>
                                             <td><?= $data['barcode_inventory'] ?></td>
                                             <td><?= $data['nama_inventory'] ?></td>
-                                            <td><?= $data['quantity'] ?></td>
+                                            <td><?= $data['quantity_purchasing'] ?></td>
                                             <td><input style="width:3em;" type="number" name="quantity_terima_<?= $i ?>"></td>
                                             <td><?= $satuan['satuan'] ?></td>
                                             <td><?= $data['harga_satuan'] ?></td>
                                             <td><?= intval($data['quantity']) * intval($data['harga_satuan']) ?></td>
+                                            <input type="hidden" name="id_<?= $i ?>" value="<?= $data['id'] ?>">
                                             <input type="hidden" name="barcode_<?= $i ?>" value="<?= $data['barcode_inventory'] ?>">
                                             <input type="hidden" name="nama_inventory_<?= $i ?>" value="<?= $data['nama_inventory'] ?>">
                                             <input type="hidden" name="quantity_order_<?= $i ?>" value="<?= $data['quantity'] ?>">
@@ -702,9 +281,9 @@ if (isset($_POST['submit'])) {
                                             <input type="hidden" name="harga_satuan_<?= $i ?>" value="<?= $data['harga_satuan'] ?>">
 
                                         </tr> <?php
-                                                                                                                                                            $i++;
-                                                                                                                                                            $total += intval($data['quantity']);
-                                                                                                                                                        endforeach; ?> </tbody>
+                                                $i++;
+                                                $total += intval($data['quantity']);
+                                            endforeach; ?> </tbody>
                             </table>
                         </div>
                         <div class="form-group pull-right">
@@ -747,8 +326,8 @@ if (isset($_POST['submit'])) {
                             </thead>
                             <tbody>
                                 <?php $i = 1;
-                                                                                                                                                        foreach ($query as $data) :
-                                                                                                                                                            extract($data); ?>
+                                foreach ($query as $data) :
+                                    extract($data); ?>
                                     <tr>
                                         <td><?= $i ?></td>
                                         <td><?= $kode ?></td>
@@ -760,7 +339,7 @@ if (isset($_POST['submit'])) {
 
                                     </tr>
                                 <?php $i++;
-                                                                                                                                                        endforeach; ?>
+                                endforeach; ?>
                             </tbody>
                         </table>
                     </div>

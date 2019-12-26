@@ -9,6 +9,7 @@ $see = intval($no_retur1['digit']) + 1;
 $no_retur = $no_retur1['header'] . "-" . $see;
 if (isset($_POST['simpan'])) {
     extract($_POST);
+    $total = 0;
     $sql = "INSERT INTO retur_pembelian_barang(nomor_retur,nomor_invoice,tanggal,kode_supplier,keterangan,id_admin, id_edit_admin) VALUES(
         '$nomor_retur',
         '$nomor_invoice',
@@ -34,7 +35,54 @@ if (isset($_POST['simpan'])) {
             '$id_admin',
             '0'
         );";
+        $sql .= PHP_EOL;
+        $inven = query("SELECT * FROM inventory WHERE barcode = '$barcode' ")[0];
+        $hpp = intval($inven['harga_beli']) * intval($jumlah);
+        $sql .= "INSERT INTO intrn(tanggal,kode_item,quantity,satuan,harga_beli,hpp,harga_jual,discount,keterangan,tipe_transaksi,kode_user) VALUES(
+            '$tanggal',
+            '$barcode',
+            '$jumlah',
+            '$inven[satuan]',
+            '$inven[harga_beli]',
+            '$hpp',
+            '0',
+            '0',
+            'Retur Barang Pembelian',
+            'RB',
+            '$id_admin'
+        );";
+        $sql .= PHP_EOL;
+        $quantity_selisih = intval($inven['quantity']) - intval($jumlah);
+        $sql .= "UPDATE inventory SET quantity = '$quantity_selisih' WHERE barcode = '$barcode';";
+        $sql .= PHP_EOL;
+
+        $total += intval($jumlah);
     }
+    $jurnal = query("SELECT * FROM jurnal_referensi")[0];
+    $hutang = $jurnal['hutang'];
+    $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,debet,kredit,keterangan,tanggal,userid,useredit) VALUES(
+        '$nomor_retur',
+        '1',
+        '$hutang',
+        '0'
+        '$total',
+        'Hutang Retur Barang Pembelian',
+        '$tanggal',
+        '$id_admin',
+        '0'
+    );";
+    $sql .= PHP_EOL;
+    $sql .= "INSERT INTO tr_jurnal(novoucher,nourut,kodeakun,debet,kredit,keterangan,tanggal,userid,useredit) VALUES(
+        '$nomor_retur',
+        '2',
+        '0',
+        '$hutang',
+        '$total',
+        'Persediaan Retur Barang Pembelian',
+        '$tanggal',
+        '$id_admin',
+        '0'
+    );";
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "dibuat!");
 }

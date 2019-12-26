@@ -7,10 +7,17 @@ $title = "Input Picking Gudang";
 $query = query('SELECT * FROM counter WHERE tabel = "picking"')[0];
 $nomor_order = '';
 $kode_customer = '';
+$update = true; // penanda update atau tidak
 $item = array();
-$nomor_pick = $query['header'] . "-" . (intval($query['digit']) + 1);
+$nomor_pick = $query['header'] . "-" . (intval($query['digit']));
+
 if (isset($_GET['nomor'])) {
     $nomor_order = $_GET['nomor'];
+    $checking_picking = query("SELECT  * FROM picking WHERE nomor_picking = '$nomor_pick'")[0];
+    if ($checking_picking['nomor_order'] !== $nomor_order) {
+        $nomor_pick++;
+        $update = false;
+    }
     $data = query("SELECT * FROM order_gudang WHERE nomor_order = '$nomor_order'")[0];
     $kode_customer = $data['kode_customer'];
     $item = array();
@@ -34,19 +41,32 @@ if (isset($_POST['submit'])) {
     $tanggal  = date('Y-m-d', $time);
     for ($i2 = 1; $i2 <= $total; $i2++) {
         foreach ($item as $now) {
-
             $id = $_POST['id_' . $i2];
             if (intval($now['id']) == intval($id)) {
                 $quantity_pick = $_POST['quantity_pick_' . $i2];
                 extract($now);
-                $sql .= "INSERT INTO picking_item(nomor_picking,barcode,id_order_item,quantity_picking,quantity_order,id_admin,id_edit_admin) VALUES('$nomor_picking','$barcode','$id','$quantity_pick','$quantity','$sess','0');";
+                if ($update) {
+                    $selisih = query("SELECT * FROM picking_item WHERE id_order_item = '$id'")[0];
+                    $quantity_pick = intval($selisih['quantity_picking']) + intval($quantity_pick);
+                    $sql .= "UPDATE picking_item SET quantity_picking = '$quantity_pick', id_edit_admin = '$sess' WHERE id_order_item = '$id';";
+                } else {
+                    $sql .= "INSERT INTO picking_item(nomor_picking,barcode,id_order_item,quantity_picking,quantity_order,id_admin,id_edit_admin) VALUES('$nomor_picking','$barcode','$id','$quantity_pick','$quantity','$sess','0');";
+                }
+
                 $totalQuantity += intval($quantity_pick);
             }
         }
     }
-    $data = explode("-", $nomor_picking)[1];
-    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'picking';";
-    $sql .= "INSERT INTO picking(nomor_picking,nomor_order,kode_customer,status,total,tanggal,id_admin,id_edit_admin) VALUES('$nomor_picking','$nomor_order','$kode','$status','$totalQuantity','$tanggal','$sess','0');";
+
+    if ($update) {
+        $sql .= "UPDATE picking SET status = '$status',total = '$totalQuantity' ,id_edit_admin  = '$sess' WHERE nomor_order = '$nomor_order';";
+    } else {
+        $data = explode("-", $nomor_picking)[1];
+        $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'picking';";
+
+        $sql .= "INSERT INTO picking(nomor_picking,nomor_order,kode_customer,status,total,tanggal,id_admin,id_edit_admin) VALUES('$nomor_picking','$nomor_order','$kode','$status','$totalQuantity','$tanggal','$sess','0');";
+    }
+
     $query = mysqli_multi_query($conn, $sql);
     lanjutkan($query, "Dibuat!");
     $return = true;
@@ -163,9 +183,9 @@ if (isset($_POST['submit'])) {
                                                         </tr>
                                                     </thead>
                                                     <tbody id="cari_so_tabel">
-                                                        <?php                                                                    $i_m1 = 1;
-                                                                                                                                foreach (query("SELECT * FROM order_gudang") as $data_so) : $so =  $data_so['nomor_order'];
-                                                                                                                                    $ko = $data_so['kode_customer'];
+                                                        <?php $i_m1 = 1;
+                                                        foreach (query("SELECT * FROM order_gudang") as $data_so) : $so =  $data_so['nomor_order'];
+                                                            $ko = $data_so['kode_customer'];
                                                         ?>
                                                             <tr>
                                                                 <td><?= $i_m1 ?></td>
@@ -175,8 +195,8 @@ if (isset($_POST['submit'])) {
                                                                 <td><a class="btn btn-primary" href="picking_gudang/input.php?nomor=<?= $so ?>">Pilih</button></td>
                                                             </tr>
                                                         <?php
-                                                                                                                                    $i_m1++;
-                                                                                                                                endforeach;
+                                                            $i_m1++;
+                                                        endforeach;
                                                         ?>
                                                     </tbody>
                                                 </table>
@@ -204,26 +224,32 @@ if (isset($_POST['submit'])) {
                                         <th>Nama Item</th>
                                         <th>Satuan</th>
                                         <th>Qty Order</th>
+                                        <?php if ($update) : ?>
+                                            <th>Qty Sudah Dipicking</th>
+                                        <?php endif; ?>
                                         <th>Qty Pick</th>
                                     </tr>
                                 </thead>
                                 <tbody align="center">
                                     <?php $i = 1;
-                                                                                                                                foreach ($item as $now) : ?>
+                                    foreach ($item as $now) : ?>
                                         <tr>
                                             <td><?= $i ?></td>
                                             <td><?= $now['barcode'] ?></td>
                                             <td><?= $now['nama_item'] ?></td>
                                             <td><?= $now['satuan'] ?></td>
                                             <td><?= $now['quantity'] ?></td>
-                                            <td><?php 
-                                            $data_gan = query("SELECT * FROM picking_item WHERE barcode = '$now['barcode']'")[0];
-                                            ?>
+                                            <?php if ($update) {
+                                                $qty = query("SELECT * FROM picking_item WHERE id_order_item = '$now[id]'")[0];
+                                                $qty_sudah_pick =  intval($qty['quantity_picking']);
+                                                echo "<td>" . $qty_sudah_pick . "</td>";
+                                            } ?>
+                                            <td>
                                                 <input type="text" class="form-control" name="quantity_pick_<?= $i ?>"></td>
                                             <input type="hidden" name="id_<?= $i ?>" value="<?= $now['id'] ?>">
                                         </tr>
                                     <?php $i++;
-                                                                                                                                endforeach; ?>
+                                    endforeach; ?>
                                 </tbody>
                             </table>
                         </div>

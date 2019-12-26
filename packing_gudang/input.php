@@ -13,14 +13,24 @@ $sess = $_SESSION['admin']['id'];
 if (isset($_POST['submit'])) {
     $query = '';
     $total = 0;
+    $switch = 0;
     for ($i = 1; $i <= $_POST['total']; $i++) {
         $query .= sprintf("INSERT INTO packing_item(nomor_packing,id_picking_item,quantity_packing,id_admin,id_edit_admin) VALUES('%s',%s,%s,%s,%s); ", $_POST['nomor_packing'], $_POST['id_picking_' . $i], $_POST['qty_pack_' . $i], $sess, 0);
-        $query .= sprintf("UPDATE picking_item SET quantity_packing = '%s', id_edit_admin = '%s' WHERE id = %s;", $_POST['qty_pack_' . $i], $sess, $_POST['id_picking_' . $i]);
+        $id_picking =  $_POST['id_picking_' . $i];
+        $query .= sprintf("UPDATE picking_item SET quantity_packing = '%s', id_edit_admin = '%s' WHERE id = %s;", $_POST['qty_pack_' . $i], $sess, $id_picking);
+        $picking = query("SELECT * FROM picking_item WHERE id = '$id_picking'")[0];
+        $nomor_picking = $picking['nomor_picking'];
         $total += intval($_POST['qty_pack_' . $i]);
     }
+    $picks = query("SELECT * FROM picking WHERE nomor_picking = '$nomor_picking'")[0];
+    $query .= "UPDATE picking SET total_picking = '$total' WHERE nomor_picking = '$nomor_picking';";
+    if (intval($picks['total']) == intval($total)) {
+        $query .= "UPDATE picking SET status = 'Selesai' WHERE nomor_picking = '$nomor_picking';";
+    }
     $query .= sprintf("INSERT INTO packing(nomor_packing,kode_customer,tanggal,total,id_admin,id_edit_admin) VALUES('%s','%s','%s','%s','%s','%s');", $_POST['nomor_packing'], $_POST['customer'], $_POST['tanggal'], $total, $sess, 0);
-    $data = explode($_POST['nomor_packing'], "-")[1];
-    $sql .= "UPDATE counter SET digit = '$data' WHERE tabel = 'packing';";
+    $data = explode("-", $_POST['nomor_packing'])[1];
+    $query .= "UPDATE counter SET digit = '$data' WHERE tabel = 'packing';";
+
     $sql = mysqli_multi_query($conn, $query);
 
     lanjutkan($sql, "Ditambahkan!");
@@ -66,7 +76,7 @@ $nomor_pick = $query['header'] . "-" . (intval($query['digit']) + 1);
                                         <label class="col-xs-3">Tanggal</label>
                                         <div class="col-xs-9">
                                             <div class="input-group">
-                                                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= date('Y-m-d') ?>" readonly>
+                                                <input type="date" name="Tanggal" id="tanggal" class="form-control" value="<?= date('Y-m-d') ?>" readonly>
                                                 <div class="input-group-addon">
                                                     <i class="fa fa-calendar"></i>
                                                 </div>
@@ -118,21 +128,24 @@ $nomor_pick = $query['header'] . "-" . (intval($query['digit']) + 1);
                                                                     foreach (query("SELECT * FROM picking_item") as $pick) :
                                                                         $d  = query(sprintf("SELECT * FROM picking WHERE nomor_picking = '%s'", $pick['nomor_picking']))[0];
                                                                         $bar = query(sprintf("SELECT * FROM inventory WHERE barcode = '%s'", $pick['barcode']))[0];
-                                                                        ?>
-                                                                        <tr id="tr_<?= $i2 ?>">
-                                                                            <td id="i_"><?= $i2 ?></td>
-                                                                            <td><?= $d['tanggal'] ?></td>
-                                                                            <td><?= $d['kode_customer'] ?></td>
-                                                                            <td><?= $pick['nomor_picking'] ?></td>
-                                                                            <td><?= $bar['nama_barang'] ?></td>
-                                                                            <td><?= $pick['quantity_picking'] ?></td>
-                                                                            <td><?= $pick['quantity_packing'] ?></td>
-                                                                            <td><?= intval($pick['quantity_picking']) - intval($pick['quantity_packing']) ?></td>
-                                                                            <td><button onclick="pilih_item(<?= $i2 ?>)" type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check text-light"></i></button></td>
-                                                                            <input type="hidden" id="tr_barcode_<?= $i2 ?>" value="<?= $pick['barcode'] ?>">
-                                                                            <input type="hidden" id="tr_id_<?= $i2 ?>" value="<?= $pick['id'] ?>">
-                                                                        </tr>
-                                                                    <?php $i2++;
+                                                                    ?>
+                                                                        <?php if (intval($pick['quantity_picking']) !== intval($pick['quantity_packing'])) : ?>
+                                                                            <tr id="tr_<?= $i2 ?>">
+                                                                                <td id="i_"><?= $i2 ?></td>
+                                                                                <td><?= $d['tanggal'] ?></td>
+                                                                                <td><?= $d['kode_customer'] ?></td>
+                                                                                <td><?= $pick['nomor_picking'] ?></td>
+                                                                                <td><?= $bar['nama_barang'] ?></td>
+                                                                                <td><?= $pick['quantity_picking'] ?></td>
+                                                                                <td><?= $pick['quantity_packing'] ?></td>
+                                                                                <td><?= intval($pick['quantity_picking']) - intval($pick['quantity_packing']) ?></td>
+                                                                                <td><button onclick="pilih_item(<?= $i2 ?>)" type="button" class="btn btn-success" data-dismiss="modal"><i class="fa fa-check text-light"></i></button></td>
+                                                                                <input type="hidden" id="tr_barcode_<?= $i2 ?>" value="<?= $pick['barcode'] ?>">
+                                                                                <input type="hidden" id="tr_id_<?= $i2 ?>" value="<?= $pick['id'] ?>">
+                                                                            </tr>
+                                                                    <?php
+                                                                            $i2++;
+                                                                        endif;
                                                                     endforeach; ?>
                                                                 </tbody>
                                                             </table>

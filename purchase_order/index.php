@@ -16,7 +16,7 @@ if (isset($_POST['submit'])) {
     foreach ($data_po as $data) {
         $data = (array) $data;
         extract($data);
-        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,harga_satuan,satuan,id_admin,id_edit_admin) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$harga','$satuan','$id','0'); ";
+        $sql .= "INSERT INTO purchase_order_item(kode_po,barcode_inventory,kode_item_supplier,nama_inventory,quantity,quantity_purchasing,harga_satuan,satuan,id_admin,id_edit_admin) VALUES('$kode','$barcode','$kode_item_supplier','$nama_item','$quantity','$quantity','$harga','$satuan','$id','0'); ";
         $sql .= PHP_EOL;
     }
     $dataLabel = json_decode($dataLabel);

@@ -82,7 +82,7 @@ $title = "Master Inventory";
                   <?php
                   $datat = query("SELECT * FROM satuan");
                   foreach ($datat as $datas) :
-                    ?>
+                  ?>
                     <option value="<?= $datas['id'] ?>"><?= $datas['satuan'] ?></option>
                   <?php endforeach; ?>
                 </select>
@@ -93,7 +93,7 @@ $title = "Master Inventory";
                   <?php
                   $datat = cariBarang();
                   foreach ($datat as $datas) :
-                    ?>
+                  ?>
 
                     <option value="<?= $datas['id'] ?>"><?= $datas['nama_barang'] ?></option>
                   <?php endforeach; ?>
@@ -143,29 +143,31 @@ $title = "Master Inventory";
                 <th>HARGA JUAL 1</th>
                 <th>HARGA JUAL 2</th>
                 <th>HARGA JUAL 3</th>
+                <th>STOK</th>
                 <th>AKSI</th>
               </tr>
             </thead>
             <tbody align="center">
               <?php $i = 1; ?>
               <?php foreach ($data as $row) :
-                ?>
+              ?>
 
                 <tr>
                   <td><?php echo $i; ?></td>
                   <td><?php echo $row["barcode"]; ?></td>
                   <?php
-                    $id_tipe = $row['id_tipe_barang'];
-                    $result = query("SELECT * FROM tipe_barang WHERE id = '$id_tipe'");
-                    $id_satuan = $row['satuan'];
-                    $result2 = query("SELECT * FROM satuan WHERE id = '$id_satuan'");
-                    ?>
+                  $id_tipe = $row['id_tipe_barang'];
+                  $result = query("SELECT * FROM tipe_barang WHERE id = '$id_tipe'");
+                  $id_satuan = $row['satuan'];
+                  $result2 = query("SELECT * FROM satuan WHERE id = '$id_satuan'");
+                  ?>
                   <td><?php echo $row["nama_barang"]; ?></td>
                   <td><?php echo $result2[0]["satuan"]; ?></td>
                   <td><?php echo $result[0]['nama_barang']; ?></td>
                   <td><?php echo $row["harga_jual1"]; ?></td>
                   <td><?php echo $row["harga_jual2"]; ?></td>
                   <td><?php echo $row["harga_jual3"]; ?></td>
+                  <td><?php echo $row["quantity"]; ?></td>
                   <td>
                     <a href="master_inventory/ubah.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-edit fa-lg"></i>&nbsp&nbsp</a>
                     <a href="master_inventory/hapus.php?id=<?php echo $row["id"]; ?>"><i class="fa fa-trash fa-lg text-red">&nbsp&nbsp</i></a>
