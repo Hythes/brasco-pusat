@@ -1,7 +1,10 @@
 <?php
-// $base = "http://192.168.100.3:8080/brasco/";
+// $base_url = "http://192.168.100.3:8080/brasco/";
 
-// $base = 'http://192.168.0.112:8080/brasco/';
+// $base_url = 'http://192.168.0.112:8080/brasco/';
+// $base_url = "http://192.168.56.1:8080/brasco/";
+// $base = "http://192.168.56.1:8080/brasco/";
+$base_url = "http://localhost:8080/brasco/";
 $base = "http://localhost:8080/brasco/";
 
 
@@ -9,16 +12,16 @@ if (session_status() == PHP_SESSION_NONE) {
   session_start();
 }
 if (!isset($_SESSION['is_admin'])) {
-  return header("Location: " . $base . "login.php?err=1  ");
+  return header("Location: " . $base_url . "login.php?err=1  ");
 }
 if (!isset($_SESSION['is_admin'])) {
-  return header("Location: " . $base . "login.php?err=1  ");
+  return header("Location: " . $base_url . "login.php?err=1  ");
 }
 if ($_SESSION['admin']['groupType'] == 'superadmin') {
   $role = 'superadmin';
 } elseif ($_SESSION['admin']['groupType'] !== $role) {
   if (is_null($role_index)) {
-    return header("Location: " . $base . "index.php?err=1  ");
+    return header("Location: " . $base_url . "index.php?err=1  ");
   } else {
     $role = $_SESSION['admin']['groupType'];
   }
@@ -31,7 +34,7 @@ if ($_SESSION['admin']['groupType'] == 'superadmin') {
 
 <head>
   <meta charset="utf-8">
-  <base href="<?= $base ?>">
+  <base href="<?= $base_url ?>">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title id="title"><?= $title ?></title>
   <!-- Tell the browser to be responsive to screen width -->

@@ -7,7 +7,8 @@ if ($params == 1) {
     $arr = array();
     $tanggal_tempo = query("SELECT * FROM purchasing WHERE tanggal_jatuh_tempo BETWEEN '$tanggal_satu' AND '$tanggal_dua'");
     foreach ($tanggal_tempo as $purchasing) {
-        $arr['invoice'] = $purchasing['kode'];
+        $arr['invoice'] = $purchasing['no_invoice'];
+        $arr['kode'] = $purchasing['no_invoice'];
         $kode_pu = $arr['kode'];
         $arr['tanggal_jatuh_tempo'] = $purchasing['tanggal_jatuh_tempo'];
         $tanggal_now = date('Y-m-d', strtotime('now'));

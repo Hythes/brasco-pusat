@@ -113,14 +113,6 @@ if (isset($_POST['submit'])) {
         <?php if (isset($query)) : ?>
             <div class="box box-info">
                 <div class="box-body">
-                    <div class="otherButtom" style="margin-bottom: 20px;">
-                        <h4 style="margin-bottom: 20px; margin-top: 30px;">LIST DATA PURCHASE ORDER</h4>
-                        <a href="#" class="btn btn-default">Copy</a>
-                        <a href="#" class="btn btn-default">CSV</a>
-                        <a href="#" class="btn btn-default">Excel</a>
-                        <a href="#" class="btn btn-default">PDF</a>
-                        <a href="#" class="btn btn-default">Print</a>
-                    </div>
 
                     <!-- datatable -->
                     <table id="example1" class="table table-bordered table-striped">

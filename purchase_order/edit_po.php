@@ -30,14 +30,11 @@ if (isset($_POST['submit'])) {
 }
 $data = query("SELECT * FROM inventory");
 $kode = $_GET['kode'];
-$query = $conn->query("SELECT * FROM purchase_order WHERE kode ='$kode'");
-foreach ($query as $supp) {
-    $kode_supp = $supp['kode_supplier'];
-}
-$query3 = $conn->query("SELECT * FROM supplier WHERE kode='$kode_supp'");
-$var = query($query);
+$query = "SELECT * FROM purchase_order WHERE kode ='$kode'";
+$var = query($query)[0];
+$kode_supp = $var['kode_supplier'];
+$supplier = query("SELECT * FROM supplier WHERE kode='$kode_supp'")[0];
 $title = 'Edit Purchase Order';
-$var = $var[0];
 ?>
 <script>
     var dataSimpan = {
@@ -74,7 +71,7 @@ $var = $var[0];
         <!-- Default box -->
         <div class="box">
             <div class="box-body">
-                <h3 class="header text-center">PURCHASE ORDER <span><a href="purchase_order/cetak/cetak_label_barcode.php?kode" class="btn btn-primary pull-right">Create PO</a></span></h3>
+                <h3 class="header text-center">PURCHASE ORDER <span><a href="purchase_order/cetak/cetak_label_barcode.php?kode=<?= $kode ?>" class="btn btn-primary pull-right" target="_blank">Print Label Barcode</a></span></h3>
                 <!-- form -->
                 <input type="hidden" id="kode" value="<?= $_GET['kode'] ?>">
                 <div class="form-body" style="margin-top: 20px;">
@@ -91,10 +88,10 @@ $var = $var[0];
                                 <div class="kode-nama">
                                     <div class="row">
                                         <div class="textbox col-xs-5">
-                                            <input type="text" value="<?= $var['kode_supplier'] ?>" name="kode_supplier" id="kode_supplier" class="form-control" placeholder="KODE SUPPLIER">
+                                            <input type="text" value="<?= $supplier['kode'] ?>" name="kode_supplier" id="kode_supplier" class="form-control" placeholder="KODE SUPPLIER">
                                         </div>
                                         <div class="textbox col-xs-6">
-                                            <input type="text" readonly name="nama_supplier" value="<?= $var['nama'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
+                                            <input type="text" readonly name="nama_supplier" value="<?= $supplier['nama'] ?>" id="nama_supplier" class="form-control" placeholder="NAMA SUPPLIER">
                                         </div>
                                         <div class="col-xs-1">
                                             <i id="cari_supplier_po" style="cursor:pointer" class="fa fa-search fa-2x"></i>
@@ -102,7 +99,7 @@ $var = $var[0];
                                     </div>
                                 </div>
                                 <div class="textbox form-group" style="margin-top: 15px;">
-                                    <textarea class="form-control" id="alamat_supplier" readonly rows="3" name="alamat_supplier" placeholder="ALAMAT"><?= $var['alamat_supplier'] ?></textarea>
+                                    <textarea class="form-control" id="alamat_supplier" readonly rows="3" name="alamat_supplier" placeholder="ALAMAT"><?= $supplier['alamat'] ?></textarea>
                                 </div>
                             </div>
                             <!-- div class md-6 -->

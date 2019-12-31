@@ -257,7 +257,19 @@ $query3 = $conn->query("SELECT * FROM purchase_order_item WHERE kode_po = '$kode
         </section>
     </div>
     <script>
-
+        function printWindow(){
+            window.print();
+            CheckWindowState();
+        }
+        function CheckWindowState(){
+            if(document.readyState=="complete"){
+                window.close();
+            }
+            else{
+                setTimeout("CheckWindowState()", 11000);
+            }
+        }
+        printWindow();
     </script>
 </body>
 

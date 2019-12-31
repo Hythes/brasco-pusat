@@ -92,7 +92,7 @@ require '../env.php' ?>
                 </div>
 
                 <!-- table -->
-                <table id="data-table" class="table table-bordered table-hover">
+                <table id="datajoko" class="table table-bordered table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -123,9 +123,14 @@ require '../env.php' ?>
     <!-- /.content -->
 </div>
 <!-- /.content-wrapper -->
-<?= jquery() ?>
-<script src="assets/bower_components/jquery/dist/jquery.min.js"></script>
+
+<?php include('../templates/footer.php') ?>
+
 <script type="text/javascript">
+    var table = $('#datajoko').DataTable({
+        dom: 'Bfrtip',
+        buttons: ['print']
+    });
     $('#search').click(function() {
         $('#tabl').html('')
         var tanggal1 = $('#tanggal_satu').val()
@@ -138,40 +143,19 @@ require '../env.php' ?>
             res = JSON.parse(response)
             no = 1
             res.forEach(element => {
-                $('#tabl').append(`
-                    <tr>
-                    <td> ${no++} </td>
-                    <td> ${element.invoice} </td>
-                    <td> ${element.nama_supplier} </td>
-                    <td> ${element.tanggal_jatuh_tempo} </td>
-                    <td> 
-                         ${
-                            (!element.belum_jatuh_tempo) ? "-" : element.belum_jatuh_tempo 
-                        }
-                    </td>
-                    <td> 
-                    ${
-                        (!element.satu_bulan) ? "-" : element.satu_bulan 
-                        }
-                    </td>
-                    <td> 
-                    ${
-                        (!element.dua_bulan) ? "-" : element.dua_bulan 
-                        }
-                    </td>
-                    <td>
-                    ${
-                        (!element.tiga_bulan) ? "-" : element.tiga_bulan 
-                        }
-                    </td>
-                    <td>
-                    ${
-                        (!element.lebih_dari_tiga_bulan) ? "-" : element.lebih_dari_tiga_bulan 
-                        }
-                    </td>
-                    </tr>`)
+                table.row.add([
+                    no++,
+                    element.invoice,
+                    element.nama_supplier,
+                    element.tanggal_jatuh_tempo,
+                    (!element.belum_jatuh_tempo) ? "-" : element.belum_jatuh_tempo,
+                    (!element.satu_bulan) ? "-" : element.satu_bulan,
+                    (!element.dua_bulan) ? "-" : element.dua_bulan,
+                    (!element.tiga_bulan) ? "-" : element.tiga_bulan,
+                    (!element.lebih_dari_tiga_bulan) ? "-" : element.lebih_dari_tiga_bulan
+                ]).draw(false);
+
             })
         })
     })
 </script>
-<?php include('../templates/footer.php') ?>

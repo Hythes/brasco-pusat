@@ -96,26 +96,26 @@ foreach ($query3 as $supp) {
 								</thead>
 								<tbody>
 									<?php
-																							$totalS = 0;
-																							$no = 1;
-																							foreach ($query2 as $tabel) :
+									$totalS = 0;
+									$no = 1;
+									foreach ($query2 as $tabel) :
 									?>
 										<tr>
 											<td><?= $no; ?></td>
 											<td><?= $tabel['barcode_inventory'] ?> </td>
 											<td><?= $tabel['quantity'] ?></td>
 											<td><?php
-																								$id = $tabel["satuan"];
-																								$satuan = $conn->query("SELECT * FROM satuan WHERE id = '$id'");
-																								foreach ($satuan as $sat) {
-																									echo $sat['satuan'];
-																								}
+												$id = $tabel["satuan"];
+												$satuan = $conn->query("SELECT * FROM satuan WHERE id = '$id'");
+												foreach ($satuan as $sat) {
+													echo $sat['satuan'];
+												}
 												?></td>
 											<td>Rp. 160.000</td>
 											<td><?= $keterangan ?></td>
 										</tr>
 										<?php
-																								$totalS += intval($tabel['quantity']);
+										$totalS += intval($tabel['quantity']);
 										?>
 										<?php $no++; ?>
 									<?php endforeach; ?>
@@ -160,7 +160,19 @@ foreach ($query3 as $supp) {
 	</div>
 
 	<script>
+		// function printWindow() {
+		// 	window.print();
+		// 	CheckWindowState();
+		// }
 
+		// function CheckWindowState() {
+		// 	if (document.readyState == "complete") {
+		// 		window.close();
+		// 	} else {
+		// 		setTimeout("CheckWindowState()", 11000);
+		// 	}
+		// }
+		// printWindow();
 	</script>
 </body>
 
