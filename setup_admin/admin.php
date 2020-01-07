@@ -95,7 +95,7 @@ $title = 'Admin Panel'
             <div class="form-group">
               <label class="col-sm-4">Group</label>
               <div class="col-sm-8">
-                <select class="form-control" name="group_buat" required>
+                <select class="form-control" name="group_buat">
                   <option disabled selected>Pilih Group</option>
                   <option value="inventory">Inventory</option>
                   <option value="pemasaran">Pemasaran</option>

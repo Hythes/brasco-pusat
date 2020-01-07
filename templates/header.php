@@ -4,8 +4,8 @@
 // $base_url = 'http://192.168.0.112:8080/brasco/';
 // $base_url = "http://192.168.56.1:8080/brasco/";
 // $base = "http://192.168.56.1:8080/brasco/";
-$base_url = "http://localhost:8080/brasco/";
-$base = "http://localhost:8080/brasco/";
+$base_url = "http://localhost/brasco/";
+$base = "http://localhost/brasco/";
 
 
 if (session_status() == PHP_SESSION_NONE) {

@@ -153,7 +153,7 @@ if (isset($_POST['submit'])) {
                                         <td><?= $tanggal ?></td>
                                         <td><?= ($tanggal_approve == '') ? 'Unknown' : $tanggal_approve ?></td>
                                         <td><?= $status ?></td>
-                                        <td><a href="purchase_order/lihat_po.php?kode=<?= $kode ?>" target="_blank" class="btn btn-info">Detail</a></td>
+                                        <td><a href="purchase_order/lihat_po_manager.php?kode=<?= $kode ?>" target="_blank" class="btn btn-info">Detail</a></td>
                                         <td>
                                             <div class="input-group">
                                                 <select style="width: auto" name="status<?= $i ?>" class="form-control">
